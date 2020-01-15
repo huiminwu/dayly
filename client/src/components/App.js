@@ -21,12 +21,13 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    get("/api/whoami").then((user) => {
+  async componentDidMount() {
+    const user = await get("/api/whoami").then((user) => {
+    
+      // they are registed in the database, and currently logged in.
       if (user._id) {
-        // they are registed in the database, and currently logged in.
         this.setState({ userId: user._id });
-      }
+    }
     });
   }
 
