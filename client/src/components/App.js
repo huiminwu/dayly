@@ -9,6 +9,7 @@ import "../utilities.css";
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
+import Navbar from "./modules/Navbar.js";
 
 /**
  * Define the "App" component as a class.
@@ -49,6 +50,7 @@ class App extends Component {
   render() {
     return (
       <>
+        <Navbar />
         <Router>
           <Skeleton
             path="/"
