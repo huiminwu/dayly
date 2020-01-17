@@ -11,6 +11,15 @@ import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
 import Navbar from "./modules/Navbar.js";
 
+const moment = require("moment");
+moment().format("dddd, MMMM DD YYYY");
+moment().local();
+
+const MONTHS = [
+  "January",
+  "February"
+]
+
 /**
  * Define the "App" component as a class.
  */
@@ -20,9 +29,9 @@ class App extends Component {
     super(props);
     this.state = {
       userId: undefined,
-      year: 2020,
-      month: "January",
-      day: 12
+      year: moment().year(),
+      month: moment().month(),
+      day: moment().date(),
     };
   }
 
@@ -50,19 +59,54 @@ class App extends Component {
     post("/api/logout");
   };
 
-  handleBackClick(d) {
-    const newDay = d - 1;
-    this.setState({
-      day: newDay,
-    });
+  handleBackClick(varToChange) {
+    const curDate = moment([
+      this.state.year,
+      this.state.month,
+      this.state.day
+    ]);
+
+    let newDate;
+
+    if (varToChange === "day") {
+      newDate = curDate.subtract(1, "day");
+      this.setState({
+        day: newDate.date(),
+        month: newDate.month(),
+        year: newDate.year(),
+      })
+    } else {
+      newDate = curDate.subtract(1, "month");
+      this.setState({
+        month: newDate.month(),
+        year: newDate.year(),
+      })
+    }
   }
 
-  // TODO: Track if date exceeds # of days in month and take account of it
-  handleNextClick(d) {
-    const newDay = d + 1;
-    this.setState({
-      day: newDay,
-    });
+  handleNextClick(varToChange) {   
+    const curDate = moment([
+      this.state.year,
+      this.state.month,
+      this.state.day
+    ]);
+
+    let newDate;
+
+    if (varToChange === "day") {
+      newDate = curDate.add(1, "day");
+      this.setState({
+        day: newDate.date(),
+        month: newDate.month(),
+        year: newDate.year(),
+      })
+    } else {
+      newDate = curDate.add(1, "month");
+      this.setState({
+        month: newDate.month(),
+        year: newDate.year(),
+      })
+    }
   }
 
   render() {
@@ -81,8 +125,8 @@ class App extends Component {
             year={this.state.year}
             month={this.state.month}
             day={this.state.day}
-            handleBackClick={() => this.handleBackClick(this.state.day)}
-            handleNextClick={() => this.handleNextClick(this.state.day)}
+            handleBackClick={() => this.handleBackClick("day")}
+            handleNextClick={() => this.handleNextClick("day")}
           />
           <NotFound default />
         </Router>
