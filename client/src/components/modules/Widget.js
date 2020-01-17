@@ -41,15 +41,17 @@ class SliderWidget extends Component {
     handleSliderChange = (event) => {
         this.setState({slider_value: event.target.value});
         let string_slider_value = event.target.value.toString();
-        this.props.submitValue(string_slider_value);
     }
 
     render() {
         return (    
             <div>
                 <h3>{this.props.name}</h3>
-                <input type="range" min="0" max="12" step="1" value={this.state.slider_value}
-                        onChange={this.handleSliderChange} />
+                <input type="range" min="0" max="12" step="1" 
+                    value={this.state.slider_value}
+                    onChange={this.handleSliderChange} 
+                    onMouseUp={() => this.props.submitValue(this.state.slider_value)}
+                />
                 <p>{this.state.slider_value}</p>
             </div>
         );

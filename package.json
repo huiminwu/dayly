@@ -34,7 +34,8 @@
     "react-router-dom": "^4.3.1",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
-    "url-loader": "^1.1.2"
+    "url-loader": "^1.1.2",
+    "moment": "2.24.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
