@@ -37,28 +37,27 @@ class Navbar extends Component {
                     <Link className="Navbar-opts_link" to="/month">
                         Monthly
                     </Link>
-
+                    {console.log("hello")}
                     {this.props.userId ? (
-                    <GoogleLogout
-                        className="Navbar-opts_login"
-                        clientId={GOOGLE_CLIENT_ID}
-                        buttonText="Logout"
-                        onLogoutSuccess={this.props.handleLogout}
-                        onFailure={(err) => console.log(err)}
-                    />
+                        <GoogleLogout
+                            className="Navbar-opts_login"
+                            clientId={GOOGLE_CLIENT_ID}
+                            buttonText="Logout"
+                            onLogoutSuccess={this.props.handleLogout}
+                            onFailure={(err) => console.log(err)}
+                        />
                     ) : (
-                    <GoogleLogin
-                        className="Navbar-opts_login"
-                        clientId={GOOGLE_CLIENT_ID}
-                        buttonText="Login"
-                        onSuccess={this.props.handleLogin}
-                        onFailure={(err) => console.log(err)}
-                    />
+                        <GoogleLogin
+                            className="Navbar-opts_login"
+                            clientId={GOOGLE_CLIENT_ID}
+                            buttonText="Login"
+                            onSuccess={this.props.handleLogin}
+                            onFailure={(err) => console.log(err)}
+                        />
                     )}
                 </div>
-
             </div>
-        )
+        );
     }
 }
 
