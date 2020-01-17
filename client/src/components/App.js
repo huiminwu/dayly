@@ -20,6 +20,9 @@ class App extends Component {
     super(props);
     this.state = {
       userId: undefined,
+      year: 2020,
+      month: "January",
+      day: 12
     };
   }
 
@@ -47,6 +50,21 @@ class App extends Component {
     post("/api/logout");
   };
 
+  handleBackClick(d) {
+    const newDay = d - 1;
+    this.setState({
+      day: newDay,
+    });
+  }
+
+  // TODO: Track if date exceeds # of days in month and take account of it
+  handleNextClick(d) {
+    const newDay = d + 1;
+    this.setState({
+      day: newDay,
+    });
+  }
+
   render() {
     return (
       <>
@@ -58,7 +76,14 @@ class App extends Component {
             handleLogout={this.handleLogout}
             userId={this.state.userId}
           />
-          <Daily path="/day" />
+          <Daily 
+            path="/day" 
+            year={this.state.year}
+            month={this.state.month}
+            day={this.state.day}
+            handleBackClick={() => this.handleBackClick(this.state.day)}
+            handleNextClick={() => this.handleNextClick(this.state.day)}
+          />
           <NotFound default />
         </Router>
       </>
