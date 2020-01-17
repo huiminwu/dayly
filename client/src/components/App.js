@@ -118,12 +118,6 @@ class App extends Component {
           handleLogout={this.handleLogout}
         />
         <Router>
-          <Skeleton
-            path="/"
-            handleLogin={this.handleLogin}
-            handleLogout={this.handleLogout}
-            userId={this.state.userId}
-          />
           <Daily 
             path="/day" 
             year={this.state.year}
