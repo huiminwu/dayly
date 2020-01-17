@@ -16,6 +16,7 @@ class Daily extends Component {
                 year={this.props.year}
                 month={this.props.month}
                 day={this.props.day}
+                view={"day"}
                 handleBackClick={this.props.handleBackClick}
                 handleNextClick={this.props.handleNextClick}
             />
