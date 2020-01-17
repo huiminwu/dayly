@@ -35,7 +35,7 @@ const socket = require("./server-socket");
 
 // Server configuration below
 // TODO change connection URL after setting up your team database
-const mongoConnectionURL = process.env.ATLAS_SRV;
+const mongoConnectionURL = "mongodb+srv://dayly_admin:ahi-tuna@cluster0-j7aiy.mongodb.net/test?retryWrites=true&w=majority";
 // TODO change database name to the name you chose
 const databaseName = "dayly";
 
