@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
-import Skeleton from "./pages/Skeleton.js";
 import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
 import Navbar from "./modules/Navbar.js";
@@ -119,6 +118,7 @@ class App extends Component {
           handleLogout={this.handleLogout}
         />
         <Router>
+          {console.log(Daily)}
           <Daily 
             path="/day" 
             year={this.state.year}
