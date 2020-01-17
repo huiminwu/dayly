@@ -49,7 +49,7 @@ class SliderWidget extends Component {
             <div>
                 <h3>{this.props.name}</h3>
                 <input type="range" min="0" max="12" step="1" value={this.state.slider_value}
-                        onChange={(e) => this.handleSliderChange(e)} />
+                        onChange={this.handleSliderChange} />
                 <p>{this.state.slider_value}</p>
             </div>
         );
@@ -72,10 +72,9 @@ class Widget extends Component {
 
     componentDidMount() {
         // TODO: get values already stored from API endpoint and setState
-        // actually, not sure if this should happen here or in WidgetList. probably WidgetList
     }
     
-    submitValue = (value) => {
+    submitValue(value) {
         // post to API endpoint. expects value to be a string
         console.log("submitted " + value);
     }
