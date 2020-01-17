@@ -12,11 +12,15 @@ class Daily extends Component {
     render() {
         return (
             <>
-            <Header />
-            <div className="body-container">
-                <WidgetList />
-                <Notebook />
-            </div>
+            <Header
+                year={this.props.year}
+                month={this.props.month}
+                day={this.props.day}
+                handleBackClick={this.props.handleBackClick}
+                handleNextClick={this.props.handleNextClick}
+            />
+            <WidgetList />
+            <Notebook />
             </>
         );
     }

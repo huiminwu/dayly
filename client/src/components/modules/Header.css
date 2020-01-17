@@ -1,0 +1,23 @@
+.Header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 10vh;
+    margin: 50px 20px 0px 20px;
+    
+}
+
+.Header-nav {
+    padding: 20px;
+}
+.Header-nav-btn {
+    padding: 10px;
+    background-color:#000 !important;
+    color: white;
+    border: 1px solid black;
+    border-radius: 25px;
+}
+
+button + button {
+    margin-left: 5px;
+}
