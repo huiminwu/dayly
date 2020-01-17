@@ -18,6 +18,8 @@
 const validator = require("./validator");
 validator.checkSetup();
 
+// require("dotenv").config();
+
 //import libraries needed for the webserver to work!
 const http = require("http");
 const express = require("express"); // backend framework for our node server.
@@ -32,7 +34,9 @@ const auth = require("./auth");
 const socket = require("./server-socket");
 
 // Server configuration below
+// TODO change connection URL after setting up your team database
 const mongoConnectionURL = "mongodb+srv://dayly_admin:ahi-tuna@cluster0-j7aiy.mongodb.net/test?retryWrites=true&w=majority";
+// TODO change database name to the name you chose
 const databaseName = "dayly";
 
 // connect to mongodb
@@ -55,7 +59,7 @@ app.use(express.json());
 // set up a session, which will persist login data across requests
 app.use(
   session({
-    secret: "session-secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
