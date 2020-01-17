@@ -6,6 +6,7 @@ import WidgetList from "../modules/WidgetList.js";
 class Daily extends Component {
     constructor(props) {
         super(props);
+        // TODO: this.state
     }
 
     render() {

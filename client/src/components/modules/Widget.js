@@ -34,6 +34,7 @@ class SliderWidget extends Component {
         super(props);
         this.state = {
             slider_value: 0,
+            // this should probably be replaced with the this.props.storedvalue or something like that
         }
     }
 
@@ -66,6 +67,12 @@ class SliderWidget extends Component {
 class Widget extends Component {
     constructor(props) {
         super(props);
+        // TODO: this.state contains an empty array of the values already stored
+    }
+
+    componentDidMount() {
+        // TODO: get values already stored from API endpoint and setState
+        // actually, not sure if this should happen here or in WidgetList. probably WidgetList
     }
     
     submitValue = (value) => {
