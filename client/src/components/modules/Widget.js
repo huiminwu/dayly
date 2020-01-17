@@ -45,7 +45,7 @@ class SliderWidget extends Component {
     }
 
     render() {
-        return (
+        return (    
             <div>
                 <h3>{this.props.name}</h3>
                 <input type="range" min="0" max="12" step="1" value={this.state.slider_value}
