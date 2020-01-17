@@ -18,6 +18,18 @@ const MONTHS = [
   ]
   
 
+/**
+ * Header is a component for displaying appropriate date
+ * and for allowing for changes
+ *
+ * Proptypes
+ * @param {Number} date 
+ * @param {Number} month 
+ * @param {Number} year
+ * @param {string} view that is using header
+ * @param {func} handleBackClick that offsets -1 by either date or month
+ * @param {func} handleNextClick that offsets +1 by either date or month
+ **/
 class Header extends Component {
     constructor(props) {
         super(props);
