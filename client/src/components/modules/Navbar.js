@@ -24,10 +24,10 @@ class Navbar extends Component {
                 {/* hardcoded logo for now */}
                 <span className="Navbar-company"> day.ly </span>
                 <div className="Navbar-opts">
-                    <Link className="Navbar-opts_link" to="/">
+                    <Link className="Navbar-opts_link" to="/day">
                         Daily
                     </Link>
-                    <Link className="Navbar-opts_link" to="/monthly">
+                    <Link className="Navbar-opts_link" to="/month">
                         Monthly
                     </Link>
 
