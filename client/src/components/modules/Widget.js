@@ -14,6 +14,7 @@ class BinaryWidget extends Component {
 
 class ColorWidget extends Component {
     // TODO: use CSS to display different colors of mood
+    // also replace the values submitted lol
     render() {
         return (
             <div>
@@ -28,12 +29,27 @@ class ColorWidget extends Component {
     }
 }
 
-class ScaleWidget extends Component {
+class SliderWidget extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            slider_value: 0,
+        }
+    }
+
+    handleSliderChange = (event) => {
+        this.setState({slider_value: event.target.value});
+        let string_slider_value = event.target.value.toString();
+        this.props.submitValue(string_slider_value);
+    }
+
     render() {
         return (
             <div>
                 <h3>{this.props.name}</h3>
-                <input type="range" min="0" max="12" step="1" onChange={(e) => this.props.submitValue(e.target.value.toString())} />
+                <input type="range" min="0" max="12" step="1" value={this.state.slider_value}
+                        onChange={(e) => this.handleSliderChange(e)} />
+                <p>{this.state.slider_value}</p>
             </div>
         );
     }
@@ -62,7 +78,7 @@ class Widget extends Component {
             <>
                {this.props.type === "BinaryWidget" && <BinaryWidget name={this.props.name} submitValue={this.submitValue} />} 
                {this.props.type === "ColorWidget" && <ColorWidget name={this.props.name} submitValue={this.submitValue} />} 
-               {this.props.type === "ScaleWidget" && <ScaleWidget name={this.props.name} submitValue={this.submitValue} />} 
+               {this.props.type === "SliderWidget" && <SliderWidget name={this.props.name} submitValue={this.submitValue} />} 
             </>
         );
     }

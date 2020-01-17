@@ -11,8 +11,9 @@ class WidgetList extends Component {
         return (
             <div className="widget-container"> 
                 <Widget name="Mood" type="ColorWidget" value="" />
-                <Widget name="Sleep" type="ScaleWidget" value="" />
-                <Widget name="Goal" type="BinaryWidget" value="" />
+                <Widget name="Sleep" type="SliderWidget" value="" />
+                <h3>Goals</h3>
+                <Widget name="Go to the gym" type="BinaryWidget" value="" />
             </div>
         );
     }
