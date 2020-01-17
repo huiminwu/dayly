@@ -12,8 +12,10 @@ class Daily extends Component {
         return (
             <>
             <Header />
-            <WidgetList />
-            <Notebook />
+            <div className="body-container">
+                <WidgetList />
+                <Notebook />
+            </div>
             </>
         );
     }
