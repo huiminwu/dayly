@@ -17,17 +17,14 @@ const WIDGET_LIST = [
   {
     name: "Mood",
     type: "ColorWidget",
-    value: "",
   },
   {
     name: "Sleep",
     type: "SliderWidget",
-    value: "",
   },
   {
     name: "Go to the gym",
     type: "BinaryWidget",
-    value: "",
   },
 ];
 
@@ -71,7 +68,9 @@ class App extends Component {
       return post("/api/initsocket", { socketid: socket.id });
     }).then(() => {
       navigate('/day');
-    })
+    });
+
+
   };
 
   handleLogout = () => {

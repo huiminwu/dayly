@@ -47,41 +47,61 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 
 // router.get("/day", (req, res) => {
-//   Day.find({ 
+//   Day.find({
 //     creator: req.user._id,
 //     day: req.query.day,
 //     month: req.query.month,
-//     year: req.query.year, 
+//     year: req.query.year,
 //   }).then((day) => {
 //     console.log(day);
 //     res.send(day);
 //   });
 // });
 
-// router.post("/day", (req, res) => {
-//   const newDay = new Day({
-//     creator: req.user._id,
-//     day: req.body.day,
-//     month: req.body.month,
-//     year: req.body.year,
-//     widgets: widget._id,
-//   });
-// })
+router.post("/day", (req, res) => {
+  let widgetList;
+
+  // check if day already exists, if not, do nothing
+  User.findById(req.user._id)
+    .then((user) => (widgetList = user.widgetList))
+    .then(() => {
+      console.log(widgetList);
+      let widgetObjs = widgetList.map((widget) => {
+        newWidget = new Widget({
+          name: widget.name,
+          type: widget.widgetType,
+          value: "",
+        });
+        newWidget.save().then((widget) => console.log(widget));
+        return newWidget;
+      });
+      const newDay = new Day({
+        creator: req.user._id,
+        day: req.body.day,
+        month: req.body.month,
+        year: req.body.year,
+        widgets: widgetObjs.map((widget) => widget._id),
+      });
+      newDay.save().then((data) => res.send(data));
+    });
+});
 
 router.post("/day/widget", (req, res) => {
   const dayQuery = {
     creator: req.user._id,
     day: req.query.day,
     month: req.query.month,
-    year: req.query.year, 
-  }
+    year: req.query.year,
+  };
 
   Day.findOne(dayQuery).then((day) => {
-       const targetWidget = day.widgets.filter((widget) => { widget.name === req.body.widget_name });
+    const targetWidget = day.widgets.filter((widget) => {
+      widget.name === req.body.widget_name;
+    });
     targetWidget[0].value = req.body.value;
     targetWidget[0].save().then((widget) => console.log(widget));
-   });
-})
+  });
+});
 
 // Promise.all(š
 //   user = new User({
