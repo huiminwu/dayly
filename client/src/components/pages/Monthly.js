@@ -15,6 +15,10 @@ import Header from "../modules/Header.js";
 class Monthly extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+          type: "none",
+        }
+        
     }
 
     render() {
@@ -27,6 +31,7 @@ class Monthly extends Component {
             handleBackClick={this.props.handleBackClick}
             handleNextClick={this.props.handleNextClick}
           />
+
         </>
         );
     }
