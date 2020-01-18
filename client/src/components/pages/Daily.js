@@ -3,6 +3,8 @@ import Header from "../modules/Header.js";
 import Notebook from "../modules/Notebook.js";
 import Widget from "../modules/Widget.js";
 
+import "./Daily.css";
+
 /**
  * Daily is a component for displaying the daily view
  *
@@ -41,7 +43,7 @@ class Daily extends Component {
     }
 
     return (
-      <>
+      <div className="journal-container">
         <Header
           year={this.props.year}
           month={this.props.month}
@@ -50,9 +52,10 @@ class Daily extends Component {
           handleBackClick={this.props.handleBackClick}
           handleNextClick={this.props.handleNextClick}
         />
+
         <div className="widget-container">{widgets}</div>
         <Notebook />
-      </>
+      </div>
     );
   }
 }
