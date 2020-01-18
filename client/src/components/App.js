@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Router } from "@reach/router";
+import { navigate, Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
+import Landing from "./pages/Landing.js"
 import Navbar from "./modules/Navbar.js";
 
 import "../utilities.css";
@@ -68,13 +69,17 @@ class App extends Component {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
       this.setState({ userId: user._id });
-      post("/api/initsocket", { socketid: socket.id });
-    });
+      return post("/api/initsocket", { socketid: socket.id });
+    }).then(() => {
+      navigate('/day');
+    })
   };
 
   handleLogout = () => {
     this.setState({ userId: undefined });
-    post("/api/logout");
+    post("/api/logout").then(() => {
+      navigate('/');
+    });
   };
 
   handleBackClick(varToChange) {
@@ -136,6 +141,10 @@ class App extends Component {
           handleLogout={this.handleLogout}
         />
         <Router>
+          <Landing
+            path="/"
+            userId={this.state.userId}
+          />
           <Daily 
             path="/day" 
             year={this.state.year}
