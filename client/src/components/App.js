@@ -12,6 +12,10 @@ import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faBold, faItalic, faUnderline } from "@fortawesome/free-solid-svg-icons";
+library.add(faBold, faItalic, faUnderline);
+
 const moment = require("moment");
 moment().format("dddd, MMMM DD YYYY");
 moment().local();
