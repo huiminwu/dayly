@@ -12,22 +12,6 @@ import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
 
-// Hardcoded list of widgets to display for the user
-const WIDGET_LIST = [
-  {
-    name: "Mood",
-    type: "ColorWidget",
-  },
-  {
-    name: "Sleep",
-    type: "SliderWidget",
-  },
-  {
-    name: "Pset",
-    type: "BinaryWidget",
-  },
-];
-
 const moment = require("moment");
 moment().format("dddd, MMMM DD YYYY");
 moment().local();
@@ -44,7 +28,7 @@ class App extends Component {
       year: moment().year(),
       month: moment().month(),
       day: moment().date(),
-      widgetlist: WIDGET_LIST,
+      widgetlist: null,
       data: null,
     };
   }
@@ -54,7 +38,10 @@ class App extends Component {
 
     // they are registed in the database, and currently logged in.
     if (user._id) {
-      this.setState({ creator_id: user._id });
+      this.setState({
+        creator: user._id,
+        widgetlist: user.widgetList,
+      });
     }
   }
 
@@ -62,7 +49,10 @@ class App extends Component {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken })
       .then((user) => {
-        this.setState({ creator: user._id });
+        this.setState({
+          creator: user._id,
+          widgetlist: user.widgetList,
+        });
         return post("/api/initsocket", { socketid: socket.id });
       })
       .then(() => {
