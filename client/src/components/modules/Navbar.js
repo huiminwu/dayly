@@ -37,7 +37,6 @@ class Navbar extends Component {
                     <Link className="Navbar-opts_link" to="/month">
                         Monthly
                     </Link>
-                    {console.log("hello")}
                     {this.props.userId ? (
                         <GoogleLogout
                             className="Navbar-opts_login"

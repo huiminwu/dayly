@@ -118,7 +118,6 @@ class App extends Component {
           handleLogout={this.handleLogout}
         />
         <Router>
-          {console.log(Daily)}
           <Daily 
             path="/day" 
             year={this.state.year}
@@ -129,6 +128,10 @@ class App extends Component {
           />
           <Monthly
             path="/month"
+            year={this.state.year}
+            month={this.state.month}
+            handleBackClick={() => this.handleBackClick("month")}
+            handleNextClick={() => this.handleNextClick("month")}
           />
           <NotFound default />
         </Router>

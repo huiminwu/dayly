@@ -6,6 +6,7 @@ import Header from "../modules/Header.js";
  *
  * Proptypes
  * @param {Number} month 
+ * @param {Number} day 
  * @param {Number} year
  * @param {func} handleBackClick that offsets -1 by either date or month
  * @param {func} handleNextClick that offsets +1 by either date or month
@@ -18,10 +19,16 @@ class Monthly extends Component {
 
     render() {
         return(
-            <div>
-                Hello World
-            </div>
-        )
+        <>
+          <Header 
+            year={this.props.year}
+            month={this.props.month}
+            view="month"
+            handleBackClick={this.props.handleBackClick}
+            handleNextClick={this.props.handleNextClick}
+          />
+        </>
+        );
     }
 }
 
