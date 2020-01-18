@@ -98,23 +98,20 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
+router.post("/day/widget", (req, res) => {
   const dayQuery = {
     creator: req.user._id,
-    day: req.body.day,
-    month: req.body.month,
-    year: req.body.year,
+    day: req.query.day,
+    month: req.query.month,
+    year: req.query.year,
   };
 
-  console.log(dayQuery);
   Day.findOne(dayQuery).then((day) => {
-    console.log(`hi im inside of day ${day}`);
     const targetWidget = day.widgets.filter((widget) => {
-      widget.name === req.body.name;
+      widget.name === req.body.widget_name;
     });
-    console.log(`hi i am ${targetWidget}`)
     targetWidget[0].value = req.body.value;
-    targetWidget[0].save().then((widget) => res.send(widget));
+    targetWidget[0].save().then((widget) => console.log(widget));
   });
 });
 
