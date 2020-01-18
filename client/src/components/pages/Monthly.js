@@ -18,9 +18,15 @@ class Monthly extends Component {
 
     render() {
         return(
-            <div>
-                Hello World
-            </div>
+            <>
+                <div className="widget-container">
+                    
+
+                </div>
+                <div>
+                    Hello World
+                </div>
+            </>
         )
     }
 }
