@@ -46,20 +46,20 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-// router.get("/day", (req, res) => {
-//   Day.find({
-//     creator: req.user._id,
-//     day: req.query.day,
-//     month: req.query.month,
-//     year: req.query.year,
-//   }).then((day) => {
-//     console.log(day);
-//     res.send(day);
-//   });
-// });
+router.get("/day", (req, res) => {
+  Day.findOne({
+    creator: req.user._id,
+    day: req.query.day,
+    month: req.query.month,
+    year: req.query.year,
+  }).then((day) => {
+    console.log(day);
+    res.send(day);
+  });
+});
 
 // creates new Day if it doesn't already exist
-router.post("/day", (req, res) => {
+router.post("/day", auth.ensureLoggedIn, (req, res) => {
   let widgetList;
 
   Day.find({
@@ -78,7 +78,7 @@ router.post("/day", (req, res) => {
               type: widget.widgetType,
               value: "",
             });
-            newWidget.save().then((widget) => console.log(widget));
+            newWidget.save();
             return newWidget;
           });
           const newDay = new Day({
@@ -88,8 +88,12 @@ router.post("/day", (req, res) => {
             year: req.body.year,
             widgets: widgetObjs.map((widget) => widget._id),
           });
-          newDay.save().then((data) => res.send(data));
+          newDay.save().then((data) => {
+            res.send(data);
+          });
         });
+    } else {
+      res.send(false);
     }
   });
 });
