@@ -101,17 +101,18 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
 router.post("/day/widget", (req, res) => {
   const dayQuery = {
     creator: req.user._id,
-    day: req.query.day,
-    month: req.query.month,
-    year: req.query.year,
+    day: req.body.day,
+    month: req.body.month,
+    year: req.body.year,
   };
 
   Day.findOne(dayQuery).then((day) => {
+    console.log(day);
     const targetWidget = day.widgets.filter((widget) => {
-      widget.name === req.body.widget_name;
+      widget.name === req.body.name;
     });
     targetWidget[0].value = req.body.value;
-    targetWidget[0].save().then((widget) => console.log(widget));
+    targetWidget[0].save().then((widget) => res.send(widget));
   });
 });
 

@@ -25,20 +25,6 @@ function getOrCreateUser(user) {
     const newUser = new User({
       name: user.name,
       googleid: user.sub,
-      // widgetList: [
-      //   {
-      //     name: "Mood",
-      //     widgetType: "ColorWidget",
-      //   },
-      //   {
-      //     name: "Sleep",
-      //     widgetType: "SliderWidget",
-      //   },
-      //   {
-      //     name: "Pset",
-      //     widgetType: "BinaryWidget",
-      //   },
-      // ],
     });
 
     return newUser.save();
