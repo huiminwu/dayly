@@ -94,7 +94,6 @@ class Widget extends Component {
       name: this.props.name,
       value: val,
     };
-    console.log(params);
     post("/api/day/widget", params).then((data) => console.log("submitted " + data));
   };
 

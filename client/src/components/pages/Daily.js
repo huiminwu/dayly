@@ -40,9 +40,9 @@ class Daily extends Component {
         name={widget.name}
         type={widget.type}
         value=""
-        year={this.props.year}
-        month={this.props.month}
         day={this.props.day}
+        month={this.props.month}
+        year={this.props.year}
       />
     ));
 

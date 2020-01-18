@@ -106,15 +106,23 @@ router.post("/day/widget", (req, res) => {
     year: req.query.year,
   };
 
+  // find the corresponding day
   Day.findOne(dayQuery).then((day) => {
-    const targetWidget = day.widgets.filter((widget) => {
-      widget.name === req.body.widget_name;
+    // for each widget, find it in the db
+    // and check if it matches the target name
+    day.widgets.forEach((el) => {
+      Widget.findById(el).then((data) => {
+        // once found, update the value and send back
+        if (data.name === req.body.name) {
+          data.value = req.body.value;
+          data.save().then((newWidget) => {
+            res.send(newWidget.value);
+          });
+        }
+      });
     });
-    targetWidget[0].value = req.body.value;
-    targetWidget[0].save().then((widget) => console.log(widget));
   });
 });
-
 // Promise.all(š
 //   user = new User({
 //     name: "yo",
