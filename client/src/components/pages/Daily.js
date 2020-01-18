@@ -35,7 +35,14 @@ class Daily extends Component {
 
     render() {
         const widgets = this.props.widgetlist.map((widget) => (
-            <Widget creator={this.props.creator} name={widget.name} type={widget.type} value="" />
+            <Widget 
+                creator={this.props.creator} 
+                name={widget.name} 
+                type={widget.type} 
+                value="" 
+                day={this.props.day}
+                month={this.props.month}
+                year={this.props.year}/>
         ));
 
         return (

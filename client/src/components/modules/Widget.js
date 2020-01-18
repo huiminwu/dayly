@@ -82,6 +82,7 @@ class Widget extends Component {
     }
     
     submitValue = (val) => {
+        console.log(this.props.day);
         const params = {
             creator: this.props.creator,
             day: this.props.day,
@@ -96,7 +97,11 @@ class Widget extends Component {
     render() {
         return (
             <>
-               {this.props.type === "BinaryWidget" && <BinaryWidget name={this.props.name} creator={this.props.creator} submitValue={this.submitValue} />} 
+               {this.props.type === "BinaryWidget" && <BinaryWidget 
+                name={this.props.name} 
+                creator={this.props.creator} 
+                submitValue={this.submitValue}
+                />} 
                {this.props.type === "ColorWidget" && <ColorWidget name={this.props.name} creator={this.props.creator} submitValue={this.submitValue} />} 
                {this.props.type === "SliderWidget" && <SliderWidget name={this.props.name} creator={this.props.creator} submitValue={this.submitValue} />} 
             </>
