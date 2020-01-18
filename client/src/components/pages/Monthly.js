@@ -16,13 +16,33 @@ class Monthly extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          type: "none",
+          displayType: "none",
         }
         
     }
 
+    handleWidgetSelect(type) {
+      this.setState({
+        displayType: type,
+      });
+      console.log(`Changed view`);
+    }
+
+    // TODO: make an api to get data for this month
+    componentDidMount(){}
+
     render() {
-        return(
+      const widget_buttons = this.props.widgetlist.map((widget) => 
+        (<button
+          type="button"
+          onClick={() => this.handleWidgetSelect(widget.name)}
+        >
+          {widget.name}
+        </button>)
+      );
+
+
+      return(
         <>
           <Header 
             year={this.props.year}
@@ -31,7 +51,9 @@ class Monthly extends Component {
             handleBackClick={this.props.handleBackClick}
             handleNextClick={this.props.handleNextClick}
           />
-
+          {widget_buttons}
+          {/* displaying type just to test code */}
+          {this.state.displayType} 
         </>
         );
     }

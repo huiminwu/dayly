@@ -149,6 +149,7 @@ class App extends Component {
             path="/month"
             year={this.state.year}
             month={this.state.month}
+            widgetlist={this.state.widgetlist}
             handleBackClick={() => this.handleBackClick("month")}
             handleNextClick={() => this.handleNextClick("month")}
           />
