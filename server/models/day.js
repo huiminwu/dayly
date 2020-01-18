@@ -3,10 +3,10 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const DaySchema = new mongoose.Schema({
 	creator: {type: ObjectId, ref: "user"},
-  date: Number,
+  day: Number,
   month: Number,
   year: Number,
-  widget: {type: ObjectId, ref: "widget"},
+  widgets: [{type: ObjectId, ref: "widget"}],
   notes: String,
 });
 

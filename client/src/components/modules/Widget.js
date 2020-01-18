@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { get, post } from "../../utilities.js";
 
 class BinaryWidget extends Component {
     render() {
@@ -62,6 +63,10 @@ class SliderWidget extends Component {
  * Widget is a component for displaying widgets
  *
  * Proptypes
+ * @param {ObjectId} creator 
+ * @param {number} day 
+ * @param {number} month 
+ * @param {number} year
  * @param {string} name of widget
  * @param {string} type of widget
  * @param {string} value of widget
@@ -76,8 +81,14 @@ class Widget extends Component {
         // TODO: get values already stored from API endpoint and setState
     }
     
-    submitValue(value) {
-        // post to API endpoint. expects value to be a string
+    submitValue(value, name) {
+        const params = {
+            creator: this.props.creator,
+            day: this.props.day,
+            month: this.props.month,
+            year: this.props.year, 
+        }
+        post("/api/day/widget")
         console.log("submitted " + value);
     }
 

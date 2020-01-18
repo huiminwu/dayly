@@ -46,7 +46,44 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-// Promise.all([
+// router.get("/day", (req, res) => {
+//   Day.find({ 
+//     creator: req.user._id,
+//     day: req.query.day,
+//     month: req.query.month,
+//     year: req.query.year, 
+//   }).then((day) => {
+//     console.log(day);
+//     res.send(day);
+//   });
+// });
+
+// router.post("/day", (req, res) => {
+//   const newDay = new Day({
+//     creator: req.user._id,
+//     day: req.body.day,
+//     month: req.body.month,
+//     year: req.body.year,
+//     widgets: widget._id,
+//   });
+// })
+
+router.post("/day/widget", (req, res) => {
+  const dayQuery = {
+    creator: req.user._id,
+    day: req.query.day,
+    month: req.query.month,
+    year: req.query.year, 
+  }
+
+  Day.findOne(dayQuery).then((day) => {
+       const targetWidget = day.widgets.filter((widget) => { widget.name === req.body.widget_name });
+    targetWidget[0].value = req.body.value;
+    targetWidget[0].save().then((widget) => console.log(widget));
+   });
+})
+
+// Promise.all(š
 //   user = new User({
 //     name: "yo",
 //     googleid: "39999f3f3g32"
