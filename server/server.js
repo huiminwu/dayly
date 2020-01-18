@@ -28,12 +28,14 @@ const path = require("path"); // provide utilities for working with file and dir
 const api = require("./api");
 const auth = require("./auth");
 
+require("dotenv").config();
+
 // socket stuff
 const socket = require("./server-socket");
 
 // Server configuration below
 // TODO change connection URL after setting up your team database
-const mongoConnectionURL = "mongodb+srv://dayly_admin:ahi-tuna@cluster0-j7aiy.mongodb.net/test?retryWrites=true&w=majority";
+const mongoConnectionURL = process.env.ATLAS_SRV;
 // TODO change database name to the name you chose
 const databaseName = "dayly";
 
@@ -57,7 +59,7 @@ app.use(express.json());
 // set up a session, which will persist login data across requests
 app.use(
   session({
-    secret: "session-secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
