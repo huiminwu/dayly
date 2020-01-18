@@ -6,6 +6,7 @@ import Header from "../modules/Header.js";
  *
  * Proptypes
  * @param {Number} month 
+ * @param {Number} day 
  * @param {Number} year
  * @param {func} handleBackClick that offsets -1 by either date or month
  * @param {func} handleNextClick that offsets +1 by either date or month
@@ -14,20 +15,47 @@ import Header from "../modules/Header.js";
 class Monthly extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+          displayType: "none",
+        }
+        
     }
 
-    render() {
-        return(
-            <>
-                <div className="widget-container">
-                    
+    handleWidgetSelect(type) {
+      this.setState({
+        displayType: type,
+      });
+      console.log(`Changed view`);
+    }
 
-                </div>
-                <div>
-                    Hello World
-                </div>
-            </>
-        )
+    // TODO: make an api to get data for this month
+    componentDidMount(){}
+
+    render() {
+      const widget_buttons = this.props.widgetlist.map((widget) => 
+        (<button
+          type="button"
+          onClick={() => this.handleWidgetSelect(widget.name)}
+        >
+          {widget.name}
+        </button>)
+      );
+
+
+      return(
+        <>
+          <Header 
+            year={this.props.year}
+            month={this.props.month}
+            view="month"
+            handleBackClick={this.props.handleBackClick}
+            handleNextClick={this.props.handleNextClick}
+          />
+          {widget_buttons}
+          {/* displaying type just to test code */}
+          {this.state.displayType} 
+        </>
+        );
     }
 }
 

@@ -12,14 +12,29 @@ import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
 
+// Hardcoded list of widgets to display for the user 
+const WIDGET_LIST = [
+  {
+    name: "Mood",
+    type: "ColorWidget",
+    value: "",
+  },
+  {
+    name: "Sleep",
+    type: "SliderWidget",
+    value: "",
+  },
+  {
+    name: "Go to the gym",
+    type: "BinaryWidget",
+    value: "",
+  },
+];
+
+
 const moment = require("moment");
 moment().format("dddd, MMMM DD YYYY");
 moment().local();
-
-const MONTHS = [
-  "January",
-  "February"
-]
 
 /**
  * Define the "App" component as a class.
@@ -33,6 +48,7 @@ class App extends Component {
       year: moment().year(),
       month: moment().month(),
       day: moment().date(),
+      widgetlist: WIDGET_LIST,
     };
   }
 
@@ -43,6 +59,8 @@ class App extends Component {
       if (user._id) {
         this.setState({ userId: user._id });
     }
+    // TODO: get widget list from db.
+    // ideally returns this sorted alphabetically by type!!
     });
   }
 
@@ -132,11 +150,17 @@ class App extends Component {
             year={this.state.year}
             month={this.state.month}
             day={this.state.day}
+            widgetlist={this.state.widgetlist}
             handleBackClick={() => this.handleBackClick("day")}
             handleNextClick={() => this.handleNextClick("day")}
           />
           <Monthly
             path="/month"
+            year={this.state.year}
+            month={this.state.month}
+            widgetlist={this.state.widgetlist}
+            handleBackClick={() => this.handleBackClick("month")}
+            handleNextClick={() => this.handleNextClick("month")}
           />
           <NotFound default />
         </Router>

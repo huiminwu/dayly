@@ -21,10 +21,16 @@ const GOOGLE_CLIENT_ID = "209641585704-as3jqe7b1ensmoc8anroucgruqqq8a72.apps.goo
 class Navbar extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            display: "none",
+        }
     }
 
     componentDidMount() {}
+    // TODO: Make an api call for widgets
 
+
+    
     render() {
         return (
             <div className="Navbar-container">

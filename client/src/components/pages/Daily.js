@@ -10,6 +10,7 @@ import Widget from "../modules/Widget.js";
  * @param {Number} date 
  * @param {Number} month 
  * @param {Number} year
+ * @param {Array} widgetlist
  * @param {func} handleBackClick that offsets -1 by either date or month
  * @param {func} handleNextClick that offsets +1 by either date or month
  **/
@@ -17,10 +18,13 @@ import Widget from "../modules/Widget.js";
 class Daily extends Component {
     constructor(props) {
         super(props);
-        // TODO: this.state
     }
 
     render() {
+        const widgets = this.props.widgetlist.map((widget) => (
+            <Widget name={widget.name} type={widget.type} value="" />
+        ));
+
         return (
             <>
             <Header
@@ -32,10 +36,7 @@ class Daily extends Component {
                 handleNextClick={this.props.handleNextClick}
             />
             <div className="widget-container"> 
-                <Widget name="Mood" type="ColorWidget" value="" />
-                <Widget name="Sleep" type="SliderWidget" value="" />
-                <h3>Goals</h3>
-                <Widget name="Go to the gym" type="BinaryWidget" value="" />
+                {widgets}
             </div>
             <Notebook />
             </>

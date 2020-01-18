@@ -5,7 +5,7 @@ class BinaryWidget extends Component {
     render() {
         return (
             <div>
-                <p>{this.props.name}</p>
+                <h3>{this.props.name}</h3>
                 <button onClick={() => this.props.submitValue("True")}>Yes</button> 
                 <button onClick={() => this.props.submitValue("False")}>No</button> 
             </div>
