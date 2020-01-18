@@ -6,8 +6,8 @@ class BinaryWidget extends Component {
     return (
       <div>
         <h3>{this.props.name}</h3>
-        <button onClick={() => this.props.submitValue("True")}>Yes</button>
-        <button onClick={() => this.props.submitValue("False")}>No</button>
+        <button onClick={() => this.props.submitValue(1)}>Yes</button>
+        <button onClick={() => this.props.submitValue(0)}>No</button>
       </div>
     );
   }
@@ -20,11 +20,11 @@ class ColorWidget extends Component {
     return (
       <div>
         <h3>{this.props.name}</h3>
-        <button className="mood-1" onClick={() => this.props.submitValue("Sad")} />
-        <button className="mood-2" onClick={() => this.props.submitValue("A Little Sad")} />
-        <button className="mood-3" onClick={() => this.props.submitValue("Neutral")} />
-        <button className="mood-4" onClick={() => this.props.submitValue("A Little Happy")} />
-        <button className="mood-5" onClick={() => this.props.submitValue("Happy")} />
+        <button className="mood-1" onClick={() => this.props.submitValue(1)} />
+        <button className="mood-2" onClick={() => this.props.submitValue(2)} />
+        <button className="mood-3" onClick={() => this.props.submitValue(3)} />
+        <button className="mood-4" onClick={() => this.props.submitValue(4)} />
+        <button className="mood-5" onClick={() => this.props.submitValue(5)} />
       </div>
     );
   }
@@ -41,7 +41,6 @@ class SliderWidget extends Component {
 
   handleSliderChange = (event) => {
     this.setState({ slider_value: event.target.value });
-    let string_slider_value = event.target.value.toString();
   };
 
   render() {
@@ -94,7 +93,7 @@ class Widget extends Component {
       name: this.props.name,
       value: val,
     };
-    post("/api/day/widget", params).then((data) => console.log("submitted " + data));
+    post("/api/day/widget", params);
   };
 
   render() {

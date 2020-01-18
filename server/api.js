@@ -98,12 +98,12 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-router.post("/day/widget", (req, res) => {
+router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
   const dayQuery = {
     creator: req.user._id,
-    day: req.query.day,
-    month: req.query.month,
-    year: req.query.year,
+    day: req.body.day,
+    month: req.body.month,
+    year: req.body.year,
   };
 
   // find the corresponding day
@@ -115,8 +115,8 @@ router.post("/day/widget", (req, res) => {
         // once found, update the value and send back
         if (data.name === req.body.name) {
           data.value = req.body.value;
-          data.save().then((newWidget) => {
-            res.send(newWidget.value);
+          data.save().then((updatedWidget) => {
+            res.send(updatedWidget.value);
           });
         }
       });

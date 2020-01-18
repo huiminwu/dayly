@@ -23,7 +23,7 @@ const WIDGET_LIST = [
     type: "SliderWidget",
   },
   {
-    name: "Go to the gym",
+    name: "Pset",
     type: "BinaryWidget",
   },
 ];
