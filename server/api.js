@@ -58,32 +58,40 @@ router.post("/initsocket", (req, res) => {
 //   });
 // });
 
+// creates new Day if it doesn't already exist
 router.post("/day", (req, res) => {
   let widgetList;
 
-  // check if day already exists, if not, do nothing
-  User.findById(req.user._id)
-    .then((user) => (widgetList = user.widgetList))
-    .then(() => {
-      console.log(widgetList);
-      let widgetObjs = widgetList.map((widget) => {
-        newWidget = new Widget({
-          name: widget.name,
-          type: widget.widgetType,
-          value: "",
+  Day.find({
+    creator: req.user._id,
+    day: req.body.day,
+    month: req.body.month,
+    year: req.body.year,
+  }).then((days) => {
+    if (days.length === 0) {
+      User.findById(req.user._id)
+        .then((user) => (widgetList = user.widgetList))
+        .then(() => {
+          let widgetObjs = widgetList.map((widget) => {
+            newWidget = new Widget({
+              name: widget.name,
+              type: widget.widgetType,
+              value: "",
+            });
+            newWidget.save().then((widget) => console.log(widget));
+            return newWidget;
+          });
+          const newDay = new Day({
+            creator: req.user._id,
+            day: req.body.day,
+            month: req.body.month,
+            year: req.body.year,
+            widgets: widgetObjs.map((widget) => widget._id),
+          });
+          newDay.save().then((data) => res.send(data));
         });
-        newWidget.save().then((widget) => console.log(widget));
-        return newWidget;
-      });
-      const newDay = new Day({
-        creator: req.user._id,
-        day: req.body.day,
-        month: req.body.month,
-        year: req.body.year,
-        widgets: widgetObjs.map((widget) => widget._id),
-      });
-      newDay.save().then((data) => res.send(data));
-    });
+    }
+  });
 });
 
 router.post("/day/widget", (req, res) => {
