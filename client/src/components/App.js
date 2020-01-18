@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Daily from "./pages/Daily.js";
+import Monthly from "./pages/Monthly.js";
+import Navbar from "./modules/Navbar.js";
 
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
-import Navbar from "./modules/Navbar.js";
 
 const moment = require("moment");
 moment().format("dddd, MMMM DD YYYY");
@@ -125,6 +126,9 @@ class App extends Component {
             day={this.state.day}
             handleBackClick={() => this.handleBackClick("day")}
             handleNextClick={() => this.handleNextClick("day")}
+          />
+          <Monthly
+            path="/month"
           />
           <NotFound default />
         </Router>
