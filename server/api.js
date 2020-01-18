@@ -74,7 +74,7 @@ router.post("/initsocket", (req, res) => {
 // }).then(function(value) {
 //   day.save().then((day) => {
 //     console.log("Day Logged"),
-//     d = Day.findOne().populate("creator").then((day) => console.log(day)),
+//     d = Day.findOne({name = req.user.name}).populate("creator").then((day) => console.log(day)),
 //     w = Day.findOne().populate("widget").then((day) => console.log(day))
 //   })
 // });
