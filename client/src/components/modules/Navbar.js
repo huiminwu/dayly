@@ -37,7 +37,7 @@ class Navbar extends Component {
                 {/* hardcoded logo for now */}
                 <span className="Navbar-company"> day.ly </span>
                 <div className="Navbar-opts">
-                {this.props.userId ? (
+                {this.props.creator ? (
                     <>
                         <Link className="Navbar-opts_link" to="/day">
                             Daily

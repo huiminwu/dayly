@@ -81,23 +81,24 @@ class Widget extends Component {
         // TODO: get values already stored from API endpoint and setState
     }
     
-    submitValue(value, name) {
+    submitValue = (val) => {
         const params = {
             creator: this.props.creator,
             day: this.props.day,
             month: this.props.month,
             year: this.props.year, 
+            name: this.props.name,
+            value: val,
         }
-        post("/api/day/widget")
-        console.log("submitted " + value);
+        post("/api/day/widget", params).then((data) => console.log("submitted " + data));
     }
 
     render() {
         return (
             <>
-               {this.props.type === "BinaryWidget" && <BinaryWidget name={this.props.name} submitValue={this.submitValue} />} 
-               {this.props.type === "ColorWidget" && <ColorWidget name={this.props.name} submitValue={this.submitValue} />} 
-               {this.props.type === "SliderWidget" && <SliderWidget name={this.props.name} submitValue={this.submitValue} />} 
+               {this.props.type === "BinaryWidget" && <BinaryWidget name={this.props.name} creator={this.props.creator} submitValue={this.submitValue} />} 
+               {this.props.type === "ColorWidget" && <ColorWidget name={this.props.name} creator={this.props.creator} submitValue={this.submitValue} />} 
+               {this.props.type === "SliderWidget" && <SliderWidget name={this.props.name} creator={this.props.creator} submitValue={this.submitValue} />} 
             </>
         );
     }

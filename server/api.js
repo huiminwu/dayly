@@ -104,8 +104,7 @@ router.post("/day/widget", (req, res) => {
 //     date: "19",
 //     month: "3",
 //     year: "2020",
-//     widget: widget._id,
-//     // widget: {type: ObjectId, ref: "widget"},
+//     // widget: [{type: ObjectId, ref: "widget"}],
 //     notes: "yeet the spagheet",
 //   })
 // }).then(function(value) {

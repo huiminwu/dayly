@@ -7,6 +7,7 @@ import Widget from "../modules/Widget.js";
  * Daily is a component for displaying the daily view
  *
  * Proptypes
+ * @param {ObjectId} creator
  * @param {Number} date 
  * @param {Number} month 
  * @param {Number} year
@@ -22,7 +23,7 @@ class Daily extends Component {
 
     render() {
         const widgets = this.props.widgetlist.map((widget) => (
-            <Widget name={widget.name} type={widget.type} value="" />
+            <Widget creator={this.props.creator} name={widget.name} type={widget.type} value="" />
         ));
 
         return (

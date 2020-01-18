@@ -44,7 +44,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: undefined,
+      creator: undefined,
       year: moment().year(),
       month: moment().month(),
       day: moment().date(),
@@ -57,7 +57,7 @@ class App extends Component {
     
       // they are registed in the database, and currently logged in.
       if (user._id) {
-        this.setState({ userId: user._id });
+        this.setState({ creator: user._id });
     }
     // TODO: get widget list from db.
     // ideally returns this sorted alphabetically by type!!
@@ -65,10 +65,9 @@ class App extends Component {
   }
 
   handleLogin = (res) => {
-    console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
-      this.setState({ userId: user._id });
+      this.setState({ creator: user._id });
       return post("/api/initsocket", { socketid: socket.id });
     }).then(() => {
       navigate('/day');
@@ -76,7 +75,7 @@ class App extends Component {
   };
 
   handleLogout = () => {
-    this.setState({ userId: undefined });
+    this.setState({ creator: undefined });
     post("/api/logout").then(() => {
       navigate('/');
     });
@@ -136,17 +135,18 @@ class App extends Component {
     return (
       <>
         <Navbar 
-          userId={this.state.userId}
+          creator={this.state.creator}
           handleLogin={this.handleLogin}
           handleLogout={this.handleLogout}
         />
         <Router>
           <Landing
             path="/"
-            userId={this.state.userId}
+            creator={this.state.creator}
           />
           <Daily 
             path="/day" 
+            creator={this.state.creator}
             year={this.state.year}
             month={this.state.month}
             day={this.state.day}
