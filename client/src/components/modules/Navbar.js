@@ -31,14 +31,14 @@ class Navbar extends Component {
                 {/* hardcoded logo for now */}
                 <span className="Navbar-company"> day.ly </span>
                 <div className="Navbar-opts">
-                    <Link className="Navbar-opts_link" to="/day">
-                        Daily
-                    </Link>
-                    <Link className="Navbar-opts_link" to="/month">
-                        Monthly
-                    </Link>
-                    {console.log("hello")}
-                    {this.props.userId ? (
+                {this.props.userId ? (
+                    <>
+                        <Link className="Navbar-opts_link" to="/day">
+                            Daily
+                        </Link>
+                        <Link className="Navbar-opts_link" to="/month">
+                            Monthly
+                        </Link>
                         <GoogleLogout
                             className="Navbar-opts_login"
                             clientId={GOOGLE_CLIENT_ID}
@@ -46,6 +46,7 @@ class Navbar extends Component {
                             onLogoutSuccess={this.props.handleLogout}
                             onFailure={(err) => console.log(err)}
                         />
+                    </>
                     ) : (
                         <GoogleLogin
                             className="Navbar-opts_login"
