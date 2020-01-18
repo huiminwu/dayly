@@ -3,8 +3,6 @@ import Header from "../modules/Header.js";
 import Notebook from "../modules/Notebook.js";
 import Widget from "../modules/Widget.js";
 
-import { get, post } from "../../utilities.js";
-
 /**
  * Daily is a component for displaying the daily view
  *
@@ -23,15 +21,7 @@ class Daily extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    const params = {
-      creator: this.props.creator,
-      day: this.props.day,
-      month: this.props.month,
-      year: this.props.year,
-    };
-    post("/api/day", params).then((day) => console.log(day));
-  }
+  componentDidMount() {}
 
   render() {
     const widgets = this.props.widgetlist.map((widget) => (
