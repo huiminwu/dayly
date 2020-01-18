@@ -116,7 +116,7 @@ router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
         if (data.name === req.body.name) {
           data.value = req.body.value;
           data.save().then((newWidget) => {
-            res.send(newWidget);
+            res.send(newWidget.value);
           });
         }
       });
