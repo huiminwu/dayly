@@ -32,11 +32,14 @@ class Monthly extends Component {
   componentDidMount() {}
 
   render() {
-    const widget_buttons = this.props.widgetlist.map((widget, k) => (
-      <button key={k} type="button" onClick={() => this.handleWidgetSelect(widget.name)}>
-        {widget.name}
-      </button>
-    ));
+    let widget_buttons = "Loading...";
+    if (this.props.widgetlist) {
+      widget_buttons = this.props.widgetlist.map((widget, k) => (
+        <button key={k} type="button" onClick={() => this.handleWidgetSelect(widget.name)}>
+          {widget.name}
+        </button>
+      ));
+    }
 
     return (
       <>

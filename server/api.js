@@ -98,6 +98,8 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+// updates the value of widget
+// when a new day is created, every widget is also created with a null value
 router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
   const dayQuery = {
     creator: req.user._id,
@@ -123,6 +125,7 @@ router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
     });
   });
 });
+
 // Promise.all(š
 //   user = new User({
 //     name: "yo",

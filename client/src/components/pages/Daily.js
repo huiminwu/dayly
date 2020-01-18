@@ -24,18 +24,21 @@ class Daily extends Component {
   componentDidMount() {}
 
   render() {
-    const widgets = this.props.widgetlist.map((widget, k) => (
-      <Widget
-        key={k}
-        creator={this.props.creator}
-        name={widget.name}
-        type={widget.widgetType}
-        value=""
-        day={this.props.day}
-        month={this.props.month}
-        year={this.props.year}
-      />
-    ));
+    let widgets = "Loading...";
+    if (this.props.widgetlist) {
+      widgets = this.props.widgetlist.map((widget, k) => (
+        <Widget
+          key={k}
+          creator={this.props.creator}
+          name={widget.name}
+          type={widget.widgetType}
+          value=""
+          day={this.props.day}
+          month={this.props.month}
+          year={this.props.year}
+        />
+      ));
+    }
 
     return (
       <>

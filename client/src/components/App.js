@@ -35,12 +35,24 @@ class App extends Component {
 
   async componentDidMount() {
     const user = await get("/api/whoami");
-
-    // they are registed in the database, and currently logged in.
+    console.log("logged in already");
+    console.log(user);
+    // they are registered in the database, and currently logged in.
     if (user._id) {
       this.setState({
         creator: user._id,
         widgetlist: user.widgetList,
+      });
+
+      const query = {
+        day: this.state.day,
+        month: this.state.month,
+        year: this.state.year,
+      };
+
+      const dayData = await get("/api/day", query);
+      this.setState({
+        data: dayData,
       });
     }
   }
@@ -49,6 +61,8 @@ class App extends Component {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken })
       .then((user) => {
+        console.log("logging in");
+        console.log(user);
         this.setState({
           creator: user._id,
           widgetlist: user.widgetList,
