@@ -34,7 +34,7 @@ class SliderWidget extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      slider_value: 0,
+      slider_value: props.value,
       // this should probably be replaced with the this.props.storedvalue or something like that
     };
   }
@@ -72,13 +72,12 @@ class SliderWidget extends Component {
  * @param {number} year
  * @param {string} name of widget
  * @param {string} type of widget
- * @param {string} value of widget
+ * @param {string} placeholder of widget
  **/
 class Widget extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    // TODO: this.state contains an empty array of the values already stored
   }
 
   componentDidMount() {
