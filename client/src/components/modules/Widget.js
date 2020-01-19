@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { get, post } from "../../utilities.js";
+import "./Widget.css";
 
 class BinaryWidget extends Component {
   render() {
@@ -14,13 +15,21 @@ class BinaryWidget extends Component {
 }
 
 class ColorWidget extends Component {
-  // TODO: use CSS to display different colors of mood
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.value,
+    };
+  }
   render() {
-    // the five values submitted to backend
+    // dyanmically produce buttons
     const colorValues = [1, 2, 3, 4, 5];
-
     const colorButtons = colorValues.map((val, k) => (
-      <button key={k} className={`mood-${val}`} onClick={() => this.props.submitValue(val)} />
+      <button
+        key={k}
+        className={`mood-${val} ${val === parseInt(this.state.value) ? "submitted-val" : ""}`}
+        onClick={() => this.props.submitValue(val)}
+      />
     ));
 
     return (
