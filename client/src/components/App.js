@@ -20,6 +20,12 @@ const moment = require("moment");
 moment().format("dddd, MMMM DD YYYY");
 moment().local();
 
+class Loading extends Component {
+  render() {
+    return <div>Loading...</div>;
+  }
+}
+
 /**
  * Define the "App" component as a class.
  */
@@ -33,6 +39,7 @@ class App extends Component {
       month: moment().month(),
       day: moment().date(),
       widgetlist: null,
+      widgetId: null,
       data: null,
     };
   }
@@ -57,7 +64,10 @@ class App extends Component {
       const dayData = await get("/api/day", query);
       this.setState({
         data: dayData,
+        widgetId: dayData.widgets,
       });
+      console.log("componentDidMount app");
+      console.log(this.state.widgetId);
     }
   }
 
@@ -91,6 +101,7 @@ class App extends Component {
         if (day) {
           this.setState({
             data: day,
+            widgetId: day.widgets,
           });
         } else {
           // Otherwise, retrieve the existing data
@@ -103,6 +114,7 @@ class App extends Component {
           const dayData = await get("/api/day", query);
           this.setState({
             data: dayData,
+            widgetId: dayData.widgets,
           });
         }
       });
@@ -158,6 +170,8 @@ class App extends Component {
   }
 
   render() {
+    console.log("render app");
+    console.log(this.state.widgetId);
     return (
       <>
         <Navbar
@@ -167,16 +181,21 @@ class App extends Component {
         />
         <Router>
           <Landing path="/" creator={this.state.creator} />
-          <Daily
-            path="/day"
-            creator={this.state.creator}
-            year={this.state.year}
-            month={this.state.month}
-            day={this.state.day}
-            widgetlist={this.state.widgetlist}
-            handleBackClick={() => this.handleBackClick("day")}
-            handleNextClick={() => this.handleNextClick("day")}
-          />
+          {this.state.widgetId ? (
+            <Daily
+              path="/day"
+              creator={this.state.creator}
+              year={this.state.year}
+              month={this.state.month}
+              day={this.state.day}
+              widgetlist={this.state.widgetlist}
+              widgetId={this.state.widgetId}
+              handleBackClick={() => this.handleBackClick("day")}
+              handleNextClick={() => this.handleNextClick("day")}
+            />
+          ) : (
+            <Loading path="/day" />
+          )}
           <Monthly
             path="/month"
             creator={this.state.creator}

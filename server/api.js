@@ -98,6 +98,31 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+router.get("/day/widget", (req, res) => {
+  const widgetIdList = JSON.parse(req.query.widgetId);
+  console.log(widgetIdList);
+
+  Widget.find({ _id: { $in: widgetIdList } }).then((data) => {
+    res.send(data);
+  });
+
+  // let allWidgetValues = [];
+  // const widgetIdList = JSON.parse(req.query.widgetId);
+  // Promise.all([
+  //   widgetIdList.forEach((id) => {
+  //     Widget.findById(id).then((data) => {
+  //       console.log("found widget");
+  //       console.log(data.name);
+  //       allWidgetValues.push(data.value);
+  //     });
+  //   }),
+  // ]).then((smth) => {
+  //   console.log(`i am smth ${smth}`);
+  //   console.log(allWidgetValues);
+  //   res.send(allWidgetValues);
+  // });
+});
+
 // updates the value of widget
 // when a new day is created, every widget is also created with a null value
 router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
@@ -126,7 +151,7 @@ router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-// Promise.all(š
+// Promise.all(
 //   user = new User({
 //     name: "yo",
 //     googleid: "39999f3f3g32"

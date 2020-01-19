@@ -77,6 +77,7 @@ class SliderWidget extends Component {
 class Widget extends Component {
   constructor(props) {
     super(props);
+    this.state = {};
     // TODO: this.state contains an empty array of the values already stored
   }
 
@@ -104,6 +105,7 @@ class Widget extends Component {
             name={this.props.name}
             creator={this.props.creator}
             submitValue={this.submitValue}
+            value={this.props.value}
           />
         )}
         {this.props.type === "ColorWidget" && (
@@ -111,6 +113,7 @@ class Widget extends Component {
             name={this.props.name}
             creator={this.props.creator}
             submitValue={this.submitValue}
+            value={this.props.value}
           />
         )}
         {this.props.type === "SliderWidget" && (
@@ -118,6 +121,7 @@ class Widget extends Component {
             name={this.props.name}
             creator={this.props.creator}
             submitValue={this.submitValue}
+            value={this.props.value}
           />
         )}
       </>
