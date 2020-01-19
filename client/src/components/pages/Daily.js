@@ -26,7 +26,6 @@ class Daily extends Component {
     super(props);
     this.state = {
       widgetValues: null,
-      notes: null,
     };
   }
 
