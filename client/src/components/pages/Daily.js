@@ -36,8 +36,6 @@ class Daily extends Component {
         widgetArray.forEach((widget) => {
           widgetValues[widget.name] = widget.value;
         });
-        console.log(`these are ${widgetValues}`);
-        console.log(`should be a value ${widgetValues["Mood"]}`);
         this.setState({ widgetValues: widgetValues });
       }
     );
