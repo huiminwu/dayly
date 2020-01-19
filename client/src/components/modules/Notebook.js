@@ -1,22 +1,30 @@
 import React, { Component } from "react";
 import "./Notebook.css";
 
-import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
+import { post } from "../../utilities.js";
+
+import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from "draft-js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Notebook extends Component {
   constructor(props) {
     super(props);
-    //TODO: this.state with the text empty for now
     this.state = {
       editorState: EditorState.createEmpty(),
     };
-    this.onChange = (editorState) => this.setState({ editorState });
   }
 
   componentDidMount() {
-    // TODO: dump the already saved stuff in editorState?
+    if (this.props.notes) {
+      const contentStateParsed = JSON.parse(this.props.notes);
+      const convertedContentState = convertFromRaw(contentStateParsed);
+      this.setState({
+        editorState: EditorState.createWithContent(convertedContentState),
+      });
+    }
   }
+
+  onChange = (editorState) => this.setState({ editorState });
 
   _onBoldClick() {
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, "BOLD"));
@@ -31,10 +39,19 @@ class Notebook extends Component {
   }
 
   handleSubmit(editorState) {
-    // TODO: post to API
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const contentStateString = JSON.stringify(rawContentState);
-    console.log(contentStateString);
+    const params = {
+      creator: this.props.creator,
+      day: this.props.day,
+      month: this.props.month,
+      year: this.props.year,
+      notes: contentStateString,
+    };
+    post("/api/day/notes", params).then((notes) => {
+      const convertedContentState = convertFromRaw(notes);
+      this.setState({ editorState: EditorState.createWithContent(convertedContentState) });
+    });
   }
 
   render() {
