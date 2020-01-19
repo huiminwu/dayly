@@ -3,12 +3,37 @@ import { get, post } from "../../utilities.js";
 import "./Widget.css";
 
 class BinaryWidget extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.value,
+    };
+  }
+
+  // submits and updates value
+  handleOnClick = (val) => {
+    this.setState({
+      value: val,
+    });
+    this.props.submitValue(val);
+  };
+
   render() {
     return (
       <div>
         <h3>{this.props.name}</h3>
-        <button onClick={() => this.props.submitValue(1)}>Yes</button>
-        <button onClick={() => this.props.submitValue(0)}>No</button>
+        <button
+          className={`yes-btn ${parseInt(this.state.value) === 1 ? "submitted-val" : ""}`}
+          onClick={() => this.handleOnClick(1)}
+        >
+          Yes
+        </button>
+        <button
+          className={`no-btn ${parseInt(this.state.value) === 0 ? "submitted-val" : ""}`}
+          onClick={() => this.handleOnClick(0)}
+        >
+          No
+        </button>
       </div>
     );
   }
@@ -22,6 +47,7 @@ class ColorWidget extends Component {
     };
   }
 
+  // submits and updates value
   handleOnClick = (val) => {
     this.setState({
       value: val,
