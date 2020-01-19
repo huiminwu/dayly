@@ -105,22 +105,6 @@ router.get("/day/widget", (req, res) => {
   Widget.find({ _id: { $in: widgetIdList } }).then((data) => {
     res.send(data);
   });
-
-  // let allWidgetValues = [];
-  // const widgetIdList = JSON.parse(req.query.widgetId);
-  // Promise.all([
-  //   widgetIdList.forEach((id) => {
-  //     Widget.findById(id).then((data) => {
-  //       console.log("found widget");
-  //       console.log(data.name);
-  //       allWidgetValues.push(data.value);
-  //     });
-  //   }),
-  // ]).then((smth) => {
-  //   console.log(`i am smth ${smth}`);
-  //   console.log(allWidgetValues);
-  //   res.send(allWidgetValues);
-  // });
 });
 
 // updates the value of widget

@@ -39,7 +39,6 @@ class App extends Component {
       month: moment().month(),
       day: moment().date(),
       widgetlist: null,
-      widgetId: null,
       data: null,
       notes: null,
     };
@@ -65,11 +64,7 @@ class App extends Component {
       const dayData = await get("/api/day", query);
       this.setState({
         data: dayData,
-        widgetId: dayData.widgets,
-        notes: dayData.notes,
       });
-      console.log("componentDidMount app");
-      console.log(this.state.widgetId);
     }
   }
 
@@ -103,8 +98,6 @@ class App extends Component {
         if (day) {
           this.setState({
             data: day,
-            widgetId: day.widgets,
-            notes: day.notes,
           });
         } else {
           // Otherwise, retrieve the existing data
@@ -117,8 +110,6 @@ class App extends Component {
           const dayData = await get("/api/day", query);
           this.setState({
             data: dayData,
-            widgetId: dayData.widgets,
-            notes: dayData.notes,
           });
         }
       });
@@ -174,8 +165,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("render app");
-    console.log(this.state.widgetId);
     return (
       <>
         <Navbar
@@ -185,16 +174,14 @@ class App extends Component {
         />
         <Router>
           <Landing path="/" creator={this.state.creator} />
-          {this.state.widgetId ? (
+          {this.state.data ? (
             <Daily
               path="/day"
               creator={this.state.creator}
               year={this.state.year}
               month={this.state.month}
               day={this.state.day}
-              widgetlist={this.state.widgetlist}
-              widgetId={this.state.widgetId}
-              notes={this.state.notes}
+              data={this.state.data}
               handleBackClick={() => this.handleBackClick("day")}
               handleNextClick={() => this.handleNextClick("day")}
             />
