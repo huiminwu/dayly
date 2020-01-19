@@ -16,25 +16,6 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBold, faItalic, faUnderline } from "@fortawesome/free-solid-svg-icons";
 library.add(faBold, faItalic, faUnderline);
 
-// Hardcoded list of widgets to display for the user
-const WIDGET_LIST = [
-  {
-    name: "Mood",
-    type: "ColorWidget",
-    value: "",
-  },
-  {
-    name: "Sleep",
-    type: "SliderWidget",
-    value: "",
-  },
-  {
-    name: "Go to the gym",
-    type: "BinaryWidget",
-    value: "",
-  },
-];
-
 const moment = require("moment");
 moment().format("dddd, MMMM DD YYYY");
 moment().local();
@@ -47,40 +28,88 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: undefined,
+      creator: undefined,
       year: moment().year(),
       month: moment().month(),
       day: moment().date(),
-      widgetlist: WIDGET_LIST,
+      widgetlist: null,
+      data: null,
     };
   }
 
   async componentDidMount() {
-    const user = await get("/api/whoami").then((user) => {
-      // they are registed in the database, and currently logged in.
-      if (user._id) {
-        this.setState({ userId: user._id });
-      }
-      // TODO: get widget list from db.
-      // ideally returns this sorted alphabetically by type!!
-    });
+    const user = await get("/api/whoami");
+    console.log("logged in already");
+    console.log(user);
+    // they are registered in the database, and currently logged in.
+    if (user._id) {
+      this.setState({
+        creator: user._id,
+        widgetlist: user.widgetList,
+      });
+
+      const query = {
+        day: this.state.day,
+        month: this.state.month,
+        year: this.state.year,
+      };
+
+      const dayData = await get("/api/day", query);
+      this.setState({
+        data: dayData,
+      });
+    }
   }
 
   handleLogin = (res) => {
-    console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken })
       .then((user) => {
-        this.setState({ userId: user._id });
+        console.log("logging in");
+        console.log(user);
+        this.setState({
+          creator: user._id,
+          widgetlist: user.widgetList,
+        });
         return post("/api/initsocket", { socketid: socket.id });
       })
       .then(() => {
         navigate("/day");
+      })
+      .then(async () => {
+        // After logging in,
+        // Create a new Day collection if it does not exist
+        const params = {
+          day: this.state.day,
+          month: this.state.month,
+          year: this.state.year,
+        };
+
+        const day = await post("/api/day", params);
+
+        // If created, set data to the resulting instance
+        if (day) {
+          this.setState({
+            data: day,
+          });
+        } else {
+          // Otherwise, retrieve the existing data
+          const query = {
+            day: this.state.day,
+            month: this.state.month,
+            year: this.state.year,
+          };
+
+          const dayData = await get("/api/day", query);
+          this.setState({
+            data: dayData,
+          });
+        }
       });
   };
 
   handleLogout = () => {
-    this.setState({ userId: undefined });
+    this.setState({ creator: undefined });
     post("/api/logout").then(() => {
       navigate("/");
     });
@@ -132,14 +161,15 @@ class App extends Component {
     return (
       <>
         <Navbar
-          userId={this.state.userId}
+          creator={this.state.creator}
           handleLogin={this.handleLogin}
           handleLogout={this.handleLogout}
         />
         <Router>
-          <Landing path="/" userId={this.state.userId} />
+          <Landing path="/" creator={this.state.creator} />
           <Daily
             path="/day"
+            creator={this.state.creator}
             year={this.state.year}
             month={this.state.month}
             day={this.state.day}
@@ -149,6 +179,8 @@ class App extends Component {
           />
           <Monthly
             path="/month"
+            creator={this.state.creator}
+            day={this.state.day}
             year={this.state.year}
             month={this.state.month}
             widgetlist={this.state.widgetlist}

@@ -3,12 +3,15 @@ import Header from "../modules/Header.js";
 import Notebook from "../modules/Notebook.js";
 import Widget from "../modules/Widget.js";
 
+import "./Daily.css";
+
 /**
  * Daily is a component for displaying the daily view
  *
  * Proptypes
- * @param {Number} date 
- * @param {Number} month 
+ * @param {ObjectId} creator
+ * @param {Number} date
+ * @param {Number} month
  * @param {Number} year
  * @param {Array} widgetlist
  * @param {func} handleBackClick that offsets -1 by either date or month
@@ -16,32 +19,45 @@ import Widget from "../modules/Widget.js";
  **/
 
 class Daily extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {}
+
+  render() {
+    let widgets = "Loading...";
+    if (this.props.widgetlist) {
+      widgets = this.props.widgetlist.map((widget, k) => (
+        <Widget
+          key={k}
+          creator={this.props.creator}
+          name={widget.name}
+          type={widget.widgetType}
+          value=""
+          day={this.props.day}
+          month={this.props.month}
+          year={this.props.year}
+        />
+      ));
     }
 
-    render() {
-        const widgets = this.props.widgetlist.map((widget) => (
-            <Widget name={widget.name} type={widget.type} value="" />
-        ));
+    return (
+      <div className="journal-container">
+        <Header
+          year={this.props.year}
+          month={this.props.month}
+          day={this.props.day}
+          view={"day"}
+          handleBackClick={this.props.handleBackClick}
+          handleNextClick={this.props.handleNextClick}
+        />
 
-        return (
-            <>
-            <Header
-                year={this.props.year}
-                month={this.props.month}
-                day={this.props.day}
-                view={"day"}
-                handleBackClick={this.props.handleBackClick}
-                handleNextClick={this.props.handleNextClick}
-            />
-            <div className="widget-container"> 
-                {widgets}
-            </div>
-            <Notebook />
-            </>
-        );
-    }
+        <div className="widget-container">{widgets}</div>
+        <Notebook />
+      </div>
+    );
+  }
 }
 
 export default Daily;

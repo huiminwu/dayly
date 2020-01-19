@@ -46,7 +46,87 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-// Promise.all([
+router.get("/day", (req, res) => {
+  Day.findOne({
+    creator: req.user._id,
+    day: req.query.day,
+    month: req.query.month,
+    year: req.query.year,
+  }).then((day) => {
+    console.log(day);
+    res.send(day);
+  });
+});
+
+// creates new Day if it doesn't already exist
+router.post("/day", auth.ensureLoggedIn, (req, res) => {
+  let widgetList;
+
+  Day.find({
+    creator: req.user._id,
+    day: req.body.day,
+    month: req.body.month,
+    year: req.body.year,
+  }).then((days) => {
+    if (days.length === 0) {
+      User.findById(req.user._id)
+        .then((user) => (widgetList = user.widgetList))
+        .then(() => {
+          let widgetObjs = widgetList.map((widget) => {
+            newWidget = new Widget({
+              name: widget.name,
+              type: widget.widgetType,
+              value: "",
+            });
+            newWidget.save();
+            return newWidget;
+          });
+          const newDay = new Day({
+            creator: req.user._id,
+            day: req.body.day,
+            month: req.body.month,
+            year: req.body.year,
+            widgets: widgetObjs.map((widget) => widget._id),
+          });
+          newDay.save().then((data) => {
+            res.send(data);
+          });
+        });
+    } else {
+      res.send(false);
+    }
+  });
+});
+
+// updates the value of widget
+// when a new day is created, every widget is also created with a null value
+router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
+  const dayQuery = {
+    creator: req.user._id,
+    day: req.body.day,
+    month: req.body.month,
+    year: req.body.year,
+  };
+
+  // find the corresponding day
+  Day.findOne(dayQuery).then((day) => {
+    // for each widget, find it in the db
+    // and check if it matches the target name
+    day.widgets.forEach((el) => {
+      Widget.findById(el).then((data) => {
+        // once found, update the value and send back
+        if (data.name === req.body.name) {
+          data.value = req.body.value;
+          data.save().then((updatedWidget) => {
+            res.send(updatedWidget.value);
+          });
+        }
+      });
+    });
+  });
+});
+
+// Promise.all(š
 //   user = new User({
 //     name: "yo",
 //     googleid: "39999f3f3g32"
@@ -67,8 +147,7 @@ router.post("/initsocket", (req, res) => {
 //     date: "19",
 //     month: "3",
 //     year: "2020",
-//     widget: widget._id,
-//     // widget: {type: ObjectId, ref: "widget"},
+//     // widget: [{type: ObjectId, ref: "widget"}],
 //     notes: "yeet the spagheet",
 //   })
 // }).then(function(value) {

@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const DaySchema = new mongoose.Schema({
-	creator: {type: ObjectId, ref: "user"},
-  date: Number,
+  creator: { type: ObjectId, ref: "user" },
+  day: Number,
   month: Number,
   year: Number,
-  widget: {type: ObjectId, ref: "widget"},
-  notes: String,
+  widgets: [{ type: ObjectId, ref: "widget" }],
+  notes: { type: String, default: "" },
 });
 
 // compile model from schema
