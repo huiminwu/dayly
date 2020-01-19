@@ -41,6 +41,7 @@ class App extends Component {
       widgetlist: null,
       widgetId: null,
       data: null,
+      notes: null,
     };
   }
 
@@ -65,6 +66,7 @@ class App extends Component {
       this.setState({
         data: dayData,
         widgetId: dayData.widgets,
+        notes: dayData.notes,
       });
       console.log("componentDidMount app");
       console.log(this.state.widgetId);
@@ -102,6 +104,7 @@ class App extends Component {
           this.setState({
             data: day,
             widgetId: day.widgets,
+            notes: day.notes,
           });
         } else {
           // Otherwise, retrieve the existing data
@@ -115,6 +118,7 @@ class App extends Component {
           this.setState({
             data: dayData,
             widgetId: dayData.widgets,
+            notes: dayData.notes,
           });
         }
       });
@@ -190,6 +194,7 @@ class App extends Component {
               day={this.state.day}
               widgetlist={this.state.widgetlist}
               widgetId={this.state.widgetId}
+              notes={this.state.notes}
               handleBackClick={() => this.handleBackClick("day")}
               handleNextClick={() => this.handleNextClick("day")}
             />

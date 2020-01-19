@@ -74,7 +74,13 @@ class Daily extends Component {
           handleNextClick={this.props.handleNextClick}
         />
         <div className="widget-container">{widgets}</div>
-        <Notebook />
+        <Notebook
+          creator={this.props.creator}
+          day={this.props.day}
+          month={this.props.month}
+          year={this.props.year}
+          notes={this.props.notes}
+        />
       </div>
     );
   }

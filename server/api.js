@@ -151,6 +151,37 @@ router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+router.get("/day/notes", (req, res) => {
+  const dayQuery = {
+    creator: req.user._id,
+    day: req.query.day,
+    month: req.query.month,
+    year: req.query.year,
+  };
+
+  // find the corresponding day, find notes
+  Day.findOne(dayQuery).then((day) => {
+    res.send(day.notes);
+  });
+});
+
+router.post("/day/notes", auth.ensureLoggedIn, (req, res) => {
+  const dayQuery = {
+    creator: req.user._id,
+    day: req.body.day,
+    month: req.body.month,
+    year: req.body.year,
+  };
+
+  // find the corresponding day, replace notes, and send back
+  Day.findOne(dayQuery).then((day) => {
+    day.notes = req.body.notes;
+    day.save().then((updatedDay) => {
+      res.send(updatedDay.notes);
+    });
+  });
+});
+
 // Promise.all(
 //   user = new User({
 //     name: "yo",

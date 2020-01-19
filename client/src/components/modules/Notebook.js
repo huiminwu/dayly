@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Notebook.css";
 
+import { post } from "../../utilities.js";
+
 import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -14,9 +16,7 @@ class Notebook extends Component {
     this.onChange = (editorState) => this.setState({ editorState });
   }
 
-  componentDidMount() {
-    // TODO: dump the already saved stuff in editorState?
-  }
+  componentDidMount() {}
 
   _onBoldClick() {
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, "BOLD"));
@@ -35,6 +35,17 @@ class Notebook extends Component {
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const contentStateString = JSON.stringify(rawContentState);
     console.log(contentStateString);
+    const params = {
+      creator: this.props.creator,
+      day: this.props.day,
+      month: this.props.month,
+      year: this.props.year,
+      notes: contentStateString,
+    };
+    post("/api/day/notes", params).then((notes) => {
+      console.log(notes);
+      // this.setState({ editorState: notes });
+    });
   }
 
   render() {
