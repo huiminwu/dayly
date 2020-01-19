@@ -53,7 +53,6 @@ router.get("/day", (req, res) => {
     month: req.query.month,
     year: req.query.year,
   }).then((day) => {
-    console.log(day);
     res.send(day);
   });
 });
@@ -100,7 +99,6 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
 
 router.get("/day/widget", (req, res) => {
   const widgetIdList = JSON.parse(req.query.widgetId);
-  console.log(widgetIdList);
 
   Widget.find({ _id: { $in: widgetIdList } }).then((data) => {
     res.send(data);
@@ -132,20 +130,6 @@ router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
         }
       });
     });
-  });
-});
-
-router.get("/day/notes", (req, res) => {
-  const dayQuery = {
-    creator: req.user._id,
-    day: req.query.day,
-    month: req.query.month,
-    year: req.query.year,
-  };
-
-  // find the corresponding day, find notes
-  Day.findOne(dayQuery).then((day) => {
-    res.send(day.notes);
   });
 });
 
