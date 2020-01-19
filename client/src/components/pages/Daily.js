@@ -24,37 +24,28 @@ import "./Daily.css";
 class Daily extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      widgetValues: null,
-    };
+    this.state = { widgetValues: null };
   }
 
   componentDidMount() {
-    let widgetValues = {};
-    get("/api/day/widget", { widgetId: JSON.stringify(this.props.widgetId) }).then(
+    get("/api/day/widget", { widgetId: JSON.stringify(this.props.data.widgets) }).then(
       (widgetArray) => {
-        widgetArray.forEach((widget) => {
-          widgetValues[widget.name] = widget.value;
-        });
-        console.log(`these are ${widgetValues}`);
-        console.log(`should be a value ${widgetValues["Mood"]}`);
-        this.setState({ widgetValues: widgetValues });
+        this.setState({ widgetValues: widgetArray });
       }
     );
   }
 
   render() {
     let widgets = "Loading...";
-    if (this.props.widgetlist && this.state.widgetValues) {
-      widgets = this.props.widgetlist.map((widget, k) => {
-        const widget_name = widget.name;
+    if (this.state.widgetValues) {
+      widgets = this.state.widgetValues.map((widget, k) => {
         return (
           <Widget
             key={k}
             creator={this.props.creator}
-            name={widget_name}
-            type={widget.widgetType}
-            value={this.state.widgetValues[widget_name]}
+            name={widget.name}
+            type={widget.type}
+            value={widget.value}
             day={this.props.day}
             month={this.props.month}
             year={this.props.year}

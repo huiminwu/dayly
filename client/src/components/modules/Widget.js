@@ -1,30 +1,75 @@
 import React, { Component } from "react";
 import { get, post } from "../../utilities.js";
+import "./Widget.css";
 
 class BinaryWidget extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.value,
+    };
+  }
+
+  // submits and updates value
+  handleOnClick = (val) => {
+    this.setState({
+      value: val,
+    });
+    this.props.submitValue(val);
+  };
+
   render() {
     return (
       <div>
         <h3>{this.props.name}</h3>
-        <button onClick={() => this.props.submitValue(1)}>Yes</button>
-        <button onClick={() => this.props.submitValue(0)}>No</button>
+        <button
+          className={`yes-btn ${parseInt(this.state.value) === 1 ? "submitted-val" : ""}`}
+          onClick={() => this.handleOnClick(1)}
+        >
+          Yes
+        </button>
+        <button
+          className={`no-btn ${parseInt(this.state.value) === 0 ? "submitted-val" : ""}`}
+          onClick={() => this.handleOnClick(0)}
+        >
+          No
+        </button>
       </div>
     );
   }
 }
 
 class ColorWidget extends Component {
-  // TODO: use CSS to display different colors of mood
-  // also replace the values submitted lol
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.value,
+    };
+  }
+
+  // submits and updates value
+  handleOnClick = (val) => {
+    this.setState({
+      value: val,
+    });
+    this.props.submitValue(val);
+  };
+
   render() {
+    // dyanmically produce buttons
+    const colorValues = [1, 2, 3, 4, 5];
+    const colorButtons = colorValues.map((val, k) => (
+      <button
+        key={k}
+        className={`mood-${val} ${val === parseInt(this.state.value) ? "submitted-val" : ""}`}
+        onClick={() => this.handleOnClick(val)}
+      />
+    ));
+
     return (
       <div>
         <h3>{this.props.name}</h3>
-        <button className="mood-1" onClick={() => this.props.submitValue(1)} />
-        <button className="mood-2" onClick={() => this.props.submitValue(2)} />
-        <button className="mood-3" onClick={() => this.props.submitValue(3)} />
-        <button className="mood-4" onClick={() => this.props.submitValue(4)} />
-        <button className="mood-5" onClick={() => this.props.submitValue(5)} />
+        {colorButtons}
       </div>
     );
   }
@@ -34,7 +79,7 @@ class SliderWidget extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      slider_value: 0,
+      slider_value: props.value,
       // this should probably be replaced with the this.props.storedvalue or something like that
     };
   }
@@ -72,13 +117,12 @@ class SliderWidget extends Component {
  * @param {number} year
  * @param {string} name of widget
  * @param {string} type of widget
- * @param {string} value of widget
+ * @param {string} placeholder of widget
  **/
 class Widget extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    // TODO: this.state contains an empty array of the values already stored
   }
 
   componentDidMount() {
