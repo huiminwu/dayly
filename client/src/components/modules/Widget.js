@@ -15,16 +15,18 @@ class BinaryWidget extends Component {
 
 class ColorWidget extends Component {
   // TODO: use CSS to display different colors of mood
-  // also replace the values submitted lol
   render() {
+    // the five values submitted to backend
+    const colorValues = [1, 2, 3, 4, 5];
+
+    const colorButtons = colorValues.map((val, k) => (
+      <button key={k} className={`mood-${val}`} onClick={() => this.props.submitValue(val)} />
+    ));
+
     return (
       <div>
         <h3>{this.props.name}</h3>
-        <button className="mood-1" onClick={() => this.props.submitValue(1)} />
-        <button className="mood-2" onClick={() => this.props.submitValue(2)} />
-        <button className="mood-3" onClick={() => this.props.submitValue(3)} />
-        <button className="mood-4" onClick={() => this.props.submitValue(4)} />
-        <button className="mood-5" onClick={() => this.props.submitValue(5)} />
+        {colorButtons}
       </div>
     );
   }
