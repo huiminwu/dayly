@@ -21,6 +21,14 @@ class ColorWidget extends Component {
       value: props.value,
     };
   }
+
+  handleOnClick = (val) => {
+    this.setState({
+      value: val,
+    });
+    this.props.submitValue(val);
+  };
+
   render() {
     // dyanmically produce buttons
     const colorValues = [1, 2, 3, 4, 5];
@@ -28,7 +36,7 @@ class ColorWidget extends Component {
       <button
         key={k}
         className={`mood-${val} ${val === parseInt(this.state.value) ? "submitted-val" : ""}`}
-        onClick={() => this.props.submitValue(val)}
+        onClick={() => this.handleOnClick(val)}
       />
     ));
 
