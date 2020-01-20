@@ -20,18 +20,39 @@ class Monthly extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayType: "none",
+      displayWidget: null,
+      widgetData: null,
     };
   }
 
-  handleWidgetSelect(type) {
+  handleWidgetSelect(name) {
     this.setState({
-      displayType: type,
+      displayWidget: name,
     });
   }
 
-  // TODO: make an api to get data for this month
-  componentDidMount() {}
+  getWidgetsForMonth() {
+    const date = this.props.dateObject.toDate();
+    const first = new Date(date.getFullYear(), date.getMonth(), 1).toISOString();
+    const last = new Date(date.getFullYear(), date.getMonth() + 1).toISOString();
+
+    get("/api/month/widgets", { firstDay: first, lastDay: last }).then((data) => {
+      this.setState({
+        widgetData: data,
+      });
+      console.log(data);
+    });
+    // get("/api/month/widgets", { month: 0 }).then((data) => {
+    //   console.log(data);
+    //   this.setState({
+    //     widgetData: data,
+    //   });
+    // });
+  }
+
+  componentDidMount() {
+    this.getWidgetsForMonth();
+  }
 
   render() {
     let widgetButtons;
@@ -54,7 +75,11 @@ class Monthly extends Component {
         {widgetButtons}
         {/* displaying type just to test code */}
         {this.state.displayType}
-        <Calendar dateObject={this.props.dateObject} />
+        <Calendar
+          displayWidget={this.state.displayWidget}
+          dateObject={this.props.dateObject}
+          widgetData={this.state.widgetData}
+        />
       </>
     );
   }

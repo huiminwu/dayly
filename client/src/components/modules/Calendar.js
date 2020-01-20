@@ -6,9 +6,6 @@ import "./Calendar.css";
 class Calendar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      //   dateObject: props.fullDate,
-    };
   }
 
   // for finding the first day of the month
@@ -51,12 +48,28 @@ class Calendar extends Component {
       blanks.push(<td className="calendar-day empty">{""}</td>);
     }
 
+    // filter widget data to selected type
+    let widgetValues = {};
+    if (this.props.widgetData && this.props.displayWidget) {
+      this.props.widgetData.forEach((widget) => {
+        if (widget.name === this.props.displayWidget) {
+          let date = Number(widget.timestamp.slice(8, 10)).toString();
+          widgetValues[date] = widget.type + "-" + widget.value;
+        }
+      });
+    }
+
     // create date cells
     let daysInMonth = [];
     for (let d = 1; d <= this.props.dateObject.daysInMonth(); d++) {
+      // if data exists for this day and selected type add as classname
+      let widgetClass = "";
+      if (widgetValues[d]) {
+        widgetClass = widgetValues[d];
+      }
       daysInMonth.push(
         <td key={d} className="calendar-day">
-          <div className="calendar-color-data"> </div>
+          <div className={"calendar-color-data " + widgetClass}> </div>
           <h1 className="calendar-number">{d}</h1>
         </td>
       );
