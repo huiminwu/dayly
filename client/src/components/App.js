@@ -35,6 +35,7 @@ class App extends Component {
     super(props);
     this.state = {
       creator: undefined,
+      dateObject: moment(),
       year: moment().year(),
       month: moment().month(),
       day: moment().date(),
@@ -132,12 +133,14 @@ class App extends Component {
         day: newDate.date(),
         month: newDate.month(),
         year: newDate.year(),
+        dateObject: this.state.dateObject.subtract(1, "day"),
       });
     } else {
       newDate = curDate.subtract(1, "month");
       this.setState({
         month: newDate.month(),
         year: newDate.year(),
+        dateObject: this.state.dateObject.subtract(1, "month"),
       });
     }
   }
@@ -153,12 +156,14 @@ class App extends Component {
         day: newDate.date(),
         month: newDate.month(),
         year: newDate.year(),
+        dateObject: this.state.dateObject.add(1, "day"),
       });
     } else {
       newDate = curDate.add(1, "month");
       this.setState({
         month: newDate.month(),
         year: newDate.year(),
+        dateObject: this.state.dateObject.add(1, "month"),
       });
     }
   }
@@ -175,7 +180,7 @@ class App extends Component {
           <Landing path="/" creator={this.state.creator} />
           {this.state.data ? (
             <Daily
-              path="/day/:year/:month/:day"
+              path="/day"
               creator={this.state.creator}
               year={this.state.year}
               month={this.state.month}
@@ -190,6 +195,7 @@ class App extends Component {
           <Monthly
             path="/month"
             creator={this.state.creator}
+            dateObject={this.state.dateObject}
             day={this.state.day}
             year={this.state.year}
             month={this.state.month}
