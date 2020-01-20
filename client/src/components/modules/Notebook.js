@@ -159,31 +159,46 @@ class Notebook extends Component {
       );
     };
 
+    let editorClassName = "RichEditor-editor";
+    var contentState = this.state.editorState.getCurrentContent();
+    if (!contentState.hasText()) {
+      if (
+        contentState
+          .getBlockMap()
+          .first()
+          .getType() !== "unstyled"
+      ) {
+        editorClassName += " RichEditor-hidePlaceholder";
+      }
+    }
+
+    let saveClassName = "editor-saveButton";
+    if (this.state.isSaved) {
+      saveClassName = "editor-saveButton-saved";
+    }
+
     return (
-      <div className="notes-sectionContainer">
-        <div className="editor-container">
-          <div className="editor-toolbar">
-            <InlineStyleControls
+      <div className="notes-section">
+        <div className="RichEditor-root">
+          <InlineStyleControls
+            editorState={this.state.editorState}
+            onToggle={this._toggleInlineStyle}
+          />
+          <BlockStyleControls
+            editorState={this.state.editorState}
+            onToggle={this._toggleBlockType}
+          />
+          <div className={editorClassName}>
+            <Editor
               editorState={this.state.editorState}
-              onToggle={this._toggleInlineStyle}
-            />
-            <BlockStyleControls
-              editorState={this.state.editorState}
-              onToggle={this._toggleBlockType}
+              onChange={this.onChange}
+              handleKeyCommand={this.handleKeyCommand}
+              placeholder="How was your day?"
             />
           </div>
-          <Editor
-            editorState={this.state.editorState}
-            onChange={this.onChange}
-            handleKeyCommand={this.handleKeyCommand}
-            placeholder="How was your day?"
-          />
         </div>
         {this.state.isSaved ? <span>All changes saved</span> : <span>Unsaved</span>}
-        <button
-          className="editor-saveButton"
-          onClick={() => this.handleSave(this.state.editorState)}
-        >
+        <button className={saveClassName} onClick={() => this.handleSave(this.state.editorState)}>
           Save
         </button>
       </div>
