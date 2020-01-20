@@ -35,9 +35,14 @@ class Notebook extends Component {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty(),
+      isSaved: true,
     };
 
-    this.onChange = (editorState) => this.setState({ editorState });
+    this.onChange = (editorState) =>
+      this.setState({
+        editorState: editorState,
+        isSaved: false,
+      });
   }
 
   componentDidMount() {
@@ -70,7 +75,10 @@ class Notebook extends Component {
     };
     post("/api/day/notes", params).then((notes) => {
       const convertedContentState = convertFromRaw(notes);
-      this.setState({ editorState: EditorState.createWithContent(convertedContentState) });
+      this.setState({
+        editorState: EditorState.createWithContent(convertedContentState),
+        isSaved: true,
+      });
     });
   }
 
@@ -147,6 +155,7 @@ class Notebook extends Component {
             placeholder="How was your day?"
           />
         </div>
+        {this.state.isSaved ? <span>All changes saved</span> : <span>Unsaved</span>}
         <button
           className="editor-saveButton"
           onClick={() => this.handleSave(this.state.editorState)}
