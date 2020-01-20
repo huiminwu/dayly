@@ -175,7 +175,7 @@ class App extends Component {
           <Landing path="/" creator={this.state.creator} />
           {this.state.data ? (
             <Daily
-              path="/day"
+              path="/day/:year/:month/:day"
               creator={this.state.creator}
               year={this.state.year}
               month={this.state.month}

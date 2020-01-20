@@ -39,7 +39,11 @@
     "react-router-dom": "^4.3.1",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
-    "url-loader": "^1.1.2"
+    "url-loader": "^1.1.2",
+    "@fullcalendar/daygrid": "~4.3.0",
+    "@fullcalendar/core": "~4.3.0",
+    "@fullcalendar/react": "4.3.0",
+    "@fullcalendar/interaction": "~4.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
