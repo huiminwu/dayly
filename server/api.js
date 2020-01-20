@@ -53,7 +53,6 @@ router.get("/day", (req, res) => {
     month: req.query.month,
     year: req.query.year,
   }).then((day) => {
-    console.log(day);
     res.send(day);
   });
 });
@@ -76,6 +75,7 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
         .then(() => {
           let widgetObjs = widgetList.map((widget) => {
             newWidget = new Widget({
+              creator: req.user._id,
               name: widget.name,
               type: widget.widgetType,
               value: "",
@@ -105,7 +105,6 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
 */
 router.get("/day/widget", (req, res) => {
   const widgetIdList = JSON.parse(req.query.widgetId);
-  console.log(widgetIdList);
 
   Widget.find({ _id: { $in: widgetIdList } }).then((data) => {
     res.send(data);
@@ -141,6 +140,45 @@ router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+/*
+  gets widgets created from a given month
+*/
+// router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
+//   Day.find({
+//     creator: req.user._id,
+//     month: req.query.month,
+//     day: { $lt: 32 },
+//   })
+//     .sort({ day: 1 })
+//     .then(async (days) => {
+//       let allWidgets = {};
+//       days.forEach(async (day) => {
+//         let data = await Widget.find({ _id: { $in: day.widgets } });
+//         allWidgets[day.day] = data;
+//       });
+//     });
+//   console.log(allWidgets);
+//   res.send(allWidgets);
+// });
+// Hah i wish :(
+/*
+ gets widgets created from [firstDay, lastDay)
+*/
+router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
+  console.log(req.query.firstDay);
+  console.log(req.query.lastDay);
+  Widget.find({
+    creator: req.user._id,
+    timestamp: {
+      $gte: req.query.firstDay,
+      $lt: req.query.lastDay,
+    },
+  })
+    .sort({ timestamp: 1 })
+    .then((widgets) => {
+      res.send(widgets);
+    });
+});
 // Promise.all(
 //   user = new User({
 //     name: "yo",
