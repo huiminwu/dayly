@@ -4,6 +4,7 @@ import "./Notebook.css";
 import { post } from "../../utilities.js";
 
 import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from "draft-js";
+import "draft-js/dist/Draft.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class StyleButton extends React.Component {
@@ -57,7 +58,7 @@ class Notebook extends Component {
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle));
   };
 
-  handleSubmit(editorState) {
+  handleSave(editorState) {
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const contentStateString = JSON.stringify(rawContentState);
     const params = {
@@ -99,7 +100,6 @@ class Notebook extends Component {
 
     const BLOCK_TYPES = [
       { label: "H1", style: "header-one" },
-      { label: "Blockquote", style: "blockquote" },
       { label: "UL", style: "unordered-list-item" },
       { label: "OL", style: "ordered-list-item" },
     ];
@@ -128,19 +128,31 @@ class Notebook extends Component {
     };
 
     return (
-      <div className="editor">
-        <InlineStyleControls
-          editorState={this.state.editorState}
-          onToggle={this._toggleInlineStyle}
-        />
-        <BlockStyleControls editorState={this.state.editorState} onToggle={this._toggleBlockType} />
-        <Editor
-          editorState={this.state.editorState}
-          onChange={this.onChange}
-          handleKeyCommand={this.handleKeyCommand}
-          placeholder="How was your day?"
-        />
-        <button onClick={() => this.handleSubmit(this.state.editorState)}>Submit</button>
+      <div className="notes-sectionContainer">
+        <div className="editor-container">
+          <div className="editor-toolbar">
+            <InlineStyleControls
+              editorState={this.state.editorState}
+              onToggle={this._toggleInlineStyle}
+            />
+            <BlockStyleControls
+              editorState={this.state.editorState}
+              onToggle={this._toggleBlockType}
+            />
+          </div>
+          <Editor
+            editorState={this.state.editorState}
+            onChange={this.onChange}
+            handleKeyCommand={this.handleKeyCommand}
+            placeholder="How was your day?"
+          />
+        </div>
+        <button
+          className="editor-saveButton"
+          onClick={() => this.handleSave(this.state.editorState)}
+        >
+          Save
+        </button>
       </div>
     );
   }

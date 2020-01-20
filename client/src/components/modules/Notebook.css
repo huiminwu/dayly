@@ -1,19 +1,36 @@
-.editor {
+.notes-sectionContainer {
+  margin: -15em 25em;
+}
+
+.editor-container {
   /* temporary CSS just so the text box is visible lol */
   height: 50vh;
   width: 50vw;
-  margin: -10em 25em;
   border: 1px solid #bcbcbc;
-  padding: 0.5em 1em;
+  padding: 1em 1em;
   color: #010101;
+  overflow: scroll;
 }
 
-.toolbar-button {
-  padding: 1em;
-  border: none;
-  background-color: none;
+.editor-toolbar {
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #bcbcbc;
+}
+
+.RichEditor-controls {
+  display: inline;
+  margin-right: 1em;
 }
 
 .RichEditor-styleButton + .RichEditor-styleButton {
-  margin: 1em;
+  margin-left: 1em;
+}
+
+.RichEditor-activeButton {
+  color: red;
+}
+
+.editor-saveButton {
+  margin-top: 2em;
 }
