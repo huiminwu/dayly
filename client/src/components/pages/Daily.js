@@ -12,9 +12,7 @@ import "./Daily.css";
  *
  * Proptypes
  * @param {ObjectId} creator
- * @param {Number} date
- * @param {Number} month
- * @param {Number} year
+ * @param {moment} dateObject
  * @param {Array} widgetlist list of widgets, part of user object
  * @param {Array} widgetId list of widget IDs, part of day object
  * @param {func} handleBackClick that offsets -1 by either date or month
@@ -46,9 +44,7 @@ class Daily extends Component {
             name={widget.name}
             type={widget.type}
             value={widget.value}
-            day={this.props.day}
-            month={this.props.month}
-            year={this.props.year}
+            dateObject={this.props.dateObject}
           />
         );
       });
@@ -57,9 +53,7 @@ class Daily extends Component {
     return (
       <div className="journal-container">
         <Header
-          year={this.props.year}
-          month={this.props.month}
-          day={this.props.day}
+          dateObject={this.props.dateObject}
           view={"day"}
           handleBackClick={this.props.handleBackClick}
           handleNextClick={this.props.handleNextClick}

@@ -46,8 +46,7 @@ class Monthly extends Component {
     return (
       <>
         <Header
-          year={this.props.year}
-          month={this.props.month}
+          dateObject={this.props.dateObject}
           view="month"
           handleBackClick={this.props.handleBackClick}
           handleNextClick={this.props.handleNextClick}
