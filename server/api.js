@@ -141,32 +141,9 @@ router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
 });
 
 /*
-  gets widgets created from a given month
-*/
-// router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
-//   Day.find({
-//     creator: req.user._id,
-//     month: req.query.month,
-//     day: { $lt: 32 },
-//   })
-//     .sort({ day: 1 })
-//     .then(async (days) => {
-//       let allWidgets = {};
-//       days.forEach(async (day) => {
-//         let data = await Widget.find({ _id: { $in: day.widgets } });
-//         allWidgets[day.day] = data;
-//       });
-//     });
-//   console.log(allWidgets);
-//   res.send(allWidgets);
-// });
-// Hah i wish :(
-/*
  gets widgets created from [firstDay, lastDay)
 */
 router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
-  console.log(req.query.firstDay);
-  console.log(req.query.lastDay);
   Widget.find({
     creator: req.user._id,
     timestamp: {
