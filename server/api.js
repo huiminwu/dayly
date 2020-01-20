@@ -58,7 +58,9 @@ router.get("/day", (req, res) => {
   });
 });
 
-// creates new Day if it doesn't already exist
+/*
+ creates new Day if it doesn't already exist
+ */
 router.post("/day", auth.ensureLoggedIn, (req, res) => {
   let widgetList;
 
@@ -98,6 +100,9 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+/*
+  gets list of wigets given widget ids
+*/
 router.get("/day/widget", (req, res) => {
   const widgetIdList = JSON.parse(req.query.widgetId);
   console.log(widgetIdList);
@@ -107,8 +112,9 @@ router.get("/day/widget", (req, res) => {
   });
 });
 
-// updates the value of widget
-// when a new day is created, every widget is also created with a null value
+/* 
+updates the value of widget
+*/
 router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
   const dayQuery = {
     creator: req.user._id,
