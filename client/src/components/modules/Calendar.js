@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import moment from "moment";
 
+import "./Calendar.css";
+
 class Calendar extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +56,8 @@ class Calendar extends Component {
     for (let d = 1; d <= this.props.dateObject.daysInMonth(); d++) {
       daysInMonth.push(
         <td key={d} className="calendar-day">
-          {d}
+          <div className="calendar-color-data"> </div>
+          <h1 className="calendar-number">{d}</h1>
         </td>
       );
     }
@@ -80,14 +83,12 @@ class Calendar extends Component {
     let daysinmonth = rows.map((d, i) => <tr>{d}</tr>);
 
     return (
-      <div>
-        <table className="calendar">
-          <thead>
-            <tr>{weekdayHeader}</tr>
-          </thead>
-          <tbody>{daysinmonth}</tbody>
-        </table>
-      </div>
+      <table className="calendar">
+        <thead>
+          <tr>{weekdayHeader}</tr>
+        </thead>
+        <tbody>{daysinmonth}</tbody>
+      </table>
     );
   }
 }

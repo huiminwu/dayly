@@ -1,0 +1,48 @@
+.calendar {
+  border-spacing: 0;
+}
+
+.calendar-day {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #696969;
+}
+
+tr:not(:first-child) > td {
+  border-top: none;
+}
+
+tr:nth-child(2) > td {
+  border: 1px solid #696969;
+}
+
+tr:not(:first-child) > td {
+  border-left: none;
+}
+
+.calendar-color-data {
+  position: absolute;
+  top: 0;
+  height: 10px;
+  width: 100%;
+  background-color: #c0c0c0;
+}
+
+h1 {
+  margin: 0;
+}
+
+.calendar-number {
+  position: absolute;
+  text-align: center;
+  top: 10px;
+  font-size: 18px;
+}
+
+.week-day {
+  background-color: #000;
+  color: white;
+}

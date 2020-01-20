@@ -36,9 +36,6 @@ class App extends Component {
     this.state = {
       creator: undefined,
       dateObject: moment(),
-      year: moment().year(),
-      month: moment().month(),
-      day: moment().date(),
       widgetlist: null,
       data: null,
     };
@@ -56,9 +53,9 @@ class App extends Component {
       });
 
       const query = {
-        day: this.state.day,
-        month: this.state.month,
-        year: this.state.year,
+        day: this.state.dateObject.date(),
+        month: this.state.dateObject.month(),
+        year: this.state.dateObject.year(),
       };
 
       const dayData = await get("/api/day", query);
