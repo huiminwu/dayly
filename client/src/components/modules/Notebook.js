@@ -7,6 +7,8 @@ import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from "dr
 import "draft-js/dist/Draft.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import debounce from "lodash/debounce";
+
 class StyleButton extends React.Component {
   constructor() {
     super();
@@ -35,9 +37,16 @@ class Notebook extends Component {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty(),
+      isSaved: true,
     };
 
-    this.onChange = (editorState) => this.setState({ editorState });
+    this.onChange = (editorState) => {
+      this.setState({
+        editorState: editorState,
+        isSaved: false,
+      });
+      // this.handleSave(this.state.editorState);
+    };
   }
 
   componentDidMount() {
@@ -70,9 +79,32 @@ class Notebook extends Component {
     };
     post("/api/day/notes", params).then((notes) => {
       const convertedContentState = convertFromRaw(notes);
-      this.setState({ editorState: EditorState.createWithContent(convertedContentState) });
+      this.setState({
+        editorState: EditorState.createWithContent(convertedContentState),
+        isSaved: true,
+      });
     });
   }
+
+  // autosave code (doesn't work)
+  // handleSave = debounce((editorState) => {
+  //   const rawContentState = convertToRaw(editorState.getCurrentContent());
+  //   const contentStateString = JSON.stringify(rawContentState);
+  //   const params = {
+  //     creator: this.props.creator,
+  //     day: this.props.day,
+  //     month: this.props.month,
+  //     year: this.props.year,
+  //     notes: contentStateString,
+  //   };
+  //   post("/api/day/notes", params).then((notes) => {
+  //     const convertedContentState = convertFromRaw(notes);
+  //     this.setState({
+  //       editorState: EditorState.createWithContent(convertedContentState),
+  //       isSaved: true,
+  //     });
+  //   });
+  // }, 3000);
 
   render() {
     const INLINE_STYLES = [
@@ -147,6 +179,7 @@ class Notebook extends Component {
             placeholder="How was your day?"
           />
         </div>
+        {this.state.isSaved ? <span>All changes saved</span> : <span>Unsaved</span>}
         <button
           className="editor-saveButton"
           onClick={() => this.handleSave(this.state.editorState)}
