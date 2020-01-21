@@ -6,7 +6,7 @@ const WidgetSchema = new mongoose.Schema({
   name: String,
   type: String,
   value: String,
-  timestamp: { type: Date, default: Date.now() },
+  timestamp: Date,
 });
 
 // compile model from schema

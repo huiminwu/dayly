@@ -79,6 +79,7 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
               name: widget.name,
               type: widget.widgetType,
               value: "",
+              timestamp: new Date(req.body.year, req.body.month, req.body.day),
             });
             newWidget.save();
             return newWidget;
