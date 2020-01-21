@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { navigate, Router } from "@reach/router";
+import { navigate, Router, Redirect } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
@@ -47,7 +47,7 @@ class App extends Component {
       widgetlist: null,
       data: null,
       notes: null,
-      // increment: 0,
+      loggedIn: false,
     };
   }
 
@@ -116,6 +116,7 @@ class App extends Component {
         this.setState({
           creator: user._id,
           widgetlist: user.widgetList,
+          loggedIn: true,
         });
         return post("/api/initsocket", { socketid: socket.id });
       })
@@ -155,7 +156,10 @@ class App extends Component {
   };
 
   handleLogout = () => {
-    this.setState({ creator: undefined });
+    this.setState({
+      creator: undefined,
+      loggedIn: false,
+    });
     post("/api/logout").then(() => {
       navigate("/");
     });
@@ -264,18 +268,30 @@ class App extends Component {
   // };
 
   render() {
-    return (
-      <>
-        <Navbar
-          creator={this.state.creator}
-          handleLogin={this.handleLogin}
-          handleLogout={this.handleLogout}
-        />
-        <Router>
-          <Landing path="/" creator={this.state.creator} />
-          {this.state.data ? (
+    if (this.state.loggedIn) {
+      return (
+        <>
+          <Navbar
+            creator={this.state.creator}
+            handleLogin={this.handleLogin}
+            handleLogout={this.handleLogout}
+          />
+          <Router>
+            <Landing path="/" creator={this.state.creator} />
+            {this.state.data ? (
+              <Daily
+                path="/day"
+                dateObject={this.state.dateObject}
+                data={this.state.data}
+                handleBackClick={() => this.handleBackClick("day")}
+                handleNextClick={() => this.handleNextClick("day")}
+              />
+            ) : (
+              <Loading path="/day" />
+            )}
+            {/* View for when you look back on Monthly view */}
             <Daily
-              path="/day"
+              path="/day/:oldYear/:oldMonth/:oldDay"
               dateObject={this.state.dateObject}
               data={this.state.data}
               setToOldDate={this.setToOldDate}
@@ -283,31 +299,32 @@ class App extends Component {
               handleBackClick={() => this.handleBackClick("day")}
               handleNextClick={() => this.handleNextClick("day")}
             />
-          ) : (
-            <Loading path="/day" />
-          )}
-          {/* View for when you look back on Monthly view */}
-          <Daily
-            path="/day/:oldYear/:oldMonth/:oldDay"
-            dateObject={this.state.dateObject}
-            data={this.state.data}
-            setToOldDate={this.setToOldDate}
-            viewOldDate={this.viewOldDate}
-            handleBackClick={() => this.handleBackClick("day")}
-            handleNextClick={() => this.handleNextClick("day")}
-          />
-          <Monthly
-            path="/month"
+            <Monthly
+              path="/month"
+              creator={this.state.creator}
+              dateObject={this.state.dateObject}
+              widgetlist={this.state.widgetlist}
+              handleBackClick={() => this.handleBackClick("month")}
+              handleNextClick={() => this.handleNextClick("month")}
+            />
+          </Router>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Navbar
             creator={this.state.creator}
-            dateObject={this.state.dateObject}
-            widgetlist={this.state.widgetlist}
-            handleBackClick={() => this.handleBackClick("month")}
-            handleNextClick={() => this.handleNextClick("month")}
+            handleLogin={this.handleLogin}
+            handleLogout={this.handleLogout}
           />
-          <NotFound default />
-        </Router>
-      </>
-    );
+          <Router>
+            <Landing path="/" creator={this.state.creator} />
+            <NotFound default />
+          </Router>
+        </>
+      );
+    }
   }
 }
 
