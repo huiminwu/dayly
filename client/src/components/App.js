@@ -13,8 +13,14 @@ import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBold, faItalic, faUnderline } from "@fortawesome/free-solid-svg-icons";
-library.add(faBold, faItalic, faUnderline);
+import {
+  faBold,
+  faItalic,
+  faUnderline,
+  faAngleLeft,
+  faAngleRight,
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faBold, faItalic, faUnderline, faAngleLeft, faAngleRight);
 
 const moment = require("moment");
 moment().format("dddd, MMMM DD YYYY");

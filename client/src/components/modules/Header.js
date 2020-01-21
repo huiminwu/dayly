@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Header.css";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 // hardcoded list to convert numerical month to english
 const MONTHS = [
   "January",
@@ -46,10 +48,10 @@ class Header extends Component {
           <h1 className="Header-dates">{date}</h1>
           <div className="Header-nav">
             <button className="Header-nav-btn" type="button" onClick={this.props.handleBackClick}>
-              Back
+              <FontAwesomeIcon icon="angle-left" />
             </button>
             <button className="Header-nav-btn" type="button" onClick={this.props.handleNextClick}>
-              Next
+              <FontAwesomeIcon icon="angle-right" />
             </button>
           </div>
         </div>

@@ -1,25 +1,31 @@
-.notes-section {
-}
-
 .RichEditor-root {
   /* temporary CSS just so the text box is visible lol */
   height: 50vh;
   width: 60vw;
   border: 1px solid #bcbcbc;
-  padding: 1.5em;
+  border-radius: 10px;
+  padding: 24px;
   color: #010101;
   overflow: scroll;
 }
 
 .RichEditor-editor {
   border-top: 1px solid #bcbcbc;
-  margin-top: 1em;
-  padding-top: 1em;
+  margin-top: 16px;
+  padding-top: 16px;
 }
 
 .RichEditor-controls {
   display: inline;
-  margin-right: 1em;
+  margin-right: 16px;
+}
+
+.RichEditor-controls:hover {
+  cursor: default;
+}
+
+.RichEditor-styleButton:hover {
+  cursor: pointer;
 }
 
 .RichEditor-styleButton + .RichEditor-styleButton {
@@ -36,24 +42,32 @@
 
 .RichEditor-footer {
   width: 60vw;
-  padding: 0em 1.5em;
+  margin-left: 50px;
   display: flex;
   justify-content: flex-end;
   align-items: baseline;
 }
 
+.editor-saveButton,
+.editor-saveButton-saved {
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  margin-top: 32px;
+  margin-left: 32px;
+  padding: 16px;
+  border-radius: 10px;
+}
+
 .editor-saveButton {
-  margin-top: 2em;
-  margin-left: 2em;
-  padding: 1em;
   background: black;
   color: white;
 }
 
 .editor-saveButton-saved {
-  margin-top: 2em;
-  margin-left: 2em;
-  padding: 1em;
   background: none;
   color: #bcbcbc;
+}
+
+.editor-saveButton:hover {
+  cursor: pointer;
 }
