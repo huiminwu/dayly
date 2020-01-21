@@ -5,9 +5,8 @@
   border: white;
 }
 
-.submitted-val.color-btn {
-  box-shadow: 1px 2px var(--borders);
-}
+.cool-btn.submitted-val {
+  border: 1.5px solid black;
 
 .widget {
   /* border: 1px solid var(--borders); */
@@ -48,3 +47,18 @@
 .slider-input {
   margin-right: 16px;
 }
+
+.cool-btn {
+  height: 32px;
+  width: 32px;
+  border-radius: 10px;
+}
+
+.yes-btn,
+.no-btn {
+  height: 32px;
+  width: 32px;
+  border-radius: 100%;
+  font-family: "Poppins", sans-serif;
+}
+
