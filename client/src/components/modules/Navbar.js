@@ -33,7 +33,7 @@ class Navbar extends Component {
     return (
       <div className="Navbar-container">
         {/* hardcoded logo for now */}
-        <span className="Navbar-company"> day.ly </span>
+        <span className="Navbar-company"> Day.ly </span>
         <div className="Navbar-opts">
           {this.props.creator ? (
             <>

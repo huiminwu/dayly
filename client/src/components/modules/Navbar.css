@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins|Sacramento&display=swap");
+
 .Navbar-container {
   display: flex;
   align-items: center;
@@ -7,6 +9,7 @@
 }
 
 .Navbar-company {
+  font-family: "Sacramento", cursive;
   color: white;
   font-size: 36px;
   font-weight: 500;
@@ -21,6 +24,7 @@
 }
 
 .Navbar-opts_link {
+  font-family: "Poppins", sans-serif;
   color: white;
   width: 50%;
   margin-right: 20px;
