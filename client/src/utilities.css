@@ -14,16 +14,15 @@
 * much after initial creation.
 */
 
-/* TODO: REPLACE WITH YOUR OWN FONT! */
-@import url("https://fonts.googleapis.com/css?family=Poppins|Sacramento&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Poppins:100, 500|Sacramento&display=swap");
 
 :root {
   --primary: #396dff;
-  --primary--dim: #6987db;
-  --darkgrey: #d4d4d4;
-  --medgrey: #e0e0e0;
-  --grey: #f7f7f7;
-  --white: #fff;
+  --accent: #cf9893;
+  --headers: #a7bed3;
+  --body: #6e6e6e;
+  --borders: #cec0b7;
+  --background: #fcf8f7;
 
   --xs: 4px;
   --s: 8px;
@@ -34,8 +33,9 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: var(--background);
   font-family: "Poppins", sans-serif;
-  font-weight: 300;
+  font-weight: 200;
 }
 
 form {
