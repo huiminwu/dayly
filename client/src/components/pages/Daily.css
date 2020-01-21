@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  border: 1px solid #bcbcbc;
+  border: 1px solid var(--borders);
   border-radius: 10px;
   height: 50vh;
   width: 20vw;

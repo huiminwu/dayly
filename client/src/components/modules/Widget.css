@@ -1,11 +1,16 @@
-.submitted-val {
-  background: black;
+.submitted-val.yes-btn,
+.submitted-val.no-btn {
+  background: var(--accent);
   color: white;
   border: white;
 }
 
+.submitted-val.color-btn {
+  box-shadow: 1px 2px var(--borders);
+}
+
 .widget {
-  /* border: 1px solid #bcbcbc; */
+  /* border: 1px solid var(--borders); */
   /* border-radius: 7px; */
   padding: 16px;
 }
@@ -18,6 +23,22 @@
   margin-bottom: 8px;
 }
 
+.yes-btn,
+.no-btn {
+  height: 32px;
+  width: 32px;
+  border: 1px solid var(--borders);
+  border-radius: 100%;
+  font-family: "Poppins", sans-serif;
+}
+
+.color-btn {
+  height: 32px;
+  width: 32px;
+  border-radius: 10px;
+  border: 1px solid var(--borders);
+}
+
 .slider-widget {
   display: flex;
   justify-content: center;
@@ -26,18 +47,4 @@
 
 .slider-input {
   margin-right: 16px;
-}
-
-.mood-btn {
-  height: 32px;
-  width: 32px;
-  border-radius: 10px;
-}
-
-.yes-btn,
-.no-btn {
-  height: 32px;
-  width: 32px;
-  border-radius: 100%;
-  font-family: "Poppins", sans-serif;
 }

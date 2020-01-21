@@ -79,7 +79,7 @@ class ColorWidget extends Component {
     const colorButtons = colorValues.map((val, k) => (
       <button
         key={k}
-        className={`mood-btn mood-${val} ${
+        className={`color-btn color-${val} ${
           val === parseInt(this.state.value) ? "submitted-val" : ""
         }`}
         onClick={() => this.handleOnClick(val)}
@@ -89,7 +89,7 @@ class ColorWidget extends Component {
     return (
       <div>
         <div className="widget-name">{this.props.name}</div>
-        {colorButtons}
+        <div className-="color-btn-container">{colorButtons}</div>
       </div>
     );
   }
