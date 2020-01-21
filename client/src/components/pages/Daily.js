@@ -105,7 +105,7 @@ class Daily extends Component {
         <Notebook
           creator={this.props.creator}
           dateObject={this.props.dateObject}
-          notes={this.props.data.notes}
+          data={this.props.data}
         />
       );
     }
