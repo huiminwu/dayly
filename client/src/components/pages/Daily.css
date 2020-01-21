@@ -1,7 +1,23 @@
+.page-container {
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  border: 1px solid orange;
+}
+
 .journal-container {
-  margin: 2em 3em;
+  display: flex;
+  border: 1px solid red;
+  justify-content: space-between;
 }
 
 .widget-container {
-  margin-left: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #bcbcbc;
+  height: 50vh;
+  width: 20vw;
+  padding: 1.5em;
 }

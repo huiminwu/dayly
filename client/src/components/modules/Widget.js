@@ -143,7 +143,7 @@ class Widget extends Component {
 
   render() {
     return (
-      <>
+      <div className="widget">
         {this.props.type === "BinaryWidget" && (
           <BinaryWidget
             name={this.props.name}
@@ -168,7 +168,7 @@ class Widget extends Component {
             value={this.props.value}
           />
         )}
-      </>
+      </div>
     );
   }
 }

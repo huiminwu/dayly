@@ -70,7 +70,7 @@ class Daily extends Component {
     }
 
     return (
-      <div className="journal-container">
+      <div className="page-container">
         <Header
           year={this.props.year}
           month={this.props.month}
@@ -79,8 +79,10 @@ class Daily extends Component {
           handleBackClick={this.props.handleBackClick}
           handleNextClick={this.props.handleNextClick}
         />
-        <div className="widget-container">{widgets}</div>
-        <div>{notebook}</div>
+        <div className="journal-container">
+          <div className="widget-container">{widgets}</div>
+          {notebook}
+        </div>
       </div>
     );
   }

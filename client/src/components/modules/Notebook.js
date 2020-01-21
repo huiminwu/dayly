@@ -197,10 +197,12 @@ class Notebook extends Component {
             />
           </div>
         </div>
-        {this.state.isSaved ? <span>All changes saved</span> : <span>Unsaved</span>}
-        <button className={saveClassName} onClick={() => this.handleSave(this.state.editorState)}>
-          Save
-        </button>
+        <div className="RichEditor-footer">
+          {this.state.isSaved ? <span>All changes saved</span> : <span>Unsaved</span>}
+          <button className={saveClassName} onClick={() => this.handleSave(this.state.editorState)}>
+            Save
+          </button>
+        </div>
       </div>
     );
   }

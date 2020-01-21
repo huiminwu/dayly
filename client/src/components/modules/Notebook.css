@@ -1,11 +1,10 @@
 .notes-section {
-  margin: -15em 25em;
 }
 
 .RichEditor-root {
   /* temporary CSS just so the text box is visible lol */
   height: 50vh;
-  width: 50vw;
+  width: 60vw;
   border: 1px solid #bcbcbc;
   padding: 1.5em;
   color: #010101;
@@ -33,6 +32,14 @@
 
 .RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
   display: none;
+}
+
+.RichEditor-footer {
+  width: 60vw;
+  padding: 0em 1.5em;
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
 }
 
 .editor-saveButton {
