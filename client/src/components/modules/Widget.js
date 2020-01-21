@@ -112,9 +112,7 @@ class SliderWidget extends Component {
  *
  * Proptypes
  * @param {ObjectId} creator
- * @param {number} day
- * @param {number} month
- * @param {number} year
+ * @param {moment} dateObject
  * @param {string} name of widget
  * @param {string} type of widget
  * @param {string} placeholder of widget
@@ -132,9 +130,9 @@ class Widget extends Component {
   submitValue = (val) => {
     const params = {
       creator: this.props.creator,
-      day: this.props.day,
-      month: this.props.month,
-      year: this.props.year,
+      day: this.props.dateObject.date(),
+      month: this.props.dateObject.month(),
+      year: this.props.dateObject.year(),
       name: this.props.name,
       value: val,
     };
