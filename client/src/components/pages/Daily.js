@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import Header from "../modules/Header.js";
 import Notebook from "../modules/Notebook.js";
 import Widget from "../modules/Widget.js";
+import moment from "moment";
 
-import { get } from "../../utilities";
+import { get, post } from "../../utilities";
 
 import "./Daily.css";
 
@@ -22,15 +23,57 @@ import "./Daily.css";
 class Daily extends Component {
   constructor(props) {
     super(props);
-    this.state = { widgetValues: null };
+    this.state = {
+      widgetValues: null,
+    };
   }
 
-  componentDidMount() {
-    get("/api/day/widget", { widgetId: JSON.stringify(this.props.data.widgets) }).then(
-      (widgetArray) => {
+  async componentDidMount() {
+    // if accessed via redirect do this
+    if (this.props.oldYear && this.props.oldMonth && this.props.oldDay) {
+      const dateToView = moment()
+        .year(this.props.oldYear)
+        .month(this.props.oldMonth)
+        .date(this.props.oldDay);
+      this.props.setToOldDate(dateToView);
+
+      const query = {
+        day: dateToView.date(),
+        month: dateToView.month(),
+        year: dateToView.year(),
+      };
+
+      // check if already created (should be but in the case user views date not yet created)
+      // then use that to fetch widgets
+      const newData = await post("/api/day", query);
+      if (newData) {
+        this.props.viewOldDate(newData);
+        let widgetArray = await get("/api/day/widget", {
+          widgetId: JSON.stringify(newData.widgets),
+        });
+        console.log(`new data = ${newData}`);
         this.setState({ widgetValues: widgetArray });
       }
-    );
+      // if already exists, fetch it
+      // along with widgets
+      else {
+        let dayData = await get("/api/day", query);
+        this.props.viewOldDate(dayData);
+        console.log(dayData);
+        let widgetArray = await get("/api/day/widget", {
+          widgetId: JSON.stringify(dayData.widgets),
+        });
+        console.log(`day data = ${dayData}`);
+        this.setState({ widgetValues: widgetArray });
+      }
+    } else {
+      // if accessed from landing page
+      // just fetch widgets for passed down date
+      let widgetArray = await get("/api/day/widget", {
+        widgetId: JSON.stringify(this.props.data.widgets),
+      });
+      this.setState({ widgetValues: widgetArray });
+    }
   }
 
   render() {

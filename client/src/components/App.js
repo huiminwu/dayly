@@ -64,6 +64,17 @@ class App extends Component {
     }
   }
 
+  setToOldDate = (momentObj) => {
+    this.setState({
+      dateObject: momentObj,
+    });
+  };
+  viewOldDate = (dayData) => {
+    this.setState({
+      data: dayData,
+    });
+  };
+
   handleLogin = (res) => {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken })
@@ -162,6 +173,15 @@ class App extends Component {
           ) : (
             <Loading path="/day" />
           )}
+          <Daily
+            path="/day/:oldYear/:oldMonth/:oldDay"
+            dateObject={this.state.dateObject}
+            data={this.state.data}
+            setToOldDate={this.setToOldDate}
+            viewOldDate={this.viewOldDate}
+            handleBackClick={() => this.handleBackClick("day")}
+            handleNextClick={() => this.handleNextClick("day")}
+          />
           <Monthly
             path="/month"
             creator={this.state.creator}
