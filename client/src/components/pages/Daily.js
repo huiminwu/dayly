@@ -73,6 +73,15 @@ class Daily extends Component {
     }
   }
 
+  async componentDidUpdate(prevProps, prevState) {
+    if (prevProps.data !== this.props.data) {
+      let widgetArray = await get("/api/day/widget", {
+        widgetId: JSON.stringify(this.props.data.widgets),
+      });
+      this.setState({ widgetValues: widgetArray });
+    }
+  }
+
   render() {
     let widgets = "Loading...";
     if (this.state.widgetValues) {
