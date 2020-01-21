@@ -23,7 +23,7 @@ class Landing extends Component {
         <div className="landing-Page">
           <div className="landing-Container">
             <div className="title">Day.ly</div>
-            <div className="tagline">A silver bullet for your daily bullet journal needs.</div>
+            <div className="tagline">A silver bullet for all your daily bullet journal needs.</div>
             <img className="pic" src={book}></img>
           </div>
         </div>

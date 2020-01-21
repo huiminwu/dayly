@@ -91,7 +91,7 @@ class ColorWidget extends Component {
     return (
       <div>
         <div className="widget-name">{this.props.name}</div>
-        {colorButtons}
+        <div className-="color-btn-container">{colorButtons}</div>
       </div>
     );
   }

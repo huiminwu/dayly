@@ -1,15 +1,15 @@
-.submitted-val {
-  background: black;
+.submitted-val.yes-btn,
+.submitted-val.no-btn {
+  background: var(--accent);
   color: white;
   border: white;
 }
 
 .cool-btn.submitted-val {
   border: 1.5px solid black;
-}
 
 .widget {
-  /* border: 1px solid #bcbcbc; */
+  /* border: 1px solid var(--borders); */
   /* border-radius: 7px; */
   padding: 16px;
 }
@@ -20,6 +20,22 @@
 
 .widget-name {
   margin-bottom: 8px;
+}
+
+.yes-btn,
+.no-btn {
+  height: 32px;
+  width: 32px;
+  border: 1px solid var(--borders);
+  border-radius: 100%;
+  font-family: "Poppins", sans-serif;
+}
+
+.color-btn {
+  height: 32px;
+  width: 32px;
+  border-radius: 10px;
+  border: 1px solid var(--borders);
 }
 
 .slider-widget {
@@ -45,3 +61,4 @@
   border-radius: 100%;
   font-family: "Poppins", sans-serif;
 }
+
