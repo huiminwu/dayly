@@ -38,12 +38,12 @@ class App extends Component {
       dateObject: moment(),
       widgetlist: null,
       data: null,
+      notes: null,
     };
   }
 
   async componentDidMount() {
     const user = await get("/api/whoami");
-    console.log("logged in already");
     // they are registered in the database, and currently logged in.
     if (user._id) {
       this.setState({
@@ -81,7 +81,6 @@ class App extends Component {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken })
       .then((user) => {
-        console.log("logging in");
         this.setState({
           creator: user._id,
           widgetlist: user.widgetList,

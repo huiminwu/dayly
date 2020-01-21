@@ -90,6 +90,19 @@ class Daily extends Component {
       });
     }
 
+    let notebook = "Loading...";
+    if (this.props.data) {
+      notebook = (
+        <Notebook
+          creator={this.props.creator}
+          day={this.props.day}
+          month={this.props.month}
+          year={this.props.year}
+          notes={this.props.data.notes}
+        />
+      );
+    }
+
     return (
       <div className="journal-container">
         <Header
@@ -99,7 +112,7 @@ class Daily extends Component {
           handleNextClick={this.props.handleNextClick}
         />
         <div className="widget-container">{widgets}</div>
-        <Notebook />
+        <div>{notebook}</div>
       </div>
     );
   }

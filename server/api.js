@@ -179,6 +179,24 @@ router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
       res.send(widgets);
     });
 });
+
+router.post("/day/notes", auth.ensureLoggedIn, (req, res) => {
+  const dayQuery = {
+    creator: req.user._id,
+    day: req.body.day,
+    month: req.body.month,
+    year: req.body.year,
+  };
+
+  // find the corresponding day, replace notes, and send back
+  Day.findOne(dayQuery).then((day) => {
+    day.notes = req.body.notes;
+    day.save().then((updatedDay) => {
+      res.send(updatedDay.notes);
+    });
+  });
+});
+
 // Promise.all(
 //   user = new User({
 //     name: "yo",
