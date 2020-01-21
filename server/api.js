@@ -57,7 +57,9 @@ router.get("/day", (req, res) => {
   });
 });
 
-// creates new Day if it doesn't already exist
+/*
+ creates new Day if it doesn't already exist
+ */
 router.post("/day", auth.ensureLoggedIn, (req, res) => {
   let widgetList;
 
@@ -73,9 +75,11 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
         .then(() => {
           let widgetObjs = widgetList.map((widget) => {
             newWidget = new Widget({
+              creator: req.user._id,
               name: widget.name,
               type: widget.widgetType,
               value: "",
+              timestamp: new Date(req.body.year, req.body.month, req.body.day),
             });
             newWidget.save();
             return newWidget;
@@ -97,6 +101,9 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+/*
+  gets list of wigets given widget ids
+*/
 router.get("/day/widget", (req, res) => {
   const widgetIdList = JSON.parse(req.query.widgetId);
 
@@ -105,8 +112,9 @@ router.get("/day/widget", (req, res) => {
   });
 });
 
-// updates the value of widget
-// when a new day is created, every widget is also created with a null value
+/* 
+updates the value of widget
+*/
 router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
   const dayQuery = {
     creator: req.user._id,
@@ -131,6 +139,23 @@ router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
       });
     });
   });
+});
+
+/*
+ gets widgets created from [firstDay, lastDay)
+*/
+router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
+  Widget.find({
+    creator: req.user._id,
+    timestamp: {
+      $gte: req.query.firstDay,
+      $lt: req.query.lastDay,
+    },
+  })
+    .sort({ timestamp: 1 })
+    .then((widgets) => {
+      res.send(widgets);
+    });
 });
 
 router.post("/day/notes", auth.ensureLoggedIn, (req, res) => {

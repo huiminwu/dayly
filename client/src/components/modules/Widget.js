@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { get, post } from "../../utilities.js";
 import "./Widget.css";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 class BinaryWidget extends Component {
   constructor(props) {
     super(props);
@@ -21,18 +23,18 @@ class BinaryWidget extends Component {
   render() {
     return (
       <div>
-        <h3>{this.props.name}</h3>
+        <div className="widget-name">{this.props.name}</div>
         <button
           className={`yes-btn ${parseInt(this.state.value) === 1 ? "submitted-val" : ""}`}
           onClick={() => this.handleOnClick(1)}
         >
-          Yes
+          <FontAwesomeIcon icon="check" />
         </button>
         <button
           className={`no-btn ${parseInt(this.state.value) === 0 ? "submitted-val" : ""}`}
           onClick={() => this.handleOnClick(0)}
         >
-          No
+          <FontAwesomeIcon icon="times" />
         </button>
       </div>
     );
@@ -56,19 +58,21 @@ class ColorWidget extends Component {
   };
 
   render() {
-    // dyanmically produce buttons
+    // dynamically produce buttons
     const colorValues = [1, 2, 3, 4, 5];
     const colorButtons = colorValues.map((val, k) => (
       <button
         key={k}
-        className={`mood-${val} ${val === parseInt(this.state.value) ? "submitted-val" : ""}`}
+        className={`mood-btn mood-${val} ${
+          val === parseInt(this.state.value) ? "submitted-val" : ""
+        }`}
         onClick={() => this.handleOnClick(val)}
       />
     ));
 
     return (
       <div>
-        <h3>{this.props.name}</h3>
+        <div className="widget-name">{this.props.name}</div>
         {colorButtons}
       </div>
     );
@@ -91,7 +95,7 @@ class SliderWidget extends Component {
   render() {
     return (
       <div>
-        <h3>{this.props.name}</h3>
+        <div className="widget-name">{this.props.name}</div>
         <input
           type="range"
           min="0"
@@ -100,8 +104,9 @@ class SliderWidget extends Component {
           value={this.state.slider_value}
           onChange={this.handleSliderChange}
           onMouseUp={() => this.props.submitValue(this.state.slider_value)}
+          className="slider-input"
         />
-        <p>{this.state.slider_value}</p>
+        <span className="slider-display">{this.state.slider_value}</span>
       </div>
     );
   }
@@ -112,9 +117,7 @@ class SliderWidget extends Component {
  *
  * Proptypes
  * @param {ObjectId} creator
- * @param {number} day
- * @param {number} month
- * @param {number} year
+ * @param {moment} dateObject
  * @param {string} name of widget
  * @param {string} type of widget
  * @param {string} placeholder of widget
@@ -132,9 +135,9 @@ class Widget extends Component {
   submitValue = (val) => {
     const params = {
       creator: this.props.creator,
-      day: this.props.day,
-      month: this.props.month,
-      year: this.props.year,
+      day: this.props.dateObject.date(),
+      month: this.props.dateObject.month(),
+      year: this.props.dateObject.year(),
       name: this.props.name,
       value: val,
     };
@@ -143,7 +146,7 @@ class Widget extends Component {
 
   render() {
     return (
-      <>
+      <div className="widget">
         {this.props.type === "BinaryWidget" && (
           <BinaryWidget
             name={this.props.name}
@@ -163,12 +166,13 @@ class Widget extends Component {
         {this.props.type === "SliderWidget" && (
           <SliderWidget
             name={this.props.name}
+            className="slider-widget"
             creator={this.props.creator}
             submitValue={this.submitValue}
             value={this.props.value}
           />
         )}
-      </>
+      </div>
     );
   }
 }

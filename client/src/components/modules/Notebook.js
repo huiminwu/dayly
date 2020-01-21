@@ -32,6 +32,15 @@ class StyleButton extends React.Component {
   }
 }
 
+/**
+ * Notebook is a component for displaying the notebook section
+ *
+ * Proptypes
+ * @param {ObjectId} creator
+ * @param {moment} dateObject
+ * @param {string} notes that were already saved
+ **/
+
 class Notebook extends Component {
   constructor(props) {
     super(props);
@@ -72,9 +81,9 @@ class Notebook extends Component {
     const contentStateString = JSON.stringify(rawContentState);
     const params = {
       creator: this.props.creator,
-      day: this.props.day,
-      month: this.props.month,
-      year: this.props.year,
+      day: this.props.dateObject.date(),
+      month: this.props.dateObject.month(),
+      year: this.props.dateObject.year(),
       notes: contentStateString,
     };
     post("/api/day/notes", params).then((notes) => {
@@ -197,10 +206,12 @@ class Notebook extends Component {
             />
           </div>
         </div>
-        {this.state.isSaved ? <span>All changes saved</span> : <span>Unsaved</span>}
-        <button className={saveClassName} onClick={() => this.handleSave(this.state.editorState)}>
-          Save
-        </button>
+        <div className="RichEditor-footer">
+          {this.state.isSaved ? <span>All changes saved</span> : <span>Unsaved</span>}
+          <button className={saveClassName} onClick={() => this.handleSave(this.state.editorState)}>
+            Save
+          </button>
+        </div>
       </div>
     );
   }

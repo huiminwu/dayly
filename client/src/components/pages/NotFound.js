@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import "./NotFound.css";
+import llama from "../../public/llama.jpg";
 
 class NotFound extends Component {
   constructor(props) {
@@ -7,9 +9,13 @@ class NotFound extends Component {
 
   render() {
     return (
-      <div>
-        <h1>404 Not Found</h1>
-        <p>The page you requested couldn't be found.</p>
+      <div className="notFound-Container">
+        <h1 className="error">404 Not Found</h1>
+        <p className="message">
+          Sorry, the page you requested couldn't be found, but here's this llama to make you feel
+          better.
+        </p>
+        <img className="llamapic" src={llama}></img>
       </div>
     );
   }
