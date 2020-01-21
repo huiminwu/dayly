@@ -15,7 +15,9 @@
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid #bcbcbc;
+  border-radius: 10px;
   height: 50vh;
   width: 20vw;
   padding: 1.5em;
+  overflow: scroll;
 }

@@ -4,5 +4,6 @@
 
 .widget {
   border: 1px solid #bcbcbc;
+  border-radius: 7px;
   padding: 5px;
 }
