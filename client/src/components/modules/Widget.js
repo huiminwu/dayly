@@ -81,7 +81,7 @@ class ColorWidget extends Component {
     const colorButtons = colorValues.map((val, k) => (
       <button
         key={k}
-        className={`mood-btn ColorWidget-${val} ${
+        className={`cool-btn ColorWidget-${val} ${
           val === parseInt(this.state.value) ? "submitted-val" : ""
         }`}
         onClick={() => this.handleOnClick(val)}

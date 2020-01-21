@@ -4,9 +4,8 @@
   border: white;
 }
 
-.mood-btn.submitted-val {
-  border: 2px solid black;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5);
+.cool-btn.submitted-val {
+  border: 1.5px solid black;
 }
 
 .widget {
@@ -33,7 +32,7 @@
   margin-right: 16px;
 }
 
-.mood-btn {
+.cool-btn {
   height: 32px;
   width: 32px;
   border-radius: 10px;
