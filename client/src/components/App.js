@@ -30,7 +30,6 @@ moment().local();
 
 class Loading extends Component {
   render() {
-    // INLINE STYLING BAD!!!!!! FIX THIS!!!!!!!!
     return <div>Loading...</div>;
   }
 }
