@@ -18,6 +18,14 @@ class BinaryWidget extends Component {
     this.props.submitValue(val);
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.value !== this.props.value) {
+      this.setState({
+        value: this.props.value,
+      });
+    }
+  }
+
   render() {
     return (
       <div>
@@ -55,6 +63,14 @@ class ColorWidget extends Component {
     this.props.submitValue(val);
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.value !== this.props.value) {
+      this.setState({
+        value: this.props.value,
+      });
+    }
+  }
+
   render() {
     // dyanmically produce buttons
     const colorValues = [1, 2, 3, 4, 5];
@@ -87,6 +103,14 @@ class SliderWidget extends Component {
   handleSliderChange = (event) => {
     this.setState({ slider_value: event.target.value });
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.value !== this.props.value) {
+      this.setState({
+        slider_value: this.props.value,
+      });
+    }
+  }
 
   render() {
     return (
@@ -123,9 +147,7 @@ class Widget extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    // TODO: get values already stored from API endpoint and setState
-  }
+  componentDidMount() {}
 
   submitValue = (val) => {
     const params = {
