@@ -1,9 +1,43 @@
 .submitted-val {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background: black;
+  color: white;
+  border: white;
 }
 
 .widget {
-  border: 1px solid #bcbcbc;
-  border-radius: 7px;
-  padding: 5px;
+  /* border: 1px solid #bcbcbc; */
+  /* border-radius: 7px; */
+  padding: 16px;
+}
+
+.widget + .widget {
+  margin-top: 16px;
+}
+
+.widget-name {
+  margin-bottom: 8px;
+}
+
+.slider-widget {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.slider-input {
+  margin-right: 16px;
+}
+
+.mood-btn {
+  height: 32px;
+  width: 32px;
+  border-radius: 10px;
+}
+
+.yes-btn,
+.no-btn {
+  height: 32px;
+  width: 32px;
+  border-radius: 100%;
+  font-family: "Poppins", sans-serif;
 }

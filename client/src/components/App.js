@@ -19,8 +19,10 @@ import {
   faUnderline,
   faAngleLeft,
   faAngleRight,
+  faCheck,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faBold, faItalic, faUnderline, faAngleLeft, faAngleRight);
+library.add(faBold, faItalic, faUnderline, faAngleLeft, faAngleRight, faCheck, faTimes);
 
 const moment = require("moment");
 moment().format("dddd, MMMM DD YYYY");

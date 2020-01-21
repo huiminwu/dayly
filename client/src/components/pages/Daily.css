@@ -13,7 +13,7 @@
 .widget-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   border: 1px solid #bcbcbc;
   border-radius: 10px;
   height: 50vh;
