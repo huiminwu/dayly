@@ -1,0 +1,142 @@
+.calendar {
+  border-spacing: 0;
+}
+
+.calendar-day {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  padding: 0 !important;
+  margin: 0;
+  border: 1px solid #696969;
+  cursor: pointer;
+}
+
+.calendar-day:hover {
+  background-color: #f0f0f0;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-day:active {
+  color: white;
+  background-color: gold;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-day.empty,
+.calendar-day.empty:hover,
+.calendar-day.empty:active {
+  cursor: default;
+  background-color: white;
+  box-shadow: none;
+}
+
+tr:not(:first-child) > td {
+  border-top: none;
+}
+
+tr:nth-child(2) > td {
+  border: 1px solid #696969;
+}
+
+tr:not(:first-child) > td {
+  border-left: none;
+}
+
+.calendar-color-data {
+  position: absolute;
+  top: 0;
+  height: 10px;
+  width: 100%;
+  background-color: #c0c0c0;
+}
+
+h1 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.calendar-number {
+  text-align: center;
+  font-size: 50px;
+  color: #c0c0c0;
+}
+
+.week-day {
+  background-color: #000;
+  color: white;
+}
+
+/* 
+
+FOR COLORING WIDGET DATA
+
+*/
+
+.BinaryWidget-0 {
+  background-color: red;
+}
+.BinaryWidget-1 {
+  background-color: green;
+}
+
+.ColorWidget-1 {
+  background-color: #1c6ff8;
+}
+
+.ColorWidget-2 {
+  background-color: #27bbe0;
+}
+
+.ColorWidget-3 {
+  background-color: #9bfa24;
+}
+
+.ColorWidget-4 {
+  background-color: #9bfa24;
+}
+.ColorWidget-5 {
+  background-color: #fef720;
+}
+
+.SliderWidget-1 {
+  background-color: rgba(225, 0, 225, 0.08);
+}
+
+.SliderWidget-2 {
+  background-color: rgba(225, 0, 225, 0.17);
+}
+
+.SliderWidget-3 {
+  background-color: rgba(225, 0, 225, 0.25);
+}
+.SliderWidget-4 {
+  background-color: rgba(225, 0, 225, 0.34);
+}
+.SliderWidget-5 {
+  background-color: rgba(225, 0, 225, 0.42);
+}
+.SliderWidget-6 {
+  background-color: rgba(225, 0, 225, 0.5);
+}
+.SliderWidget-7 {
+  background-color: rgba(225, 0, 225, 0.58);
+}
+.SliderWidget-8 {
+  background-color: rgba(225, 0, 225, 0.67);
+}
+.SliderWidget-9 {
+  background-color: rgba(225, 0, 225, 0.75);
+}
+.SliderWidget-10 {
+  background-color: rgba(225, 0, 225, 0.83);
+}
+.SliderWidget-11 {
+  background-color: rgba(225, 0, 225, 0.92);
+}
+.SliderWidget-12 {
+  background-color: rgba(225, 0, 225, 1);
+}
