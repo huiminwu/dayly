@@ -64,11 +64,13 @@ class App extends Component {
     }
   }
 
+  // methods to overwrite todays date
   setToOldDate = (momentObj) => {
     this.setState({
       dateObject: momentObj,
     });
   };
+
   viewOldDate = (dayData) => {
     this.setState({
       data: dayData,
@@ -173,6 +175,7 @@ class App extends Component {
           ) : (
             <Loading path="/day" />
           )}
+          {/* View for when you look back on Monthly view */}
           <Daily
             path="/day/:oldYear/:oldMonth/:oldDay"
             dateObject={this.state.dateObject}

@@ -51,7 +51,6 @@ class Daily extends Component {
         let widgetArray = await get("/api/day/widget", {
           widgetId: JSON.stringify(newData.widgets),
         });
-        console.log(`new data = ${newData}`);
         this.setState({ widgetValues: widgetArray });
       }
       // if already exists, fetch it
@@ -59,11 +58,9 @@ class Daily extends Component {
       else {
         let dayData = await get("/api/day", query);
         this.props.viewOldDate(dayData);
-        console.log(dayData);
         let widgetArray = await get("/api/day/widget", {
           widgetId: JSON.stringify(dayData.widgets),
         });
-        console.log(`day data = ${dayData}`);
         this.setState({ widgetValues: widgetArray });
       }
     } else {

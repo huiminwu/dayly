@@ -60,7 +60,6 @@ class Calendar extends Component {
         }
       });
     }
-    console.log(widgetValues);
 
     // create date cells
     let daysInMonth = [];

@@ -40,14 +40,7 @@ class Monthly extends Component {
       this.setState({
         widgetData: data,
       });
-      console.log(data);
     });
-    // get("/api/month/widgets", { month: 0 }).then((data) => {
-    //   console.log(data);
-    //   this.setState({
-    //     widgetData: data,
-    //   });
-    // });
   }
 
   componentDidMount() {
