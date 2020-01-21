@@ -71,3 +71,7 @@
 .editor-saveButton:hover {
   cursor: pointer;
 }
+
+.public-DraftEditor-content {
+  height: 40vh !important;
+}
