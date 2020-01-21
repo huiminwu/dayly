@@ -31,7 +31,7 @@ moment().local();
 class Loading extends Component {
   render() {
     // INLINE STYLING BAD!!!!!! FIX THIS!!!!!!!!
-    return <div style={{ padding: 32 + "px" }}>Loading...</div>;
+    return <div>Loading...</div>;
   }
 }
 
