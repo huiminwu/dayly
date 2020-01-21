@@ -1,0 +1,20 @@
+.notFound-Container {
+  margin-top: 12vmin;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.llamapic {
+  height: 30vh;
+  width: 40vh;
+}
+
+.error {
+  font-family: "Poppins", sans-serif;
+}
+
+.message {
+  font-family: "Poppins", sans-serif;
+}
