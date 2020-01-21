@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { get, post } from "../../utilities.js";
 import "./Widget.css";
 
+import "./Calendar.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class BinaryWidget extends Component {
@@ -79,7 +81,7 @@ class ColorWidget extends Component {
     const colorButtons = colorValues.map((val, k) => (
       <button
         key={k}
-        className={`mood-btn mood-${val} ${
+        className={`mood-btn ColorWidget-${val} ${
           val === parseInt(this.state.value) ? "submitted-val" : ""
         }`}
         onClick={() => this.handleOnClick(val)}

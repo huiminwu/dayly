@@ -4,6 +4,11 @@
   border: white;
 }
 
+.mood-btn.submitted-val {
+  border: 2px solid black;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5);
+}
+
 .widget {
   /* border: 1px solid #bcbcbc; */
   /* border-radius: 7px; */
