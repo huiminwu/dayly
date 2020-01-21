@@ -82,6 +82,11 @@ class Notebook extends Component {
           editorState: EditorState.createEmpty(),
         });
       }
+      // const contentStateParsed = JSON.parse(this.props.data.notes);
+      // const convertedContentState = convertFromRaw(contentStateParsed);
+      // this.setState({
+      //   editorState: EditorState.createWithContent(convertedContentState),
+      // });
     }
   }
 
