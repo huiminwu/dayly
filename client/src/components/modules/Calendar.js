@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import moment from "moment";
+import { Redirect, Link } from "@reach/router";
 
 import "./Calendar.css";
 
 class Calendar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      redirect: false,
+    };
   }
 
   // for finding the first day of the month
@@ -18,7 +22,6 @@ class Calendar extends Component {
 
   handleBackMonth = () => {
     const newDate = this.props.dateObject.subtract(1, "month");
-    console.log(`iam new date ${newDate}`);
     this.setState({
       dateObject: newDate,
     });
@@ -26,7 +29,6 @@ class Calendar extends Component {
 
   handleNextMonth = () => {
     const newDate = this.props.dateObject.add(1, "month");
-    console.log(`iam new date ${newDate}`);
     this.setState({
       dateObject: newDate,
     });
@@ -67,10 +69,17 @@ class Calendar extends Component {
       if (widgetValues[d]) {
         widgetClass = widgetValues[d];
       }
+      // set up year and month for redirect
+      const month = this.props.dateObject.month();
+      const year = this.props.dateObject.year();
+
+      // create table data
       daysInMonth.push(
         <td key={d} className="calendar-day">
           <div className={"calendar-color-data " + widgetClass}> </div>
-          <h1 className="calendar-number">{d}</h1>
+          <Link to={`/day/${year}/${month}/${d}`}>
+            <h1 className="calendar-number">{d}</h1>
+          </Link>
         </td>
       );
     }
@@ -96,12 +105,14 @@ class Calendar extends Component {
     let daysinmonth = rows.map((d, i) => <tr>{d}</tr>);
 
     return (
-      <table className="calendar">
-        <thead>
-          <tr>{weekdayHeader}</tr>
-        </thead>
-        <tbody>{daysinmonth}</tbody>
-      </table>
+      <>
+        <table className="calendar">
+          <thead>
+            <tr>{weekdayHeader}</tr>
+          </thead>
+          <tbody>{daysinmonth}</tbody>
+        </table>
+      </>
     );
   }
 }
