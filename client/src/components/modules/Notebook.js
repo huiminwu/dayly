@@ -54,17 +54,34 @@ class Notebook extends Component {
         editorState: editorState,
         isSaved: false,
       });
-      // this.handleSave(this.state.editorState);
     };
   }
 
   componentDidMount() {
-    if (this.props.notes) {
-      const contentStateParsed = JSON.parse(this.props.notes);
+    if (this.props.data.notes) {
+      const contentStateParsed = JSON.parse(this.props.data.notes);
       const convertedContentState = convertFromRaw(contentStateParsed);
       this.setState({
         editorState: EditorState.createWithContent(convertedContentState),
       });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.data !== prevProps.data) {
+      console.log("i should be changing the notes");
+      console.log(`i am the parsed data ${this.props.data.notes}`);
+      if (this.props.data.notes) {
+        const contentStateParsed = JSON.parse(this.props.data.notes);
+        const convertedContentState = convertFromRaw(contentStateParsed);
+        this.setState({
+          editorState: EditorState.createWithContent(convertedContentState),
+        });
+      } else {
+        this.setState({
+          editorState: EditorState.createEmpty(),
+        });
+      }
     }
   }
 
