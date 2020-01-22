@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./NotFound.css";
-import { Redirect } from "@reach/router";
 import NotFound from "./NotFound";
 
 class Loading extends Component {

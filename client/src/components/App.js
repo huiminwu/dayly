@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { navigate, Router, Redirect } from "@reach/router";
+import { navigate, Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
@@ -28,12 +28,6 @@ library.add(faBold, faItalic, faUnderline, faAngleLeft, faAngleRight, faCheck, f
 const moment = require("moment");
 moment().format("dddd, MMMM DD YYYY");
 moment().local();
-
-// class Loading extends Component {
-//   render() {
-//     return <div>Loading...</div>;
-//   }
-// }
 
 /**
  * Define the "App" component as a class.
