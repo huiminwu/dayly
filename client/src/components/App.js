@@ -4,6 +4,7 @@ import NotFound from "./pages/NotFound.js";
 import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
 import Landing from "./pages/Landing.js";
+import Loading from "./pages/Loading.js";
 import Navbar from "./modules/Navbar.js";
 
 import "../utilities.css";
@@ -28,11 +29,11 @@ const moment = require("moment");
 moment().format("dddd, MMMM DD YYYY");
 moment().local();
 
-class Loading extends Component {
-  render() {
-    return <div>Loading...</div>;
-  }
-}
+// class Loading extends Component {
+//   render() {
+//     return <div>Loading...</div>;
+//   }
+// }
 
 /**
  * Define the "App" component as a class.
@@ -304,7 +305,7 @@ class App extends Component {
               handleBackClick={() => this.handleBackClick("month")}
               handleNextClick={() => this.handleNextClick("month")}
             />
-            <NotFound default />
+            <Loading default />
           </Router>
         </>
       );
@@ -318,7 +319,8 @@ class App extends Component {
           />
           <Router>
             <Landing path="/" />
-            <NotFound default />
+            <Loading default />
+            <NotFound path="/404" />
           </Router>
         </>
       );
