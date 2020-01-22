@@ -9,11 +9,13 @@
 }
 
 .Navbar-company {
-  font-family: "Sacramento", cursive;
+  height: 36px;
+  width: 35px;
+  /* font-family: "Sacramento", cursive;
   color: white;
   font-size: 36px;
   font-weight: 500;
-  margin-left: 15px;
+  margin-left: 15px; */
 }
 
 .Navbar-opts {

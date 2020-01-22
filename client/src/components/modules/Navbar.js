@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
-
+import icon from "../../../dist/d.png";
 import { get, post } from "../../utilities.js";
 
 import "./Navbar.css";
@@ -33,7 +33,8 @@ class Navbar extends Component {
     return (
       <div className="Navbar-container">
         {/* hardcoded logo for now */}
-        <span className="Navbar-company"> Day.ly </span>
+        <img className="Navbar-company" src={icon} />
+        {/* <span className="Navbar-company"> Day.ly </span> */}
         <div className="Navbar-opts">
           {this.props.creator ? (
             <>
