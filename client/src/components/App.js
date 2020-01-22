@@ -47,7 +47,6 @@ class App extends Component {
       widgetlist: null,
       data: null,
       notes: null,
-      loggedIn: false,
     };
   }
 
@@ -116,7 +115,6 @@ class App extends Component {
         this.setState({
           creator: user._id,
           widgetlist: user.widgetList,
-          loggedIn: true,
         });
         return post("/api/initsocket", { socketid: socket.id });
       })
@@ -158,7 +156,6 @@ class App extends Component {
   handleLogout = () => {
     this.setState({
       creator: undefined,
-      loggedIn: false,
     });
     post("/api/logout").then(() => {
       navigate("/");
@@ -268,7 +265,7 @@ class App extends Component {
   // };
 
   render() {
-    if (this.state.loggedIn) {
+    if (this.state.creator) {
       return (
         <>
           <Navbar
@@ -307,6 +304,7 @@ class App extends Component {
               handleBackClick={() => this.handleBackClick("month")}
               handleNextClick={() => this.handleNextClick("month")}
             />
+            <NotFound default />
           </Router>
         </>
       );
@@ -314,12 +312,12 @@ class App extends Component {
       return (
         <>
           <Navbar
-            creator={this.state.creator}
+            //creator={this.state.creator}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
           />
           <Router>
-            <Landing path="/" creator={this.state.creator} />
+            <Landing path="/" />
             <NotFound default />
           </Router>
         </>
