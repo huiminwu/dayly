@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { navigate, Router, Redirect } from "@reach/router";
+import { navigate, Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
 import Landing from "./pages/Landing.js";
+import Loading from "./pages/Loading.js";
 import Navbar from "./modules/Navbar.js";
 
 import "../utilities.css";
@@ -28,12 +29,6 @@ const moment = require("moment");
 moment().format("dddd, MMMM DD YYYY");
 moment().local();
 
-class Loading extends Component {
-  render() {
-    return <div>Loading...</div>;
-  }
-}
-
 /**
  * Define the "App" component as a class.
  */
@@ -47,7 +42,6 @@ class App extends Component {
       widgetlist: null,
       data: null,
       notes: null,
-      loggedIn: false,
     };
   }
 
@@ -116,7 +110,6 @@ class App extends Component {
         this.setState({
           creator: user._id,
           widgetlist: user.widgetList,
-          loggedIn: true,
         });
         return post("/api/initsocket", { socketid: socket.id });
       })
@@ -158,7 +151,6 @@ class App extends Component {
   handleLogout = () => {
     this.setState({
       creator: undefined,
-      loggedIn: false,
     });
     post("/api/logout").then(() => {
       navigate("/");
@@ -268,7 +260,7 @@ class App extends Component {
   // };
 
   render() {
-    if (this.state.loggedIn) {
+    if (this.state.creator) {
       return (
         <>
           <Navbar
@@ -307,6 +299,7 @@ class App extends Component {
               handleBackClick={() => this.handleBackClick("month")}
               handleNextClick={() => this.handleNextClick("month")}
             />
+            <Loading default />
           </Router>
         </>
       );
@@ -314,13 +307,14 @@ class App extends Component {
       return (
         <>
           <Navbar
-            creator={this.state.creator}
+            //creator={this.state.creator}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
           />
           <Router>
-            <Landing path="/" creator={this.state.creator} />
-            <NotFound default />
+            <Landing path="/" />
+            <Loading default />
+            <NotFound path="/404" />
           </Router>
         </>
       );
