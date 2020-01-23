@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
-import icon from "../../../dist/d.png";
+import icon from "../../../dist/D.png";
 import { get, post } from "../../utilities.js";
 
 import "./Navbar.css";
