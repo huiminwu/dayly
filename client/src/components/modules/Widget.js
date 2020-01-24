@@ -158,14 +158,11 @@ class Widget extends Component {
 
   submitValue = (val) => {
     const params = {
-      creator: this.props.creator,
-      day: this.props.dateObject.date(),
-      month: this.props.dateObject.month(),
-      year: this.props.dateObject.year(),
+      day: this.props.dateObject.format(),
       name: this.props.name,
       value: val,
     };
-    post("/api/day/widget", params);
+    post("/api/widget", params);
   };
 
   render() {

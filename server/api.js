@@ -115,42 +115,30 @@ router.post("/day", (req, res) => {
   });
 });
 
-/*
-  gets list of wigets given widget ids
-*/
-router.get("/day/widget", (req, res) => {
-  const widgetIdList = JSON.parse(req.query.widgetId);
-
-  Widget.find({ _id: { $in: widgetIdList } }).then((data) => {
-    res.send(data);
-  });
-});
-
 /* 
 updates the value of widget
 */
-router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
-  const dayQuery = {
-    creator: req.user._id,
-    day: req.body.day,
-    month: req.body.month,
-    year: req.body.year,
-  };
+router.post("/widget", auth.ensureLoggedIn, (req, res) => {
+  const startOfDay = moment(req.body.day)
+    .local()
+    .startOf("day")
+    .format();
+  const endOfDay = moment(req.body.day)
+    .local()
+    .endOf("day")
+    .format();
 
-  // find the corresponding day
-  Day.findOne(dayQuery).then((day) => {
-    // for each widget, find it in the db
-    // and check if it matches the target name
-    day.widgets.forEach((el) => {
-      Widget.findById(el).then((data) => {
-        // once found, update the value and send back
-        if (data.name === req.body.name) {
-          data.value = req.body.value;
-          data.save().then((updatedWidget) => {
-            res.send(updatedWidget.value);
-          });
-        }
-      });
+  Widget.findOne({
+    creator: req.user._id,
+    name: req.body.name,
+    timestamp: {
+      $gte: startOfDay,
+      $lte: endOfDay,
+    },
+  }).then((widget) => {
+    widget.value = req.body.value;
+    widget.save().then((updated) => {
+      res.send(updated.value);
     });
   });
 });
