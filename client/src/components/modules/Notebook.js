@@ -69,8 +69,6 @@ class Notebook extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.data !== prevProps.data) {
-      console.log("i should be changing the notes");
-      console.log(`i am the parsed data ${this.props.data.notes}`);
       if (this.props.data.notes) {
         const contentStateParsed = JSON.parse(this.props.data.notes);
         const convertedContentState = convertFromRaw(contentStateParsed);
@@ -82,11 +80,6 @@ class Notebook extends Component {
           editorState: EditorState.createEmpty(),
         });
       }
-      // const contentStateParsed = JSON.parse(this.props.data.notes);
-      // const convertedContentState = convertFromRaw(contentStateParsed);
-      // this.setState({
-      //   editorState: EditorState.createWithContent(convertedContentState),
-      // });
     }
   }
 

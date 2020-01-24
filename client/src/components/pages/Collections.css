@@ -1,0 +1,27 @@
+.collections-page-container {
+  width: 90vw;
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.collectionList-container {
+  display: flex;
+  flex-direction: column;
+  width: 20vw;
+}
+
+.collectionList-btn {
+  padding: 16px;
+  background: none;
+}
+
+.collectionList-btn + .collectionList-btn {
+  margin-top: 16px;
+}
+
+.collections-editor {
+  width: 60vw;
+  border: 1px solid red;
+}

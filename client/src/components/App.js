@@ -3,6 +3,7 @@ import { navigate, Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
+import Collections from "./pages/Collections.js";
 import Landing from "./pages/Landing.js";
 import Loading from "./pages/Loading.js";
 import Navbar from "./modules/Navbar.js";
@@ -299,6 +300,7 @@ class App extends Component {
               handleBackClick={() => this.handleBackClick("month")}
               handleNextClick={() => this.handleNextClick("month")}
             />
+            <Collections path="/collections" />
             <Loading default />
           </Router>
         </>

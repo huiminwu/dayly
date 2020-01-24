@@ -15,6 +15,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const User = require("./models/user");
 const Widget = require("./models/widget");
 const Day = require("./models/day");
+const Collection = require("./models/collection");
 
 // import authentication library
 const auth = require("./auth");
