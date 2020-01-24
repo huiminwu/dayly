@@ -43,11 +43,10 @@ class Monthly extends Component {
   };
 
   getWidgetsForMonth() {
-    const date = this.props.dateObject.toDate();
-    const first = new Date(date.getFullYear(), date.getMonth(), 1).toISOString();
-    const last = new Date(date.getFullYear(), date.getMonth() + 1).toISOString();
-
-    get("/api/month/widgets", { firstDay: first, lastDay: last }).then((data) => {
+    const query = {
+      day: this.props.dateObject.format(),
+    };
+    get("/api/month/widgets", query).then((data) => {
       this.setState({
         widgetData: data,
       });
