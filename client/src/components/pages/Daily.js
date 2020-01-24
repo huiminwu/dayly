@@ -35,20 +35,13 @@ class Daily extends Component {
         .month(this.props.oldMonth)
         .date(this.props.oldDay);
       this.props.setToOldDate(dateToView);
-
-      const query = {
-        day: dateToView.format(),
-      };
-
-      const newData = await post("/api/day", query);
-      this.props.viewOldDate(newData);
     } else {
       // if accessed from landing page
       this.setState({ widgetValues: this.props.data.widgets });
     }
   }
 
-  async componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data) {
       this.setState({ widgetValues: this.props.data.widgets });
     }

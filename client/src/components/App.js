@@ -51,14 +51,7 @@ class App extends Component {
         widgetlist: user.widgetList,
       });
 
-      const query = {
-        day: this.state.dateObject.format(),
-      };
-
-      const dayData = await post("/api/day", query);
-      this.setState({
-        data: dayData,
-      });
+      this.getDateData(this.state.dateObject);
     }
   }
 
@@ -75,15 +68,8 @@ class App extends Component {
       .then(() => {
         navigate("/day");
       })
-      .then(async () => {
-        const query = {
-          day: this.state.dateObject.format(),
-        };
-
-        const dayData = await post("/api/day", query);
-        this.setState({
-          data: dayData,
-        });
+      .then(() => {
+        this.getDateData(this.state.dateObject);
       });
   };
 
@@ -96,62 +82,53 @@ class App extends Component {
     });
   };
 
-  async handleBackClick(varToChange) {
+  handleBackClick = async (varToChange) => {
     // update date state
     if (varToChange === "day") {
       this.setState({
         dateObject: this.state.dateObject.subtract(1, "day"),
       });
+      this.getDateData(this.state.dateObject);
     } else {
       this.setState({
         dateObject: this.state.dateObject.subtract(1, "month"),
       });
     }
+  };
 
-    // update data state
-    const params = {
-      day: this.state.dateObject.format(),
-    };
-    const newData = await post("/api/day", params);
-    this.setState({
-      data: newData,
-    });
-  }
-
-  async handleNextClick(varToChange) {
+  handleNextClick = async (varToChange) => {
     // update date state
     if (varToChange === "day") {
       this.setState({
         dateObject: this.state.dateObject.add(1, "day"),
       });
+      this.getDateData(this.state.dateObject);
     } else {
       this.setState({
         dateObject: this.state.dateObject.add(1, "month"),
       });
     }
+  };
+
+  /**
+   *  Methods for overriding current day
+   *  */
+  getDateData = async (date) => {
     // update data state
     const params = {
-      day: this.state.dateObject.format(),
+      day: date.format(),
     };
     const newData = await post("/api/day", params);
     this.setState({
       data: newData,
     });
-  }
-
-  /**
-   *  Methods for overriding current day
-   *  */
-  setToOldDate = (momentObj) => {
-    this.setState({
-      dateObject: momentObj,
-    });
   };
 
-  viewOldDate = (dayData) => {
+  setToOldDate = (date) => {
     this.setState({
-      data: dayData,
+      dateObject: date,
     });
+    this.getDateData(date);
   };
 
   render() {
@@ -182,7 +159,6 @@ class App extends Component {
               dateObject={this.state.dateObject}
               data={this.state.data}
               setToOldDate={this.setToOldDate}
-              viewOldDate={this.viewOldDate}
               handleBackClick={() => this.handleBackClick("day")}
               handleNextClick={() => this.handleNextClick("day")}
             />

@@ -78,6 +78,7 @@ router.post("/day", (req, res) => {
       $lte: endOfDay,
     },
   }).then((n) => {
+    console.log(`i am the discovered notes ${n}`);
     // if it doesn't exist, create it!
     if (n) response.notes = n;
     else {
@@ -86,6 +87,7 @@ router.post("/day", (req, res) => {
         timestamp: startOfDay,
       });
       newNote.save();
+      console.log(`i am the created note ${newNote}`);
       response["notes"] = newNote;
     }
     // and do the same for widgets
@@ -98,7 +100,7 @@ router.post("/day", (req, res) => {
     })
       .sort({ name: 1 })
       .then((w) => {
-        if (w.length === 0)
+        if (w.length === 0) {
           req.user.widgetList.forEach((widget) => {
             newWidget = new Widget({
               creator: req.user._id,
@@ -109,7 +111,8 @@ router.post("/day", (req, res) => {
             newWidget.save();
             response["widgets"].push(newWidget);
           });
-        else {
+          res.send(response);
+        } else {
           response.widgets = w;
           res.send(response);
         }
