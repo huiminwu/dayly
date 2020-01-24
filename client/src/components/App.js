@@ -5,6 +5,7 @@ import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
 import Landing from "./pages/Landing.js";
 import Loading from "./pages/Loading.js";
+import Settings from "./pages/Settings.js"
 import Navbar from "./modules/Navbar.js";
 
 import "../utilities.css";
@@ -38,6 +39,7 @@ class App extends Component {
     super(props);
     this.state = {
       creator: undefined,
+      creatorName: undefined,
       dateObject: moment(),
       widgetlist: null,
       data: null,
@@ -52,6 +54,7 @@ class App extends Component {
       this.setState({
         creator: user._id,
         widgetlist: user.widgetList,
+        creatorName: user.name,
       });
 
       const query = {
@@ -110,6 +113,7 @@ class App extends Component {
         this.setState({
           creator: user._id,
           widgetlist: user.widgetList,
+          creatorName: user.name,
         });
         return post("/api/initsocket", { socketid: socket.id });
       })
@@ -265,6 +269,7 @@ class App extends Component {
         <>
           <Navbar
             creator={this.state.creator}
+            creatorName={this.state.creatorName}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
           />
@@ -279,8 +284,8 @@ class App extends Component {
                 handleNextClick={() => this.handleNextClick("day")}
               />
             ) : (
-              <Loading path="/day" />
-            )}
+                <Loading path="/day" />
+              )}
             {/* View for when you look back on Monthly view */}
             <Daily
               path="/day/:oldYear/:oldMonth/:oldDay"
@@ -298,6 +303,10 @@ class App extends Component {
               widgetlist={this.state.widgetlist}
               handleBackClick={() => this.handleBackClick("month")}
               handleNextClick={() => this.handleNextClick("month")}
+            />
+            <Settings
+              path="/settings"
+              creator={this.state.creator}
             />
             <Loading default />
           </Router>

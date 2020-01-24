@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins|Sacramento&display=swap");
 
+.pfp {
+  height: 40px;
+  width: 40px;
+}
+
+
+
 .Navbar-container {
   display: flex;
   align-items: center;
@@ -32,8 +39,66 @@
   border-bottom: 1px solid transparent;
   text-decoration: none;
 }
+
+
+
 .Navbar-opts_link:hover {
   /* background-color: white; */
   /* color: #000; */
   border-bottom: 1px solid white;
+}
+
+.dropDown-container {
+  position: relative;
+  /* display: inline-block; */
+}
+.dropDown { 
+  /* display: none; */
+  position: absolute;
+  margin-top: 12px;
+  right:0;
+  /* padding: 12px 16px; */
+  /* width: 300px;  */
+  z-index: 2; 
+  background: var(--accent);
+  border: 1px solid rgba(0, 0, 0, 0.04); 
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14); 
+} 
+
+.li-pfp {
+  margin: auto;
+  height: 40px;
+  width: 40px;
+}
+
+ul { 
+  list-style: none; 
+  padding: 0; 
+  margin: auto; 
+} 
+
+li { 
+  padding: 8px 12px; 
+} 
+
+li:hover {
+  background-color: rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+}
+
+.settings {
+  text-align: center;
+  margin: auto;
+}
+
+.name {
+  display: block;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  color: white;
+}
+
+.name-Container:hover {
+  background-color: var(--accent);
 }

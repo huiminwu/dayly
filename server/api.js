@@ -102,6 +102,15 @@ router.post("/day", auth.ensureLoggedIn, (req, res) => {
 });
 
 /*
+  gets user data
+*/
+router.get("/user/widgets", (req, res) => {
+  let widgetList;
+  User.findById(req.user._id).then((user) => (widgetList = user.widgetList));
+  return widgetList;
+});
+
+/*
   gets list of wigets given widget ids
 */
 router.get("/day/widget", (req, res) => {
