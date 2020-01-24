@@ -20,20 +20,6 @@ class Calendar extends Component {
       .format("d");
   };
 
-  handleBackMonth = () => {
-    const newDate = this.props.dateObject.subtract(1, "month");
-    this.setState({
-      dateObject: newDate,
-    });
-  };
-
-  handleNextMonth = () => {
-    const newDate = this.props.dateObject.add(1, "month");
-    this.setState({
-      dateObject: newDate,
-    });
-  };
-
   render() {
     // construct the weekdays
     const weekdays = moment.weekdaysShort();
@@ -104,6 +90,7 @@ class Calendar extends Component {
 
     let daysinmonth = rows.map((d, i) => <tr>{d}</tr>);
 
+    console.log(widgetValues);
     return (
       <>
         <table className="calendar">

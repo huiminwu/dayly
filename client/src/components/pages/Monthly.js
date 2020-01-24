@@ -43,7 +43,10 @@ class Monthly extends Component {
   };
 
   getWidgetsForMonth() {
-    get("/api/month/widgets", { day: this.props.dateObject.format() }).then((data) => {
+    const query = {
+      day: this.props.dateObject.format(),
+    };
+    get("/api/month/widgets", query).then((data) => {
       this.setState({
         widgetData: data,
       });

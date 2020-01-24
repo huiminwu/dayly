@@ -95,23 +95,25 @@ router.post("/day", (req, res) => {
         $gte: startOfDay,
         $lte: endOfDay,
       },
-    }).then((w) => {
-      if (w.length === 0)
-        req.user.widgetList.forEach((widget) => {
-          newWidget = new Widget({
-            creator: req.user._id,
-            name: widget.name,
-            type: widget.widgetType,
-            timestamp: startOfDay,
+    })
+      .sort({ name: 1 })
+      .then((w) => {
+        if (w.length === 0)
+          req.user.widgetList.forEach((widget) => {
+            newWidget = new Widget({
+              creator: req.user._id,
+              name: widget.name,
+              type: widget.widgetType,
+              timestamp: startOfDay,
+            });
+            newWidget.save();
+            response["widgets"].push(newWidget);
           });
-          newWidget.save();
-          response["widgets"].push(newWidget);
-        });
-      else {
-        response.widgets = w;
-        res.send(response);
-      }
-    });
+        else {
+          response.widgets = w;
+          res.send(response);
+        }
+      });
   });
 });
 
@@ -147,11 +149,11 @@ router.post("/widget", auth.ensureLoggedIn, (req, res) => {
  * Retrieves all widgets for given month sorted by timestamp
  */
 router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
-  const startOfMonth = moment(req.body.day)
+  const startOfMonth = moment(req.query.day)
     .local()
     .startOf("month")
     .format();
-  const endOfMonth = moment(req.body.day)
+  const endOfMonth = moment(req.query.day)
     .local()
     .endOf("month")
     .format();
