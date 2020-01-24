@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from "draft-js";
 import "draft-js/dist/Draft.css";
+import { BlockStyleControls } from "../modules/Notebook.js";
 
 import { get, post } from "../../utilities";
 
@@ -19,42 +20,37 @@ class CollectionList extends Component {
     super(props);
   }
 
+  createNewCollection() {
+    const params = {
+      name: "TEST",
+    };
+    post("/api/collections/new", params).then((newCollection) => {
+      console.log("new collection created!");
+      console.log(newCollection);
+    });
+  }
+
   render() {
     return (
       <div className="collectionList-container">
-        {this.props.collectionList.map((collection, k) => (
-          <button
-            key={k}
-            className="collectionList-btn"
-            onClick={() => this.props.changeViewedCollection(collection)}
-          >
-            {collection}
-          </button>
-        ))}
+        {this.props.allCollections ? (
+          <>
+            <input></input>
+            <button onClick={() => this.createNewCollection()}>Create a new collection...</button>
+            {this.props.allCollections.map((collection, k) => (
+              <button
+                key={k}
+                className="collectionList-btn"
+                onClick={() => this.props.changeViewedCollection(collection)}
+              >
+                {collection.name}
+              </button>
+            ))}
+          </>
+        ) : (
+          "Loading..."
+        )}
       </div>
-    );
-  }
-}
-
-class StyleButton extends React.Component {
-  constructor() {
-    super();
-    this.onToggle = (e) => {
-      e.preventDefault();
-      this.props.onToggle(this.props.style);
-    };
-  }
-
-  render() {
-    let className = "RichEditor-styleButton";
-    if (this.props.active) {
-      className += " RichEditor-activeButton";
-    }
-
-    return (
-      <span className={className} onMouseDown={this.onToggle}>
-        {this.props.label}
-      </span>
     );
   }
 }
@@ -81,34 +77,19 @@ class CollectionEditor extends Component {
     this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
   };
 
+  componentDidMount() {
+    // get("/api/collections", { name: this.props.name }).then((collection) => {
+    //   const contentStateParsed = JSON.parse(collection.value);
+    //   const convertedContentState = convertFromRaw(contentStateParsed);
+    //   this.setState({ editorState: EditorState.createWithContent(convertedContentState) });
+    // });
+  }
+
   render() {
     const BLOCK_TYPES = [
       { label: "UL", style: "unordered-list-item" },
       { label: "OL", style: "ordered-list-item" },
     ];
-
-    const BlockStyleControls = (props) => {
-      const { editorState } = props;
-      const selection = editorState.getSelection();
-      const blockType = editorState
-        .getCurrentContent()
-        .getBlockForKey(selection.getStartKey())
-        .getType();
-
-      return (
-        <div className="RichEditor-controls">
-          {BLOCK_TYPES.map((type) => (
-            <StyleButton
-              key={type.label}
-              active={type.style === blockType}
-              label={type.label}
-              onToggle={props.onToggle}
-              style={type.style}
-            />
-          ))}
-        </div>
-      );
-    };
 
     let editorClassName = "RichEditor-editor";
     var contentState = this.state.editorState.getCurrentContent();
@@ -125,7 +106,12 @@ class CollectionEditor extends Component {
 
     return (
       <div className="collections-editor">
-        <BlockStyleControls editorState={this.state.editorState} onToggle={this._toggleBlockType} />
+        <div>{this.props.name}</div>
+        <BlockStyleControls
+          BLOCK_TYPES={BLOCK_TYPES}
+          editorState={this.state.editorState}
+          onToggle={this._toggleBlockType}
+        />
         <div className={editorClassName}>
           <Editor
             editorState={this.state.editorState}
@@ -139,13 +125,12 @@ class CollectionEditor extends Component {
   }
 }
 
-const COLLECTION_LIST = ["ONE", "TWO", "THREE", "FOUR"];
-
 class Collections extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentCollection: COLLECTION_LIST[0],
+      currentCollection: null,
+      allCollections: null,
     };
   }
 
@@ -153,17 +138,35 @@ class Collections extends Component {
     this.setState({
       currentCollection: collection,
     });
-    console.log("now viewing " + collection);
   };
+
+  componentDidMount() {
+    get("/api/collections/all").then((collections) => {
+      this.setState({
+        currentCollection: collections[0],
+        allCollections: collections,
+      });
+      console.log("got all collections");
+      console.log(collections);
+    });
+  }
 
   render() {
     return (
       <div className="collections-page-container">
-        <CollectionList
-          collectionList={COLLECTION_LIST}
-          changeViewedCollection={this.changeViewedCollection}
-        />
-        <CollectionEditor />
+        {this.state.allCollections ? (
+          <CollectionList
+            allCollections={this.state.allCollections}
+            changeViewedCollection={this.changeViewedCollection}
+          />
+        ) : (
+          <div>Loading...</div>
+        )}
+        {this.state.currentCollection ? (
+          <CollectionEditor name={this.state.currentCollection.name} />
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
     );
   }

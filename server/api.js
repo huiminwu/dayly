@@ -176,6 +176,51 @@ router.post("/day/notes", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+router.get("/collections/all", (req, res) => {
+  Collection.find({ creator: req.user._id }).then((collections) => res.send(collections));
+});
+
+router.post("/collections/new", auth.ensureLoggedIn, (req, res) => {
+  const collectionQuery = {
+    creator: req.user._id,
+    name: req.body.name,
+  };
+
+  Collection.findOne(collectionQuery).then((collection) => {
+    if (collection) {
+      res.send({ error: "Duplicate name" });
+    } else {
+      const newCollection = new Collection({
+        creator: req.user._id,
+        name: req.body.name,
+        content: null,
+      });
+      newCollection.save().then((collection) => res.send(collection));
+    }
+  });
+});
+
+router.get("/collections", (req, res) => {
+  const collectionQuery = {
+    creator: req.user._id,
+    name: req.body.name,
+  };
+
+  Collection.findOne(collectionQuery).then((collection) => res.send(collection));
+});
+
+router.post("/collections", auth.ensureLoggedIn, (req, res) => {
+  const collectionQuery = {
+    creator: req.user._id,
+    name: req.body.name,
+  };
+
+  Collection.findOne(collectionQuery).then((collection) => {
+    collection.content = req.body.content;
+    collection.save().then((updatedCollection) => res.send(updatedCollection));
+  });
+});
+
 // Promise.all(
 //   user = new User({
 //     name: "yo",

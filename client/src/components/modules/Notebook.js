@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import debounce from "lodash/debounce";
 
-class StyleButton extends React.Component {
+export class StyleButton extends React.Component {
   constructor() {
     super();
     this.onToggle = (e) => {
@@ -28,6 +28,33 @@ class StyleButton extends React.Component {
       <span className={className} onMouseDown={this.onToggle}>
         {this.props.label}
       </span>
+    );
+  }
+}
+
+export class BlockStyleControls extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const selection = this.props.editorState.getSelection();
+    const blockType = this.props.editorState
+      .getCurrentContent()
+      .getBlockForKey(selection.getStartKey())
+      .getType();
+    return (
+      <div className="RichEditor-controls">
+        {this.props.BLOCK_TYPES.map((type) => (
+          <StyleButton
+            key={type.label}
+            active={type.style === blockType}
+            label={type.label}
+            onToggle={this.props.onToggle}
+            style={type.style}
+          />
+        ))}
+      </div>
     );
   }
 }
@@ -160,29 +187,6 @@ class Notebook extends Component {
       { label: "OL", style: "ordered-list-item" },
     ];
 
-    const BlockStyleControls = (props) => {
-      const { editorState } = props;
-      const selection = editorState.getSelection();
-      const blockType = editorState
-        .getCurrentContent()
-        .getBlockForKey(selection.getStartKey())
-        .getType();
-
-      return (
-        <div className="RichEditor-controls">
-          {BLOCK_TYPES.map((type) => (
-            <StyleButton
-              key={type.label}
-              active={type.style === blockType}
-              label={type.label}
-              onToggle={props.onToggle}
-              style={type.style}
-            />
-          ))}
-        </div>
-      );
-    };
-
     let editorClassName = "RichEditor-editor";
     var contentState = this.state.editorState.getCurrentContent();
     if (!contentState.hasText()) {
@@ -209,6 +213,7 @@ class Notebook extends Component {
             onToggle={this._toggleInlineStyle}
           />
           <BlockStyleControls
+            BLOCK_TYPES={BLOCK_TYPES}
             editorState={this.state.editorState}
             onToggle={this._toggleBlockType}
           />
