@@ -54,6 +54,7 @@ class Notebook extends Component {
         editorState: editorState,
         isSaved: false,
       });
+      this.handleSave(this.state.editorState);
     };
   }
 
@@ -82,11 +83,6 @@ class Notebook extends Component {
           editorState: EditorState.createEmpty(),
         });
       }
-      // const contentStateParsed = JSON.parse(this.props.data.notes);
-      // const convertedContentState = convertFromRaw(contentStateParsed);
-      // this.setState({
-      //   editorState: EditorState.createWithContent(convertedContentState),
-      // });
     }
   }
 
@@ -98,34 +94,14 @@ class Notebook extends Component {
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle));
   };
 
-  handleSave(editorState) {
-    const rawContentState = convertToRaw(editorState.getCurrentContent());
-    const contentStateString = JSON.stringify(rawContentState);
-    const params = {
-      creator: this.props.creator,
-      day: this.props.dateObject.date(),
-      month: this.props.dateObject.month(),
-      year: this.props.dateObject.year(),
-      notes: contentStateString,
-    };
-    post("/api/day/notes", params).then((notes) => {
-      const convertedContentState = convertFromRaw(notes);
-      this.setState({
-        editorState: EditorState.createWithContent(convertedContentState),
-        isSaved: true,
-      });
-    });
-  }
-
-  // autosave code (doesn't work)
-  // handleSave = debounce((editorState) => {
+  // handleSave(editorState) {
   //   const rawContentState = convertToRaw(editorState.getCurrentContent());
   //   const contentStateString = JSON.stringify(rawContentState);
   //   const params = {
   //     creator: this.props.creator,
-  //     day: this.props.day,
-  //     month: this.props.month,
-  //     year: this.props.year,
+  //     day: this.props.dateObject.date(),
+  //     month: this.props.dateObject.month(),
+  //     year: this.props.dateObject.year(),
   //     notes: contentStateString,
   //   };
   //   post("/api/day/notes", params).then((notes) => {
@@ -135,7 +111,33 @@ class Notebook extends Component {
   //       isSaved: true,
   //     });
   //   });
-  // }, 3000);
+  // }
+
+  handleSave = debounce((editorState) => {
+    const rawContentState = convertToRaw(editorState.getCurrentContent());
+    let contentStateString = JSON.stringify(rawContentState);
+    if (!editorState.getCurrentContent().hasText()) {
+      const rawEmptyContentState = convertFromRaw(EditorState.createEmpty());
+      contentStateString = JSON.stringify(rawEmptyContentState);
+    }
+    console.log("here is what is in the editor:");
+    console.log(contentStateString);
+    const params = {
+      creator: this.props.creator,
+      day: this.props.dateObject.date(),
+      month: this.props.dateObject.month(),
+      year: this.props.dateObject.year(),
+      notes: contentStateString,
+    };
+    post("/api/day/notes", params).then((notes) => {
+      console.log("notes saved");
+      const convertedContentState = convertFromRaw(notes);
+      this.setState({
+        editorState: EditorState.createWithContent(convertedContentState),
+        isSaved: true,
+      });
+    });
+  }, 2000);
 
   render() {
     const INLINE_STYLES = [
