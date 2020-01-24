@@ -78,12 +78,26 @@ class CollectionEditor extends Component {
   };
 
   componentDidMount() {
-    // get("/api/collections", { name: this.props.name }).then((collection) => {
-    //   const contentStateParsed = JSON.parse(collection.value);
-    //   const convertedContentState = convertFromRaw(contentStateParsed);
-    //   this.setState({ editorState: EditorState.createWithContent(convertedContentState) });
-    // });
+    get("/api/collections", { name: this.props.name }).then((content) => {
+      if (content) {
+        const convertedContentState = convertFromRaw(content);
+        this.setState({ editorState: EditorState.createWithContent(convertedContentState) });
+      } else {
+        this.setState({ editorState: EditorState.createEmpty() });
+      }
+    });
   }
+
+  handleSave = (editorState) => {
+    const rawContentState = convertToRaw(editorState.getCurrentContent());
+    const contentStateString = JSON.stringify(rawContentState);
+    const params = {
+      name: this.props.name,
+      content: contentStateString,
+    };
+
+    post("/api/collections", params).then((newContent) => console.log("saved"));
+  };
 
   render() {
     const BLOCK_TYPES = [
@@ -119,6 +133,7 @@ class CollectionEditor extends Component {
             handleKeyCommand={this.handleKeyCommand}
             placeholder="Start making a list!"
           />
+          <button onClick={() => this.handleSave(this.state.editorState)}>Save</button>
         </div>
       </div>
     );

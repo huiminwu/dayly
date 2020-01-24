@@ -203,10 +203,10 @@ router.post("/collections/new", auth.ensureLoggedIn, (req, res) => {
 router.get("/collections", (req, res) => {
   const collectionQuery = {
     creator: req.user._id,
-    name: req.body.name,
+    name: req.query.name,
   };
 
-  Collection.findOne(collectionQuery).then((collection) => res.send(collection));
+  Collection.findOne(collectionQuery).then((collection) => res.send(collection.content));
 });
 
 router.post("/collections", auth.ensureLoggedIn, (req, res) => {
@@ -217,7 +217,7 @@ router.post("/collections", auth.ensureLoggedIn, (req, res) => {
 
   Collection.findOne(collectionQuery).then((collection) => {
     collection.content = req.body.content;
-    collection.save().then((updatedCollection) => res.send(updatedCollection));
+    collection.save().then((updatedCollection) => res.send(updatedCollection.content));
   });
 });
 
