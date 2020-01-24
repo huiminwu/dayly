@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import debounce from "lodash/debounce";
 
-class StyleButton extends React.Component {
+class StyleButton extends Component {
   constructor() {
     super();
     this.onToggle = (e) => {
@@ -28,6 +28,85 @@ class StyleButton extends React.Component {
       <span className={className} onMouseDown={this.onToggle}>
         {this.props.label}
       </span>
+    );
+  }
+}
+
+class FontDropdown extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentFont: "Pippins",
+    };
+  }
+
+  render() {
+    const selection = this.props.editorState.getSelection();
+    const blockType = this.props.editorState
+      .getCurrentContent()
+      .getBlockForKey(selection.getStartKey())
+      .getType();
+    return (
+      <select value={this.state.currentFont} onChange={this.props.onToggle}>
+        <option value="">Select a font...</option>
+        {this.props.FONTS.map((font, k) => {
+          return (
+            <option key={k} value={font.style}>
+              {font.label}
+            </option>
+          );
+        })}
+      </select>
+    );
+  }
+}
+
+class InlineStyleControls extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const currentStyle = this.props.editorState.getCurrentInlineStyle();
+    return (
+      <div className="RichEditor-controls">
+        {this.props.INLINE_STYLES.map((type) => (
+          <StyleButton
+            key={type.label}
+            active={currentStyle.has(type.style)}
+            label={type.label}
+            onToggle={this.props.onToggle}
+            style={type.style}
+          />
+        ))}
+      </div>
+    );
+  }
+}
+
+class BlockStyleControls extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const selection = this.props.editorState.getSelection();
+    const blockType = this.props.editorState
+      .getCurrentContent()
+      .getBlockForKey(selection.getStartKey())
+      .getType();
+    return (
+      <div className="RichEditor-controls">
+        {this.props.BLOCK_TYPES.map((type) => (
+          <StyleButton
+            key={type.label}
+            active={type.style === blockType}
+            label={type.label}
+            onToggle={this.props.onToggle}
+            style={type.style}
+          />
+        ))}
+      </div>
     );
   }
 }
@@ -82,11 +161,6 @@ class Notebook extends Component {
           editorState: EditorState.createEmpty(),
         });
       }
-      // const contentStateParsed = JSON.parse(this.props.data.notes);
-      // const convertedContentState = convertFromRaw(contentStateParsed);
-      // this.setState({
-      //   editorState: EditorState.createWithContent(convertedContentState),
-      // });
     }
   }
 
@@ -144,51 +218,36 @@ class Notebook extends Component {
       { label: "Underline", style: "UNDERLINE" },
     ];
 
-    const InlineStyleControls = (props) => {
-      const currentStyle = props.editorState.getCurrentInlineStyle();
-      return (
-        <div className="RichEditor-controls">
-          {INLINE_STYLES.map((type) => (
-            <StyleButton
-              key={type.label}
-              active={currentStyle.has(type.style)}
-              label={type.label}
-              onToggle={props.onToggle}
-              style={type.style}
-            />
-          ))}
-        </div>
-      );
-    };
-
     const BLOCK_TYPES = [
       { label: "H1", style: "header-one" },
       { label: "UL", style: "unordered-list-item" },
       { label: "OL", style: "ordered-list-item" },
     ];
 
-    const BlockStyleControls = (props) => {
-      const { editorState } = props;
-      const selection = editorState.getSelection();
-      const blockType = editorState
-        .getCurrentContent()
-        .getBlockForKey(selection.getStartKey())
-        .getType();
-
-      return (
-        <div className="RichEditor-controls">
-          {BLOCK_TYPES.map((type) => (
-            <StyleButton
-              key={type.label}
-              active={type.style === blockType}
-              label={type.label}
-              onToggle={props.onToggle}
-              style={type.style}
-            />
-          ))}
-        </div>
-      );
+    const customStyleMap = {
+      PIPPINS: {
+        fontFamily: "'Pippins', sans-serif",
+      },
+      LORA: {
+        fontFamily: "'Lora', serif",
+      },
+      MONTSERRAT: {
+        fontFamily: "'Montserrat', sans-serif",
+      },
+      INCONSOLATA: {
+        fontFamily: "'Inconsolata', monospace",
+      },
+      NEUCHA: {
+        fontFamily: "'Neucha', sans-serif",
+      },
     };
+
+    const FONTS = [
+      { label: "Pippins", style: "PIPPINS" },
+      { label: "Lora", style: "LORA" },
+      { label: "Montserrat", style: "MONTSERRAT" },
+      { label: "Inconsolata", style: "INCONSOLATA" },
+    ];
 
     let editorClassName = "RichEditor-editor";
     var contentState = this.state.editorState.getCurrentContent();
@@ -211,11 +270,18 @@ class Notebook extends Component {
     return (
       <div className="notes-section">
         <div className="RichEditor-root">
+          <FontDropdown
+            FONTS={FONTS}
+            editorState={this.state.editorState}
+            onToggle={this._toggleInlineStyle}
+          />
           <InlineStyleControls
+            INLINE_STYLES={INLINE_STYLES}
             editorState={this.state.editorState}
             onToggle={this._toggleInlineStyle}
           />
           <BlockStyleControls
+            BLOCK_TYPES={BLOCK_TYPES}
             editorState={this.state.editorState}
             onToggle={this._toggleBlockType}
           />
@@ -223,6 +289,7 @@ class Notebook extends Component {
             <Editor
               editorState={this.state.editorState}
               onChange={this.onChange}
+              customStyleMap={customStyleMap}
               handleKeyCommand={this.handleKeyCommand}
               placeholder="How was your day?"
             />
