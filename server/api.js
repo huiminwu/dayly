@@ -63,11 +63,13 @@ router.post("/day", (req, res) => {
     widgets: [],
   };
   const startOfDay = moment(req.body.day)
+    .local()
     .startOf("day")
-    .toISOString();
+    .format();
   const endOfDay = moment(req.body.day)
+    .local()
     .endOf("day")
-    .toISOString();
+    .format();
 
   Note.findOne({
     creator: req.user._id,
@@ -79,9 +81,11 @@ router.post("/day", (req, res) => {
     // if it doesn't exist, create it!
     if (n) response.notes = n;
     else {
+      console.log("creating new!");
+
       newNote = new Note({
         creator: req.user._id,
-        timestamp: new Date(req.body.day),
+        timestamp: startOfDay,
       });
       newNote.save();
       response["notes"] = newNote;
@@ -100,7 +104,7 @@ router.post("/day", (req, res) => {
             creator: req.user._id,
             name: widget.name,
             type: widget.widgetType,
-            timestamp: new Date(req.body.day),
+            timestamp: startOfDay,
           });
           newWidget.save();
           response["widgets"].push(newWidget);
@@ -111,50 +115,6 @@ router.post("/day", (req, res) => {
         res.send(response);
       }
     });
-  });
-});
-
-/*
- creates new notes and widget if it doesn't already exist
- */
-router.post("/day", auth.ensureLoggedIn, (req, res) => {
-  let widgetList;
-
-  Day.find({
-    creator: req.user._id,
-    day: req.body.day,
-    month: req.body.month,
-    year: req.body.year,
-  }).then((days) => {
-    if (days.length === 0) {
-      User.findById(req.user._id)
-        .then((user) => (widgetList = user.widgetList))
-        .then(() => {
-          let widgetObjs = widgetList.map((widget) => {
-            newWidget = new Widget({
-              creator: req.user._id,
-              name: widget.name,
-              type: widget.widgetType,
-              value: "",
-              timestamp: new Date(req.body.year, req.body.month, req.body.day),
-            });
-            newWidget.save();
-            return newWidget;
-          });
-          const newDay = new Day({
-            creator: req.user._id,
-            day: req.body.day,
-            month: req.body.month,
-            year: req.body.year,
-            widgets: widgetObjs.map((widget) => widget._id),
-          });
-          newDay.save().then((data) => {
-            res.send(data);
-          });
-        });
-    } else {
-      res.send(false);
-    }
   });
 });
 
