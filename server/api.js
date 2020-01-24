@@ -115,9 +115,9 @@ router.post("/day", (req, res) => {
   });
 });
 
-/* 
-updates the value of widget
-*/
+/**
+ * Updates the value of the widget instance for specified day
+ */
 router.post("/widget", auth.ensureLoggedIn, (req, res) => {
   const startOfDay = moment(req.body.day)
     .local()
@@ -143,15 +143,24 @@ router.post("/widget", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-/*
- gets widgets created from [firstDay, lastDay)
-*/
+/**
+ * Retrieves all widgets for given month sorted by timestamp
+ */
 router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
+  const startOfMonth = moment(req.body.day)
+    .local()
+    .startOf("month")
+    .format();
+  const endOfMonth = moment(req.body.day)
+    .local()
+    .endOf("month")
+    .format();
+
   Widget.find({
     creator: req.user._id,
     timestamp: {
-      $gte: req.query.firstDay,
-      $lt: req.query.lastDay,
+      $gte: startOfMonth,
+      $lt: endOfMonth,
     },
   })
     .sort({ timestamp: 1 })
@@ -160,6 +169,9 @@ router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
     });
 });
 
+/**
+ * Updates the value of the note instance for specified day
+ */
 router.post("/notes", auth.ensureLoggedIn, (req, res) => {
   const startOfDay = moment(req.body.day)
     .local()

@@ -186,7 +186,6 @@ class App extends Component {
             />
             <Monthly
               path="/month"
-              creator={this.state.creator}
               dateObject={this.state.dateObject}
               widgetlist={this.state.widgetlist}
               handleBackClick={() => this.handleBackClick("month")}
