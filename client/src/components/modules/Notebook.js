@@ -54,6 +54,7 @@ class Notebook extends Component {
         editorState: editorState,
         isSaved: false,
       });
+      console.log(JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent())));
       this.handleSave(this.state.editorState);
     };
   }
@@ -70,8 +71,6 @@ class Notebook extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.data !== prevProps.data) {
-      console.log("i should be changing the notes");
-      console.log(`i am the parsed data ${this.props.data.notes}`);
       if (this.props.data.notes) {
         const contentStateParsed = JSON.parse(this.props.data.notes);
         const convertedContentState = convertFromRaw(contentStateParsed);
@@ -114,10 +113,14 @@ class Notebook extends Component {
   // }
 
   handleSave = debounce((editorState) => {
+    const currentSelection = editorState.getSelection();
+
+    console.log(editorState.getCurrentContent().hasText());
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     let contentStateString = JSON.stringify(rawContentState);
     if (!editorState.getCurrentContent().hasText()) {
-      const rawEmptyContentState = convertFromRaw(EditorState.createEmpty());
+      console.log("YOU DELETED THINGS");
+      const rawEmptyContentState = convertToRaw(EditorState.createEmpty().getCurrentContent());
       contentStateString = JSON.stringify(rawEmptyContentState);
     }
     console.log("here is what is in the editor:");
@@ -132,8 +135,9 @@ class Notebook extends Component {
     post("/api/day/notes", params).then((notes) => {
       console.log("notes saved");
       const convertedContentState = convertFromRaw(notes);
+      const newStateContent = EditorState.createWithContent(convertedContentState);
       this.setState({
-        editorState: EditorState.createWithContent(convertedContentState),
+        editorState: EditorState.forceSelection(newStateContent, currentSelection),
         isSaved: true,
       });
     });
