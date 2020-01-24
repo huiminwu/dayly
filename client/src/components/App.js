@@ -97,6 +97,7 @@ class App extends Component {
   };
 
   async handleBackClick(varToChange) {
+    // update date state
     if (varToChange === "day") {
       this.setState({
         dateObject: this.state.dateObject.subtract(1, "day"),
@@ -107,18 +108,18 @@ class App extends Component {
       });
     }
 
-    // Create a new Day collection if it does not exist
+    // update data state
     const params = {
-      day: this.state.dateObject.date(),
+      day: this.state.dateObject.format(),
     };
-
-    const dayData = await post("/api/day", params);
+    const newData = await post("/api/day", params);
     this.setState({
-      data: dayData,
+      data: newData,
     });
   }
 
   async handleNextClick(varToChange) {
+    // update date state
     if (varToChange === "day") {
       this.setState({
         dateObject: this.state.dateObject.add(1, "day"),
@@ -128,18 +129,19 @@ class App extends Component {
         dateObject: this.state.dateObject.add(1, "month"),
       });
     }
-    // Create a new Day collection if it does not exist
+    // update data state
     const params = {
-      day: this.state.dateObject.date(),
+      day: this.state.dateObject.format(),
     };
-
-    const dayData = await post("/api/day", params);
+    const newData = await post("/api/day", params);
     this.setState({
-      data: day,
+      data: newData,
     });
   }
 
-  // methods to overwrite todays date
+  /**
+   *  Methods for overriding current day
+   *  */
   setToOldDate = (momentObj) => {
     this.setState({
       dateObject: momentObj,

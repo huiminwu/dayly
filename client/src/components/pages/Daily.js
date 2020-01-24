@@ -12,7 +12,6 @@ import "./Daily.css";
  * Daily is a component for displaying the daily view
  *
  * Proptypes
- * @param {ObjectId} creator
  * @param {moment} dateObject
  * @param {Array} widgetlist list of widgets, part of user object
  * @param {Array} widgetId list of widget IDs, part of day object
@@ -68,14 +67,11 @@ class Daily extends Component {
     this.setState({ widgetValues: this.props.data.widgets });
   }
 
-  // async componentDidUpdate(prevProps, prevState) {
-  //   if (prevProps.data !== this.props.data) {
-  //     let widgetArray = await get("/api/day/widget", {
-  //       widgetId: JSON.stringify(this.props.data.widgets),
-  //     });
-  //     this.setState({ widgetValues: widgetArray });
-  //   }
-  // }
+  async componentDidUpdate(prevProps, prevState) {
+    if (prevProps.data !== this.props.data) {
+      this.setState({ widgetValues: this.props.data.widgets });
+    }
+  }
 
   render() {
     let widgets = "Loading...";
