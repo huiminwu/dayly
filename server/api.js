@@ -81,8 +81,6 @@ router.post("/day", (req, res) => {
     // if it doesn't exist, create it!
     if (n) response.notes = n;
     else {
-      console.log("creating new!");
-
       newNote = new Note({
         creator: req.user._id,
         timestamp: startOfDay,
@@ -111,7 +109,6 @@ router.post("/day", (req, res) => {
         });
       else {
         response.widgets = w;
-        console.log(response);
         res.send(response);
       }
     });
@@ -175,19 +172,26 @@ router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
     });
 });
 
-router.post("/day/notes", auth.ensureLoggedIn, (req, res) => {
-  const dayQuery = {
-    creator: req.user._id,
-    day: req.body.day,
-    month: req.body.month,
-    year: req.body.year,
-  };
+router.post("/notes", auth.ensureLoggedIn, (req, res) => {
+  const startOfDay = moment(req.body.day)
+    .local()
+    .startOf("day")
+    .format();
+  const endOfDay = moment(req.body.day)
+    .local()
+    .endOf("day")
+    .format();
 
-  // find the corresponding day, replace notes, and send back
-  Day.findOne(dayQuery).then((day) => {
-    day.notes = req.body.notes;
-    day.save().then((updatedDay) => {
-      res.send(updatedDay.notes);
+  Note.findOne({
+    creator: req.user._id,
+    timestamp: {
+      $gte: startOfDay,
+      $lte: endOfDay,
+    },
+  }).then((note) => {
+    note.value = req.body.value;
+    note.save().then((updated) => {
+      res.send(updated.value);
     });
   });
 });
