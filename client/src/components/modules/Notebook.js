@@ -35,9 +35,9 @@ class StyleButton extends Component {
 class FontDropdown extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentFont: "Pippins",
-    };
+    // this.state = {
+    //   currentFont: "Pippins",
+    // };
   }
 
   render() {
@@ -47,16 +47,27 @@ class FontDropdown extends Component {
       .getBlockForKey(selection.getStartKey())
       .getType();
     return (
-      <select value={this.state.currentFont} onChange={this.props.onToggle}>
-        <option value="">Select a font...</option>
-        {this.props.FONTS.map((font, k) => {
-          return (
-            <option key={k} value={font.style}>
-              {font.label}
-            </option>
-          );
-        })}
-      </select>
+      // <select value={this.state.currentFont} onChange={this.props.onToggle}>
+      //   <option value="">Select a font...</option>
+      //   {this.props.FONTS.map((font, k) => {
+      //     return (
+      //       <option key={k} value={font.style}>
+      //         {font.label}
+      //       </option>
+      //     );
+      //   })}
+      // </select>
+      <div className="RichEditor-controls">
+        {this.props.INLINE_STYLES.map((type) => (
+          <StyleButton
+            key={type.label}
+            active={currentStyle.has(type.style)}
+            label={type.label}
+            onToggle={this.props.onToggle}
+            style={type.style}
+          />
+        ))}
+      </div>
     );
   }
 }
