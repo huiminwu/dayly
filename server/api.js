@@ -97,26 +97,24 @@ router.post("/day", (req, res) => {
         $gte: startOfDay,
         $lte: endOfDay,
       },
-    })
-      .sort({ name: 1 })
-      .then((w) => {
-        if (w.length === 0) {
-          req.user.widgetList.forEach((widget) => {
-            newWidget = new Widget({
-              creator: req.user._id,
-              name: widget.name,
-              type: widget.widgetType,
-              timestamp: startOfDay,
-            });
-            newWidget.save();
-            response["widgets"].push(newWidget);
+    }).then((w) => {
+      if (w.length === 0) {
+        req.user.widgetList.forEach((widget) => {
+          newWidget = new Widget({
+            creator: req.user._id,
+            name: widget.name,
+            type: widget.widgetType,
+            timestamp: startOfDay,
           });
-          res.send(response);
-        } else {
-          response.widgets = w;
-          res.send(response);
-        }
-      });
+          newWidget.save();
+          response["widgets"].push(newWidget);
+        });
+        res.send(response);
+      } else {
+        response.widgets = w;
+        res.send(response);
+      }
+    });
   });
 });
 
