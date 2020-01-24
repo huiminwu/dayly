@@ -59,12 +59,13 @@ class StyleButton extends React.Component {
   }
 }
 
+class Editable extends Component {}
+
 class CollectionEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty(),
-      title: "Untitled",
       isSaved: true,
     };
 
