@@ -35,14 +35,14 @@ class BinaryWidget extends Component {
       <div>
         <div className="widget-name">{this.props.name}</div>
         <button
-          className={`yes-btn ${parseInt(this.state.value) === 1 ? "submitted-val" : ""}`}
-          onClick={() => this.handleOnClick(1)}
+          className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
+          onClick={() => this.handleOnClick("true")}
         >
           <FontAwesomeIcon icon="check" />
         </button>
         <button
-          className={`no-btn ${parseInt(this.state.value) === 0 ? "submitted-val" : ""}`}
-          onClick={() => this.handleOnClick(0)}
+          className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
+          onClick={() => this.handleOnClick("false")}
         >
           <FontAwesomeIcon icon="times" />
         </button>
