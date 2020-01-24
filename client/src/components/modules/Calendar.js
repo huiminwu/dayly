@@ -90,7 +90,6 @@ class Calendar extends Component {
 
     let daysinmonth = rows.map((d, i) => <tr>{d}</tr>);
 
-    console.log(widgetValues);
     return (
       <>
         <table className="calendar">
