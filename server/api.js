@@ -9,12 +9,14 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
+const moment = require("moment");
 const ObjectId = mongoose.Types.ObjectId;
 
 // import models so we can interact with the database
 const User = require("./models/user");
 const Widget = require("./models/widget");
 const Day = require("./models/day");
+const Note = require("./models/note");
 
 // import authentication library
 const auth = require("./auth");
@@ -46,19 +48,74 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-router.get("/day", (req, res) => {
-  Day.findOne({
+/**
+ * Given the start and end of a day,
+ * if it already exists, return the notes and widgets associated with it in the form of a dict
+ * otherwise, create them and return them
+ *
+ * { notes: String,
+ *   widgets: [],
+ * }
+ */
+router.post("/day", (req, res) => {
+  let response = {
+    notes: null,
+    widgets: [],
+  };
+  const startOfDay = moment(req.body.day)
+    .startOf("day")
+    .toISOString();
+  const endOfDay = moment(req.body.day)
+    .endOf("day")
+    .toISOString();
+
+  Note.findOne({
     creator: req.user._id,
-    day: req.query.day,
-    month: req.query.month,
-    year: req.query.year,
-  }).then((day) => {
-    res.send(day);
+    timestamp: {
+      $gte: startOfDay,
+      $lte: endOfDay,
+    },
+  }).then((n) => {
+    // if it doesn't exist, create it!
+    if (n) response.notes = n;
+    else {
+      newNote = new Note({
+        creator: req.user._id,
+        timestamp: new Date(req.body.day),
+      });
+      newNote.save();
+      response["notes"] = newNote;
+    }
+    // and do the same for widgets
+    Widget.find({
+      creator: req.user._id,
+      timestamp: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    }).then((w) => {
+      if (w.length === 0)
+        req.user.widgetList.forEach((widget) => {
+          newWidget = new Widget({
+            creator: req.user._id,
+            name: widget.name,
+            type: widget.widgetType,
+            timestamp: new Date(req.body.day),
+          });
+          newWidget.save();
+          response["widgets"].push(newWidget);
+        });
+      else {
+        response.widgets = w;
+        console.log(response);
+        res.send(response);
+      }
+    });
   });
 });
 
 /*
- creates new Day if it doesn't already exist
+ creates new notes and widget if it doesn't already exist
  */
 router.post("/day", auth.ensureLoggedIn, (req, res) => {
   let widgetList;

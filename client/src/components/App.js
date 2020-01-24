@@ -26,8 +26,6 @@ import {
 library.add(faBold, faItalic, faUnderline, faAngleLeft, faAngleRight, faCheck, faTimes);
 
 const moment = require("moment");
-moment().format("dddd, MMMM DD YYYY");
-moment().local();
 
 /**
  * Define the "App" component as a class.
@@ -38,7 +36,7 @@ class App extends Component {
     super(props);
     this.state = {
       creator: undefined,
-      dateObject: moment(),
+      dateObject: moment().local(),
       widgetlist: null,
       data: null,
       notes: null,
@@ -117,34 +115,14 @@ class App extends Component {
         navigate("/day");
       })
       .then(async () => {
-        // After logging in,
-        // Create a new Day collection if it does not exist
-        const params = {
-          day: this.state.dateObject.date(),
-          month: this.state.dateObject.month(),
-          year: this.state.dateObject.year(),
+        const query = {
+          day: this.state.dateObject.format(),
         };
 
-        const day = await post("/api/day", params);
+        console.log(query);
 
-        // If created, set data to the resulting instance
-        if (day) {
-          this.setState({
-            data: day,
-          });
-        } else {
-          // Otherwise, retrieve the existing data
-          const query = {
-            day: this.state.dateObject.date(),
-            month: this.state.dateObject.month(),
-            year: this.state.dateObject.year(),
-          };
-
-          const dayData = await get("/api/day", query);
-          this.setState({
-            data: dayData,
-          });
-        }
+        const data = await post("/api/day", query);
+        console.log(data);
       });
   };
 
