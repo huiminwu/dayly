@@ -46,7 +46,6 @@ class Yearly extends Component {
           data[month] = [widget];
         }
       });
-      console.log(data);
       this.setState({
         widgetData: data,
       });

@@ -140,6 +140,12 @@ class App extends Component {
     this.getDateData(date);
   };
 
+  viewToday = () => {
+    this.setState({
+      dateObject: moment().local(),
+    });
+  };
+
   render() {
     if (this.state.creator) {
       return (
@@ -148,6 +154,7 @@ class App extends Component {
             creator={this.state.creator}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
+            handleViewChange={this.viewToday}
           />
           <Router>
             <Landing path="/" creator={this.state.creator} />
@@ -196,6 +203,7 @@ class App extends Component {
             //creator={this.state.creator}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
+            handleViewChange={this.viewToday}
           />
           <Router>
             <Landing path="/" />
