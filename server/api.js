@@ -9,12 +9,15 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
+const moment = require("moment");
 const ObjectId = mongoose.Types.ObjectId;
 
 // import models so we can interact with the database
 const User = require("./models/user");
 const Widget = require("./models/widget");
 const Day = require("./models/day");
+const Note = require("./models/note");
+const Collection = require("./models/collection");
 
 // import authentication library
 const auth = require("./auth");
@@ -46,119 +49,120 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-router.get("/day", (req, res) => {
-  Day.findOne({
-    creator: req.user._id,
-    day: req.query.day,
-    month: req.query.month,
-    year: req.query.year,
-  }).then((day) => {
-    res.send(day);
-  });
-});
-
-/*
- creates new Day if it doesn't already exist
+/**
+ * Given the start and end of a day,
+ * if it already exists, return the notes and widgets associated with it in the form of a dict
+ * otherwise, create them and return them
+ *
+ * { notes: String,
+ *   widgets: [],
+ * }
  */
-router.post("/day", auth.ensureLoggedIn, (req, res) => {
-  let widgetList;
+router.post("/day", (req, res) => {
+  let response = {
+    notes: null,
+    widgets: [],
+  };
+  const startOfDay = moment(req.body.day)
+    .local()
+    .startOf("day");
+  const endOfDay = moment(req.body.day)
+    .local()
+    .endOf("day");
 
-  Day.find({
+  Note.findOne({
     creator: req.user._id,
-    day: req.body.day,
-    month: req.body.month,
-    year: req.body.year,
-  }).then((days) => {
-    if (days.length === 0) {
-      User.findById(req.user._id)
-        .then((user) => (widgetList = user.widgetList))
-        .then(() => {
-          let widgetObjs = widgetList.map((widget) => {
+    timestamp: {
+      $gte: startOfDay.format(),
+      $lte: endOfDay.format(),
+    },
+  }).then((n) => {
+    // if it doesn't exist, create it!
+    if (n) response.notes = n;
+    else {
+      newNote = new Note({
+        creator: req.user._id,
+        timestamp: startOfDay,
+      });
+      newNote.save();
+      response["notes"] = newNote;
+    }
+    // and do the same for widgets
+    Widget.find({
+      creator: req.user._id,
+      timestamp: {
+        $gte: startOfDay.format(),
+        $lte: endOfDay.format(),
+      },
+    })
+      .sort({ type: -1, timestamp: 1 })
+      .then((w) => {
+        if (w.length === 0) {
+          req.user.widgetList.forEach((widget) => {
             newWidget = new Widget({
               creator: req.user._id,
               name: widget.name,
               type: widget.widgetType,
-              value: "",
-              timestamp: new Date(req.body.year, req.body.month, req.body.day),
+              timestamp: startOfDay.add(1, "minute"),
             });
             newWidget.save();
-            return newWidget;
+            response["widgets"].push(newWidget);
           });
-          const newDay = new Day({
-            creator: req.user._id,
-            day: req.body.day,
-            month: req.body.month,
-            year: req.body.year,
-            widgets: widgetObjs.map((widget) => widget._id),
-          });
-          newDay.save().then((data) => {
-            res.send(data);
-          });
-        });
-    } else {
-      res.send(false);
-    }
-  });
-});
-
-/*
-  gets user data
-*/
-router.get("/user/widgets", (req, res) => {
-  let widgetList;
-  User.findById(req.user._id).then((user) => (widgetList = user.widgetList));
-  return widgetList;
-});
-
-/*
-  gets list of wigets given widget ids
-*/
-router.get("/day/widget", (req, res) => {
-  const widgetIdList = JSON.parse(req.query.widgetId);
-
-  Widget.find({ _id: { $in: widgetIdList } }).then((data) => {
-    res.send(data);
-  });
-});
-
-/* 
-updates the value of widget
-*/
-router.post("/day/widget", auth.ensureLoggedIn, (req, res) => {
-  const dayQuery = {
-    creator: req.user._id,
-    day: req.body.day,
-    month: req.body.month,
-    year: req.body.year,
-  };
-
-  // find the corresponding day
-  Day.findOne(dayQuery).then((day) => {
-    // for each widget, find it in the db
-    // and check if it matches the target name
-    day.widgets.forEach((el) => {
-      Widget.findById(el).then((data) => {
-        // once found, update the value and send back
-        if (data.name === req.body.name) {
-          data.value = req.body.value;
-          data.save().then((updatedWidget) => {
-            res.send(updatedWidget.value);
-          });
+          res.send(response);
+        } else {
+          response.widgets = w;
+          res.send(response);
         }
       });
+  });
+});
+
+/**
+ * Updates the value of the widget instance for specified day
+ */
+router.post("/widget", auth.ensureLoggedIn, (req, res) => {
+  const startOfDay = moment(req.body.day)
+    .local()
+    .startOf("day")
+    .format();
+  const endOfDay = moment(req.body.day)
+    .local()
+    .endOf("day")
+    .format();
+
+  Widget.findOne({
+    creator: req.user._id,
+    name: req.body.name,
+    timestamp: {
+      $gte: startOfDay,
+      $lte: endOfDay,
+    },
+  }).then((widget) => {
+    widget.value = req.body.value;
+    widget.save().then((updated) => {
+      res.send(updated.value);
     });
   });
 });
 
-/*
- gets widgets created from [firstDay, lastDay)
-*/
+/**
+ * Retrieves all widgets for given month sorted by timestamp
+ */
 router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
+  const startOfMonth = moment(req.query.day)
+    .local()
+    .startOf("month")
+    .format();
+  const endOfMonth = moment(req.query.day)
+    .local()
+    .endOf("month")
+    .format();
+
   Widget.find({
     creator: req.user._id,
     timestamp: {
-      $gte: req.query.firstDay,
-      $lt: req.query.lastDay,
+      $gte: startOfMonth,
+      $lt: endOfMonth,
     },
   })
     .sort({ timestamp: 1 })
@@ -167,20 +171,129 @@ router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
     });
 });
 
-router.post("/day/notes", auth.ensureLoggedIn, (req, res) => {
-  const dayQuery = {
+/**
+ * Retrieves all widgets for given year sorted by timestamp
+ */
+router.get("/year/widgets", auth.ensureLoggedIn, (req, res) => {
+  const startOfYear = moment(req.query.day)
+    .local()
+    .startOf("year")
+    .format();
+  const endOfYear = moment(req.query.day)
+    .local()
+    .endOf("year")
+    .format();
+
+  Widget.find({
     creator: req.user._id,
-    day: req.body.day,
-    month: req.body.month,
-    year: req.body.year,
+    timestamp: {
+      $gte: startOfYear,
+      $lte: endOfYear,
+    },
+  })
+    .sort({ timestamp: 1 })
+    .then((widgets) => {
+      res.send(widgets);
+    });
+});
+
+/**
+ * Updates the value of the note instance for specified day
+ */
+router.post("/notes", auth.ensureLoggedIn, (req, res) => {
+  const startOfDay = moment(req.body.day)
+    .local()
+    .startOf("day")
+    .format();
+  const endOfDay = moment(req.body.day)
+    .local()
+    .endOf("day")
+    .format();
+
+  Note.findOne({
+    creator: req.user._id,
+    timestamp: {
+      $gte: startOfDay,
+      $lte: endOfDay,
+    },
+  }).then((note) => {
+    note.value = req.body.value;
+    note.save().then((updated) => {
+      res.send(updated.value);
+    });
+  });
+});
+
+router.get("/collections/all", (req, res) => {
+  Collection.find({ creator: req.user._id }).then((collections) => res.send(collections));
+});
+
+router.post("/collections/new", auth.ensureLoggedIn, (req, res) => {
+  if (!req.body.name) {
+    res.send({ error: "No name entered" });
+  } else {
+    const collectionQuery = {
+      creator: req.user._id,
+      name: req.body.name,
+    };
+
+    Collection.findOne(collectionQuery).then((collection) => {
+      if (collection) {
+        res.send({ error: "Duplicate name" });
+      } else {
+        const newCollection = new Collection({
+          creator: req.user._id,
+          name: req.body.name,
+          content: "",
+        });
+        newCollection.save().then((collection) => res.send(collection));
+      }
+    });
+  }
+});
+
+router.post("/collections/rename", auth.ensureLoggedIn, (req, res) => {
+  if (!req.body.newName) {
+    res.send({ error: "No name entered" });
+  } else {
+    Collection.findOne({ creator: req.user._id, name: req.body.newName }).then((collection) => {
+      if (collection) {
+        res.send({ error: "Duplicate name" });
+      } else {
+        Collection.findOne({ creator: req.user._id, name: req.body.oldName }).then((collection) => {
+          collection.name = req.body.newName;
+          collection.save().then((updatedCollection) => res.send(updatedCollection));
+        });
+      }
+    });
+  }
+});
+
+router.post("/collections/delete", auth.ensureLoggedIn, (req, res) => {
+  Collection.findOneAndDelete({
+    creator: req.user._id,
+    name: req.body.name,
+  }).then((deletedCollection) => res.send(deletedCollection));
+});
+
+router.get("/collections", (req, res) => {
+  const collectionQuery = {
+    creator: req.user._id,
+    name: req.query.name,
   };
 
-  // find the corresponding day, replace notes, and send back
-  Day.findOne(dayQuery).then((day) => {
-    day.notes = req.body.notes;
-    day.save().then((updatedDay) => {
-      res.send(updatedDay.notes);
-    });
+  Collection.findOne(collectionQuery).then((collection) => res.send(collection));
+});
+
+router.post("/collections", auth.ensureLoggedIn, (req, res) => {
+  const collectionQuery = {
+    creator: req.user._id,
+    name: req.body.name,
+  };
+
+  Collection.findOne(collectionQuery).then((collection) => {
+    collection.content = req.body.content;
+    collection.save().then((updatedCollection) => res.send(updatedCollection));
   });
 });
 

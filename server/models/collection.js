@@ -1,13 +1,11 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const WidgetSchema = new mongoose.Schema({
+const CollectionSchema = new mongoose.Schema({
   creator: { type: ObjectId, ref: "user" },
   name: String,
-  type: String,
-  value: { type: String, default: "" },
-  timestamp: Date,
+  content: String,
 });
 
 // compile model from schema
-module.exports = mongoose.model("widget", WidgetSchema);
+module.exports = mongoose.model("collection", CollectionSchema);

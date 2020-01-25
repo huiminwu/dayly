@@ -42,8 +42,11 @@ const GOOGLE_CLIENT_ID = "209641585704-as3jqe7b1ensmoc8anroucgruqqq8a72.apps.goo
  * Proptypes
  * @param {func} handleLogin
  * @param {func} handleLogout
+<<<<<<< HEAD
  * @param {string} creator id
  * @param {string} creatorName
+=======
+>>>>>>> 7dc90715bffd2a184c72ed80e7f70a8474356f48
  **/
 class Navbar extends Component {
   constructor(props) {
@@ -124,12 +127,19 @@ class Navbar extends Component {
         <div className="Navbar-opts">
           {this.props.creator ? (
             <>
-              <Link className="Navbar-opts_link" to="/day">
+              <Link className="Navbar-opts_link" to="/day" onClick={this.props.handleViewChange}>
                 Daily
               </Link>
-              <Link className="Navbar-opts_link" to="/month">
+              <Link className="Navbar-opts_link" to="/month" onClick={this.props.handleViewChange}>
                 Monthly
               </Link>
+              <Link className="Navbar-opts_link" to="/year" onClick={this.props.handleViewChange}>
+                Yearly
+              </Link>
+              <Link className="Navbar-opts_link" to="/collections">
+                Collections
+              </Link>
+
               <div className="dropDown-container" ref={this.container}>
                 <img className="pfp" src={this.getFirstLetter()} onClick={this.handleButtonClick} />
                 {this.state.open && (

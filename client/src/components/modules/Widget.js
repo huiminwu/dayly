@@ -10,7 +10,7 @@ class BinaryWidget extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.value,
+      value: "",
     };
   }
 
@@ -22,8 +22,14 @@ class BinaryWidget extends Component {
     this.props.submitValue(val);
   };
 
+  componentDidMount() {
+    this.setState({
+      value: this.props.value,
+    });
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.value !== this.props.value) {
+    if (prevState.value !== this.props.value) {
       this.setState({
         value: this.props.value,
       });
@@ -35,14 +41,14 @@ class BinaryWidget extends Component {
       <div>
         <div className="widget-name">{this.props.name}</div>
         <button
-          className={`yes-btn ${parseInt(this.state.value) === 1 ? "submitted-val" : ""}`}
-          onClick={() => this.handleOnClick(1)}
+          className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
+          onClick={() => this.handleOnClick("true")}
         >
           <FontAwesomeIcon icon="check" />
         </button>
         <button
-          className={`no-btn ${parseInt(this.state.value) === 0 ? "submitted-val" : ""}`}
-          onClick={() => this.handleOnClick(0)}
+          className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
+          onClick={() => this.handleOnClick("false")}
         >
           <FontAwesomeIcon icon="times" />
         </button>
@@ -55,7 +61,7 @@ class ColorWidget extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.value,
+      value: "",
     };
   }
 
@@ -67,8 +73,14 @@ class ColorWidget extends Component {
     this.props.submitValue(val);
   };
 
+  componentDidMount() {
+    this.setState({
+      value: this.props.value,
+    });
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.value !== this.props.value) {
+    if (prevState.value !== this.props.value) {
       this.setState({
         value: this.props.value,
       });
@@ -101,8 +113,7 @@ class SliderWidget extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      slider_value: props.value,
-      // this should probably be replaced with the this.props.storedvalue or something like that
+      slider_value: "",
     };
   }
 
@@ -110,8 +121,14 @@ class SliderWidget extends Component {
     this.setState({ slider_value: event.target.value });
   };
 
+  componentDidMount() {
+    this.setState({
+      slider_value: this.props.value,
+    });
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.value !== this.props.value) {
+    if (prevState.slider_value !== this.props.value) {
       this.setState({
         slider_value: this.props.value,
       });
@@ -142,7 +159,6 @@ class SliderWidget extends Component {
  * Widget is a component for displaying widgets
  *
  * Proptypes
- * @param {ObjectId} creator
  * @param {moment} dateObject
  * @param {string} name of widget
  * @param {string} type of widget
@@ -158,14 +174,11 @@ class Widget extends Component {
 
   submitValue = (val) => {
     const params = {
-      creator: this.props.creator,
-      day: this.props.dateObject.date(),
-      month: this.props.dateObject.month(),
-      year: this.props.dateObject.year(),
+      day: this.props.dateObject.format(),
       name: this.props.name,
       value: val,
     };
-    post("/api/day/widget", params);
+    post("/api/widget", params);
   };
 
   render() {
@@ -174,7 +187,6 @@ class Widget extends Component {
         {this.props.type === "BinaryWidget" && (
           <BinaryWidget
             name={this.props.name}
-            creator={this.props.creator}
             submitValue={this.submitValue}
             value={this.props.value}
           />
@@ -182,7 +194,6 @@ class Widget extends Component {
         {this.props.type === "ColorWidget" && (
           <ColorWidget
             name={this.props.name}
-            creator={this.props.creator}
             submitValue={this.submitValue}
             value={this.props.value}
           />
@@ -191,7 +202,6 @@ class Widget extends Component {
           <SliderWidget
             name={this.props.name}
             className="slider-widget"
-            creator={this.props.creator}
             submitValue={this.submitValue}
             value={this.props.value}
           />

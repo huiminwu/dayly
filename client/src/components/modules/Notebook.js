@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import debounce from "lodash/debounce";
 
-class StyleButton extends React.Component {
+export class StyleButton extends React.Component {
   constructor() {
     super();
     this.onToggle = (e) => {
@@ -32,11 +32,37 @@ class StyleButton extends React.Component {
   }
 }
 
+export class BlockStyleControls extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const selection = this.props.editorState.getSelection();
+    const blockType = this.props.editorState
+      .getCurrentContent()
+      .getBlockForKey(selection.getStartKey())
+      .getType();
+    return (
+      <div className="RichEditor-controls">
+        {this.props.BLOCK_TYPES.map((type) => (
+          <StyleButton
+            key={type.label}
+            active={type.style === blockType}
+            label={type.label}
+            onToggle={this.props.onToggle}
+            style={type.style}
+          />
+        ))}
+      </div>
+    );
+  }
+}
+
 /**
  * Notebook is a component for displaying the notebook section
  *
  * Proptypes
- * @param {ObjectId} creator
  * @param {moment} dateObject
  * @param {string} notes that were already saved
  **/
@@ -58,8 +84,8 @@ class Notebook extends Component {
   }
 
   componentDidMount() {
-    if (this.props.data.notes) {
-      const contentStateParsed = JSON.parse(this.props.data.notes);
+    if (this.props.data.notes.value) {
+      const contentStateParsed = JSON.parse(this.props.data.notes.value);
       const convertedContentState = convertFromRaw(contentStateParsed);
       this.setState({
         editorState: EditorState.createWithContent(convertedContentState),
@@ -67,12 +93,10 @@ class Notebook extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (this.props.data !== prevProps.data) {
-      console.log("i should be changing the notes");
-      console.log(`i am the parsed data ${this.props.data.notes}`);
-      if (this.props.data.notes) {
-        const contentStateParsed = JSON.parse(this.props.data.notes);
+      if (this.props.data.notes.value) {
+        const contentStateParsed = JSON.parse(this.props.data.notes.value);
         const convertedContentState = convertFromRaw(contentStateParsed);
         this.setState({
           editorState: EditorState.createWithContent(convertedContentState),
@@ -82,11 +106,6 @@ class Notebook extends Component {
           editorState: EditorState.createEmpty(),
         });
       }
-      // const contentStateParsed = JSON.parse(this.props.data.notes);
-      // const convertedContentState = convertFromRaw(contentStateParsed);
-      // this.setState({
-      //   editorState: EditorState.createWithContent(convertedContentState),
-      // });
     }
   }
 
@@ -102,13 +121,10 @@ class Notebook extends Component {
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const contentStateString = JSON.stringify(rawContentState);
     const params = {
-      creator: this.props.creator,
-      day: this.props.dateObject.date(),
-      month: this.props.dateObject.month(),
-      year: this.props.dateObject.year(),
-      notes: contentStateString,
+      day: this.props.dateObject.format(),
+      value: contentStateString,
     };
-    post("/api/day/notes", params).then((notes) => {
+    post("/api/notes", params).then((notes) => {
       const convertedContentState = convertFromRaw(notes);
       this.setState({
         editorState: EditorState.createWithContent(convertedContentState),
@@ -167,29 +183,6 @@ class Notebook extends Component {
       { label: "OL", style: "ordered-list-item" },
     ];
 
-    const BlockStyleControls = (props) => {
-      const { editorState } = props;
-      const selection = editorState.getSelection();
-      const blockType = editorState
-        .getCurrentContent()
-        .getBlockForKey(selection.getStartKey())
-        .getType();
-
-      return (
-        <div className="RichEditor-controls">
-          {BLOCK_TYPES.map((type) => (
-            <StyleButton
-              key={type.label}
-              active={type.style === blockType}
-              label={type.label}
-              onToggle={props.onToggle}
-              style={type.style}
-            />
-          ))}
-        </div>
-      );
-    };
-
     let editorClassName = "RichEditor-editor";
     var contentState = this.state.editorState.getCurrentContent();
     if (!contentState.hasText()) {
@@ -216,6 +209,7 @@ class Notebook extends Component {
             onToggle={this._toggleInlineStyle}
           />
           <BlockStyleControls
+            BLOCK_TYPES={BLOCK_TYPES}
             editorState={this.state.editorState}
             onToggle={this._toggleBlockType}
           />
