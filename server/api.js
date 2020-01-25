@@ -198,15 +198,6 @@ function helperfunc(start, end, user, res, callback) {
  * Retrieves all widgets for given year sorted by timestamp
  */
 router.get("/year/widgets", auth.ensureLoggedIn, (req, res) => {
-  // const startOfYear = moment(req.query.day)
-  //   .local()
-  //   .startOf("year");
-  // const endOfYear = moment(req.query.day)
-  //   .local()
-  //   .startOf("year")
-  //   .add(1, "month");
-
-  // helperfunc(startOfYear, endOfYear, req.user._id, res, final);
   const startOfYear = moment(req.query.day)
     .local()
     .startOf("year")
