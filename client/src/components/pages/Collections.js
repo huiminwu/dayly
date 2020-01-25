@@ -80,17 +80,26 @@ class Popup extends Component {
       <div className="popup">
         <div className="popup\_inner">
           <p>{this.props.text}</p>
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-          <input
-            type="submit"
-            onClick={() => this.props.collectionEditFunction(this.state.value)}
-          />
-          <button onClick={this.props.closePopup}>Cancel</button>
-          {this.props.nameError === "Duplicate name" && (
-            <div className="popup-error">You already have a collection with this name!</div>
-          )}
-          {this.props.nameError === "No name entered" && (
-            <div className="popup-error">Collection name cannot be blank</div>
+          {this.props.function !== "Delete" ? (
+            <>
+              <input type="text" value={this.state.value} onChange={this.handleChange} />
+              <input
+                type="submit"
+                onClick={() => this.props.collectionEditFunction(this.state.value)}
+              />
+              <button onClick={this.props.closePopup}>Cancel</button>
+              {this.props.nameError === "Duplicate name" && (
+                <div className="popup-error">You already have a collection with this name!</div>
+              )}
+              {this.props.nameError === "No name entered" && (
+                <div className="popup-error">Collection name cannot be blank</div>
+              )}
+            </>
+          ) : (
+            <>
+              <button onClick={() => this.props.collectionEditFunction()}>Yes</button>
+              <button onClick={this.props.closePopup}>No</button>
+            </>
           )}
         </div>
       </div>
@@ -109,7 +118,7 @@ class Collections extends Component {
     this.state = {
       currentCollection: null,
       allCollections: null,
-      showPopup: { createNew: false, rename: false },
+      showPopup: { createNew: false, rename: false, delete: false },
       nameError: null,
     };
   }
@@ -125,6 +134,7 @@ class Collections extends Component {
       showPopup: {
         createNew: !this.state.showPopup.createNew,
         rename: false,
+        delete: false,
       },
     });
   };
@@ -132,8 +142,19 @@ class Collections extends Component {
   togglePopupRename = () => {
     this.setState({
       showPopup: {
-        rename: !this.state.showPopup.rename,
         createNew: false,
+        rename: !this.state.showPopup.rename,
+        delete: false,
+      },
+    });
+  };
+
+  togglePopupDelete = () => {
+    this.setState({
+      showPopup: {
+        createNew: false,
+        rename: false,
+        delete: !this.state.showPopup.delete,
       },
     });
   };
@@ -161,13 +182,30 @@ class Collections extends Component {
       if (updatedCollection.error) {
         this.setState({ nameError: updatedCollection.error });
       } else {
-        console.log("renamed!");
         this.togglePopupRename();
-        this.setState((prevState) => ({
+        const oldCollectionIndex = this.state.allCollections.indexOf(this.state.currentCollection);
+        const allCollections = this.state.allCollections;
+        allCollections.splice(oldCollectionIndex, 1, updatedCollection);
+        this.setState({
           currentCollection: updatedCollection,
-          // allCollections: prevState.allCollections.concat(updatedCollection),
-        }));
+          allCollections: allCollections,
+        });
       }
+    });
+  };
+
+  deleteCollection = () => {
+    const currentIndex = this.state.allCollections.indexOf(this.state.currentCollection);
+    post("/api/collections/delete", {
+      name: this.state.currentCollection.name,
+    }).then((deletedCollection) => {
+      this.togglePopupDelete();
+      const allCollections = this.state.allCollections;
+      allCollections.splice(currentIndex, 1);
+      this.setState({
+        currentCollection: this.state.allCollections[currentIndex - 1],
+        allCollections: allCollections,
+      });
     });
   };
 
@@ -200,7 +238,8 @@ class Collections extends Component {
           {this.state.currentCollection ? (
             <CollectionEditor
               name={this.state.currentCollection.name}
-              togglePopup={this.togglePopupRename}
+              togglePopupRename={this.togglePopupRename}
+              togglePopupDelete={this.togglePopupDelete}
             />
           ) : (
             <div>You don't have any collections yet. Why not create one?</div>
@@ -209,6 +248,7 @@ class Collections extends Component {
           {this.state.showPopup.createNew ? (
             <Popup
               text="Choose a name for your new collection:"
+              function="createNew"
               closePopup={this.togglePopupCreateNew}
               collectionEditFunction={this.createNewCollection}
               nameError={this.state.nameError}
@@ -218,9 +258,19 @@ class Collections extends Component {
           {this.state.showPopup.rename ? (
             <Popup
               text="Rename this collection:"
+              function="Rename"
               closePopup={this.togglePopupRename}
               collectionEditFunction={this.renameCollection}
               nameError={this.state.nameError}
+            />
+          ) : null}
+
+          {this.state.showPopup.delete ? (
+            <Popup
+              text="Are you sure you want to delete this collection?"
+              function="Delete"
+              closePopup={this.togglePopupDelete}
+              collectionEditFunction={this.deleteCollection}
             />
           ) : null}
         </div>

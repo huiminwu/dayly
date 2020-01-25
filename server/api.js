@@ -302,6 +302,13 @@ router.post("/collections/rename", auth.ensureLoggedIn, (req, res) => {
   }
 });
 
+router.post("/collections/delete", auth.ensureLoggedIn, (req, res) => {
+  Collection.findOneAndDelete({
+    creator: req.user._id,
+    name: req.body.name,
+  }).then((deletedCollection) => res.send(deletedCollection));
+});
+
 router.get("/collections", (req, res) => {
   const collectionQuery = {
     creator: req.user._id,
