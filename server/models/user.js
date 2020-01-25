@@ -7,12 +7,12 @@ const UserSchema = new mongoose.Schema({
     type: [{ name: String, widgetType: String }],
     default: () => [
       {
-        name: "Mood",
-        widgetType: "ColorWidget",
-      },
-      {
         name: "Sleep",
         widgetType: "SliderWidget",
+      },
+      {
+        name: "Mood",
+        widgetType: "ColorWidget",
       },
       {
         name: "Pset",

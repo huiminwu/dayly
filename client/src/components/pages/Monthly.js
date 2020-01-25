@@ -88,15 +88,14 @@ class Monthly extends Component {
         />
         <div className="calendar-container">
           <div className="calendar-widgets">{widgetButtons}</div>
-          {/* displaying type just to test code */}
-          {this.state.displayType}
-          <div className="calendar">
-            <Calendar
-              displayWidget={this.state.displayWidget}
-              dateObject={this.props.dateObject}
-              widgetData={this.state.widgetData}
-            />
-          </div>
+          <Calendar
+            view={"month"}
+            month={this.props.dateObject.month()}
+            year={this.props.dateObject.year()}
+            displayWidget={this.state.displayWidget}
+            dateObject={this.props.dateObject}
+            widgetData={this.state.widgetData}
+          />
         </div>
       </div>
     );
