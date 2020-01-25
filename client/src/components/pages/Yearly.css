@@ -9,6 +9,7 @@
 }
 .year-calendar {
   width: 25%;
+  height: 160px;
   padding: 5px;
   box-sizing: border-box;
 }
