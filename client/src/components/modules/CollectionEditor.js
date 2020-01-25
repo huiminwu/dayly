@@ -93,10 +93,10 @@ class CollectionEditor extends Component {
     return (
       <div className="collections-editor">
         <div>{this.props.name}</div>
-        <button className="editor-btn" onClick={() => this.props.togglePopupRename()}>
+        <button className="editor-btn" onClick={() => this.props.openPopup("rename")}>
           Rename
         </button>
-        <button className="editor-btn" onClick={() => this.props.togglePopupDelete()}>
+        <button className="editor-btn" onClick={() => this.props.openPopup("delete")}>
           Delete
         </button>
         <BlockStyleControls

@@ -45,7 +45,7 @@ class CollectionList extends Component {
       <div className="collectionList-container">
         <button
           className="createNew-btn collectionList-btn"
-          onClick={() => this.props.togglePopup()}
+          onClick={() => this.props.openPopup("createNew")}
         >
           Create a new collection...
         </button>
@@ -56,8 +56,7 @@ class CollectionList extends Component {
 }
 
 /**
- * Popup is a component for creating a new collection or renaming a collection
- *
+ * Popup is a component for facilitating editing whole collections
  * Proptypes
  * @param {string} text to display instructions
  * @param {func} collectionEditFunction what exactly the particular Popup does
@@ -118,7 +117,7 @@ class Collections extends Component {
     this.state = {
       currentCollection: null,
       allCollections: null,
-      showPopup: { createNew: false, rename: false, delete: false },
+      showPopup: null,
       nameError: null,
     };
   }
@@ -129,33 +128,16 @@ class Collections extends Component {
     });
   };
 
-  togglePopupCreateNew = () => {
+  openPopup = (popup) => {
     this.setState({
-      showPopup: {
-        createNew: !this.state.showPopup.createNew,
-        rename: false,
-        delete: false,
-      },
+      showPopup: popup,
     });
   };
 
-  togglePopupRename = () => {
+  closePopup = () => {
     this.setState({
-      showPopup: {
-        createNew: false,
-        rename: !this.state.showPopup.rename,
-        delete: false,
-      },
-    });
-  };
-
-  togglePopupDelete = () => {
-    this.setState({
-      showPopup: {
-        createNew: false,
-        rename: false,
-        delete: !this.state.showPopup.delete,
-      },
+      showPopup: null,
+      nameError: null,
     });
   };
 
@@ -164,7 +146,7 @@ class Collections extends Component {
       if (newCollection.error) {
         this.setState({ nameError: newCollection.error });
       } else {
-        this.togglePopupCreateNew();
+        this.closePopup();
         this.setState((prevState) => ({
           currentCollection: newCollection,
           allCollections: prevState.allCollections.concat(newCollection),
@@ -182,7 +164,7 @@ class Collections extends Component {
       if (updatedCollection.error) {
         this.setState({ nameError: updatedCollection.error });
       } else {
-        this.togglePopupRename();
+        this.closePopup();
         const oldCollectionIndex = this.state.allCollections.indexOf(this.state.currentCollection);
         const allCollections = this.state.allCollections;
         allCollections.splice(oldCollectionIndex, 1, updatedCollection);
@@ -199,7 +181,7 @@ class Collections extends Component {
     post("/api/collections/delete", {
       name: this.state.currentCollection.name,
     }).then((deletedCollection) => {
-      this.togglePopupDelete();
+      this.closePopup();
       const allCollections = this.state.allCollections;
       allCollections.splice(currentIndex, 1);
       this.setState({
@@ -219,6 +201,38 @@ class Collections extends Component {
   }
 
   render() {
+    let popup = null;
+    if (this.state.showPopup === "createNew") {
+      popup = (
+        <Popup
+          text="Choose a name for your new collection:"
+          function="createNew"
+          closePopup={this.closePopup}
+          collectionEditFunction={this.createNewCollection}
+          nameError={this.state.nameError}
+        />
+      );
+    } else if (this.state.showPopup === "rename") {
+      popup = (
+        <Popup
+          text="Rename this collection:"
+          function="Rename"
+          closePopup={this.closePopup}
+          collectionEditFunction={this.renameCollection}
+          nameError={this.state.nameError}
+        />
+      );
+    } else if (this.state.showPopup === "delete") {
+      popup = (
+        <Popup
+          text="Are you sure you want to delete this collection?"
+          function="Delete"
+          closePopup={this.closePopup}
+          collectionEditFunction={this.deleteCollection}
+        />
+      );
+    }
+
     return (
       <div className="collections-page-container">
         <div className="collections-header">
@@ -230,7 +244,7 @@ class Collections extends Component {
               allCollections={this.state.allCollections}
               currentCollection={this.state.currentCollection}
               changeViewedCollection={this.changeViewedCollection}
-              togglePopup={this.togglePopupCreateNew}
+              openPopup={this.openPopup}
             />
           ) : (
             <div>Loading...</div>
@@ -238,41 +252,15 @@ class Collections extends Component {
           {this.state.currentCollection ? (
             <CollectionEditor
               name={this.state.currentCollection.name}
-              togglePopupRename={this.togglePopupRename}
-              togglePopupDelete={this.togglePopupDelete}
+              openPopup={this.openPopup}
+              closePopup={this.closePopup}
             />
           ) : (
-            <div>You don't have any collections yet. Why not create one?</div>
+            <div className="collections-editor">
+              You don't have any collections yet. Why not create one?
+            </div>
           )}
-
-          {this.state.showPopup.createNew ? (
-            <Popup
-              text="Choose a name for your new collection:"
-              function="createNew"
-              closePopup={this.togglePopupCreateNew}
-              collectionEditFunction={this.createNewCollection}
-              nameError={this.state.nameError}
-            />
-          ) : null}
-
-          {this.state.showPopup.rename ? (
-            <Popup
-              text="Rename this collection:"
-              function="Rename"
-              closePopup={this.togglePopupRename}
-              collectionEditFunction={this.renameCollection}
-              nameError={this.state.nameError}
-            />
-          ) : null}
-
-          {this.state.showPopup.delete ? (
-            <Popup
-              text="Are you sure you want to delete this collection?"
-              function="Delete"
-              closePopup={this.togglePopupDelete}
-              collectionEditFunction={this.deleteCollection}
-            />
-          ) : null}
+          {popup}
         </div>
       </div>
     );
