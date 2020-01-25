@@ -217,7 +217,7 @@ router.post("/collections", auth.ensureLoggedIn, (req, res) => {
 
   Collection.findOne(collectionQuery).then((collection) => {
     collection.content = req.body.content;
-    collection.save().then((updatedCollection) => res.send(updatedCollection.content));
+    collection.save().then((updatedCollection) => res.send(updatedCollection));
   });
 });
 

@@ -119,15 +119,12 @@ class Collections extends Component {
       name: name,
     };
     post("/api/collections/new", params).then((newCollection) => {
-      this.setState({ currentCollection: newCollection });
-    });
-
-    get("/api/collections/all").then((collections) => {
-      this.setState({
-        allCollections: collections,
-      });
-      console.log("updated list of all collections");
-      console.log(collections);
+      if (!newCollection.error) {
+        this.setState((prevState) => ({
+          currentCollection: newCollection,
+          allCollections: prevState.allCollections.concat(newCollection),
+        }));
+      }
     });
   };
 

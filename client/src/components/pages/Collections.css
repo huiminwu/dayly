@@ -10,6 +10,8 @@
   display: flex;
   flex-direction: column;
   width: 20vw;
+  height: 50vh;
+  overflow: scroll;
   border-right: 1px solid var(--borders);
 }
 
