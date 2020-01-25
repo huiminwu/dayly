@@ -4,7 +4,6 @@ import Calendar from "../modules/Calendar.js";
 import { get, post } from "../../utilities.js";
 
 import "./Yearly.css";
-import WidgetButton from "../modules/WidgetButton.js";
 import moment from "moment";
 
 class Yearly extends Component {
