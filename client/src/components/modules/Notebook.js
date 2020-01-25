@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import debounce from "lodash/debounce";
 
-class StyleButton extends Component {
+export class StyleButton extends React.Component {
   constructor() {
     super();
     this.onToggle = (e) => {
@@ -95,7 +95,7 @@ class InlineStyleControls extends Component {
   }
 }
 
-class BlockStyleControls extends Component {
+export class BlockStyleControls extends Component {
   constructor(props) {
     super(props);
   }
@@ -126,7 +126,6 @@ class BlockStyleControls extends Component {
  * Notebook is a component for displaying the notebook section
  *
  * Proptypes
- * @param {ObjectId} creator
  * @param {moment} dateObject
  * @param {string} notes that were already saved
  **/
@@ -148,8 +147,8 @@ class Notebook extends Component {
   }
 
   componentDidMount() {
-    if (this.props.data.notes) {
-      const contentStateParsed = JSON.parse(this.props.data.notes);
+    if (this.props.data.notes.value) {
+      const contentStateParsed = JSON.parse(this.props.data.notes.value);
       const convertedContentState = convertFromRaw(contentStateParsed);
       this.setState({
         editorState: EditorState.createWithContent(convertedContentState),
@@ -157,12 +156,10 @@ class Notebook extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (this.props.data !== prevProps.data) {
-      console.log("i should be changing the notes");
-      console.log(`i am the parsed data ${this.props.data.notes}`);
-      if (this.props.data.notes) {
-        const contentStateParsed = JSON.parse(this.props.data.notes);
+      if (this.props.data.notes.value) {
+        const contentStateParsed = JSON.parse(this.props.data.notes.value);
         const convertedContentState = convertFromRaw(contentStateParsed);
         this.setState({
           editorState: EditorState.createWithContent(convertedContentState),
@@ -187,13 +184,10 @@ class Notebook extends Component {
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const contentStateString = JSON.stringify(rawContentState);
     const params = {
-      creator: this.props.creator,
-      day: this.props.dateObject.date(),
-      month: this.props.dateObject.month(),
-      year: this.props.dateObject.year(),
-      notes: contentStateString,
+      day: this.props.dateObject.format(),
+      value: contentStateString,
     };
-    post("/api/day/notes", params).then((notes) => {
+    post("/api/notes", params).then((notes) => {
       const convertedContentState = convertFromRaw(notes);
       this.setState({
         editorState: EditorState.createWithContent(convertedContentState),
