@@ -3,6 +3,7 @@ import { navigate, Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
+import Yearly from "./pages/Yearly.js";
 import Collections from "./pages/Collections.js";
 import Landing from "./pages/Landing.js";
 import Loading from "./pages/Loading.js";
@@ -90,23 +91,31 @@ class App extends Component {
         dateObject: this.state.dateObject.subtract(1, "day"),
       });
       this.getDateData(this.state.dateObject);
-    } else {
+    } else if (varToChange === "month") {
       this.setState({
         dateObject: this.state.dateObject.subtract(1, "month"),
+      });
+    } else {
+      this.setState({
+        dateObject: this.state.dateObject.subtract(1, "year"),
       });
     }
   };
 
   handleNextClick = async (varToChange) => {
-    // update date state
+    // if changing daily view update date state
     if (varToChange === "day") {
       this.setState({
         dateObject: this.state.dateObject.add(1, "day"),
       });
       this.getDateData(this.state.dateObject);
-    } else {
+    } else if (varToChange === "month") {
       this.setState({
         dateObject: this.state.dateObject.add(1, "month"),
+      });
+    } else {
+      this.setState({
+        dateObject: this.state.dateObject.add(1, "year"),
       });
     }
   };
@@ -132,6 +141,12 @@ class App extends Component {
     this.getDateData(date);
   };
 
+  viewToday = () => {
+    this.setState({
+      dateObject: moment().local(),
+    });
+  };
+
   render() {
     if (this.state.creator) {
       return (
@@ -140,6 +155,7 @@ class App extends Component {
             creator={this.state.creator}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
+            handleViewChange={this.viewToday}
           />
           <Router>
             <Landing path="/" creator={this.state.creator} />
@@ -170,6 +186,13 @@ class App extends Component {
               handleBackClick={() => this.handleBackClick("month")}
               handleNextClick={() => this.handleNextClick("month")}
             />
+            <Yearly
+              path="/year"
+              dateObject={this.state.dateObject}
+              widgetlist={this.state.widgetlist}
+              handleBackClick={() => this.handleBackClick("year")}
+              handleNextClick={() => this.handleNextClick("year")}
+            />
             <Collections path="/collections" />
             <Loading default />
           </Router>
@@ -182,6 +205,7 @@ class App extends Component {
             //creator={this.state.creator}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
+            handleViewChange={this.viewToday}
           />
           <Router>
             <Landing path="/" />

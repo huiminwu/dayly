@@ -40,7 +40,9 @@ class Header extends Component {
     let date =
       this.props.view === "day"
         ? this.props.dateObject.format("MMMM D, YYYY")
-        : this.props.dateObject.format("MMMM YYYY");
+        : this.props.view === "month"
+        ? this.props.dateObject.format("MMMM YYYY")
+        : this.props.dateObject.format("YYYY");
 
     return (
       <>

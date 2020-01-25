@@ -96,24 +96,26 @@ router.post("/day", (req, res) => {
         $gte: startOfDay,
         $lte: endOfDay,
       },
-    }).then((w) => {
-      if (w.length === 0) {
-        req.user.widgetList.forEach((widget) => {
-          newWidget = new Widget({
-            creator: req.user._id,
-            name: widget.name,
-            type: widget.widgetType,
-            timestamp: startOfDay,
+    })
+      .sort({ timestamp: 1 })
+      .then((w) => {
+        if (w.length === 0) {
+          req.user.widgetList.forEach((widget) => {
+            newWidget = new Widget({
+              creator: req.user._id,
+              name: widget.name,
+              type: widget.widgetType,
+              timestamp: startOfDay,
+            });
+            newWidget.save();
+            response["widgets"].push(newWidget);
           });
-          newWidget.save();
-          response["widgets"].push(newWidget);
-        });
-        res.send(response);
-      } else {
-        response.widgets = w;
-        res.send(response);
-      }
-    });
+          res.send(response);
+        } else {
+          response.widgets = w;
+          res.send(response);
+        }
+      });
   });
 });
 
@@ -163,6 +165,63 @@ router.get("/month/widgets", auth.ensureLoggedIn, (req, res) => {
     timestamp: {
       $gte: startOfMonth,
       $lt: endOfMonth,
+    },
+  })
+    .sort({ timestamp: 1 })
+    .then((widgets) => {
+      res.send(widgets);
+    });
+});
+
+function final(res, result) {
+  console.log(result);
+  res.send(result);
+}
+function helperfunc(start, end, user, res, callback) {
+  let response = {};
+  for (let m = 0; m < 12; m++, start.add(1, "month"), end.add(1, "month")) {
+    console.log(start.format());
+    console.log(end.format());
+    Widget.find({
+      creator: user,
+      timestamp: {
+        $gte: start.format(),
+        $lt: start.format(),
+      },
+    })
+      .sort({ timestamp: 1 })
+      .then((widgets) => (response[String(m)] = widgets));
+  }
+  callback(res, response);
+}
+
+/**
+ * Retrieves all widgets for given year sorted by timestamp
+ */
+router.get("/year/widgets", auth.ensureLoggedIn, (req, res) => {
+  // const startOfYear = moment(req.query.day)
+  //   .local()
+  //   .startOf("year");
+  // const endOfYear = moment(req.query.day)
+  //   .local()
+  //   .startOf("year")
+  //   .add(1, "month");
+
+  // helperfunc(startOfYear, endOfYear, req.user._id, res, final);
+  const startOfYear = moment(req.query.day)
+    .local()
+    .startOf("year")
+    .format();
+  const endOfYear = moment(req.query.day)
+    .local()
+    .endOf("year")
+    .format();
+
+  Widget.find({
+    creator: req.user._id,
+    timestamp: {
+      $gte: startOfYear,
+      $lte: endOfYear,
     },
   })
     .sort({ timestamp: 1 })
