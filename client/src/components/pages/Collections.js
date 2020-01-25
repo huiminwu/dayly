@@ -9,6 +9,7 @@ import "./Collections.css";
  *
  * Proptypes
  * @param {array} allCollections a user has
+ * @param {Object} currentCollection being viewed
  * @param {func} changeViewedCollection to switch between different collections
  * @param {func} togglePopup for creating new collections
  **/
@@ -17,29 +18,35 @@ class CollectionList extends Component {
     super(props);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.allCollections !== prevProps.allCollections) {
-      console.log("yee the prop update");
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.allCollections !== prevProps.allCollections) {
+  //   }
+  // }
 
   render() {
     let collectionList = <div>Loading...</div>;
     if (this.props.allCollections) {
-      collectionList = this.props.allCollections.map((collection, k) => (
-        <button
-          key={k}
-          className="collectionList-btn"
-          onClick={() => this.props.changeViewedCollection(collection)}
-        >
-          {collection.name}
-        </button>
-      ));
+      collectionList = this.props.allCollections.map((collection, k) => {
+        return (
+          <button
+            key={k}
+            className={`collectionList-btn ${
+              this.props.currentCollection === collection ? "collectionList-btn-active" : ""
+            }`}
+            onClick={() => this.props.changeViewedCollection(collection)}
+          >
+            {collection.name}
+          </button>
+        );
+      });
     }
 
     return (
       <div className="collectionList-container">
-        <button className="collectionList-btn" onClick={() => this.props.togglePopup()}>
+        <button
+          className="createNew-btn collectionList-btn"
+          onClick={() => this.props.togglePopup()}
+        >
           Create a new collection...
         </button>
         {collectionList}
@@ -68,19 +75,23 @@ class Popup extends Component {
     this.setState({ value: event.target.value });
   };
 
-  handleSubmit() {
-    this.props.collectionEditFunction(this.state.value);
-    this.props.closePopup();
-  }
-
   render() {
     return (
       <div className="popup">
         <div className="popup\_inner">
           <p>{this.props.text}</p>
           <input type="text" value={this.state.value} onChange={this.handleChange} />
-          <input type="submit" onClick={() => this.handleSubmit()} />
+          <input
+            type="submit"
+            onClick={() => this.props.collectionEditFunction(this.state.value)}
+          />
           <button onClick={this.props.closePopup}>Cancel</button>
+          {this.props.nameError === "Duplicate name" && (
+            <div className="popup-error">You already have a collection with this name!</div>
+          )}
+          {this.props.nameError === "No name entered" && (
+            <div className="popup-error">Collection name cannot be blank</div>
+          )}
         </div>
       </div>
     );
@@ -98,7 +109,8 @@ class Collections extends Component {
     this.state = {
       currentCollection: null,
       allCollections: null,
-      showPopup: false,
+      showPopup: { createNew: false, rename: false },
+      nameError: null,
     };
   }
 
@@ -108,21 +120,52 @@ class Collections extends Component {
     });
   };
 
-  togglePopup = () => {
+  togglePopupCreateNew = () => {
     this.setState({
-      showPopup: !this.state.showPopup,
+      showPopup: {
+        createNew: !this.state.showPopup.createNew,
+        rename: false,
+      },
+    });
+  };
+
+  togglePopupRename = () => {
+    this.setState({
+      showPopup: {
+        rename: !this.state.showPopup.rename,
+        createNew: false,
+      },
     });
   };
 
   createNewCollection = (name) => {
-    const params = {
-      name: name,
-    };
-    post("/api/collections/new", params).then((newCollection) => {
-      if (!newCollection.error) {
+    post("/api/collections/new", { name: name }).then((newCollection) => {
+      if (newCollection.error) {
+        this.setState({ nameError: newCollection.error });
+      } else {
+        this.togglePopupCreateNew();
         this.setState((prevState) => ({
           currentCollection: newCollection,
           allCollections: prevState.allCollections.concat(newCollection),
+        }));
+      }
+    });
+  };
+
+  renameCollection = (newName) => {
+    const params = {
+      oldName: this.state.currentCollection.name,
+      newName: newName,
+    };
+    post("/api/collections/rename", params).then((updatedCollection) => {
+      if (updatedCollection.error) {
+        this.setState({ nameError: updatedCollection.error });
+      } else {
+        console.log("renamed!");
+        this.togglePopupRename();
+        this.setState((prevState) => ({
+          currentCollection: updatedCollection,
+          // allCollections: prevState.allCollections.concat(updatedCollection),
         }));
       }
     });
@@ -134,36 +177,53 @@ class Collections extends Component {
         currentCollection: collections[0],
         allCollections: collections,
       });
-      console.log("got all collections");
-      console.log(collections);
     });
   }
 
   render() {
     return (
       <div className="collections-page-container">
-        {this.state.allCollections ? (
-          <CollectionList
-            allCollections={this.state.allCollections}
-            changeViewedCollection={this.changeViewedCollection}
-            togglePopup={this.togglePopup}
-          />
-        ) : (
-          <div>Loading...</div>
-        )}
-        {this.state.currentCollection ? (
-          <CollectionEditor name={this.state.currentCollection.name} />
-        ) : (
-          <div>Loading...</div>
-        )}
+        <div className="collections-header">
+          <h1>Collections</h1>
+        </div>
+        <div className="collections-container">
+          {this.state.allCollections ? (
+            <CollectionList
+              allCollections={this.state.allCollections}
+              currentCollection={this.state.currentCollection}
+              changeViewedCollection={this.changeViewedCollection}
+              togglePopup={this.togglePopupCreateNew}
+            />
+          ) : (
+            <div>Loading...</div>
+          )}
+          {this.state.currentCollection ? (
+            <CollectionEditor
+              name={this.state.currentCollection.name}
+              togglePopup={this.togglePopupRename}
+            />
+          ) : (
+            <div>You don't have any collections yet. Why not create one?</div>
+          )}
 
-        {this.state.showPopup ? (
-          <Popup
-            text="Choose a name for your new collection:"
-            closePopup={this.togglePopup}
-            collectionEditFunction={this.createNewCollection}
-          />
-        ) : null}
+          {this.state.showPopup.createNew ? (
+            <Popup
+              text="Choose a name for your new collection:"
+              closePopup={this.togglePopupCreateNew}
+              collectionEditFunction={this.createNewCollection}
+              nameError={this.state.nameError}
+            />
+          ) : null}
+
+          {this.state.showPopup.rename ? (
+            <Popup
+              text="Rename this collection:"
+              closePopup={this.togglePopupRename}
+              collectionEditFunction={this.renameCollection}
+              nameError={this.state.nameError}
+            />
+          ) : null}
+        </div>
       </div>
     );
   }

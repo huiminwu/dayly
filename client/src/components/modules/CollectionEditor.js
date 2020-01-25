@@ -36,7 +36,6 @@ class CollectionEditor extends Component {
 
   componentDidMount() {
     get("/api/collections", { name: this.props.name }).then((collection) => {
-      console.log(collection.content);
       if (collection.content) {
         const rawContentState = JSON.parse(collection.content);
         const convertedContentState = convertFromRaw(rawContentState);
@@ -94,6 +93,9 @@ class CollectionEditor extends Component {
     return (
       <div className="collections-editor">
         <div>{this.props.name}</div>
+        <button className="rename-btn" onClick={() => this.props.togglePopup()}>
+          Rename
+        </button>
         <BlockStyleControls
           BLOCK_TYPES={BLOCK_TYPES}
           editorState={this.state.editorState}

@@ -79,7 +79,6 @@ router.post("/day", (req, res) => {
       $lte: endOfDay,
     },
   }).then((n) => {
-    console.log(`i am the discovered notes ${n}`);
     // if it doesn't exist, create it!
     if (n) response.notes = n;
     else {
@@ -88,7 +87,6 @@ router.post("/day", (req, res) => {
         timestamp: startOfDay,
       });
       newNote.save();
-      console.log(`i am the created note ${newNote}`);
       response["notes"] = newNote;
     }
     // and do the same for widgets
@@ -200,29 +198,49 @@ router.post("/notes", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-<<<<<<< HEAD
 router.get("/collections/all", (req, res) => {
   Collection.find({ creator: req.user._id }).then((collections) => res.send(collections));
 });
 
 router.post("/collections/new", auth.ensureLoggedIn, (req, res) => {
-  const collectionQuery = {
-    creator: req.user._id,
-    name: req.body.name,
-  };
+  if (!req.body.name) {
+    res.send({ error: "No name entered" });
+  } else {
+    const collectionQuery = {
+      creator: req.user._id,
+      name: req.body.name,
+    };
 
-  Collection.findOne(collectionQuery).then((collection) => {
-    if (collection) {
-      res.send({ error: "Duplicate name" });
-    } else {
-      const newCollection = new Collection({
-        creator: req.user._id,
-        name: req.body.name,
-        content: "",
-      });
-      newCollection.save().then((collection) => res.send(collection));
-    }
-  });
+    Collection.findOne(collectionQuery).then((collection) => {
+      if (collection) {
+        res.send({ error: "Duplicate name" });
+      } else {
+        const newCollection = new Collection({
+          creator: req.user._id,
+          name: req.body.name,
+          content: "",
+        });
+        newCollection.save().then((collection) => res.send(collection));
+      }
+    });
+  }
+});
+
+router.post("/collections/rename", auth.ensureLoggedIn, (req, res) => {
+  if (!req.body.newName) {
+    res.send({ error: "No name entered" });
+  } else {
+    Collection.findOne({ creator: req.user._id, name: req.body.newName }).then((collection) => {
+      if (collection) {
+        res.send({ error: "Duplicate name" });
+      } else {
+        Collection.findOne({ creator: req.user._id, name: req.body.oldName }).then((collection) => {
+          collection.name = req.body.newName;
+          collection.save().then((updatedCollection) => res.send(updatedCollection));
+        });
+      }
+    });
+  }
 });
 
 router.get("/collections", (req, res) => {
@@ -278,8 +296,6 @@ router.post("/collections", auth.ensureLoggedIn, (req, res) => {
 //   })
 // });
 
-=======
->>>>>>> 6af2736b9116831ba640f6c41b1308f9cf1e3218
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
