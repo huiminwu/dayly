@@ -3,6 +3,7 @@ import { navigate, Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
+import Yearly from "./pages/Yearly.js";
 import Landing from "./pages/Landing.js";
 import Loading from "./pages/Loading.js";
 import Navbar from "./modules/Navbar.js";
@@ -89,23 +90,31 @@ class App extends Component {
         dateObject: this.state.dateObject.subtract(1, "day"),
       });
       this.getDateData(this.state.dateObject);
-    } else {
+    } else if (varToChange === "month") {
       this.setState({
         dateObject: this.state.dateObject.subtract(1, "month"),
+      });
+    } else {
+      this.setState({
+        dateObject: this.state.dateObject.subtract(1, "year"),
       });
     }
   };
 
   handleNextClick = async (varToChange) => {
-    // update date state
+    // if changing daily view update date state
     if (varToChange === "day") {
       this.setState({
         dateObject: this.state.dateObject.add(1, "day"),
       });
       this.getDateData(this.state.dateObject);
-    } else {
+    } else if (varToChange === "month") {
       this.setState({
         dateObject: this.state.dateObject.add(1, "month"),
+      });
+    } else {
+      this.setState({
+        dateObject: this.state.dateObject.add(1, "year"),
       });
     }
   };
@@ -168,6 +177,13 @@ class App extends Component {
               widgetlist={this.state.widgetlist}
               handleBackClick={() => this.handleBackClick("month")}
               handleNextClick={() => this.handleNextClick("month")}
+            />
+            <Yearly
+              path="/year"
+              dateObject={this.state.dateObject}
+              widgetlist={this.state.widgetlist}
+              handleBackClick={() => this.handleBackClick("year")}
+              handleNextClick={() => this.handleNextClick("year")}
             />
             <Loading default />
           </Router>

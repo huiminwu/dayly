@@ -43,6 +43,9 @@ class Navbar extends Component {
               <Link className="Navbar-opts_link" to="/month">
                 Monthly
               </Link>
+              <Link className="Navbar-opts_link" to="/year">
+                Yearly
+              </Link>
               <GoogleLogout
                 className="Navbar-opts_login"
                 clientId={GOOGLE_CLIENT_ID}

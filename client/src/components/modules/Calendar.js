@@ -7,24 +7,24 @@ import "./Calendar.css";
 class Calendar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      redirect: false,
-    };
   }
 
   // for finding the first day of the month
   firstDayOfMonth = () => {
-    let dateObject = this.props.dateObject;
-    return moment(dateObject)
+    return moment()
+      .year(this.props.year)
+      .month(this.props.month)
       .startOf("month")
       .format("d");
   };
 
   render() {
     // construct the weekdays
-    const weekdays = moment.weekdaysShort();
-    let weekdayHeader = weekdays.map((day) => (
-      <th key={day} className="week-day">
+    let weekdays;
+    if (this.props.view === "month") weekdays = moment.weekdaysShort();
+    else weekdays = moment.weekdaysMin();
+    const weekdayHeader = weekdays.map((day) => (
+      <th key={day} className={`week-day ${this.props.view}`}>
         {day}
       </th>
     ));
@@ -47,27 +47,47 @@ class Calendar extends Component {
       });
     }
 
+    // set up year and month for redirect
+    const month = this.props.month;
+    const year = this.props.year;
+
     // create date cells
     let daysInMonth = [];
-    for (let d = 1; d <= this.props.dateObject.daysInMonth(); d++) {
+    for (
+      let d = 1;
+      d <=
+      moment()
+        .year(year)
+        .month(month)
+        .daysInMonth();
+      d++
+    ) {
       // if data exists for this day and selected type add as classname
       let widgetClass = "";
       if (widgetValues[d]) {
         widgetClass = widgetValues[d];
       }
-      // set up year and month for redirect
-      const month = this.props.dateObject.month();
-      const year = this.props.dateObject.year();
 
       // create table data
-      daysInMonth.push(
-        <td key={d} className="calendar-day">
-          <div className={"calendar-color-data " + widgetClass}> </div>
-          <Link to={`/day/${year}/${month}/${d}`}>
-            <h1 className="calendar-number">{d}</h1>
-          </Link>
-        </td>
-      );
+      let view = this.props.view;
+      if (view === "month") {
+        daysInMonth.push(
+          <td key={d} className={`calendar-day ${this.props.view}`}>
+            <Link to={`/day/${year}/${month}/${d}`}>
+              <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
+            </Link>
+            <div className={`calendar-color-data ${widgetClass} ${this.props.view}`}> </div>
+          </td>
+        );
+      } else {
+        daysInMonth.push(
+          <td key={d} className={`calendar-day ${this.props.view} ${widgetClass}`}>
+            <Link to={`/day/${year}/${month}/${d}`}>
+              <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
+            </Link>
+          </td>
+        );
+      }
     }
 
     let totalSlots = [...blanks, ...daysInMonth];
@@ -92,7 +112,7 @@ class Calendar extends Component {
 
     return (
       <>
-        <table className="calendar">
+        <table className={`calendar ${this.props.view}`}>
           <thead>
             <tr>{weekdayHeader}</tr>
           </thead>

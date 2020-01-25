@@ -1,11 +1,24 @@
+/* 
+Generic calendar styling
+*/
+
+h1 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.week-day {
+  background-color: #000;
+  color: white;
+}
 .calendar {
   border-spacing: 0;
 }
-
 .calendar-day {
   position: relative;
-  width: 90px;
-  height: 90px;
   padding: 0 !important;
   margin: 0;
   border: 1px solid #696969;
@@ -39,7 +52,7 @@ tr:nth-child(2) > td {
   border: 1px solid #696969;
 }
 
-tr:not(:first-child) > td {
+tr > td:not(:first-child) {
   border-left: none;
 }
 
@@ -50,24 +63,53 @@ tr:not(:first-child) > td {
   width: 100%;
   background-color: #c0c0c0;
 }
-
-h1 {
-  margin: 0;
-}
-
-a {
-  text-decoration: none;
-}
-
 .calendar-number {
   text-align: center;
   font-size: 50px;
   color: #c0c0c0;
 }
 
-.week-day {
-  background-color: #000;
-  color: white;
+/* 
+For monthly
+*/
+.calendar.month {
+  width: 60vw;
+}
+
+.calendar-day.month {
+  width: 90px;
+  height: 90px;
+}
+
+.calendar-color-data.month {
+  height: 10px;
+}
+
+.calendar-number.month {
+  font-size: 50px;
+}
+
+/* 
+For yearly
+*/
+
+.calendar.year {
+  width: 100%;
+}
+
+.calendar-day.year {
+  width: 15px;
+  height: 15px;
+}
+
+.calendar-number.year {
+  font-size: 10px;
+  color: black;
+  z-index: 100;
+}
+
+.week-day.year {
+  font-size: 10px;
 }
 
 /* 
@@ -76,10 +118,10 @@ FOR COLORING WIDGET DATA
 
 */
 
-.BinaryWidget-0 {
+.BinaryWidget-false {
   background-color: red;
 }
-.BinaryWidget-1 {
+.BinaryWidget-true {
   background-color: green;
 }
 
