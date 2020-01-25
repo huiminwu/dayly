@@ -30,6 +30,7 @@
   padding: 16px;
   background: none;
   border: none;
+  overflow-wrap: break-word;
 }
 
 .collectionList-btn + .collectionList-btn {
@@ -38,6 +39,10 @@
 
 .collectionList-btn-active {
   background: var(--accent);
+}
+
+.collection-name {
+  overflow-wrap: break-word;
 }
 
 .collections-editor {

@@ -78,7 +78,7 @@ class CollectionEditor extends Component {
     ];
 
     let editorClassName = "RichEditor-editor";
-    var contentState = this.state.editorState.getCurrentContent();
+    let contentState = this.state.editorState.getCurrentContent();
     if (!contentState.hasText()) {
       if (
         contentState
@@ -92,7 +92,7 @@ class CollectionEditor extends Component {
 
     return (
       <div className="collections-editor">
-        <div>{this.props.name}</div>
+        <div className="collection-name">{this.props.name}</div>
         <button className="editor-btn" onClick={() => this.props.openPopup("rename")}>
           Rename
         </button>
