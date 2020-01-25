@@ -193,7 +193,7 @@ router.post("/collections/new", auth.ensureLoggedIn, (req, res) => {
       const newCollection = new Collection({
         creator: req.user._id,
         name: req.body.name,
-        content: null,
+        content: "",
       });
       newCollection.save().then((collection) => res.send(collection));
     }
@@ -206,7 +206,7 @@ router.get("/collections", (req, res) => {
     name: req.query.name,
   };
 
-  Collection.findOne(collectionQuery).then((collection) => res.send(collection.content));
+  Collection.findOne(collectionQuery).then((collection) => res.send(collection));
 });
 
 router.post("/collections", auth.ensureLoggedIn, (req, res) => {

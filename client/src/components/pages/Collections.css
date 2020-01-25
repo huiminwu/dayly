@@ -28,3 +28,26 @@
   border: 1px solid red;
   padding: 16px;
 }
+
+.popup {
+  position: fixed;
+  width: 20vw;
+  height: 20vw;
+  margin: auto;
+  background-color: white;
+  border: 1px solid var(--borders);
+  border-radius: 10px;
+  padding: 16px;
+  z-index: 1;
+}
+
+.popup\_inner {
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  top: 25%;
+  bottom: 25%;
+  margin: auto;
+  border-radius: 20px;
+  background: white;
+}

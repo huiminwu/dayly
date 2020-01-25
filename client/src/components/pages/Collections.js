@@ -1,157 +1,133 @@
 import React, { Component } from "react";
-
-import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from "draft-js";
-import "draft-js/dist/Draft.css";
-import { BlockStyleControls } from "../modules/Notebook.js";
-
+import CollectionEditor from "../modules/CollectionEditor.js";
 import { get, post } from "../../utilities";
 
 import "./Collections.css";
 
 /**
- * Collections is a component for displaying the collections
+ * CollectionList is a component for displaying the list of all collections for a user
  *
  * Proptypes
- * @param {ObjectId} creator
+ * @param {array} allCollections a user has
+ * @param {func} changeViewedCollection to switch between different collections
+ * @param {func} togglePopup for creating new collections
  **/
-
 class CollectionList extends Component {
   constructor(props) {
     super(props);
   }
 
-  createNewCollection() {
-    const params = {
-      name: "TEST",
-    };
-    post("/api/collections/new", params).then((newCollection) => {
-      console.log("new collection created!");
-      console.log(newCollection);
-    });
+  componentDidUpdate(prevProps) {
+    if (this.props.allCollections !== prevProps.allCollections) {
+      console.log("yee the prop update");
+    }
   }
 
   render() {
+    let collectionList = <div>Loading...</div>;
+    if (this.props.allCollections) {
+      collectionList = this.props.allCollections.map((collection, k) => (
+        <button
+          key={k}
+          className="collectionList-btn"
+          onClick={() => this.props.changeViewedCollection(collection)}
+        >
+          {collection.name}
+        </button>
+      ));
+    }
+
     return (
       <div className="collectionList-container">
-        {this.props.allCollections ? (
-          <>
-            <input></input>
-            <button onClick={() => this.createNewCollection()}>Create a new collection...</button>
-            {this.props.allCollections.map((collection, k) => (
-              <button
-                key={k}
-                className="collectionList-btn"
-                onClick={() => this.props.changeViewedCollection(collection)}
-              >
-                {collection.name}
-              </button>
-            ))}
-          </>
-        ) : (
-          "Loading..."
-        )}
+        <button className="collectionList-btn" onClick={() => this.props.togglePopup()}>
+          Create a new collection...
+        </button>
+        {collectionList}
       </div>
     );
   }
 }
 
-class Editable extends Component {}
-
-class CollectionEditor extends Component {
+/**
+ * Popup is a component for creating a new collection or renaming a collection
+ *
+ * Proptypes
+ * @param {string} text to display instructions
+ * @param {func} collectionEditFunction what exactly the particular Popup does
+ * @param {func} closePopup
+ **/
+class Popup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: EditorState.createEmpty(),
-      isSaved: true,
-    };
-
-    this.onChange = (editorState) => {
-      this.setState({
-        editorState: editorState,
-        isSaved: false,
-      });
+      value: "",
     };
   }
 
-  _toggleBlockType = (blockType) => {
-    this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
+  handleChange = (event) => {
+    this.setState({ value: event.target.value });
   };
 
-  componentDidMount() {
-    get("/api/collections", { name: this.props.name }).then((content) => {
-      if (content) {
-        const convertedContentState = convertFromRaw(content);
-        this.setState({ editorState: EditorState.createWithContent(convertedContentState) });
-      } else {
-        this.setState({ editorState: EditorState.createEmpty() });
-      }
-    });
+  handleSubmit() {
+    this.props.collectionEditFunction(this.state.value);
+    this.props.closePopup();
   }
-
-  handleSave = (editorState) => {
-    const rawContentState = convertToRaw(editorState.getCurrentContent());
-    const contentStateString = JSON.stringify(rawContentState);
-    const params = {
-      name: this.props.name,
-      content: contentStateString,
-    };
-
-    post("/api/collections", params).then((newContent) => console.log("saved"));
-  };
 
   render() {
-    const BLOCK_TYPES = [
-      { label: "UL", style: "unordered-list-item" },
-      { label: "OL", style: "ordered-list-item" },
-    ];
-
-    let editorClassName = "RichEditor-editor";
-    var contentState = this.state.editorState.getCurrentContent();
-    if (!contentState.hasText()) {
-      if (
-        contentState
-          .getBlockMap()
-          .first()
-          .getType() !== "unstyled"
-      ) {
-        editorClassName += " RichEditor-hidePlaceholder";
-      }
-    }
-
     return (
-      <div className="collections-editor">
-        <div>{this.props.name}</div>
-        <BlockStyleControls
-          BLOCK_TYPES={BLOCK_TYPES}
-          editorState={this.state.editorState}
-          onToggle={this._toggleBlockType}
-        />
-        <div className={editorClassName}>
-          <Editor
-            editorState={this.state.editorState}
-            onChange={this.onChange}
-            handleKeyCommand={this.handleKeyCommand}
-            placeholder="Start making a list!"
-          />
-          <button onClick={() => this.handleSave(this.state.editorState)}>Save</button>
+      <div className="popup">
+        <div className="popup\_inner">
+          <p>{this.props.text}</p>
+          <input type="text" value={this.state.value} onChange={this.handleChange} />
+          <input type="submit" onClick={() => this.handleSubmit()} />
+          <button onClick={this.props.closePopup}>Cancel</button>
         </div>
       </div>
     );
   }
 }
 
+/**
+ * Collections is a component for displaying collections
+ *
+ * Proptypes
+ **/
 class Collections extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentCollection: null,
       allCollections: null,
+      showPopup: false,
     };
   }
 
   changeViewedCollection = (collection) => {
     this.setState({
       currentCollection: collection,
+    });
+  };
+
+  togglePopup = () => {
+    this.setState({
+      showPopup: !this.state.showPopup,
+    });
+  };
+
+  createNewCollection = (name) => {
+    const params = {
+      name: name,
+    };
+    post("/api/collections/new", params).then((newCollection) => {
+      this.setState({ currentCollection: newCollection });
+    });
+
+    get("/api/collections/all").then((collections) => {
+      this.setState({
+        allCollections: collections,
+      });
+      console.log("updated list of all collections");
+      console.log(collections);
     });
   };
 
@@ -173,6 +149,7 @@ class Collections extends Component {
           <CollectionList
             allCollections={this.state.allCollections}
             changeViewedCollection={this.changeViewedCollection}
+            togglePopup={this.togglePopup}
           />
         ) : (
           <div>Loading...</div>
@@ -182,6 +159,14 @@ class Collections extends Component {
         ) : (
           <div>Loading...</div>
         )}
+
+        {this.state.showPopup ? (
+          <Popup
+            text="Choose a name for your new collection:"
+            closePopup={this.togglePopup}
+            collectionEditFunction={this.createNewCollection}
+          />
+        ) : null}
       </div>
     );
   }
