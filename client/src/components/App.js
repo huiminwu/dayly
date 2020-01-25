@@ -4,6 +4,7 @@ import NotFound from "./pages/NotFound.js";
 import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
 import Yearly from "./pages/Yearly.js";
+import Collections from "./pages/Collections.js";
 import Landing from "./pages/Landing.js";
 import Loading from "./pages/Loading.js";
 import Navbar from "./modules/Navbar.js";
@@ -192,6 +193,7 @@ class App extends Component {
               handleBackClick={() => this.handleBackClick("year")}
               handleNextClick={() => this.handleNextClick("year")}
             />
+            <Collections path="/collections" />
             <Loading default />
           </Router>
         </>

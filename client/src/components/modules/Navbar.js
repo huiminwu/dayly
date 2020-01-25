@@ -45,6 +45,9 @@ class Navbar extends Component {
               <Link className="Navbar-opts_link" to="/year" onClick={this.props.handleViewChange}>
                 Yearly
               </Link>
+              <Link className="Navbar-opts_link" to="/collections">
+                Collections
+              </Link>
               <GoogleLogout
                 className="Navbar-opts_login"
                 clientId={GOOGLE_CLIENT_ID}

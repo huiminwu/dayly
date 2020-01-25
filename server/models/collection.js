@@ -4,7 +4,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const CollectionSchema = new mongoose.Schema({
   creator: { type: ObjectId, ref: "user" },
   name: String,
-  notes: { type: String, default: "" },
+  content: String,
 });
 
 // compile model from schema

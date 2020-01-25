@@ -17,6 +17,7 @@ const User = require("./models/user");
 const Widget = require("./models/widget");
 const Day = require("./models/day");
 const Note = require("./models/note");
+const Collection = require("./models/collection");
 
 // import authentication library
 const auth = require("./auth");
@@ -222,6 +223,111 @@ router.post("/notes", auth.ensureLoggedIn, (req, res) => {
     });
   });
 });
+
+router.get("/collections/all", (req, res) => {
+  Collection.find({ creator: req.user._id }).then((collections) => res.send(collections));
+});
+
+router.post("/collections/new", auth.ensureLoggedIn, (req, res) => {
+  if (!req.body.name) {
+    res.send({ error: "No name entered" });
+  } else {
+    const collectionQuery = {
+      creator: req.user._id,
+      name: req.body.name,
+    };
+
+    Collection.findOne(collectionQuery).then((collection) => {
+      if (collection) {
+        res.send({ error: "Duplicate name" });
+      } else {
+        const newCollection = new Collection({
+          creator: req.user._id,
+          name: req.body.name,
+          content: "",
+        });
+        newCollection.save().then((collection) => res.send(collection));
+      }
+    });
+  }
+});
+
+router.post("/collections/rename", auth.ensureLoggedIn, (req, res) => {
+  if (!req.body.newName) {
+    res.send({ error: "No name entered" });
+  } else {
+    Collection.findOne({ creator: req.user._id, name: req.body.newName }).then((collection) => {
+      if (collection) {
+        res.send({ error: "Duplicate name" });
+      } else {
+        Collection.findOne({ creator: req.user._id, name: req.body.oldName }).then((collection) => {
+          collection.name = req.body.newName;
+          collection.save().then((updatedCollection) => res.send(updatedCollection));
+        });
+      }
+    });
+  }
+});
+
+router.post("/collections/delete", auth.ensureLoggedIn, (req, res) => {
+  Collection.findOneAndDelete({
+    creator: req.user._id,
+    name: req.body.name,
+  }).then((deletedCollection) => res.send(deletedCollection));
+});
+
+router.get("/collections", (req, res) => {
+  const collectionQuery = {
+    creator: req.user._id,
+    name: req.query.name,
+  };
+
+  Collection.findOne(collectionQuery).then((collection) => res.send(collection));
+});
+
+router.post("/collections", auth.ensureLoggedIn, (req, res) => {
+  const collectionQuery = {
+    creator: req.user._id,
+    name: req.body.name,
+  };
+
+  Collection.findOne(collectionQuery).then((collection) => {
+    collection.content = req.body.content;
+    collection.save().then((updatedCollection) => res.send(updatedCollection));
+  });
+});
+
+// Promise.all(
+//   user = new User({
+//     name: "yo",
+//     googleid: "39999f3f3g32"
+//   }),
+//   widget = new Widget({
+//     name: "Hours Slept",
+//     type: "Slider",
+//     value: "11111",
+//   }),
+//   user.save()
+//     .then((user) => console.log("Inserted User")),
+//   widget.save()
+//     .then((widget) => console.log("Inserted Widget")),
+// ]).then(function(value) {
+//   day = new Day({
+//     creator: user._id,
+//     // creator: {type: ObjectId, ref: "user"},
+//     date: "19",
+//     month: "3",
+//     year: "2020",
+//     // widget: [{type: ObjectId, ref: "widget"}],
+//     notes: "yeet the spagheet",
+//   })
+// }).then(function(value) {
+//   day.save().then((day) => {
+//     console.log("Day Logged"),
+//     d = Day.findOne({name = req.user.name}).populate("creator").then((day) => console.log(day)),
+//     w = Day.findOne().populate("widget").then((day) => console.log(day))
+//   })
+// });
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
