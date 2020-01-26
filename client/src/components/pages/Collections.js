@@ -184,9 +184,9 @@ class Collections extends Component {
       this.closePopup();
       const allCollections = this.state.allCollections;
       allCollections.splice(currentIndex, 1);
-      let targetIndex = currentIndex - 1;
-      if (currentIndex === 0) {
-        targetIndex = 0;
+      let targetIndex = currentIndex;
+      if (currentIndex === allCollections.length) {
+        targetIndex = currentIndex - 1;
       }
       this.setState({
         currentCollection: this.state.allCollections[targetIndex],
