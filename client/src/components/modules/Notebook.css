@@ -1,5 +1,4 @@
 .RichEditor-root {
-  /* temporary CSS just so the text box is visible lol */
   height: 50vh;
   width: 60vw;
   border: 1px solid var(--borders);
@@ -75,4 +74,50 @@
 
 .public-DraftEditor-content {
   height: 40vh !important;
+}
+
+.font-menu-dropdown {
+  display: inline-block;
+  position: relative; /* idk if this might break it lol */
+}
+
+.font-menu {
+  display: inline-block;
+  position: absolute;
+  margin-left: calc(-10vw - 10px);
+  top: 40px;
+  z-index: 2;
+  border: 1px solid var(--borders);
+  max-height: 150px;
+  overflow-y: scroll;
+  width: calc(10vw - 2px); /* this is completely WHACK. fix it */
+}
+
+.font-menu::-webkit-scrollbar {
+  display: none;
+}
+
+/* font-menu-btn and font-menu-first-btn have lots in common */
+.font-menu-btn {
+  background-color: white;
+  border: none;
+  text-align: left;
+  padding: 8px 16px;
+  font-size: 16px;
+  width: 10vw;
+}
+
+.font-menu-first-btn {
+  background: white;
+  border: 1px solid var(--borders);
+  padding: 8px 16px;
+  margin-right: 10px;
+  width: 10vw;
+  font-size: 16px;
+  text-align: left;
+}
+
+.font-menu-btn:hover {
+  background: #f0f0f0;
+  cursor: pointer;
 }

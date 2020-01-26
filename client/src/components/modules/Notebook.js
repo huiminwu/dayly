@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import debounce from "lodash/debounce";
 
+import Immutable from "immutable";
+
 export class StyleButton extends React.Component {
   constructor() {
     super();
@@ -35,38 +37,44 @@ export class StyleButton extends React.Component {
 class FontDropdown extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   currentFont: "Pippins",
-    // };
+    this.state = {
+      isShowingFontSizeMenu: false,
+    };
   }
 
+  onToggle = (e, style) => {
+    e.preventDefault();
+    this.props.onToggle(style);
+    this.setState({ isShowingFontSizeMenu: false });
+  };
+
   render() {
-    const selection = this.props.editorState.getSelection();
-    const blockType = this.props.editorState
-      .getCurrentContent()
-      .getBlockForKey(selection.getStartKey())
-      .getType();
+    const currentStyle = this.props.editorState.getCurrentInlineStyle();
+    const currentFont = this.props.FONTS.filter((font) => currentStyle.has(font.style));
+    console.log(currentFont);
+    const fontButtons = this.props.FONTS.map((font, k) => {
+      return (
+        <button key={k} className="font-menu-btn" onMouseDown={(e) => this.onToggle(e, font.style)}>
+          {font.label}
+        </button>
+      );
+    });
     return (
-      // <select value={this.state.currentFont} onChange={this.props.onToggle}>
-      //   <option value="">Select a font...</option>
-      //   {this.props.FONTS.map((font, k) => {
-      //     return (
-      //       <option key={k} value={font.style}>
-      //         {font.label}
-      //       </option>
-      //     );
-      //   })}
+      // <select value={currentStyle} onChange={this.onToggle}>
+      //   <button>Select a font...</button>
+      //   {fontButtons}
       // </select>
-      <div className="RichEditor-controls">
-        {this.props.INLINE_STYLES.map((type) => (
-          <StyleButton
-            key={type.label}
-            active={currentStyle.has(type.style)}
-            label={type.label}
-            onToggle={this.props.onToggle}
-            style={type.style}
-          />
-        ))}
+      <div className="font-menu-dropdown">
+        <button
+          onMouseDown={(e) => {
+            e.preventDefault();
+            this.setState({ isShowingFontSizeMenu: !this.state.isShowingFontSizeMenu });
+          }}
+          className="font-menu-first-btn"
+        >
+          {currentFont[0] ? currentFont[0].label : "Poppins"}
+        </button>
+        {this.state.isShowingFontSizeMenu ? <div className="font-menu">{fontButtons}</div> : null}
       </div>
     );
   }
@@ -229,9 +237,15 @@ class Notebook extends Component {
       { label: "OL", style: "ordered-list-item" },
     ];
 
+    // const blockRenderMap = Immutable.Map({
+    //   unstyled: {
+    //     fontFamily: "'Pippins', sans-serif",
+    //   },
+    // });
+
     const customStyleMap = {
-      PIPPINS: {
-        fontFamily: "'Pippins', sans-serif",
+      POPPINS: {
+        fontFamily: "'Poppins', sans-serif",
       },
       LORA: {
         fontFamily: "'Lora', serif",
@@ -248,7 +262,7 @@ class Notebook extends Component {
     };
 
     const FONTS = [
-      { label: "Pippins", style: "PIPPINS" },
+      { label: "Poppins", style: "POPPINS" },
       { label: "Lora", style: "LORA" },
       { label: "Montserrat", style: "MONTSERRAT" },
       { label: "Inconsolata", style: "INCONSOLATA" },
@@ -295,6 +309,7 @@ class Notebook extends Component {
               editorState={this.state.editorState}
               onChange={this.onChange}
               customStyleMap={customStyleMap}
+              // blockRenderMap={blockRenderMap}
               handleKeyCommand={this.handleKeyCommand}
               placeholder="How was your day?"
             />
