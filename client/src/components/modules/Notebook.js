@@ -11,6 +11,7 @@ import {
   convertToRaw,
   convertFromRaw,
   getDefaultKeyBinding,
+  DefaultDraftBlockRenderMap,
 } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -77,7 +78,7 @@ class Dropdown extends Component {
         <div
           key={k}
           className={`${this.props.wideMenu && "dropdown-btn-wide"} ${option.label ===
-            this.props.defaultOption && "dropdown-btn-active"} dropdown-btn`}
+            optionDisplayed && "dropdown-btn-active"} dropdown-btn`}
           onMouseDown={(e) => this.onToggle(e, option.style)}
         >
           {option.label}
@@ -212,17 +213,18 @@ class Notebook extends Component {
   };
 
   handleKeyCommand = (command, editorState) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      this.onChange(newState);
+    const newEditorState = RichUtils.handleKeyCommand(editorState, command);
+    if (newEditorState) {
+      this.onChange(newEditorState);
       return true;
     }
     return false;
   };
 
-  mapKeyToEditorCommand = (e) => {
-    if (e.keyCode === 9 /* TAB */) {
-      const newEditorState = RichUtils.onTab(e, this.state.editorState, 4 /* maxDepth */);
+  mapKeyBindings = (e) => {
+    if (e.keyCode === 9) {
+      // on tab, indent the list to a maximum of 4 layers
+      const newEditorState = RichUtils.onTab(e, this.state.editorState, 4);
       if (newEditorState !== this.state.editorState) {
         this.onChange(newEditorState);
       }
@@ -429,7 +431,7 @@ class Notebook extends Component {
               customStyleMap={customStyleMap}
               // blockRenderMap={blockRenderMap}
               handleKeyCommand={this.handleKeyCommand}
-              keyBindingFn={this.mapKeyToEditorCommand}
+              keyBindingFn={this.mapKeyBindings}
               placeholder="How was your day?"
             />
           </div>
