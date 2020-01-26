@@ -47,6 +47,11 @@ class Dropdown extends Component {
       this.props.onToggle(style, this.props.customStyleMap);
       this.setState({ showDropdown: false });
     };
+
+    this.toggleMenu = (e) => {
+      e.preventDefault();
+      this.setState((prevState) => ({ showDropdown: !prevState.showDropdown }));
+    };
   }
 
   render() {
@@ -63,7 +68,8 @@ class Dropdown extends Component {
       return (
         <div
           key={k}
-          className={`${this.props.wideMenu && "dropdown-btn-wide"}  dropdown-btn`}
+          className={`${this.props.wideMenu && "dropdown-btn-wide"} ${option.label ===
+            this.props.defaultOption && "dropdown-btn-active"} dropdown-btn`}
           onMouseDown={(e) => this.onToggle(e, option.style)}
         >
           {option.label}
@@ -74,11 +80,8 @@ class Dropdown extends Component {
     return (
       <div className="dropdown-container">
         <div
-          onMouseDown={(e) => {
-            e.preventDefault();
-            this.setState((prevState) => ({ showDropdown: !prevState.showDropdown }));
-          }}
-          className={`${this.props.wideMenu && "dropdown-btn-wide"}  dropdown-first-btn`}
+          onMouseDown={(e) => this.toggleMenu(e)}
+          className={`${this.props.wideMenu && "dropdown-btn-wide"} dropdown-first-btn`}
         >
           {optionDisplayed} <FontAwesomeIcon icon="caret-down" />
         </div>
@@ -326,10 +329,11 @@ class Notebook extends Component {
     const customStyleMap = { ...fontFamilyStyleMap, ...fontSizeStyleMap };
 
     const FONT_FAMILIES = [
-      { label: "Poppins", style: "POPPINS" },
+      { label: "Inconsolata", style: "INCONSOLATA" },
       { label: "Lora", style: "LORA" },
       { label: "Montserrat", style: "MONTSERRAT" },
-      { label: "Inconsolata", style: "INCONSOLATA" },
+      { label: "Neucha", style: "NEUCHA" },
+      { label: "Poppins", style: "POPPINS" },
     ];
 
     const FONT_SIZES = [
