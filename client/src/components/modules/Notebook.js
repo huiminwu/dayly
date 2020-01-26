@@ -14,6 +14,7 @@ import Immutable from "immutable";
 export class StyleButton extends React.Component {
   constructor() {
     super();
+
     this.onToggle = (e) => {
       e.preventDefault();
       this.props.onToggle(this.props.style);
@@ -34,47 +35,58 @@ export class StyleButton extends React.Component {
   }
 }
 
-class FontDropdown extends Component {
+class Dropdown extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowingFontSizeMenu: false,
+      showDropdown: false,
+    };
+
+    this.onToggle = (e, style) => {
+      e.preventDefault();
+      this.props.onToggle(style, this.props.customStyleMap);
+      this.setState({ showDropdown: false });
     };
   }
 
-  onToggle = (e, style) => {
-    e.preventDefault();
-    this.props.onToggle(style, this.props.customStyleMap);
-    this.setState({ isShowingFontSizeMenu: false });
-  };
-
   render() {
     const currentStyle = this.props.editorState.getCurrentInlineStyle();
-    const currentFont = this.props.FONTS.filter((font) => currentStyle.has(font.style));
+    // option refers to each individual style in the dropdown
+    const currentOption = this.props.STYLE_LIST.filter((option) => currentStyle.has(option.style));
     // assuming unstyled text has font "Poppins"
-    let fontDisplayed = "Poppins";
-    if (currentFont.length === 1) {
-      fontDisplayed = currentFont[0].label;
+    let optionDisplayed = this.props.defaultOption;
+    if (currentOption.length === 1) {
+      optionDisplayed = currentOption[0].label;
     }
-    const fontButtons = this.props.FONTS.map((font, k) => {
+
+    const optionButtons = this.props.STYLE_LIST.map((option, k) => {
       return (
-        <div key={k} className="font-menu-btn" onMouseDown={(e) => this.onToggle(e, font.style)}>
-          {font.label}
+        <div
+          key={k}
+          className={`${this.props.wideMenu && "dropdown-btn-wide"}  dropdown-btn`}
+          onMouseDown={(e) => this.onToggle(e, option.style)}
+        >
+          {option.label}
         </div>
       );
     });
+
     return (
-      <div className="font-menu-dropdown">
+      <div className="dropdown-container">
         <div
           onMouseDown={(e) => {
             e.preventDefault();
-            this.setState({ isShowingFontSizeMenu: !this.state.isShowingFontSizeMenu });
+            this.setState((prevState) => ({ showDropdown: !prevState.showDropdown }));
           }}
-          className="font-menu-first-btn"
+          className={`${this.props.wideMenu && "dropdown-btn-wide"}  dropdown-first-btn`}
         >
-          {fontDisplayed} <FontAwesomeIcon icon="caret-down" />
+          {optionDisplayed} <FontAwesomeIcon icon="caret-down" />
         </div>
-        {this.state.isShowingFontSizeMenu ? <div className="font-menu">{fontButtons}</div> : null}
+        {this.state.showDropdown && (
+          <div className={`${this.props.wideMenu && "dropdown-menu-wide"} dropdown-menu`}>
+            {optionButtons}
+          </div>
+        )}
       </div>
     );
   }
@@ -269,7 +281,7 @@ class Notebook extends Component {
     //   },
     // });
 
-    const customStyleMap = {
+    const fontFamilyStyleMap = {
       POPPINS: {
         fontFamily: "'Poppins', sans-serif",
       },
@@ -287,11 +299,47 @@ class Notebook extends Component {
       },
     };
 
-    const FONTS = [
+    const fontSizeStyleMap = {
+      "12": {
+        fontSize: "12px",
+      },
+      "14": {
+        fontSize: "14px",
+      },
+      "16": {
+        fontSize: "16px",
+      },
+      "18": {
+        fontSize: "18px",
+      },
+      "20": {
+        fontSize: "20px",
+      },
+      "24": {
+        fontSize: "24px",
+      },
+      "32": {
+        fontSize: "32px",
+      },
+    };
+
+    const customStyleMap = { ...fontFamilyStyleMap, ...fontSizeStyleMap };
+
+    const FONT_FAMILIES = [
       { label: "Poppins", style: "POPPINS" },
       { label: "Lora", style: "LORA" },
       { label: "Montserrat", style: "MONTSERRAT" },
       { label: "Inconsolata", style: "INCONSOLATA" },
+    ];
+
+    const FONT_SIZES = [
+      { label: "12", style: "12" },
+      { label: "14", style: "14" },
+      { label: "16", style: "16" },
+      { label: "18", style: "18" },
+      { label: "20", style: "20" },
+      { label: "24", style: "24" },
+      { label: "32", style: "32" },
     ];
 
     let editorClassName = "RichEditor-editor";
@@ -315,10 +363,20 @@ class Notebook extends Component {
     return (
       <div className="notes-section">
         <div className="RichEditor-root">
-          <FontDropdown
-            FONTS={FONTS}
+          <Dropdown
+            STYLE_LIST={FONT_FAMILIES}
+            defaultOption="Poppins"
+            wideMenu={true}
             editorState={this.state.editorState}
-            customStyleMap={customStyleMap}
+            customStyleMap={fontFamilyStyleMap}
+            onToggle={this.setInlineStyle}
+          />
+          <Dropdown
+            STYLE_LIST={FONT_SIZES}
+            defaultOption="16"
+            wideMenu={false}
+            editorState={this.state.editorState}
+            customStyleMap={fontSizeStyleMap}
             onToggle={this.setInlineStyle}
           />
           <InlineStyleControls

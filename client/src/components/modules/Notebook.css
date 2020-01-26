@@ -76,52 +76,56 @@
   height: 40vh !important;
 }
 
-.font-menu-dropdown {
+/* DROPDOWN MENU */
+.dropdown-container {
   display: inline-block;
   position: relative; /* idk if this might break it lol */
 }
 
-.font-menu {
+.dropdown-menu {
   display: inline-block;
   position: absolute;
   margin-left: 0;
-  top: 48px;
+  top: 44px;
   z-index: 2;
   border: 1px solid var(--borders);
   max-height: 25vh;
   overflow-y: scroll;
-  width: calc(9vw + 16px);
+  width: calc(2.5vw + 24px);
 }
 
-.font-menu::-webkit-scrollbar {
+.dropdown-menu-wide {
+  width: calc(9vw + 24px) !important;
+}
+
+.dropdown-btn-wide {
+  width: 9vw !important;
+}
+
+.dropdown-menu::-webkit-scrollbar {
   display: none;
 }
 
-/* font-menu-btn and font-menu-first-btn have lots in common */
-.font-menu-btn {
+.dropdown-btn,
+.dropdown-first-btn {
   background-color: white;
   border: none;
   text-align: left;
-  padding: 8px;
+  padding: 8px 12px;
   font-size: 16px;
-  width: 9vw;
+  width: 2.5vw;
 }
 
-.font-menu-first-btn {
-  background: white;
-  border: 1px solid var(--borders);
-  padding: 8px;
-  margin-right: 10px;
-  height: 3vh;
-  width: 9vw;
-  font-size: 16px;
-  text-align: left;
+.dropdown-first-btn {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid var(--borders);
+  margin-right: 10px;
+  height: 3vh;
 }
 
-.font-menu-btn:hover {
+.dropdown-btn:hover {
   background: #f0f0f0;
   cursor: pointer;
 }
