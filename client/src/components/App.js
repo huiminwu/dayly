@@ -24,8 +24,18 @@ import {
   faAngleRight,
   faCheck,
   faTimes,
+  faCaretDown,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faBold, faItalic, faUnderline, faAngleLeft, faAngleRight, faCheck, faTimes);
+library.add(
+  faBold,
+  faItalic,
+  faUnderline,
+  faAngleLeft,
+  faAngleRight,
+  faCheck,
+  faTimes,
+  faCaretDown
+);
 
 const moment = require("moment");
 

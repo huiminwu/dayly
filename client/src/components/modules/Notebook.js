@@ -3,7 +3,7 @@ import "./Notebook.css";
 
 import { post } from "../../utilities.js";
 
-import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from "draft-js";
+import { Editor, EditorState, RichUtils, Modifier, convertToRaw, convertFromRaw } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -44,36 +44,38 @@ class FontDropdown extends Component {
 
   onToggle = (e, style) => {
     e.preventDefault();
-    this.props.onToggle(style);
+    this.props.onToggle(style, this.props.customStyleMap);
     this.setState({ isShowingFontSizeMenu: false });
   };
 
   render() {
     const currentStyle = this.props.editorState.getCurrentInlineStyle();
     const currentFont = this.props.FONTS.filter((font) => currentStyle.has(font.style));
-    console.log(currentFont);
+    let fontDisplayed = "";
+    if (currentFont.length === 1) {
+      fontDisplayed = currentFont[0].label;
+    } else if (currentFont.length === 0) {
+      fontDisplayed = "Poppins";
+    }
     const fontButtons = this.props.FONTS.map((font, k) => {
       return (
-        <button key={k} className="font-menu-btn" onMouseDown={(e) => this.onToggle(e, font.style)}>
+        <div key={k} className="font-menu-btn" onMouseDown={(e) => this.onToggle(e, font.style)}>
           {font.label}
-        </button>
+        </div>
       );
     });
     return (
-      // <select value={currentStyle} onChange={this.onToggle}>
-      //   <button>Select a font...</button>
-      //   {fontButtons}
-      // </select>
       <div className="font-menu-dropdown">
-        <button
+        <div
           onMouseDown={(e) => {
             e.preventDefault();
             this.setState({ isShowingFontSizeMenu: !this.state.isShowingFontSizeMenu });
           }}
           className="font-menu-first-btn"
         >
-          {currentFont[0] ? currentFont[0].label : "Poppins"}
-        </button>
+          {/* assuming that Poppins is the font for unstyled text */}
+          {fontDisplayed} <FontAwesomeIcon icon="caret-down" />
+        </div>
         {this.state.isShowingFontSizeMenu ? <div className="font-menu">{fontButtons}</div> : null}
       </div>
     );
@@ -188,6 +190,33 @@ class Notebook extends Component {
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle));
   };
 
+  setInlineStyle = (inlineStyle, customStyleMap) => {
+    const editorState = this.state.editorState;
+    const selection = editorState.getSelection();
+
+    // removing other inline styles of the same category already applied
+    const reducer = (contentState, style) =>
+      Modifier.removeInlineStyle(contentState, selection, style);
+
+    const nextContentState = Object.keys(customStyleMap).reduce(
+      reducer,
+      editorState.getCurrentContent()
+    );
+
+    let nextEditorState = EditorState.push(editorState, nextContentState, "change-inline-style");
+
+    const currentStyle = editorState.getCurrentInlineStyle();
+
+    // // Unset style override for current color.
+    // if (selection.isCollapsed()) {
+    //   nextEditorState = currentStyle.reduce((state, style) => {
+    //     return RichUtils.toggleInlineStyle(state, style);
+    //   }, nextEditorState);
+    // }
+
+    this.onChange(RichUtils.toggleInlineStyle(nextEditorState, inlineStyle));
+  };
+
   handleSave(editorState) {
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const contentStateString = JSON.stringify(rawContentState);
@@ -292,7 +321,8 @@ class Notebook extends Component {
           <FontDropdown
             FONTS={FONTS}
             editorState={this.state.editorState}
-            onToggle={this._toggleInlineStyle}
+            customStyleMap={customStyleMap}
+            onToggle={this.setInlineStyle}
           />
           <InlineStyleControls
             INLINE_STYLES={INLINE_STYLES}
