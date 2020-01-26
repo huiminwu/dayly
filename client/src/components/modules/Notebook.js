@@ -3,7 +3,15 @@ import "./Notebook.css";
 
 import { post } from "../../utilities.js";
 
-import { Editor, EditorState, RichUtils, Modifier, convertToRaw, convertFromRaw } from "draft-js";
+import {
+  Editor,
+  EditorState,
+  RichUtils,
+  Modifier,
+  convertToRaw,
+  convertFromRaw,
+  getDefaultKeyBinding,
+} from "draft-js";
 import "draft-js/dist/Draft.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -195,12 +203,32 @@ class Notebook extends Component {
     }
   }
 
-  _toggleBlockType = (blockType) => {
+  toggleBlockType = (blockType) => {
     this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
   };
 
-  _toggleInlineStyle = (inlineStyle) => {
+  toggleInlineStyle = (inlineStyle) => {
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle));
+  };
+
+  handleKeyCommand = (command, editorState) => {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+    if (newState) {
+      this.onChange(newState);
+      return true;
+    }
+    return false;
+  };
+
+  mapKeyToEditorCommand = (e) => {
+    if (e.keyCode === 9 /* TAB */) {
+      const newEditorState = RichUtils.onTab(e, this.state.editorState, 4 /* maxDepth */);
+      if (newEditorState !== this.state.editorState) {
+        this.onChange(newEditorState);
+      }
+      return;
+    }
+    return getDefaultKeyBinding(e);
   };
 
   setInlineStyle = (inlineStyle, customStyleMap) => {
@@ -278,11 +306,23 @@ class Notebook extends Component {
       { label: "OL", style: "ordered-list-item" },
     ];
 
-    // const blockRenderMap = Immutable.Map({
-    //   unstyled: {
-    //     fontFamily: "'Pippins', sans-serif",
-    //   },
-    // });
+    const FONT_FAMILIES = [
+      { label: "Inconsolata", style: "INCONSOLATA" },
+      { label: "Lora", style: "LORA" },
+      { label: "Montserrat", style: "MONTSERRAT" },
+      { label: "Neucha", style: "NEUCHA" },
+      { label: "Poppins", style: "POPPINS" },
+    ];
+
+    const FONT_SIZES = [
+      { label: "12", style: "12" },
+      { label: "14", style: "14" },
+      { label: "16", style: "16" },
+      { label: "18", style: "18" },
+      { label: "20", style: "20" },
+      { label: "24", style: "24" },
+      { label: "32", style: "32" },
+    ];
 
     const fontFamilyStyleMap = {
       POPPINS: {
@@ -328,23 +368,11 @@ class Notebook extends Component {
 
     const customStyleMap = { ...fontFamilyStyleMap, ...fontSizeStyleMap };
 
-    const FONT_FAMILIES = [
-      { label: "Inconsolata", style: "INCONSOLATA" },
-      { label: "Lora", style: "LORA" },
-      { label: "Montserrat", style: "MONTSERRAT" },
-      { label: "Neucha", style: "NEUCHA" },
-      { label: "Poppins", style: "POPPINS" },
-    ];
-
-    const FONT_SIZES = [
-      { label: "12", style: "12" },
-      { label: "14", style: "14" },
-      { label: "16", style: "16" },
-      { label: "18", style: "18" },
-      { label: "20", style: "20" },
-      { label: "24", style: "24" },
-      { label: "32", style: "32" },
-    ];
+    // const blockRenderMap = Immutable.Map({
+    //   unstyled: {
+    //     fontFamily: "'Pippins', sans-serif",
+    //   },
+    // });
 
     let editorClassName = "RichEditor-editor";
     var contentState = this.state.editorState.getCurrentContent();
@@ -386,13 +414,14 @@ class Notebook extends Component {
           <InlineStyleControls
             INLINE_STYLES={INLINE_STYLES}
             editorState={this.state.editorState}
-            onToggle={this._toggleInlineStyle}
+            onToggle={this.toggleInlineStyle}
           />
           <BlockStyleControls
             BLOCK_TYPES={BLOCK_TYPES}
             editorState={this.state.editorState}
-            onToggle={this._toggleBlockType}
+            onToggle={this.toggleBlockType}
           />
+
           <div className={editorClassName}>
             <Editor
               editorState={this.state.editorState}
@@ -400,6 +429,7 @@ class Notebook extends Component {
               customStyleMap={customStyleMap}
               // blockRenderMap={blockRenderMap}
               handleKeyCommand={this.handleKeyCommand}
+              keyBindingFn={this.mapKeyToEditorCommand}
               placeholder="How was your day?"
             />
           </div>

@@ -102,9 +102,9 @@
   width: 9vw !important;
 }
 
-.dropdown-menu::-webkit-scrollbar {
+/* .dropdown-menu::-webkit-scrollbar {
   display: none;
-}
+} */
 
 .dropdown-btn,
 .dropdown-first-btn {
