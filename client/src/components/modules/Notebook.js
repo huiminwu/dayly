@@ -51,11 +51,10 @@ class FontDropdown extends Component {
   render() {
     const currentStyle = this.props.editorState.getCurrentInlineStyle();
     const currentFont = this.props.FONTS.filter((font) => currentStyle.has(font.style));
-    let fontDisplayed = "";
+    // assuming unstyled text has font "Poppins"
+    let fontDisplayed = "Poppins";
     if (currentFont.length === 1) {
       fontDisplayed = currentFont[0].label;
-    } else if (currentFont.length === 0) {
-      fontDisplayed = "Poppins";
     }
     const fontButtons = this.props.FONTS.map((font, k) => {
       return (
@@ -73,7 +72,6 @@ class FontDropdown extends Component {
           }}
           className="font-menu-first-btn"
         >
-          {/* assuming that Poppins is the font for unstyled text */}
           {fontDisplayed} <FontAwesomeIcon icon="caret-down" />
         </div>
         {this.state.isShowingFontSizeMenu ? <div className="font-menu">{fontButtons}</div> : null}
@@ -193,6 +191,7 @@ class Notebook extends Component {
   setInlineStyle = (inlineStyle, customStyleMap) => {
     const editorState = this.state.editorState;
     const selection = editorState.getSelection();
+    const currentStyle = editorState.getCurrentInlineStyle();
 
     // removing other inline styles of the same category already applied
     const reducer = (contentState, style) =>
@@ -205,14 +204,12 @@ class Notebook extends Component {
 
     let nextEditorState = EditorState.push(editorState, nextContentState, "change-inline-style");
 
-    const currentStyle = editorState.getCurrentInlineStyle();
-
-    // // Unset style override for current color.
-    // if (selection.isCollapsed()) {
-    //   nextEditorState = currentStyle.reduce((state, style) => {
-    //     return RichUtils.toggleInlineStyle(state, style);
-    //   }, nextEditorState);
-    // }
+    // if nothing is selected, prevents inline styles from stacking on top of each other
+    if (selection.isCollapsed()) {
+      nextEditorState = currentStyle.reduce((state, style) => {
+        return RichUtils.toggleInlineStyle(state, style);
+      }, nextEditorState);
+    }
 
     this.onChange(RichUtils.toggleInlineStyle(nextEditorState, inlineStyle));
   };
