@@ -1,6 +1,7 @@
 .editor-toolbar-container {
   display: flex;
   align-items: center;
+  font-size: 14px;
 }
 
 .toolbar-icon-btn {
@@ -9,7 +10,7 @@
   height: 2vw;
   width: 2vw;
   text-align: center;
-  line-height: 2.25vw;
+  line-height: 2vw;
   background-color: white;
 }
 
@@ -25,7 +26,7 @@
 .toolbar-btn-group {
   display: flex;
   align-items: center;
-  margin-right: 16px;
+  margin-right: 12px;
 }
 
 .toolbar-btn-group:hover {
@@ -38,7 +39,7 @@
 
 .toolbar-btn,
 .toolbar-icon-btn + .toolbar-icon-btn {
-  margin-left: 1em;
+  margin-left: 12px;
 }
 
 .toolbar-active-btn {
@@ -57,20 +58,30 @@
   display: inline-block;
   position: absolute;
   margin-left: 0;
-  top: 44px;
+  top: 36px;
   z-index: 2;
   border: 1px solid var(--borders);
+  border-radius: 3px;
   max-height: 25vh;
   overflow-y: scroll;
-  width: calc(2.5vw + 24px);
+  width: calc(2vw + 24px);
 }
 
 .dropdown-menu-wide {
-  width: calc(9vw + 24px) !important;
+  width: calc(8vw + 24px) !important;
 }
 
 .dropdown-btn-wide {
-  width: 9vw !important;
+  width: 8vw !important;
+}
+
+.dropdown-menu-color {
+  width: calc(1vw + 16px) !important;
+}
+
+.dropdown-btn-color {
+  padding: 4px 8px !important;
+  width: 1vw !important;
 }
 
 /* .dropdown-menu::-webkit-scrollbar {
@@ -82,9 +93,8 @@
   background-color: white;
   border: none;
   text-align: left;
-  padding: 8px 12px;
-  font-size: 16px;
-  width: 2.5vw;
+  padding: 4px 12px;
+  width: 2vw;
 }
 
 .dropdown-first-btn {
@@ -92,6 +102,7 @@
   justify-content: space-between;
   align-items: center;
   border: 1px solid var(--borders);
+  border-radius: 3px;
   margin-right: 10px;
   height: 3vh;
 }
@@ -104,4 +115,17 @@
 
 .dropdown-btn-active {
   background: var(--background);
+}
+
+.dropdown-color {
+  height: 14px;
+  width: 1vw;
+  background-color: black;
+}
+
+.dropdown-color-first {
+  width: 1.5em;
+  text-align: center;
+  font-size: 12px;
+  border-bottom: 3px solid none;
 }

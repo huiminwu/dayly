@@ -28,6 +28,9 @@ import {
   faTimes,
   faCaretDown,
   faCircle as fasFaCircle,
+  faStrikethrough,
+  faHighlighter,
+  faFont,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircle as farFaCircle } from "@fortawesome/free-regular-svg-icons";
 library.add(
@@ -42,7 +45,10 @@ library.add(
   faTimes,
   faCaretDown,
   fasFaCircle,
-  farFaCircle
+  farFaCircle,
+  faStrikethrough,
+  faHighlighter,
+  faFont
 );
 
 const moment = require("moment");

@@ -56,21 +56,45 @@ class Dropdown extends Component {
     const currentStyle = this.props.editorState.getCurrentInlineStyle();
     // option refers to each individual style in the dropdown
     const currentOption = this.props.STYLE_LIST.filter((option) => currentStyle.has(option.style));
-    // assuming unstyled text has font "Poppins"
+    // assuming unstyled text has default font styling
     let optionDisplayed = this.props.defaultOption;
     if (currentOption.length === 1) {
       optionDisplayed = currentOption[0].label;
+    }
+
+    // displays special icon if text color or highlight menu
+    if (this.props.colorMenu) {
+      optionDisplayed = (
+        <div
+          className="dropdown-color-first"
+          style={{ borderBottom: `3px solid ${optionDisplayed}` }}
+        >
+          {/* text icon if text color (therefore default is #6e6e6e), highlight icon if highlight color*/}
+          {this.props.defaultOption === "#6e6e6e" ? (
+            <FontAwesomeIcon icon="font" />
+          ) : (
+            <FontAwesomeIcon icon="highlighter" />
+          )}
+        </div>
+      );
     }
 
     const optionButtons = this.props.STYLE_LIST.map((option, k) => {
       return (
         <div
           key={k}
-          className={`${this.props.wideMenu && "dropdown-btn-wide"} ${option.label ===
-            optionDisplayed && "dropdown-btn-active"} dropdown-btn`}
+          // PLEASE CLEAN THIS UP IT'S AWFUL. THERE ARE 3 DIFFERENT WIDTHS I NEED
+          className={`${this.props.wideMenu && "dropdown-btn-wide"} ${this.props.colorMenu &&
+            "dropdown-btn-color"} ${option.label === optionDisplayed &&
+            "dropdown-btn-active"} dropdown-btn`}
           onMouseDown={(e) => this.onToggle(e, option.style)}
         >
-          {option.label}
+          {/* if color menu, display squares of color instead of just the name */}
+          {this.props.colorMenu ? (
+            <div className="dropdown-color" style={{ backgroundColor: option.label }}></div>
+          ) : (
+            option.label
+          )}
         </div>
       );
     });
@@ -79,12 +103,17 @@ class Dropdown extends Component {
       <div className="dropdown-container">
         <div
           onMouseDown={(e) => this.toggleMenu(e)}
-          className={`${this.props.wideMenu && "dropdown-btn-wide"} dropdown-first-btn`}
+          className={`${this.props.wideMenu && "dropdown-btn-wide"} ${this.props.colorMenu &&
+            "dropdown-btn-color"} dropdown-first-btn`}
         >
-          {optionDisplayed} <FontAwesomeIcon icon="caret-down" />
+          {optionDisplayed}
+          {!this.props.colorMenu && <FontAwesomeIcon icon="caret-down" />}
         </div>
         {this.state.showDropdown && (
-          <div className={`${this.props.wideMenu && "dropdown-menu-wide"} dropdown-menu`}>
+          <div
+            className={`${this.props.wideMenu && "dropdown-menu-wide"} ${this.props.colorMenu &&
+              "dropdown-menu-color"} dropdown-menu`}
+          >
             {optionButtons}
           </div>
         )}
@@ -164,6 +193,7 @@ class Toolbar extends Component {
       { label: <FontAwesomeIcon icon="bold" />, style: "BOLD" },
       { label: <FontAwesomeIcon icon="italic" />, style: "ITALIC" },
       { label: <FontAwesomeIcon icon="underline" />, style: "UNDERLINE" },
+      { label: <FontAwesomeIcon icon="strikethrough" />, style: "STRIKETHROUGH" },
     ];
 
     const BLOCK_TYPES = [
@@ -198,6 +228,24 @@ class Toolbar extends Component {
       { label: "32", style: "32" },
     ];
 
+    const HIGHLIGHT_COLORS = [
+      { label: "rgba(0, 0, 0, 0)", style: "none" },
+      { label: "#FFCFE2", style: "pinkHighlight" },
+      { label: "#FDFF8A", style: "yellowHighlight" },
+      { label: "#BFFFB8", style: "greenHighlight" },
+      { label: "#B8F9FF", style: "blueHighlight" },
+      { label: "#D5B8FF", style: "purpleHighlight" },
+    ];
+
+    const TEXT_COLORS = [
+      { label: "#6e6e6e", style: "default" },
+      { label: "#A80000", style: "redText" },
+      { label: "#22854C", style: "greenText" },
+      { label: "#174B8A", style: "blueText" },
+      { label: "#4D1586", style: "purpleText" },
+      { label: "#A6178E", style: "pinkText" },
+    ];
+
     return (
       <div className="editor-toolbar-container">
         <Dropdown
@@ -211,9 +259,24 @@ class Toolbar extends Component {
         <Dropdown
           STYLE_LIST={FONT_SIZES}
           defaultOption="16"
-          wideMenu={false}
           editorState={this.props.editorState}
           customStyleMap={this.props.fontSizeStyleMap}
+          onToggle={this.props.setInlineStyle}
+        />
+        <Dropdown
+          STYLE_LIST={TEXT_COLORS}
+          defaultOption="#6e6e6e"
+          colorMenu={true}
+          editorState={this.props.editorState}
+          customStyleMap={this.props.textColorStyleMap}
+          onToggle={this.props.setInlineStyle}
+        />
+        <Dropdown
+          STYLE_LIST={HIGHLIGHT_COLORS}
+          defaultOption="rgba(0, 0, 0, 0)"
+          colorMenu={true}
+          editorState={this.props.editorState}
+          customStyleMap={this.props.highlightStyleMap}
           onToggle={this.props.setInlineStyle}
         />
         <InlineStyleControls

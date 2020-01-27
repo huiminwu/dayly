@@ -269,7 +269,54 @@ class Notebook extends Component {
       },
     };
 
-    const customStyleMap = { ...fontFamilyStyleMap, ...fontSizeStyleMap };
+    const highlightStyleMap = {
+      none: {
+        backgroundColor: "rgba(0, 0, 0, 0)",
+      },
+      pinkHighlight: {
+        backgroundColor: "#FFCFE2",
+      },
+      yellowHighlight: {
+        backgroundColor: "#FDFF8A",
+      },
+      greenHighlight: {
+        backgroundColor: "#BFFFB8",
+      },
+      blueHighlight: {
+        backgroundColor: "#B8F9FF",
+      },
+      purpleHighlight: {
+        backgroundColor: "#D5B8FF",
+      },
+    };
+
+    const textColorStyleMap = {
+      default: {
+        color: "#6e6e6e",
+      },
+      redText: {
+        color: "#A80000",
+      },
+      greenText: {
+        color: "#22854C",
+      },
+      blueText: {
+        color: "#174B8A",
+      },
+      purpleText: {
+        color: "#4D1586",
+      },
+      pinkText: {
+        color: "#A6178E",
+      },
+    };
+
+    const customStyleMap = {
+      ...fontFamilyStyleMap,
+      ...fontSizeStyleMap,
+      ...highlightStyleMap,
+      ...textColorStyleMap,
+    };
 
     const blockRenderMap = Immutable.Map({
       CustomBullet1: {
@@ -314,6 +361,8 @@ class Notebook extends Component {
             setInlineStyle={this.setInlineStyle}
             fontFamilyStyleMap={fontFamilyStyleMap}
             fontSizeStyleMap={fontSizeStyleMap}
+            textColorStyleMap={textColorStyleMap}
+            highlightStyleMap={highlightStyleMap}
             toggleInlineStyle={this.toggleInlineStyle}
             toggleBlockType={this.toggleBlockType}
           />
