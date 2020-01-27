@@ -19,7 +19,6 @@ import "draft-js/dist/Draft.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import debounce from "lodash/debounce";
-import _ from "underscore";
 import Immutable from "immutable";
 
 class CustomBullet1 extends React.Component {
@@ -250,7 +249,7 @@ class Notebook extends Component {
         isSaved: true,
       });
     });
-  };
+  }
 
   render() {
     const fontFamilyStyleMap = {
