@@ -24,7 +24,9 @@ class WidgetButton extends Component {
     const buttons = this.props.widgetlist.map((widget, k) => (
       <button
         key={k}
-        className={`calendar-widget-btn ${this.state.active == widget.name ? "active" : ""}`}
+        className={`calendar-widget-btn u-pointer ${
+          this.state.active == widget.name ? "active" : ""
+        }`}
         type="button"
         onClick={() => this.handleOnClick(widget.name)}
       >

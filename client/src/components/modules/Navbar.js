@@ -59,9 +59,9 @@ class Navbar extends Component {
               </Link>
               <Link
                 className={`Navbar-opts_link ${
-                  this.props.currentView.includes("collection") ? "active" : ""
+                  this.props.currentView.includes("collections") ? "active" : ""
                 }`}
-                to="/collection"
+                to="/collections"
                 onClick={this.props.handleViewChange}
               >
                 Collections
