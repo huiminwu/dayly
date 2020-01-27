@@ -10,9 +10,14 @@ class WidgetButton extends Component {
 
   handleOnClick = (name) => {
     this.props.handleOnClick(name);
-    this.setState({
-      active: name,
-    });
+    if (name === this.state.active)
+      this.setState({
+        active: null,
+      });
+    else
+      this.setState({
+        active: name,
+      });
   };
 
   render() {

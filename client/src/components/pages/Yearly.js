@@ -18,9 +18,14 @@ class Yearly extends Component {
   }
 
   handleWidgetSelect = (name) => {
-    this.setState({
-      displayWidget: name,
-    });
+    if (name === this.state.displayWidget)
+      this.setState({
+        displayWidget: null,
+      });
+    else
+      this.setState({
+        displayWidget: name,
+      });
   };
 
   handleBackYear = () => {
