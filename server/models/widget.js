@@ -5,7 +5,7 @@ const WidgetSchema = new mongoose.Schema({
   creator: { type: ObjectId, ref: "user" },
   name: String,
   type: String,
-  value: String,
+  value: { type: String, default: "" },
   timestamp: Date,
 });
 

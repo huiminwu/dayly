@@ -1,5 +1,4 @@
 .RichEditor-root {
-  /* temporary CSS just so the text box is visible lol */
   height: 50vh;
   width: 60vw;
   border: 1px solid var(--borders);
@@ -7,6 +6,7 @@
   padding: 24px;
   color: var(--body);
   overflow: scroll;
+  word-wrap: break-word;
 }
 
 .RichEditor-editor {
@@ -15,26 +15,46 @@
   padding-top: 16px;
 }
 
-.RichEditor-controls {
-  display: inline;
-  margin-right: 16px;
+.custom-bullet-container {
+  margin-left: 4px;
+  margin-bottom: 8px;
 }
 
-.RichEditor-controls:hover {
-  cursor: default;
+.custom-bullet {
+  display: flex;
+  align-items: center;
 }
 
-.RichEditor-styleButton:hover {
-  cursor: pointer;
+.custom-bullet + .custom-bullet {
+  margin-top: 8px;
 }
 
-.RichEditor-styleButton + .RichEditor-styleButton {
-  margin-left: 1em;
-}
-
-.RichEditor-activeButton {
-  font-weight: bold;
+.bullet-circle {
+  font-size: 8px;
   color: var(--accent);
+}
+
+.bullet-label {
+  margin-left: 10px;
+  padding: 2px 8px;
+  color: white;
+  font-size: 14px;
+}
+
+.label-1 {
+  background-color: var(--accent);
+}
+
+.label-2 {
+  background-color: #b3d9ff;
+}
+
+.label-3 {
+  background-color: #d9b3ff;
+}
+
+.bullet-content {
+  margin-left: 8px;
 }
 
 .RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {

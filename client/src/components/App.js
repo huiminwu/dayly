@@ -3,6 +3,8 @@ import { navigate, Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Daily from "./pages/Daily.js";
 import Monthly from "./pages/Monthly.js";
+import Yearly from "./pages/Yearly.js";
+import Collections from "./pages/Collections.js";
 import Landing from "./pages/Landing.js";
 import Loading from "./pages/Loading.js";
 import Navbar from "./modules/Navbar.js";
@@ -18,16 +20,38 @@ import {
   faBold,
   faItalic,
   faUnderline,
+  faListUl,
+  faListOl,
   faAngleLeft,
   faAngleRight,
   faCheck,
   faTimes,
+  faCaretDown,
+  faCircle as fasFaCircle,
+  faStrikethrough,
+  faHighlighter,
+  faFont,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faBold, faItalic, faUnderline, faAngleLeft, faAngleRight, faCheck, faTimes);
+import { faCircle as farFaCircle } from "@fortawesome/free-regular-svg-icons";
+library.add(
+  faBold,
+  faItalic,
+  faUnderline,
+  faListUl,
+  faListOl,
+  faAngleLeft,
+  faAngleRight,
+  faCheck,
+  faTimes,
+  faCaretDown,
+  fasFaCircle,
+  farFaCircle,
+  faStrikethrough,
+  faHighlighter,
+  faFont
+);
 
 const moment = require("moment");
-moment().format("dddd, MMMM DD YYYY");
-moment().local();
 
 /**
  * Define the "App" component as a class.
@@ -38,10 +62,9 @@ class App extends Component {
     super(props);
     this.state = {
       creator: undefined,
-      dateObject: moment(),
+      dateObject: moment().local(),
       widgetlist: null,
       data: null,
-      notes: null,
     };
   }
 
@@ -54,54 +77,9 @@ class App extends Component {
         widgetlist: user.widgetList,
       });
 
-      const query = {
-        day: this.state.dateObject.date(),
-        month: this.state.dateObject.month(),
-        year: this.state.dateObject.year(),
-      };
-
-      const dayData = await get("/api/day", query);
-      this.setState({
-        data: dayData,
-      });
+      this.getDateData(this.state.dateObject);
     }
   }
-
-  // async componentDidUpdate(prevProps, prevState) {
-  //   console.log(this.state.increment !== prevState.increment);
-  //   if (this.state.increment !== prevState.increment) {
-  //     console.log("hi i am updating the day data");
-  //     // create a new day if it does exist.
-  //     const params = {
-  //       day: this.state.dateObject.date(),
-  //       month: this.state.dateObject.month(),
-  //       year: this.state.dateObject.year(),
-  //     };
-
-  //     const day = await post("/api/day", params);
-  //     console.log(`i am the day varianble ${day}`);
-  //     // If created, set data to the resulting instance
-  //     if (day) {
-  //       console.log(`hi i am the newly created day ${day}`);
-  //       this.setState({
-  //         data: day,
-  //       });
-  //     } else {
-  //       // Otherwise, retrieve the existing data
-  //       const query = {
-  //         day: this.state.dateObject.date(),
-  //         month: this.state.dateObject.month(),
-  //         year: this.state.dateObject.year(),
-  //       };
-
-  //       const dayData = await get("/api/day", query);
-  //       console.log(`hi i am the retrieved old day ${dayData}`);
-  //       this.setState({
-  //         data: day,
-  //       });
-  //     }
-  //   }
-  // }
 
   handleLogin = (res) => {
     const userToken = res.tokenObj.id_token;
@@ -116,35 +94,8 @@ class App extends Component {
       .then(() => {
         navigate("/day");
       })
-      .then(async () => {
-        // After logging in,
-        // Create a new Day collection if it does not exist
-        const params = {
-          day: this.state.dateObject.date(),
-          month: this.state.dateObject.month(),
-          year: this.state.dateObject.year(),
-        };
-
-        const day = await post("/api/day", params);
-
-        // If created, set data to the resulting instance
-        if (day) {
-          this.setState({
-            data: day,
-          });
-        } else {
-          // Otherwise, retrieve the existing data
-          const query = {
-            day: this.state.dateObject.date(),
-            month: this.state.dateObject.month(),
-            year: this.state.dateObject.year(),
-          };
-
-          const dayData = await get("/api/day", query);
-          this.setState({
-            data: dayData,
-          });
-        }
+      .then(() => {
+        this.getDateData(this.state.dateObject);
       });
   };
 
@@ -157,107 +108,68 @@ class App extends Component {
     });
   };
 
-  async handleBackClick(varToChange) {
+  handleBackClick = async (varToChange) => {
+    // update date state
     if (varToChange === "day") {
       this.setState({
         dateObject: this.state.dateObject.subtract(1, "day"),
       });
-    } else {
+      this.getDateData(this.state.dateObject);
+    } else if (varToChange === "month") {
       this.setState({
         dateObject: this.state.dateObject.subtract(1, "month"),
       });
-    }
-
-    // Create a new Day collection if it does not exist
-    const params = {
-      day: this.state.dateObject.date(),
-      month: this.state.dateObject.month(),
-      year: this.state.dateObject.year(),
-    };
-
-    const day = await post("/api/day", params);
-
-    // If created, set data to the resulting instance
-    if (day) {
-      this.setState({
-        data: day,
-      });
     } else {
-      // Otherwise, retrieve the existing data
-      const query = {
-        day: this.state.dateObject.date(),
-        month: this.state.dateObject.month(),
-        year: this.state.dateObject.year(),
-      };
-
-      const dayData = await get("/api/day", query);
       this.setState({
-        data: dayData,
+        dateObject: this.state.dateObject.subtract(1, "year"),
       });
     }
-  }
-  // this.triggerUpdate();
+  };
 
-  async handleNextClick(varToChange) {
+  handleNextClick = async (varToChange) => {
+    // if changing daily view update date state
     if (varToChange === "day") {
       this.setState({
         dateObject: this.state.dateObject.add(1, "day"),
       });
-    } else {
+      this.getDateData(this.state.dateObject);
+    } else if (varToChange === "month") {
       this.setState({
         dateObject: this.state.dateObject.add(1, "month"),
       });
-    }
-    // Create a new Day collection if it does not exist
-    const params = {
-      day: this.state.dateObject.date(),
-      month: this.state.dateObject.month(),
-      year: this.state.dateObject.year(),
-    };
-
-    const day = await post("/api/day", params);
-
-    // If created, set data to the resulting instance
-    if (day) {
-      this.setState({
-        data: day,
-      });
     } else {
-      // Otherwise, retrieve the existing data
-      const query = {
-        day: this.state.dateObject.date(),
-        month: this.state.dateObject.month(),
-        year: this.state.dateObject.year(),
-      };
-
-      const dayData = await get("/api/day", query);
       this.setState({
-        data: dayData,
+        dateObject: this.state.dateObject.add(1, "year"),
       });
     }
-  }
-
-  // methods to overwrite todays date
-  setToOldDate = (momentObj) => {
-    this.setState({
-      dateObject: momentObj,
-    });
-    // this.triggerUpdate();
   };
 
-  viewOldDate = (dayData) => {
+  /**
+   *  Methods for overriding current day
+   *  */
+  getDateData = async (date) => {
+    // update data state
+    const params = {
+      day: date.format(),
+    };
+    const newData = await post("/api/day", params);
     this.setState({
-      data: dayData,
+      data: newData,
     });
-    // this.triggerUpdate();
   };
 
-  // triggerUpdate = () => {
-  //   console.log("i should have triggered an update");
-  //   this.setState({
-  //     increment: this.state.increment + 1,
-  //   });
-  // };
+  setToOldDate = (date) => {
+    this.setState({
+      dateObject: date,
+    });
+    this.getDateData(date);
+  };
+
+  viewToday = () => {
+    this.setState({
+      dateObject: moment().local(),
+    });
+  };
 
   render() {
     if (this.state.creator) {
@@ -267,6 +179,7 @@ class App extends Component {
             creator={this.state.creator}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
+            handleViewChange={this.viewToday}
           />
           <Router>
             <Landing path="/" creator={this.state.creator} />
@@ -287,18 +200,24 @@ class App extends Component {
               dateObject={this.state.dateObject}
               data={this.state.data}
               setToOldDate={this.setToOldDate}
-              viewOldDate={this.viewOldDate}
               handleBackClick={() => this.handleBackClick("day")}
               handleNextClick={() => this.handleNextClick("day")}
             />
             <Monthly
               path="/month"
-              creator={this.state.creator}
               dateObject={this.state.dateObject}
               widgetlist={this.state.widgetlist}
               handleBackClick={() => this.handleBackClick("month")}
               handleNextClick={() => this.handleNextClick("month")}
             />
+            <Yearly
+              path="/year"
+              dateObject={this.state.dateObject}
+              widgetlist={this.state.widgetlist}
+              handleBackClick={() => this.handleBackClick("year")}
+              handleNextClick={() => this.handleNextClick("year")}
+            />
+            <Collections path="/collections" />
             <Loading default />
           </Router>
         </>
@@ -310,6 +229,7 @@ class App extends Component {
             //creator={this.state.creator}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
+            handleViewChange={this.viewToday}
           />
           <Router>
             <Landing path="/" />

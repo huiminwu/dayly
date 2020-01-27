@@ -1,0 +1,18 @@
+.year-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+.calendars {
+  width: 60vw;
+  display: flex;
+  flex-wrap: wrap;
+}
+.year-calendar {
+  width: 25%;
+  height: 160px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+.year-calendar-month {
+  margin: auto;
+}

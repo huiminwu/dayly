@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const CollectionSchema = new mongoose.Schema({
+const NoteSchema = new mongoose.Schema({
   creator: { type: ObjectId, ref: "user" },
-  name: String,
-  content: String,
+  value: { type: String, default: "" },
+  timestamp: Date,
 });
 
 // compile model from schema
-module.exports = mongoose.model("collection", CollectionSchema);
+module.exports = mongoose.model("note", NoteSchema);
