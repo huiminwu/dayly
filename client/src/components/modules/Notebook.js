@@ -226,26 +226,24 @@ class Notebook extends Component {
     this.onChange(RichUtils.toggleInlineStyle(nextEditorState, inlineStyle));
   };
 
+  // commented code is probably unnecessary, but leaving it there just in case there's a bug
   handleSave = debounce((editorState) => {
-    const currentSelection = this.state.editorState.getSelection();
+    // const currentSelection = this.state.editorState.getSelection();
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     let contentStateString = JSON.stringify(rawContentState);
     if (!editorState.getCurrentContent().hasText()) {
-      console.log("YOU DELETED THINGS");
       const rawEmptyContentState = convertToRaw(EditorState.createEmpty().getCurrentContent());
       contentStateString = JSON.stringify(rawEmptyContentState);
     }
-    console.log("here is what is in the editor:");
-    console.log(contentStateString);
     const params = {
       day: this.props.dateObject.format(),
       value: contentStateString,
     };
     post("/api/notes", params).then((notes) => {
-      const convertedContentState = convertFromRaw(notes);
-      const editorStateWithContent = EditorState.createWithContent(convertedContentState);
+      // const convertedContentState = convertFromRaw(notes);
+      // const editorStateWithContent = EditorState.createWithContent(convertedContentState);
       this.setState({
-        editorState: EditorState.forceSelection(editorStateWithContent, currentSelection),
+        // editorState: EditorState.forceSelection(editorStateWithContent, currentSelection),
         isSaved: true,
       });
     });
