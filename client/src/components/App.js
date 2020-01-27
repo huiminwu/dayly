@@ -20,21 +20,29 @@ import {
   faBold,
   faItalic,
   faUnderline,
+  faListUl,
+  faListOl,
   faAngleLeft,
   faAngleRight,
   faCheck,
   faTimes,
   faCaretDown,
+  faCircle as fasFaCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { faCircle as farFaCircle } from "@fortawesome/free-regular-svg-icons";
 library.add(
   faBold,
   faItalic,
   faUnderline,
+  faListUl,
+  faListOl,
   faAngleLeft,
   faAngleRight,
   faCheck,
   faTimes,
-  faCaretDown
+  faCaretDown,
+  fasFaCircle,
+  farFaCircle
 );
 
 const moment = require("moment");

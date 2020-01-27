@@ -6,6 +6,7 @@
   padding: 24px;
   color: var(--body);
   overflow: scroll;
+  word-wrap: break-word;
 }
 
 .RichEditor-editor {
@@ -14,26 +15,46 @@
   padding-top: 16px;
 }
 
-.RichEditor-controls {
-  display: inline;
-  margin-right: 16px;
+.custom-bullet-container {
+  margin-left: 4px;
+  margin-bottom: 8px;
 }
 
-.RichEditor-controls:hover {
-  cursor: default;
+.custom-bullet {
+  display: flex;
+  align-items: center;
 }
 
-.RichEditor-styleButton:hover {
-  cursor: pointer;
+.custom-bullet + .custom-bullet {
+  margin-top: 8px;
 }
 
-.RichEditor-styleButton + .RichEditor-styleButton {
-  margin-left: 1em;
-}
-
-.RichEditor-activeButton {
-  font-weight: bold;
+.bullet-circle {
+  font-size: 8px;
   color: var(--accent);
+}
+
+.bullet-label {
+  margin-left: 10px;
+  padding: 2px 8px;
+  color: white;
+  font-size: 14px;
+}
+
+.label-1 {
+  background-color: var(--accent);
+}
+
+.label-2 {
+  background-color: #b3d9ff;
+}
+
+.label-3 {
+  background-color: #d9b3ff;
+}
+
+.bullet-content {
+  margin-left: 8px;
 }
 
 .RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
@@ -74,63 +95,4 @@
 
 .public-DraftEditor-content {
   height: 40vh !important;
-}
-
-/* DROPDOWN MENU */
-.dropdown-container {
-  display: inline-block;
-  position: relative; /* idk if this might break it lol */
-}
-
-.dropdown-menu {
-  display: inline-block;
-  position: absolute;
-  margin-left: 0;
-  top: 44px;
-  z-index: 2;
-  border: 1px solid var(--borders);
-  max-height: 25vh;
-  overflow-y: scroll;
-  width: calc(2.5vw + 24px);
-}
-
-.dropdown-menu-wide {
-  width: calc(9vw + 24px) !important;
-}
-
-.dropdown-btn-wide {
-  width: 9vw !important;
-}
-
-/* .dropdown-menu::-webkit-scrollbar {
-  display: none;
-} */
-
-.dropdown-btn,
-.dropdown-first-btn {
-  background-color: white;
-  border: none;
-  text-align: left;
-  padding: 8px 12px;
-  font-size: 16px;
-  width: 2.5vw;
-}
-
-.dropdown-first-btn {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid var(--borders);
-  margin-right: 10px;
-  height: 3vh;
-}
-
-.dropdown-btn:hover {
-  background: var(--background);
-  cursor: pointer;
-  transition-duration: 0.2s;
-}
-
-.dropdown-btn-active {
-  background: var(--background);
 }

@@ -1,0 +1,107 @@
+.editor-toolbar-container {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-icon-btn {
+  border: 1px solid var(--borders);
+  border-radius: 3px;
+  height: 2vw;
+  width: 2vw;
+  text-align: center;
+  line-height: 2.25vw;
+  background-color: white;
+}
+
+.toolbar-btn {
+  padding: 0px 8px;
+  height: 2vw;
+  line-height: 2.25vw;
+  background-color: white;
+  border: 1px solid var(--borders);
+  border-radius: 3px;
+}
+
+.toolbar-btn-group {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.toolbar-btn-group:hover {
+  cursor: default;
+}
+
+.toolbar-btn:hover {
+  cursor: pointer;
+}
+
+.toolbar-btn,
+.toolbar-icon-btn + .toolbar-icon-btn {
+  margin-left: 1em;
+}
+
+.toolbar-active-btn {
+  font-weight: bold;
+  background-color: var(--accent);
+  color: white;
+}
+
+/* DROPDOWN MENU */
+.dropdown-container {
+  display: inline-block;
+  position: relative; /* idk if this might break it lol */
+}
+
+.dropdown-menu {
+  display: inline-block;
+  position: absolute;
+  margin-left: 0;
+  top: 44px;
+  z-index: 2;
+  border: 1px solid var(--borders);
+  max-height: 25vh;
+  overflow-y: scroll;
+  width: calc(2.5vw + 24px);
+}
+
+.dropdown-menu-wide {
+  width: calc(9vw + 24px) !important;
+}
+
+.dropdown-btn-wide {
+  width: 9vw !important;
+}
+
+/* .dropdown-menu::-webkit-scrollbar {
+    display: none;
+  } */
+
+.dropdown-btn,
+.dropdown-first-btn {
+  background-color: white;
+  border: none;
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 16px;
+  width: 2.5vw;
+}
+
+.dropdown-first-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--borders);
+  margin-right: 10px;
+  height: 3vh;
+}
+
+.dropdown-btn:hover {
+  background: var(--background);
+  cursor: pointer;
+  transition-duration: 0.2s;
+}
+
+.dropdown-btn-active {
+  background: var(--background);
+}

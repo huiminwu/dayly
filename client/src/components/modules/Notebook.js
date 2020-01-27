@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Toolbar from "./Toolbar.js";
 import "./Notebook.css";
 
 import { post } from "../../utilities.js";
@@ -14,141 +15,71 @@ import {
   DefaultDraftBlockRenderMap,
 } from "draft-js";
 import "draft-js/dist/Draft.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import debounce from "lodash/debounce";
 
 import Immutable from "immutable";
 
-export class StyleButton extends React.Component {
-  constructor() {
-    super();
-
-    this.onToggle = (e) => {
-      e.preventDefault();
-      this.props.onToggle(this.props.style);
-    };
-  }
-
-  render() {
-    let className = "RichEditor-styleButton";
-    if (this.props.active) {
-      className += " RichEditor-activeButton";
-    }
-
-    return (
-      <span className={className} onMouseDown={this.onToggle}>
-        {this.props.label}
-      </span>
-    );
-  }
-}
-
-class Dropdown extends Component {
+class CustomBullet1 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showDropdown: false,
-    };
-
-    this.onToggle = (e, style) => {
-      e.preventDefault();
-      this.props.onToggle(style, this.props.customStyleMap);
-      this.setState({ showDropdown: false });
-    };
-
-    this.toggleMenu = (e) => {
-      e.preventDefault();
-      this.setState((prevState) => ({ showDropdown: !prevState.showDropdown }));
-    };
   }
-
   render() {
-    const currentStyle = this.props.editorState.getCurrentInlineStyle();
-    // option refers to each individual style in the dropdown
-    const currentOption = this.props.STYLE_LIST.filter((option) => currentStyle.has(option.style));
-    // assuming unstyled text has font "Poppins"
-    let optionDisplayed = this.props.defaultOption;
-    if (currentOption.length === 1) {
-      optionDisplayed = currentOption[0].label;
-    }
-
-    const optionButtons = this.props.STYLE_LIST.map((option, k) => {
-      return (
-        <div
-          key={k}
-          className={`${this.props.wideMenu && "dropdown-btn-wide"} ${option.label ===
-            optionDisplayed && "dropdown-btn-active"} dropdown-btn`}
-          onMouseDown={(e) => this.onToggle(e, option.style)}
-        >
-          {option.label}
-        </div>
-      );
-    });
-
     return (
-      <div className="dropdown-container">
-        <div
-          onMouseDown={(e) => this.toggleMenu(e)}
-          className={`${this.props.wideMenu && "dropdown-btn-wide"} dropdown-first-btn`}
-        >
-          {optionDisplayed} <FontAwesomeIcon icon="caret-down" />
-        </div>
-        {this.state.showDropdown && (
-          <div className={`${this.props.wideMenu && "dropdown-menu-wide"} dropdown-menu`}>
-            {optionButtons}
-          </div>
-        )}
+      <div className="custom-bullet-container">
+        {this.props.children.map((child, k) => {
+          return (
+            <div key={k} className="custom-bullet">
+              <FontAwesomeIcon icon={["fas", "circle"]} className="bullet-point bullet-circle" />
+              <div className="bullet-label label-1">EVENT</div>
+              <div className="bullet-content">{child}</div>
+            </div>
+          );
+        })}
       </div>
     );
   }
 }
 
-class InlineStyleControls extends Component {
+class CustomBullet2 extends React.Component {
   constructor(props) {
     super(props);
   }
-
   render() {
-    const currentStyle = this.props.editorState.getCurrentInlineStyle();
     return (
-      <div className="RichEditor-controls">
-        {this.props.INLINE_STYLES.map((type) => (
-          <StyleButton
-            key={type.label}
-            active={currentStyle.has(type.style)}
-            label={type.label}
-            onToggle={this.props.onToggle}
-            style={type.style}
-          />
-        ))}
+      <div className="custom-bullet-container">
+        {this.props.children.map((child, k) => {
+          return (
+            <div key={k} className="custom-bullet">
+              <FontAwesomeIcon icon="angle-right" className="bullet-point" />
+              <div className="bullet-label label-2">NOTE</div>
+              <div className="bullet-content">{child}</div>
+            </div>
+          );
+        })}
       </div>
     );
   }
 }
 
-export class BlockStyleControls extends Component {
+class CustomBullet3 extends React.Component {
   constructor(props) {
     super(props);
   }
-
   render() {
-    const selection = this.props.editorState.getSelection();
-    const blockType = this.props.editorState
-      .getCurrentContent()
-      .getBlockForKey(selection.getStartKey())
-      .getType();
     return (
-      <div className="RichEditor-controls">
-        {this.props.BLOCK_TYPES.map((type) => (
-          <StyleButton
-            key={type.label}
-            active={type.style === blockType}
-            label={type.label}
-            onToggle={this.props.onToggle}
-            style={type.style}
-          />
-        ))}
+      <div className="custom-bullet-container">
+        {this.props.children.map((child, k) => {
+          return (
+            <div key={k} className="custom-bullet">
+              <FontAwesomeIcon icon={["far", "circle"]} className="bullet-point bullet-circle" />
+              <div className="bullet-label label-3">TASK</div>
+              <div className="bullet-content">{child}</div>
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -223,8 +154,8 @@ class Notebook extends Component {
 
   mapKeyBindings = (e) => {
     if (e.keyCode === 9) {
-      // on tab, indent the list to a maximum of 4 layers
-      const newEditorState = RichUtils.onTab(e, this.state.editorState, 4);
+      // on tab, indent the list to a maximum of 3 layers
+      const newEditorState = RichUtils.onTab(e, this.state.editorState, 3);
       if (newEditorState !== this.state.editorState) {
         this.onChange(newEditorState);
       }
@@ -296,36 +227,6 @@ class Notebook extends Component {
   // }, 3000);
 
   render() {
-    const INLINE_STYLES = [
-      { label: "Bold", style: "BOLD" },
-      { label: "Italic", style: "ITALIC" },
-      { label: "Underline", style: "UNDERLINE" },
-    ];
-
-    const BLOCK_TYPES = [
-      { label: "H1", style: "header-one" },
-      { label: "UL", style: "unordered-list-item" },
-      { label: "OL", style: "ordered-list-item" },
-    ];
-
-    const FONT_FAMILIES = [
-      { label: "Inconsolata", style: "INCONSOLATA" },
-      { label: "Lora", style: "LORA" },
-      { label: "Montserrat", style: "MONTSERRAT" },
-      { label: "Neucha", style: "NEUCHA" },
-      { label: "Poppins", style: "POPPINS" },
-    ];
-
-    const FONT_SIZES = [
-      { label: "12", style: "12" },
-      { label: "14", style: "14" },
-      { label: "16", style: "16" },
-      { label: "18", style: "18" },
-      { label: "20", style: "20" },
-      { label: "24", style: "24" },
-      { label: "32", style: "32" },
-    ];
-
     const fontFamilyStyleMap = {
       POPPINS: {
         fontFamily: "'Poppins', sans-serif",
@@ -370,11 +271,22 @@ class Notebook extends Component {
 
     const customStyleMap = { ...fontFamilyStyleMap, ...fontSizeStyleMap };
 
-    // const blockRenderMap = Immutable.Map({
-    //   unstyled: {
-    //     fontFamily: "'Pippins', sans-serif",
-    //   },
-    // });
+    const blockRenderMap = Immutable.Map({
+      CustomBullet1: {
+        element: "div",
+        wrapper: <CustomBullet1 />,
+      },
+      CustomBullet2: {
+        element: "div",
+        wrapper: <CustomBullet2 />,
+      },
+      CustomBullet3: {
+        element: "div",
+        wrapper: <CustomBullet3 />,
+      },
+    });
+
+    const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
     let editorClassName = "RichEditor-editor";
     var contentState = this.state.editorState.getCurrentContent();
@@ -397,41 +309,24 @@ class Notebook extends Component {
     return (
       <div className="notes-section">
         <div className="RichEditor-root">
-          <Dropdown
-            STYLE_LIST={FONT_FAMILIES}
-            defaultOption="Poppins"
-            wideMenu={true}
+          <Toolbar
             editorState={this.state.editorState}
-            customStyleMap={fontFamilyStyleMap}
-            onToggle={this.setInlineStyle}
+            setInlineStyle={this.setInlineStyle}
+            fontFamilyStyleMap={fontFamilyStyleMap}
+            fontSizeStyleMap={fontSizeStyleMap}
+            toggleInlineStyle={this.toggleInlineStyle}
+            toggleBlockType={this.toggleBlockType}
           />
-          <Dropdown
-            STYLE_LIST={FONT_SIZES}
-            defaultOption="16"
-            wideMenu={false}
-            editorState={this.state.editorState}
-            customStyleMap={fontSizeStyleMap}
-            onToggle={this.setInlineStyle}
-          />
-          <InlineStyleControls
-            INLINE_STYLES={INLINE_STYLES}
-            editorState={this.state.editorState}
-            onToggle={this.toggleInlineStyle}
-          />
-          <BlockStyleControls
-            BLOCK_TYPES={BLOCK_TYPES}
-            editorState={this.state.editorState}
-            onToggle={this.toggleBlockType}
-          />
-
           <div className={editorClassName}>
             <Editor
               editorState={this.state.editorState}
               onChange={this.onChange}
               customStyleMap={customStyleMap}
-              // blockRenderMap={blockRenderMap}
               handleKeyCommand={this.handleKeyCommand}
               keyBindingFn={this.mapKeyBindings}
+              blockRenderMap={extendedBlockRenderMap}
+              // blockRendererFn={this.blockRendererFn}
+              // blockStyleFn={this.blockStyleFn}
               placeholder="How was your day?"
             />
           </div>
