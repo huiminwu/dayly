@@ -19,7 +19,6 @@ import "draft-js/dist/Draft.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import debounce from "lodash/debounce";
-import _ from "underscore";
 import Immutable from "immutable";
 
 class CustomBullet1 extends React.Component {
@@ -106,6 +105,7 @@ class Notebook extends Component {
         editorState: editorState,
         isSaved: false,
       });
+      this.handleSave(editorState);
     };
   }
 
@@ -226,41 +226,28 @@ class Notebook extends Component {
     this.onChange(RichUtils.toggleInlineStyle(nextEditorState, inlineStyle));
   };
 
-  handleSave(editorState) {
+  // commented code is probably unnecessary, but leaving it there just in case there's a bug
+  handleSave = debounce((editorState) => {
+    // const currentSelection = this.state.editorState.getSelection();
     const rawContentState = convertToRaw(editorState.getCurrentContent());
-    const contentStateString = JSON.stringify(rawContentState);
+    let contentStateString = JSON.stringify(rawContentState);
+    if (!editorState.getCurrentContent().hasText()) {
+      const rawEmptyContentState = convertToRaw(EditorState.createEmpty().getCurrentContent());
+      contentStateString = JSON.stringify(rawEmptyContentState);
+    }
     const params = {
       day: this.props.dateObject.format(),
       value: contentStateString,
     };
     post("/api/notes", params).then((notes) => {
-      const convertedContentState = convertFromRaw(notes);
+      // const convertedContentState = convertFromRaw(notes);
+      // const editorStateWithContent = EditorState.createWithContent(convertedContentState);
       this.setState({
-        editorState: EditorState.createWithContent(convertedContentState),
+        // editorState: EditorState.forceSelection(editorStateWithContent, currentSelection),
         isSaved: true,
       });
     });
-  }
-
-  // autosave code (doesn't work)
-  // handleSave = debounce((editorState) => {
-  //   const rawContentState = convertToRaw(editorState.getCurrentContent());
-  //   const contentStateString = JSON.stringify(rawContentState);
-  //   const params = {
-  //     creator: this.props.creator,
-  //     day: this.props.day,
-  //     month: this.props.month,
-  //     year: this.props.year,
-  //     notes: contentStateString,
-  //   };
-  //   post("/api/day/notes", params).then((notes) => {
-  //     const convertedContentState = convertFromRaw(notes);
-  //     this.setState({
-  //       editorState: EditorState.createWithContent(convertedContentState),
-  //       isSaved: true,
-  //     });
-  //   });
-  // }, 3000);
+  }, 2000);
 
   render() {
     const fontFamilyStyleMap = {

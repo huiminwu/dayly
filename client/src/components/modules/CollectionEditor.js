@@ -13,6 +13,8 @@ import { BlockStyleControls } from "./Toolbar.js";
 
 import { get, post } from "../../utilities";
 
+import debounce from "lodash/debounce";
+
 import "../pages/Collections.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -35,6 +37,7 @@ class CollectionEditor extends Component {
         editorState: editorState,
         isSaved: false,
       });
+      this.handleSave(editorState);
     };
   }
 
@@ -89,7 +92,7 @@ class CollectionEditor extends Component {
     }
   }
 
-  handleSave = (editorState) => {
+  handleSave = debounce((editorState) => {
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const contentStateString = JSON.stringify(rawContentState);
     const params = {
@@ -97,8 +100,8 @@ class CollectionEditor extends Component {
       content: contentStateString,
     };
 
-    post("/api/collections", params);
-  };
+    post("/api/collections", params).then((updatedCollection) => this.setState({ isSaved: true }));
+  }, 2000);
 
   render() {
     const BLOCK_TYPES = [
@@ -147,6 +150,7 @@ class CollectionEditor extends Component {
             keyBindingFn={this.mapKeyBindings}
             placeholder="Start making a list!"
           />
+          {this.state.isSaved ? <span>All changes saved</span> : <span>Unsaved</span>}
           <button onClick={() => this.handleSave(this.state.editorState)}>Save</button>
         </div>
       </div>
