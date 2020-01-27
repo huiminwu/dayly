@@ -20,12 +20,36 @@ import {
   faBold,
   faItalic,
   faUnderline,
+  faListUl,
+  faListOl,
   faAngleLeft,
   faAngleRight,
   faCheck,
   faTimes,
+  faCaretDown,
+  faCircle as fasFaCircle,
+  faStrikethrough,
+  faHighlighter,
+  faFont,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faBold, faItalic, faUnderline, faAngleLeft, faAngleRight, faCheck, faTimes);
+import { faCircle as farFaCircle } from "@fortawesome/free-regular-svg-icons";
+library.add(
+  faBold,
+  faItalic,
+  faUnderline,
+  faListUl,
+  faListOl,
+  faAngleLeft,
+  faAngleRight,
+  faCheck,
+  faTimes,
+  faCaretDown,
+  fasFaCircle,
+  farFaCircle,
+  faStrikethrough,
+  faHighlighter,
+  faFont
+);
 
 const moment = require("moment");
 
