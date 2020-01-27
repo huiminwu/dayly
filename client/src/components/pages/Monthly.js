@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Header from "../modules/Header.js";
 import Calendar from "../modules/Calendar.js";
+import WidgetButton from "../modules/WidgetButton";
 import { get, post } from "../../utilities.js";
 
 import "./Monthly.css";
@@ -26,11 +27,11 @@ class Monthly extends Component {
     };
   }
 
-  handleWidgetSelect(name) {
+  handleWidgetSelect = (name) => {
     this.setState({
       displayWidget: name,
     });
-  }
+  };
 
   handleBackMonth = () => {
     this.props.handleBackClick();
@@ -65,18 +66,10 @@ class Monthly extends Component {
 
   render() {
     let widgetButtons;
-    if (this.props.widgetlist) {
-      widgetButtons = this.props.widgetlist.map((widget, k) => (
-        <button
-          key={k}
-          className="calendar-widget-btn"
-          type="button"
-          onClick={() => this.handleWidgetSelect(widget.name)}
-        >
-          {widget.name}
-        </button>
-      ));
-    }
+    if (this.props.widgetlist)
+      widgetButtons = (
+        <WidgetButton widgetlist={this.props.widgetlist} handleOnClick={this.handleWidgetSelect} />
+      );
 
     return (
       <div className="page-container">
