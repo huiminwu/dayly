@@ -83,7 +83,7 @@ class Dropdown extends Component {
       return (
         <div
           key={k}
-          // PLEASE CLEAN THIS UP IT'S AWFUL. THERE ARE 3 DIFFERENT WIDTHS I NEED
+          // three different fixed widths needed: one for font, another for font size, another for color
           className={`${this.props.wideMenu && "dropdown-btn-wide"} ${this.props.colorMenu &&
             "dropdown-btn-color"} ${option.label === optionDisplayed &&
             "dropdown-btn-active"} dropdown-btn`}

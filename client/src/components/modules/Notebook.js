@@ -19,7 +19,7 @@ import "draft-js/dist/Draft.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import debounce from "lodash/debounce";
-
+import _ from "underscore";
 import Immutable from "immutable";
 
 class CustomBullet1 extends React.Component {
@@ -155,7 +155,7 @@ class Notebook extends Component {
   mapKeyBindings = (e) => {
     if (e.keyCode === 9) {
       // on tab, indent the list to a maximum of 3 layers
-      const newEditorState = RichUtils.onTab(e, this.state.editorState, 3);
+      const newEditorState = RichUtils.onTab(e, this.state.editorState, 2);
       if (newEditorState !== this.state.editorState) {
         this.onChange(newEditorState);
       }
@@ -163,6 +163,36 @@ class Notebook extends Component {
     }
     return getDefaultKeyBinding(e);
   };
+
+  // getBlockStyle = (block, customStyleMap) => {
+  //   const blockStyles = [];
+  //   const styleMap = Object.keys(customStyleMap);
+
+  //   switch (block.getType()) {
+  //     case "ordered-list-item":
+  //     case "unordered-list-item":
+  //       // With draft JS we cannot output different styles for the same block type.
+  //       // We can however customise the css classes:
+  //       block.findStyleRanges(
+  //         (item) => {
+  //           const itemStyles = item.getStyle();
+  //           return _.some(styleMap, (styleKey) => itemStyles.includes(styleKey));
+  //         },
+  //         (startCharacter) => {
+  //           if (startCharacter === 0) {
+  //             // Apply the same styling to the block as the first character
+  //             _.each(block.getInlineStyleAt(startCharacter).toArray(), (styleKey) => {
+  //               blockStyles.push(`block-style-${styleKey}`);
+  //             });
+  //           }
+  //         }
+  //       );
+
+  //       return blockStyles.join(" ");
+  //     default:
+  //       return null;
+  //   }
+  // };
 
   setInlineStyle = (inlineStyle, customStyleMap) => {
     const editorState = this.state.editorState;
@@ -374,8 +404,7 @@ class Notebook extends Component {
               handleKeyCommand={this.handleKeyCommand}
               keyBindingFn={this.mapKeyBindings}
               blockRenderMap={extendedBlockRenderMap}
-              // blockRendererFn={this.blockRendererFn}
-              // blockStyleFn={this.blockStyleFn}
+              // blockStyleFn={(block) => this.getBlockStyle(block, customStyleMap)}
               placeholder="How was your day?"
             />
           </div>
