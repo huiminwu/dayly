@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 
-import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from "draft-js";
+import {
+  Editor,
+  EditorState,
+  RichUtils,
+  convertToRaw,
+  convertFromRaw,
+  getDefaultKeyBinding,
+} from "draft-js";
 import "draft-js/dist/Draft.css";
 import { BlockStyleControls } from "./Notebook.js";
 
@@ -32,6 +39,27 @@ class CollectionEditor extends Component {
 
   _toggleBlockType = (blockType) => {
     this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
+  };
+
+  handleKeyCommand = (command, editorState) => {
+    const newEditorState = RichUtils.handleKeyCommand(editorState, command);
+    if (newEditorState) {
+      this.onChange(newEditorState);
+      return true;
+    }
+    return false;
+  };
+
+  mapKeyBindings = (e) => {
+    if (e.keyCode === 9) {
+      // on tab, indent the list to a maximum of 4 layers
+      const newEditorState = RichUtils.onTab(e, this.state.editorState, 4);
+      if (newEditorState !== this.state.editorState) {
+        this.onChange(newEditorState);
+      }
+      return;
+    }
+    return getDefaultKeyBinding(e);
   };
 
   componentDidMount() {
@@ -109,6 +137,7 @@ class CollectionEditor extends Component {
             editorState={this.state.editorState}
             onChange={this.onChange}
             handleKeyCommand={this.handleKeyCommand}
+            keyBindingFn={this.mapKeyBindings}
             placeholder="Start making a list!"
           />
           <button onClick={() => this.handleSave(this.state.editorState)}>Save</button>
