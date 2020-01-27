@@ -15,6 +15,7 @@ export class StyleButton extends Component {
 
   render() {
     let className = "";
+    // add special customization if the button has a font awesome icon
     if (typeof this.props.label !== "string") {
       className = "toolbar-icon-btn";
     } else {
@@ -33,24 +34,59 @@ export class StyleButton extends Component {
   }
 }
 
+/**
+ * Dropdown is a component for displaying dropdown menus in the toolbar
+ *
+ * Proptypes
+ * @param {array} STYLE_LIST mapping styles to their labels
+ * @param {string} defaultOption default for unstyled text, also identifies each dropdown
+ * @param {string} showDropdown identifies which dropdown, if any, is shown
+ * @param {Object} editorState
+ * @param {Object} customStyleMap mapping styles to their properties
+ * @param {func} setInlineStyle to set the selected style
+ * @param {func} toggleDropdown sets which dropdown, if any, is shown
+ * @param {bool} wideMenu for the font-family menu, which needs to be wider
+ * @param {bool} colorMenu for the font color and highlight menus, which have special icons and widths
+ **/
 class Dropdown extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showDropdown: false,
-    };
 
     this.onToggle = (e, style) => {
       e.preventDefault();
-      this.props.onToggle(style, this.props.customStyleMap);
-      this.setState({ showDropdown: false });
+      this.props.setInlineStyle(style, this.props.customStyleMap);
+      // close the dropdown menu once you've chosen something
+      this.props.toggleDropdown(null);
     };
 
     this.toggleMenu = (e) => {
       e.preventDefault();
-      this.setState((prevState) => ({ showDropdown: !prevState.showDropdown }));
+      // if the menu is already shown, close the menu
+      if (this.props.showDropdown === this.props.defaultOption) {
+        this.props.toggleDropdown(null);
+      } else {
+        // otherwise, open the menu
+        this.props.toggleDropdown(this.props.defaultOption);
+      }
     };
   }
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  }
+
+  //   handleClickOutside = (e) => {
+  //     if (!this.node.contains(e.target)) {
+  //       console.log("I AM OUTSIDE");
+  //       this.props.toggleDropdown(null);
+  //     } else {
+  //       console.log("I AM INSIDE");
+  //     }
+  //   };
 
   render() {
     const currentStyle = this.props.editorState.getCurrentInlineStyle();
@@ -101,6 +137,7 @@ class Dropdown extends Component {
 
     return (
       <div className="dropdown-container">
+        {/* ref={(node) => (this.node = node)} */}
         <div
           onMouseDown={(e) => this.toggleMenu(e)}
           className={`${this.props.wideMenu && "dropdown-btn-wide"} ${this.props.colorMenu &&
@@ -109,7 +146,8 @@ class Dropdown extends Component {
           {optionDisplayed}
           {!this.props.colorMenu && <FontAwesomeIcon icon="caret-down" />}
         </div>
-        {this.state.showDropdown && (
+        {/* again, the different dropdowns are identified by their unique default options */}
+        {this.props.showDropdown === this.props.defaultOption && (
           <div
             className={`${this.props.wideMenu && "dropdown-menu-wide"} ${this.props.colorMenu &&
               "dropdown-menu-color"} dropdown-menu`}
@@ -186,7 +224,14 @@ export class BlockStyleControls extends Component {
 class Toolbar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showDropdown: null,
+    };
   }
+
+  toggleDropdown = (name) => {
+    this.setState({ showDropdown: name });
+  };
 
   render() {
     const INLINE_STYLES = [
@@ -254,14 +299,18 @@ class Toolbar extends Component {
           wideMenu={true}
           editorState={this.props.editorState}
           customStyleMap={this.props.fontFamilyStyleMap}
-          onToggle={this.props.setInlineStyle}
+          setInlineStyle={this.props.setInlineStyle}
+          showDropdown={this.state.showDropdown}
+          toggleDropdown={this.toggleDropdown}
         />
         <Dropdown
           STYLE_LIST={FONT_SIZES}
           defaultOption="16"
           editorState={this.props.editorState}
           customStyleMap={this.props.fontSizeStyleMap}
-          onToggle={this.props.setInlineStyle}
+          setInlineStyle={this.props.setInlineStyle}
+          showDropdown={this.state.showDropdown}
+          toggleDropdown={this.toggleDropdown}
         />
         <Dropdown
           STYLE_LIST={TEXT_COLORS}
@@ -269,7 +318,9 @@ class Toolbar extends Component {
           colorMenu={true}
           editorState={this.props.editorState}
           customStyleMap={this.props.textColorStyleMap}
-          onToggle={this.props.setInlineStyle}
+          setInlineStyle={this.props.setInlineStyle}
+          showDropdown={this.state.showDropdown}
+          toggleDropdown={this.toggleDropdown}
         />
         <Dropdown
           STYLE_LIST={HIGHLIGHT_COLORS}
@@ -277,7 +328,9 @@ class Toolbar extends Component {
           colorMenu={true}
           editorState={this.props.editorState}
           customStyleMap={this.props.highlightStyleMap}
-          onToggle={this.props.setInlineStyle}
+          setInlineStyle={this.props.setInlineStyle}
+          showDropdown={this.state.showDropdown}
+          toggleDropdown={this.toggleDropdown}
         />
         <InlineStyleControls
           INLINE_STYLES={INLINE_STYLES}

@@ -200,8 +200,9 @@ class Notebook extends Component {
     const currentStyle = editorState.getCurrentInlineStyle();
 
     // removing other inline styles of the same category already applied
-    const reducer = (contentState, style) =>
-      Modifier.removeInlineStyle(contentState, selection, style);
+    const reducer = (contentState, style) => {
+      return Modifier.removeInlineStyle(contentState, selection, style);
+    };
 
     const nextContentState = Object.keys(customStyleMap).reduce(
       reducer,
@@ -211,9 +212,14 @@ class Notebook extends Component {
     let nextEditorState = EditorState.push(editorState, nextContentState, "change-inline-style");
 
     // if nothing is selected, prevents inline styles from stacking on top of each other
+    // if a style is in the category, it is toggled to be turned off; other styles are untouched
     if (selection.isCollapsed()) {
       nextEditorState = currentStyle.reduce((state, style) => {
-        return RichUtils.toggleInlineStyle(state, style);
+        if (Object.keys(customStyleMap).includes(style)) {
+          return RichUtils.toggleInlineStyle(state, style);
+        } else {
+          return state;
+        }
       }, nextEditorState);
     }
 
