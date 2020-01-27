@@ -106,6 +106,7 @@ class Notebook extends Component {
         editorState: editorState,
         isSaved: false,
       });
+      this.handleSave(editorState);
     };
   }
 
@@ -226,7 +227,8 @@ class Notebook extends Component {
     this.onChange(RichUtils.toggleInlineStyle(nextEditorState, inlineStyle));
   };
 
-  handleSave(editorState) {
+  handleSave = debounce((editorState) => {
+    const currentSelection = this.state.editorState.getSelection();
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const contentStateString = JSON.stringify(rawContentState);
     const params = {
@@ -235,32 +237,13 @@ class Notebook extends Component {
     };
     post("/api/notes", params).then((notes) => {
       const convertedContentState = convertFromRaw(notes);
+      const editorStateWithContent = EditorState.createWithContent(convertedContentState);
       this.setState({
-        editorState: EditorState.createWithContent(convertedContentState),
+        editorState: EditorState.forceSelection(editorStateWithContent, currentSelection),
         isSaved: true,
       });
     });
-  }
-
-  // autosave code (doesn't work)
-  // handleSave = debounce((editorState) => {
-  //   const rawContentState = convertToRaw(editorState.getCurrentContent());
-  //   const contentStateString = JSON.stringify(rawContentState);
-  //   const params = {
-  //     creator: this.props.creator,
-  //     day: this.props.day,
-  //     month: this.props.month,
-  //     year: this.props.year,
-  //     notes: contentStateString,
-  //   };
-  //   post("/api/day/notes", params).then((notes) => {
-  //     const convertedContentState = convertFromRaw(notes);
-  //     this.setState({
-  //       editorState: EditorState.createWithContent(convertedContentState),
-  //       isSaved: true,
-  //     });
-  //   });
-  // }, 3000);
+  }, 2000);
 
   render() {
     const fontFamilyStyleMap = {
