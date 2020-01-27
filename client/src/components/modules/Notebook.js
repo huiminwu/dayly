@@ -19,7 +19,6 @@ import "draft-js/dist/Draft.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import debounce from "lodash/debounce";
-import _ from "underscore";
 import Immutable from "immutable";
 
 class CustomBullet1 extends React.Component {
@@ -230,7 +229,14 @@ class Notebook extends Component {
   handleSave = debounce((editorState) => {
     const currentSelection = this.state.editorState.getSelection();
     const rawContentState = convertToRaw(editorState.getCurrentContent());
-    const contentStateString = JSON.stringify(rawContentState);
+    let contentStateString = JSON.stringify(rawContentState);
+    if (!editorState.getCurrentContent().hasText()) {
+      console.log("YOU DELETED THINGS");
+      const rawEmptyContentState = convertToRaw(EditorState.createEmpty().getCurrentContent());
+      contentStateString = JSON.stringify(rawEmptyContentState);
+    }
+    console.log("here is what is in the editor:");
+    console.log(contentStateString);
     const params = {
       day: this.props.dateObject.format(),
       value: contentStateString,
