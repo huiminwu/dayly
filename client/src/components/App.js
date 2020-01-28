@@ -84,7 +84,7 @@ class App extends Component {
         creatorName: user.name,
       });
 
-      const userWidgets = await get("/api/user/widgets");
+      const userWidgets = user.widgetList;
       this.setState({
         widgetlist: userWidgets,
       });
