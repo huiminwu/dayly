@@ -7,7 +7,7 @@ import Yearly from "./pages/Yearly.js";
 import Collections from "./pages/Collections.js";
 import Landing from "./pages/Landing.js";
 import Loading from "./pages/Loading.js";
-import Settings from "./pages/Settings.js"
+import Settings from "./pages/Settings.js";
 import Navbar from "./modules/Navbar.js";
 
 import "../utilities.css";
@@ -48,8 +48,8 @@ class App extends Component {
 
   async componentDidMount() {
     const user = await get("/api/whoami");
-    console.log("Component did mount")
-    console.log(user.widgetList)
+    console.log("Component did mount");
+    console.log(user.widgetList);
     // they are registered in the database, and currently logged in.
     if (user._id) {
       this.setState({
@@ -127,22 +127,21 @@ class App extends Component {
   };
 
   handleWidgetSubmit = (name, type) => {
-    const params = { name: name, widgetType: type, };
+    console.log(`i exist in app and i was called`);
+    const params = { name: name, widgetType: type };
     post("/api/user/widgets", params).then((userNew) => {
-      console.log("done")
+      console.log("done");
       this.setState({
-        widgetlist: userNew.widgetList
+        widgetlist: userNew.widgetList,
       });
     });
-  }
+  };
 
   handleWidgetDelete = (id, name) => {
-    post("/api/user/widgets/delete", { widget: id, name: name })
-      .then((userNew) => {
-        this.setState({ widgetlist: userNew.widgetList }
-        );
-      });
-  }
+    post("/api/user/widgets/delete", { widget: id, name: name }).then((userNew) => {
+      this.setState({ widgetlist: userNew.widgetList });
+    });
+  };
   /**
    *  Methods for overriding current day
    *  */
@@ -192,8 +191,8 @@ class App extends Component {
                 handleNextClick={() => this.handleNextClick("day")}
               />
             ) : (
-                <Loading path="/day" />
-              )}
+              <Loading path="/day" />
+            )}
             {/* View for when you look back on Monthly view */}
             <Daily
               path="/day/:oldYear/:oldMonth/:oldDay"

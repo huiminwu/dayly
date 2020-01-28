@@ -18,64 +18,63 @@ class Settings extends Component {
     this.state = {
       newWidgetName: "",
       newWidgetType: "ColorWidget",
-    }
+    };
   }
 
-  widgetTypes = ["ColorWidget", "SliderWidget", "BinaryWidget"]
+  widgetTypes = ["ColorWidget", "SliderWidget", "BinaryWidget"];
 
   componentDidMount() {
-    this.displayWidgets()
-  };
-
-  displayWidgets = () => {
-    console.log("display widgets called")
-    console.log(this.props.widgetlist)
-    let widgets = [];
-    (this.props.widgetlist && this.props.widgetlist.forEach((widget) => {
-      widgets.push(
-        <div>
-          <div> {this.getWidgetStyle(widget["name"], widget["widgetType"])} </div>
-          <img className="minus-sign" onClick={() => this.handleWidDelete(widget["_id"], widget["name"])} src={minus}></img>
-        </div>
-      );
-    }))
-    return widgets;
+    this.displayWidgets();
   }
 
-  getWidgetStyle(widgetName, widgetType) {
-    return (<Widget
-      name={widgetName}
-      type={widgetType}
-      work="no"
+  displayWidgets = () => {
+    let widgets = [];
+    if (this.props.widgetlist) {
+      this.props.widgetlist.forEach((widget) => {
+        widgets.push(
+          <div>
+            <div> {this.getWidgetStyle(widget["name"], widget["widgetType"])} </div>
+            <img
+              className="minus-sign"
+              onClick={() => this.handleWidDelete(widget["_id"], widget["name"])}
+              src={minus}
+            ></img>
+          </div>
+        );
+      });
+    }
+    return widgets;
+  };
 
-    />)
+  getWidgetStyle(widgetName, widgetType) {
+    return <Widget name={widgetName} type={widgetType} work="no" />;
   }
 
   handleNameChange = (event) => {
     this.setState({
       newWidgetName: event.target.value,
-    })
-  }
+    });
+  };
 
   handleTypeChange = (event) => {
     this.setState({
       newWidgetType: event.target.value,
-    })
-  }
+    });
+  };
 
   handleWidDelete = (id, name) => {
     // ev.preventDefault();
-    console.log("DELETE 68")
+    console.log("DELETE 68");
     this.props.handleWidgetDelete(id, name);
-  }
+  };
 
   handleWidSubmit = () => {
-    console.log("Submitted")
+    console.log(`i exist in settigns and i was submitted `);
     this.props.handleWidgetSubmit(this.state.newWidgetName, this.state.newWidgetType).then(() => {
-      this.setState({ newWidgetName: "" })
-      this.setState({ newWidgetType: "ColorWidget" })
+      this.setState({ newWidgetName: "" });
+      this.setState({ newWidgetType: "ColorWidget" });
     });
-  }
+  };
 
   render() {
     return (
@@ -84,26 +83,23 @@ class Settings extends Component {
         <div className="settingsContainer">
           <div className="widgetsTitle"> Widgets </div>
           {this.displayWidgets()}
-          <form onSubmit={() => this.handleWidSubmit()}>
-            <label>
-              <input
-                type="text"
-                placeholder="Name of Widget"
-                value={this.state.newWidgetName}
-                onChange={this.handleNameChange}
-                className="NewWidget-input"
-              />
-              <select
-                value={this.state.newWidgetType}
-                onChange={this.handleTypeChange}
-              >
-                <option value="ColorWidget">Color</option>
-                <option value="SliderWidget">Slider</option>
-                <option value="BinaryWidget">Binary</option>
-              </select>
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
+          <input
+            type="text"
+            placeholder="Name of Widget"
+            value={this.state.newWidgetName}
+            onChange={this.handleNameChange}
+            className="NewWidget-input"
+          />
+          <label>
+            <select value={this.state.newWidgetType} onChange={this.handleTypeChange}>
+              <option value="ColorWidget">Color</option>
+              <option value="SliderWidget">Slider</option>
+              <option value="BinaryWidget">Binary</option>
+            </select>
+          </label>
+          <button type="submit" onClick={this.handleWidSubmit}>
+            Submit
+          </button>
         </div>
       </>
     );
