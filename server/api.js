@@ -148,7 +148,7 @@ router.post("/user/widgets/delete", auth.ensureLoggedIn, (req, res) => {
   })
     .then(() => {
       Widget.deleteMany({
-        _id: req.user._id,
+        _id: req.body.widget,
         name: req.body.name,
       }).then((s) => console.log("deleted many"))
     });

@@ -24,14 +24,7 @@ class Settings extends Component {
   widgetTypes = ["ColorWidget", "SliderWidget", "BinaryWidget"]
 
   componentDidMount() {
-    console.log("Component did mount")
-    // get("/api/whoami", { creator: this.props.creator })
-    //   .then((user) => {
-    //     this.setState({
-    //       widgets: user.widgetList,
-    //     })
-    //   })
-    //   .then(console.log(this.state.widgets))
+    this.displayWidgets()
   };
 
   displayWidgets = () => {
@@ -42,7 +35,7 @@ class Settings extends Component {
       widgets.push(
         <div>
           <div> {this.getWidgetStyle(widget["name"], widget["widgetType"])} </div>
-          <img className="minus-sign" onClick={this.props.handleWidgetDelete(widget["_id"], widget["name"])} src={minus}></img>
+          <img className="minus-sign" onClick={() => this.handleWidDelete(widget["_id"], widget["name"])} src={minus}></img>
         </div>
       );
     }))
@@ -70,19 +63,14 @@ class Settings extends Component {
     })
   }
 
-
-
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.creator !== prevProps.creator) {
-  //     get("/api/whoami", { creator: this.props.creator }).then((user) => {
-  //       this.setState({
-  //         widgets: user.widgetList,
-  //       });
-  //     })
-  //   }
-  // }
+  handleWidDelete = (id, name) => {
+    // ev.preventDefault();
+    console.log("DELETE 68")
+    this.props.handleWidgetDelete(id, name);
+  }
 
   handleWidSubmit = () => {
+    console.log("Submitted")
     this.props.handleWidgetSubmit(this.state.newWidgetName, this.state.newWidgetType).then(() => {
       this.setState({ newWidgetName: "" })
       this.setState({ newWidgetType: "ColorWidget" })
@@ -96,7 +84,7 @@ class Settings extends Component {
         <div className="settingsContainer">
           <div className="widgetsTitle"> Widgets </div>
           {this.displayWidgets()}
-          <form onSubmit={this.handleWidSubmit}>
+          <form onSubmit={() => this.handleWidSubmit()}>
             <label>
               <input
                 type="text"
