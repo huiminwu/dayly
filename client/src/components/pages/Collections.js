@@ -79,14 +79,25 @@ class Popup extends Component {
       <div className="popup">
         <div className="popup\_inner">
           <p>{this.props.text}</p>
-          {this.props.function !== "Delete" ? (
+          {this.props.submitType === "input" && (
             <>
-              <input type="text" value={this.state.value} onChange={this.handleChange} />
               <input
-                type="submit"
-                onClick={() => this.props.collectionEditFunction(this.state.value)}
+                type="text"
+                className="popup-text"
+                value={this.state.value}
+                onChange={this.handleChange}
               />
-              <button onClick={this.props.closePopup}>Cancel</button>
+              <div className="popup-btn-container">
+                <button
+                  className="popup-btn popup-submit-btn"
+                  onClick={() => this.props.collectionEditFunction(this.state.value)}
+                >
+                  Submit
+                </button>
+                <button className="popup-btn" onClick={this.props.closePopup}>
+                  Cancel
+                </button>
+              </div>
               {this.props.nameError === "Duplicate name" && (
                 <div className="popup-error">You already have a collection with this name!</div>
               )}
@@ -94,11 +105,16 @@ class Popup extends Component {
                 <div className="popup-error">Collection name cannot be blank</div>
               )}
             </>
-          ) : (
-            <>
-              <button onClick={() => this.props.collectionEditFunction()}>Yes</button>
-              <button onClick={this.props.closePopup}>No</button>
-            </>
+          )}
+          {this.props.submitType === "binary" && (
+            <div className="popup-btn-container">
+              <button className="popup-btn popup-delete-btn" onClick={this.props.closePopup}>
+                No
+              </button>
+              <button className="popup-btn" onClick={() => this.props.collectionEditFunction()}>
+                Yes, delete
+              </button>
+            </div>
           )}
         </div>
       </div>
@@ -147,10 +163,12 @@ class Collections extends Component {
         this.setState({ nameError: newCollection.error });
       } else {
         this.closePopup();
-        this.setState((prevState) => ({
+        const collections = this.state.allCollections;
+        collections.splice(0, 0, newCollection);
+        this.setState({
           currentCollection: newCollection,
-          allCollections: prevState.allCollections.concat(newCollection),
-        }));
+          allCollections: collections,
+        });
       }
     });
   };
@@ -210,7 +228,7 @@ class Collections extends Component {
       popup = (
         <Popup
           text="Choose a name for your new collection:"
-          function="createNew"
+          submitType="input"
           closePopup={this.closePopup}
           collectionEditFunction={this.createNewCollection}
           nameError={this.state.nameError}
@@ -220,7 +238,7 @@ class Collections extends Component {
       popup = (
         <Popup
           text="Rename this collection:"
-          function="Rename"
+          submitType="input"
           closePopup={this.closePopup}
           collectionEditFunction={this.renameCollection}
           nameError={this.state.nameError}
@@ -230,7 +248,7 @@ class Collections extends Component {
       popup = (
         <Popup
           text="Are you sure you want to delete this collection?"
-          function="Delete"
+          submitType="binary"
           closePopup={this.closePopup}
           collectionEditFunction={this.deleteCollection}
         />

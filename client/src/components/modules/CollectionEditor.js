@@ -9,11 +9,14 @@ import {
   getDefaultKeyBinding,
 } from "draft-js";
 import "draft-js/dist/Draft.css";
-import { BlockStyleControls } from "./Notebook.js";
+import { BlockStyleControls } from "./Toolbar.js";
 
 import { get, post } from "../../utilities";
 
+import debounce from "lodash/debounce";
+
 import "../pages/Collections.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 /**
  * CollectionEditor is a component for displaying and editing the contents of a collection
@@ -34,6 +37,7 @@ class CollectionEditor extends Component {
         editorState: editorState,
         isSaved: false,
       });
+      this.handleSave(editorState);
     };
   }
 
@@ -52,8 +56,8 @@ class CollectionEditor extends Component {
 
   mapKeyBindings = (e) => {
     if (e.keyCode === 9) {
-      // on tab, indent the list to a maximum of 4 layers
-      const newEditorState = RichUtils.onTab(e, this.state.editorState, 4);
+      // on tab, indent the list to a maximum of 3 layers
+      const newEditorState = RichUtils.onTab(e, this.state.editorState, 3);
       if (newEditorState !== this.state.editorState) {
         this.onChange(newEditorState);
       }
@@ -88,7 +92,7 @@ class CollectionEditor extends Component {
     }
   }
 
-  handleSave = (editorState) => {
+  handleSave = debounce((editorState) => {
     const rawContentState = convertToRaw(editorState.getCurrentContent());
     const contentStateString = JSON.stringify(rawContentState);
     const params = {
@@ -96,13 +100,19 @@ class CollectionEditor extends Component {
       content: contentStateString,
     };
 
-    post("/api/collections", params);
-  };
+    post("/api/collections", params).then((updatedCollection) => this.setState({ isSaved: true }));
+  }, 2000);
 
   render() {
     const BLOCK_TYPES = [
-      { label: "UL", style: "unordered-list-item" },
-      { label: "OL", style: "ordered-list-item" },
+      {
+        label: <FontAwesomeIcon icon="list-ul" className="toolbar-icon" />,
+        style: "unordered-list-item",
+      },
+      {
+        label: <FontAwesomeIcon icon="list-ol" className="toolbar-icon" />,
+        style: "ordered-list-item",
+      },
     ];
 
     let editorClassName = "RichEditor-editor";
@@ -140,7 +150,11 @@ class CollectionEditor extends Component {
             keyBindingFn={this.mapKeyBindings}
             placeholder="Start making a list!"
           />
-          <button onClick={() => this.handleSave(this.state.editorState)}>Save</button>
+          <div className="collections-footer editor-footer">
+            <span className="editor-saveStatus">
+              {this.state.isSaved ? "All changes saved" : "Unsaved"}
+            </span>
+          </div>
         </div>
       </div>
     );

@@ -1,0 +1,132 @@
+.editor-toolbar-container {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.toolbar-icon-btn,
+.toolbar-btn {
+  border: 1px solid var(--borders);
+  border-radius: 3px;
+  height: 2vw;
+  text-align: center;
+  background-color: white;
+  cursor: pointer;
+}
+
+.toolbar-icon-btn {
+  width: 2vw;
+  line-height: 2vw;
+}
+
+.toolbar-btn {
+  padding: 0px 8px;
+  line-height: 2.25vw;
+}
+
+.toolbar-btn-group {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.toolbar-btn-group:hover {
+  cursor: default;
+}
+
+.toolbar-btn:hover {
+  cursor: pointer;
+}
+
+.toolbar-btn,
+.toolbar-icon-btn + .toolbar-icon-btn {
+  margin-left: 12px;
+}
+
+.toolbar-active-btn {
+  font-weight: bold;
+  background-color: var(--accent);
+  color: white;
+}
+
+/* DROPDOWN MENU */
+.dropdown-container {
+  display: inline-block;
+  position: relative; /* idk if this might break it lol */
+}
+
+.dropdown-menu {
+  display: inline-block;
+  position: absolute;
+  margin-left: 0;
+  top: 36px;
+  z-index: 2;
+  border: 1px solid var(--borders);
+  border-radius: 3px;
+  max-height: 25vh;
+  overflow-y: scroll;
+  width: calc(2vw + 24px);
+}
+
+.dropdown-menu-wide {
+  width: calc(8vw + 24px) !important;
+}
+
+.dropdown-btn-wide {
+  width: 8vw !important;
+}
+
+.dropdown-menu-color {
+  width: calc(1vw + 16px) !important;
+}
+
+.dropdown-btn-color {
+  padding: 4px 8px !important;
+  width: 1vw !important;
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  display: none;
+}
+
+.dropdown-btn,
+.dropdown-first-btn {
+  background-color: white;
+  border: none;
+  text-align: left;
+  padding: 4px 12px;
+  width: 2vw;
+  cursor: pointer;
+}
+
+.dropdown-first-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--borders);
+  border-radius: 3px;
+  margin-right: 10px;
+  height: 3vh;
+}
+
+.dropdown-btn:hover {
+  background: var(--background);
+  transition-duration: 0.2s;
+}
+
+.dropdown-btn-active {
+  background: var(--background);
+}
+
+.dropdown-color {
+  height: 14px;
+  width: 1vw;
+  background-color: black;
+}
+
+.dropdown-color-first {
+  width: 1.5em;
+  text-align: center;
+  font-size: 12px;
+  border-bottom: 3px solid none;
+}

@@ -1,52 +1,34 @@
-.RichEditor-root {
-  /* temporary CSS just so the text box is visible lol */
-  height: 50vh;
+.editor-container {
   width: 60vw;
   border: 1px solid var(--borders);
   border-radius: 10px;
   padding: 24px;
   color: var(--body);
   overflow: scroll;
+  word-wrap: break-word;
 }
 
-.RichEditor-editor {
+.editor-body {
+  height: 50vh;
   border-top: 1px solid var(--borders);
   margin-top: 16px;
   padding-top: 16px;
 }
-
-.RichEditor-controls {
-  display: inline;
-  margin-right: 16px;
-}
-
-.RichEditor-controls:hover {
-  cursor: default;
-}
-
-.RichEditor-styleButton:hover {
-  cursor: pointer;
-}
-
-.RichEditor-styleButton + .RichEditor-styleButton {
-  margin-left: 1em;
-}
-
-.RichEditor-activeButton {
-  font-weight: bold;
-  color: var(--accent);
-}
-
-.RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+.editor-hidePlaceholder .public-DraftEditorPlaceholder-root {
   display: none;
 }
 
-.RichEditor-footer {
-  width: 60vw;
-  margin-left: 50px;
+.editor-footer {
+  position: fixed;
   display: flex;
   justify-content: flex-end;
   align-items: baseline;
+  width: 60vw;
+  padding: 16px 10px 16px 0px;
+  margin-top: -26px;
+  margin-left: -6px;
+  background-color: var(--background);
+  z-index: 1;
 }
 
 .editor-saveButton,
@@ -75,4 +57,53 @@
 
 .public-DraftEditor-content {
   height: 40vh !important;
+}
+
+.editor-saveStatus {
+  font-size: 12px;
+  color: var(--borders);
+}
+
+/* CUSTOM BULLETS */
+
+.custom-bullet-container {
+  margin-left: 4px;
+  margin-bottom: 8px;
+}
+
+.custom-bullet {
+  display: flex;
+  align-items: center;
+}
+
+.custom-bullet + .custom-bullet {
+  margin-top: 8px;
+}
+
+.bullet-circle {
+  font-size: 8px;
+  color: var(--accent);
+}
+
+.bullet-label {
+  margin-left: 10px;
+  padding: 2px 8px;
+  color: white;
+  font-size: 14px;
+}
+
+.label-1 {
+  background-color: var(--accent);
+}
+
+.label-2 {
+  background-color: #b3d9ff;
+}
+
+.label-3 {
+  background-color: #d9b3ff;
+}
+
+.bullet-content {
+  margin-left: 8px;
 }

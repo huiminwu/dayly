@@ -26,7 +26,7 @@ const auth = require("./auth");
 const router = express.Router();
 
 //initialize socket
-const socket = require("./server-socket");
+// const socket = require("./server-socket");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -261,7 +261,9 @@ router.post("/notes", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/collections/all", (req, res) => {
-  Collection.find({ creator: req.user._id }).then((collections) => res.send(collections));
+  Collection.find({ creator: req.user._id })
+    .sort({ timestamp: -1 })
+    .then((collections) => res.send(collections));
 });
 
 router.post("/collections/new", auth.ensureLoggedIn, (req, res) => {
