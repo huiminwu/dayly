@@ -3,7 +3,6 @@
   align-items: center;
   justify-content: space-between;
   height: 10vh;
-  margin: 50px 0px 0px 0px;
 }
 
 .Header-dates {
@@ -28,6 +27,6 @@
   cursor: pointer;
 }
 
-.Header-nav-btn + .Header-nav-btn{
+.Header-nav-btn + .Header-nav-btn {
   margin-left: 5px;
 }

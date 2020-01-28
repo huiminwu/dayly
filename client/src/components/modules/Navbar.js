@@ -29,51 +29,13 @@ class Navbar extends Component {
         <span className="Navbar-company"> Day.ly </span>
         <div className="Navbar-opts">
           {this.props.creator ? (
-            <>
-              <Link
-                className={`Navbar-opts_link ${
-                  this.props.currentView.includes("day") ? "active" : ""
-                }`}
-                to="/day"
-                onClick={this.props.handleViewChange}
-              >
-                Daily
-              </Link>
-              <Link
-                className={`Navbar-opts_link ${
-                  this.props.currentView.includes("month") ? "active" : ""
-                }`}
-                to="/month"
-                onClick={this.props.handleViewChange}
-              >
-                Monthly
-              </Link>
-              <Link
-                className={`Navbar-opts_link ${
-                  this.props.currentView.includes("year") ? "active" : ""
-                }`}
-                to="/year"
-                onClick={this.props.handleViewChange}
-              >
-                Yearly
-              </Link>
-              <Link
-                className={`Navbar-opts_link ${
-                  this.props.currentView.includes("collections") ? "active" : ""
-                }`}
-                to="/collections"
-                onClick={this.props.handleViewChange}
-              >
-                Collections
-              </Link>
-              <GoogleLogout
-                className="Navbar-opts_login"
-                clientId={GOOGLE_CLIENT_ID}
-                buttonText="Logout"
-                onLogoutSuccess={this.props.handleLogout}
-                onFailure={(err) => console.log(err)}
-              />
-            </>
+            <GoogleLogout
+              className="Navbar-opts_login"
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Logout"
+              onLogoutSuccess={this.props.handleLogout}
+              onFailure={(err) => console.log(err)}
+            />
           ) : (
             <GoogleLogin
               className="Navbar-opts_login"

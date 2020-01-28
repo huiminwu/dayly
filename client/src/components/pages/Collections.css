@@ -5,7 +5,7 @@
 
 .collections-header {
   height: 10vh;
-  margin: 50px 0px 0px 0px;
+  margin: 0 0px 10px 0px;
 }
 
 .collections-container {
@@ -16,11 +16,11 @@
 .collectionList-container {
   display: flex;
   flex-direction: column;
-  width: 20vw;
+  width: 20%;
   height: 50vh;
   overflow: scroll;
   padding: 24px;
-  border: 1px solid var(--borders);
+  border-right: 1px solid var(--borders);
 }
 
 .collectionList-btn {
@@ -46,8 +46,7 @@
 }
 
 .collections-editor {
-  width: 60vw;
-  border: 1px solid red;
+  width: 70%;
   padding: 16px;
   word-wrap: break-word;
   overflow: scroll;
