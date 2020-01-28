@@ -97,17 +97,19 @@ router.post("/day", (req, res) => {
       .sort({ type: -1, timestamp: 1 })
       .then((w) => {
         if (w.length === 0) {
-          req.user.widgetList.forEach((widget) => {
-            newWidget = new Widget({
-              creator: req.user._id,
-              name: widget.name,
-              type: widget.widgetType,
-              timestamp: startOfDay.add(1, "minute"),
+          User.findById(req.user._id).then((user) => {
+            user.widgetList.forEach((widget) => {
+              newWidget = new Widget({
+                creator: req.user._id,
+                name: widget.name,
+                type: widget.widgetType,
+                timestamp: startOfDay.add(1, "minute"),
+              });
+              newWidget.save();
+              response["widgets"].push(newWidget);
             });
-            newWidget.save();
-            response["widgets"].push(newWidget);
+            res.send(response);
           });
-          res.send(response);
         } else {
           response.widgets = w;
           res.send(response);
