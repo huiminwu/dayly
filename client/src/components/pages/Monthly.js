@@ -77,15 +77,15 @@ class Monthly extends Component {
       );
 
     return (
-      <div className="page-container">
+      <>
         <Header
           dateObject={this.props.dateObject}
           view="month"
           handleBackClick={this.handleBackMonth}
           handleNextClick={this.handleNextMonth}
         />
-        <div className="calendar-container">
-          <div className="calendar-widgets">{widgetButtons}</div>
+        <div className="journal-container">
+          <div className="widget-container">{widgetButtons}</div>
           <Calendar
             view={"month"}
             month={this.props.dateObject.month()}
@@ -95,7 +95,7 @@ class Monthly extends Component {
             widgetData={this.state.widgetData}
           />
         </div>
-      </div>
+      </>
     );
   }
 }
