@@ -54,11 +54,6 @@ class Navbar extends Component {
   }
 
   handleButtonClick = () => {
-    // this.setState(state => {
-    //   return {
-    //     open: !this.state.open,
-    //   };
-    // });
     this.setState({ open: !this.state.open })
   }
 
@@ -140,7 +135,6 @@ class Navbar extends Component {
                   <div class="dropDown" onClick={this.handleButtonClick}>
                     <ul>
                       <li>
-                        {/* <img className="li-pfp" src={this.getFirstLetter()} onClick={this.handleButtonClick} /> */}
                         <h3 className="name"> {this.props.creatorName} </h3>
                       </li>
                       <Link className="settings" to="/settings">

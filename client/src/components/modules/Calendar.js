@@ -84,36 +84,30 @@ class Calendar extends Component {
 
       // create table data but does not add links to future dates
       let view = this.props.view;
-      console.log(month)
       if (view === "month") {
         if (year > this.state.oldYear) {
-          console.log("89")
           daysInMonth.push(
-            <td key={d} className={`calendar-day ${this.props.view}`}>
+            <td key={d} className={`no-link calendar-day ${this.props.view}`}>
               <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
               <div className={`calendar-color-data ${widgetClass} ${this.props.view}`}> </div>
             </td>
           )
         } else if (year === this.state.oldYear) {
-          console.log("97")
           if ((month + 1) > this.state.oldMonth) {
-            console.log("98")
             daysInMonth.push(
-              <td key={d} className={`calendar-day ${this.props.view}`}>
+              <td key={d} className={`no-link calendar-day ${this.props.view}`}>
                 <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
                 <div className={`calendar-color-data ${widgetClass} ${this.props.view}`}> </div>
               </td>
             )
           } else if ((month + 1) === this.state.oldMonth && d > this.state.oldDay) {
-            console.log("106")
             daysInMonth.push(
-              <td key={d} className={`calendar-day ${this.props.view}`}>
+              <td key={d} className={`no-link calendar-day ${this.props.view}`}>
                 <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
                 <div className={`calendar-color-data ${widgetClass} ${this.props.view}`}> </div>
               </td>
             )
           } else {
-            console.log("116")
             daysInMonth.push(
               <td key={d} className={`calendar-day ${this.props.view}`}>
                 <Link to={`/day/${year}/${month}/${d}`}>
@@ -124,7 +118,6 @@ class Calendar extends Component {
             );
           }
         } else {
-          console.log("275")
           daysInMonth.push(
             <td key={d} className={`calendar-day ${this.props.view}`}>
               <Link to={`/day/${year}/${month}/${d}`}>
@@ -138,24 +131,21 @@ class Calendar extends Component {
         //year view
       } else {
         if (year > this.state.oldYear) {
-          console.log("129")
           daysInMonth.push(
-            <td key={d} className={`calendar-day ${this.props.view} ${widgetClass}`}>
+            <td key={d} className={`no-link calendar-day ${this.props.view} ${widgetClass}`}>
               <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
             </td>
           )
         } else if (year === this.state.oldYear) {
           if ((month + 1) > this.state.oldMonth) {
-            console.log("137")
             daysInMonth.push(
-              <td key={d} className={`calendar-day ${this.props.view} ${widgetClass}`}>
+              <td key={d} className={`no-link calendar-day ${this.props.view} ${widgetClass}`}>
                 <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
               </td>
             )
           } else if ((month + 1) === this.state.oldMonth && d > this.state.oldDay) {
-            console.log("144")
             daysInMonth.push(
-              <td key={d} className={`calendar-day ${this.props.view} ${widgetClass}`}>
+              <td key={d} className={`no-link calendar-day ${this.props.view} ${widgetClass}`}>
                 <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
               </td>
             )
@@ -169,7 +159,6 @@ class Calendar extends Component {
             );
           }
         } else {
-          console.log("152")
           daysInMonth.push(
             <td key={d} className={`calendar-day ${this.props.view} ${widgetClass}`}>
               <Link to={`/day/${year}/${month}/${d}`}>
