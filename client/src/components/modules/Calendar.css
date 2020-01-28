@@ -2,6 +2,13 @@
 for widget buttons that alter calendar
 */
 
+
+.no-link:hover {
+  box-shadow: none;
+  cursor: default; 
+  background-color: transparent;
+}
+
 .calendar-widget-btn {
   color: var(--accent);
   border: 1px solid var(--accent);
@@ -57,6 +64,7 @@ a {
   border: 1px solid #c0c0c0;
   cursor: pointer;
 }
+
 
 .calendar-day:hover {
   background-color: var(--hover);

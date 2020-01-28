@@ -54,13 +54,8 @@ class Navbar extends Component {
   }
 
   handleButtonClick = () => {
-    // this.setState(state => {
-    //   return {
-    //     open: !this.state.open,
-    //   };
-    // });
-    this.setState({ open: !this.state.open });
-  };
+    this.setState({ open: !this.state.open })
+  }
 
   handleClickOutside = (event) => {
     if (this.container.current && !this.container.current.contains(event.target)) {
@@ -126,7 +121,9 @@ class Navbar extends Component {
           </>
         ) : (
             <>
-              <span className="Navbar-company"> Day.ly </span>
+              <Link to="/">
+                <span className="Navbar-company"> Day.ly </span>
+              </Link>
             </>
           )}
         <div className="Navbar-opts">
@@ -138,7 +135,6 @@ class Navbar extends Component {
                   <div className="dropDown" onClick={this.handleButtonClick}>
                     <ul>
                       <li>
-                        {/* <img className="li-pfp" src={this.getFirstLetter()} onClick={this.handleButtonClick} /> */}
                         <h3 className="name"> {this.props.creatorName} </h3>
                       </li>
                       <Link className="settings" to="/settings">
@@ -161,14 +157,14 @@ class Navbar extends Component {
               </div>
             </>
           ) : (
-            <GoogleLogin
-              className="Navbar-opts_login"
-              clientId={GOOGLE_CLIENT_ID}
-              buttonText="Login"
-              onSuccess={this.props.handleLogin}
-              onFailure={(err) => console.log(err)}
-            />
-          )}
+              <GoogleLogin
+                className="Navbar-opts_login"
+                clientId={GOOGLE_CLIENT_ID}
+                buttonText="Login"
+                onSuccess={this.props.handleLogin}
+                onFailure={(err) => console.log(err)}
+              />
+            )}
         </div>
       </div>
     );

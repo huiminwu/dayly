@@ -24,6 +24,7 @@ class Daily extends Component {
     super(props);
     this.state = {
       widgetValues: null,
+      // canForward: false,
     };
   }
 
