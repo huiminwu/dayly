@@ -118,7 +118,17 @@ class Navbar extends Component {
     return (
       <div className="Navbar-container">
         {/* hardcoded logo for now */}
-        <span className="Navbar-company"> Day.ly </span>
+        {this.props.creator ? (
+          <>
+            <Link to="/day/:oldYear/:oldMonth/:oldDay">
+              <span className="Navbar-company"> Day.ly </span>
+            </Link>
+          </>
+        ) : (
+            <>
+              <span className="Navbar-company"> Day.ly </span>
+            </>
+          )}
         <div className="Navbar-opts">
           {this.props.creator ? (
             <>
