@@ -132,7 +132,7 @@ class Navbar extends Component {
               <div className="dropDown-container" ref={this.container}>
                 <img className="pfp" src={this.getFirstLetter()} onClick={this.handleButtonClick} />
                 {this.state.open && (
-                  <div class="dropDown" onClick={this.handleButtonClick}>
+                  <div className="dropDown" onClick={this.handleButtonClick}>
                     <ul>
                       <li>
                         <h3 className="name"> {this.props.creatorName} </h3>
@@ -151,7 +151,6 @@ class Navbar extends Component {
                           onFailure={(err) => console.log(err)}
                         />
                       </li>
-
                     </ul>
                   </div>
                 )}

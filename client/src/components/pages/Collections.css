@@ -103,6 +103,6 @@
 }
 
 .popup-submit-btn {
-  color: white;
+  color: var(--accent-text);
   background: var(--accent);
 }

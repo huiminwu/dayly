@@ -303,7 +303,7 @@ class Toolbar extends Component {
           showDropdown={this.state.showDropdown}
           toggleDropdown={this.toggleDropdown}
         />
-        <Dropdown
+        {/* <Dropdown
           STYLE_LIST={FONT_SIZES}
           defaultOption="16"
           editorState={this.props.editorState}
@@ -311,7 +311,7 @@ class Toolbar extends Component {
           setInlineStyle={this.props.setInlineStyle}
           showDropdown={this.state.showDropdown}
           toggleDropdown={this.toggleDropdown}
-        />
+        /> */}
         <Dropdown
           STYLE_LIST={TEXT_COLORS}
           defaultOption="#6e6e6e"
