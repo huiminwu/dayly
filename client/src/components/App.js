@@ -8,6 +8,7 @@ import Collections from "./pages/Collections.js";
 import Landing from "./pages/Landing.js";
 import Loading from "./pages/Loading.js";
 import Navbar from "./modules/Navbar.js";
+import Tab from "./modules/Tab.js";
 
 import "../utilities.css";
 
@@ -199,6 +200,11 @@ class App extends Component {
     if (this.state.creator) {
       return (
         <>
+          <Tab
+            creator={this.state.creator}
+            currentView={this.state.currentView}
+            handleViewChange={this.viewToday}
+          />
           <Navbar
             creator={this.state.creator}
             currentView={this.state.currentView}
