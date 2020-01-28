@@ -79,7 +79,18 @@ class App extends Component {
       });
 
       this.getDateData(this.state.dateObject);
+
+      this.setState({
+        currentView: window.location.pathname.slice(1),
+      });
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentView !== window.location.pathname.slice(1))
+      this.setState({
+        currentView: window.location.pathname.slice(1),
+      });
   }
 
   handleLogin = (res) => {
