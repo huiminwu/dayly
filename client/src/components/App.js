@@ -11,7 +11,7 @@ import Navbar from "./modules/Navbar.js";
 
 import "../utilities.css";
 
-import { socket } from "../client-socket.js";
+// import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
 
@@ -20,12 +20,36 @@ import {
   faBold,
   faItalic,
   faUnderline,
+  faListUl,
+  faListOl,
   faAngleLeft,
   faAngleRight,
   faCheck,
   faTimes,
+  faCaretDown,
+  faCircle as fasFaCircle,
+  faStrikethrough,
+  faHighlighter,
+  faFont,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faBold, faItalic, faUnderline, faAngleLeft, faAngleRight, faCheck, faTimes);
+import { faCircle as farFaCircle } from "@fortawesome/free-regular-svg-icons";
+library.add(
+  faBold,
+  faItalic,
+  faUnderline,
+  faListUl,
+  faListOl,
+  faAngleLeft,
+  faAngleRight,
+  faCheck,
+  faTimes,
+  faCaretDown,
+  fasFaCircle,
+  farFaCircle,
+  faStrikethrough,
+  faHighlighter,
+  faFont
+);
 
 const moment = require("moment");
 
@@ -66,7 +90,7 @@ class App extends Component {
           creator: user._id,
           widgetlist: user.widgetList,
         });
-        return post("/api/initsocket", { socketid: socket.id });
+        // return post("/api/initsocket", { socketid: socket.id });
       })
       .then(() => {
         navigate("/day");

@@ -26,7 +26,7 @@ const auth = require("./auth");
 const router = express.Router();
 
 //initialize socket
-const socket = require("./server-socket");
+// const socket = require("./server-socket");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
