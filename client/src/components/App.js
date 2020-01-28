@@ -12,7 +12,7 @@ import Navbar from "./modules/Navbar.js";
 
 import "../utilities.css";
 
-import { socket } from "../client-socket.js";
+// import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
 
@@ -21,12 +21,36 @@ import {
   faBold,
   faItalic,
   faUnderline,
+  faListUl,
+  faListOl,
   faAngleLeft,
   faAngleRight,
   faCheck,
   faTimes,
+  faCaretDown,
+  faCircle as fasFaCircle,
+  faStrikethrough,
+  faHighlighter,
+  faFont,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faBold, faItalic, faUnderline, faAngleLeft, faAngleRight, faCheck, faTimes);
+import { faCircle as farFaCircle } from "@fortawesome/free-regular-svg-icons";
+library.add(
+  faBold,
+  faItalic,
+  faUnderline,
+  faListUl,
+  faListOl,
+  faAngleLeft,
+  faAngleRight,
+  faCheck,
+  faTimes,
+  faCaretDown,
+  fasFaCircle,
+  farFaCircle,
+  faStrikethrough,
+  faHighlighter,
+  faFont
+);
 
 const moment = require("moment");
 
@@ -41,8 +65,9 @@ class App extends Component {
       creator: undefined,
       creatorName: undefined,
       dateObject: moment().local(),
-      widgetlist: null,
       data: null,
+      widgetlist: null,
+      currentView: "",
     };
   }
 
@@ -59,7 +84,18 @@ class App extends Component {
       });
 
       this.getDateData(this.state.dateObject);
+
+      this.setState({
+        currentView: window.location.pathname.slice(1),
+      });
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentView !== window.location.pathname.slice(1))
+      this.setState({
+        currentView: window.location.pathname.slice(1),
+      });
   }
 
   handleLogin = (res) => {
@@ -71,7 +107,7 @@ class App extends Component {
           widgetlist: user.widgetList,
           creatorName: user.name,
         });
-        return post("/api/initsocket", { socketid: socket.id });
+        // return post("/api/initsocket", { socketid: socket.id });
       })
       .then(() => {
         navigate("/day");
@@ -79,6 +115,10 @@ class App extends Component {
       .then(() => {
         this.getDateData(this.state.dateObject);
       });
+
+    this.setState({
+      currentView: window.location.pathname.slice(1),
+    });
   };
 
   handleLogout = () => {
@@ -169,6 +209,12 @@ class App extends Component {
     });
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentView !== window.location.pathname.slice(1))
+      this.setState({
+        currentView: window.location.pathname.slice(1),
+      });
+  }
   render() {
     if (this.state.creator) {
       return (
@@ -176,6 +222,7 @@ class App extends Component {
           <Navbar
             creator={this.state.creator}
             creatorName={this.state.creatorName}
+            currentView={this.state.currentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
             handleViewChange={this.viewToday}
@@ -233,6 +280,7 @@ class App extends Component {
         <>
           <Navbar
             //creator={this.state.creator}
+            currentView={this.state.currentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
             handleViewChange={this.viewToday}

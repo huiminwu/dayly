@@ -5,6 +5,7 @@ const CollectionSchema = new mongoose.Schema({
   creator: { type: ObjectId, ref: "user" },
   name: String,
   content: String,
+  timestamp: { type: Date, default: Date.now },
 });
 
 // compile model from schema

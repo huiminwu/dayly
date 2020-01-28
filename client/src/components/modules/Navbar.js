@@ -122,16 +122,40 @@ class Navbar extends Component {
         <div className="Navbar-opts">
           {this.props.creator ? (
             <>
-              <Link className="Navbar-opts_link" to="/day" onClick={this.props.handleViewChange}>
+              <Link
+                className={`Navbar-opts_link ${
+                  this.props.currentView.includes("day") ? "active" : ""
+                  }`}
+                to="/day"
+                onClick={this.props.handleViewChange}
+              >
                 Daily
               </Link>
-              <Link className="Navbar-opts_link" to="/month" onClick={this.props.handleViewChange}>
+              <Link
+                className={`Navbar-opts_link ${
+                  this.props.currentView.includes("month") ? "active" : ""
+                  }`}
+                to="/month"
+                onClick={this.props.handleViewChange}
+              >
                 Monthly
               </Link>
-              <Link className="Navbar-opts_link" to="/year" onClick={this.props.handleViewChange}>
+              <Link
+                className={`Navbar-opts_link ${
+                  this.props.currentView.includes("year") ? "active" : ""
+                  }`}
+                to="/year"
+                onClick={this.props.handleViewChange}
+              >
                 Yearly
               </Link>
-              <Link className="Navbar-opts_link" to="/collections">
+              <Link
+                className={`Navbar-opts_link ${
+                  this.props.currentView.includes("collections") ? "active" : ""
+                  }`}
+                to="/collections"
+                onClick={this.props.handleViewChange}
+              >
                 Collections
               </Link>
 
