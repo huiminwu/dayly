@@ -4,6 +4,11 @@
   height: 40px;
   width: 40px;
 }
+
+.pfp:hover {
+  cursor: pointer;
+}
+
 .settings {
   font-family: "Poppins", sans-serif;
   color: var(--headers);
@@ -87,6 +92,7 @@
   height: 40px;
   width: 40px;
 }
+
 /* 
 .logout-btn{
   align-self: center;
