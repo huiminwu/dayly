@@ -6,9 +6,11 @@
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
 }
+
 .Tab-opt::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
+
 .Tab-opt_link {
   color: white;
   width: 120px;

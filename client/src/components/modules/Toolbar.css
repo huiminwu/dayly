@@ -12,16 +12,15 @@
   text-align: center;
   background-color: white;
   cursor: pointer;
+  line-height: 2vw;
 }
 
 .toolbar-icon-btn {
   width: 2vw;
-  line-height: 2vw;
 }
 
 .toolbar-btn {
   padding: 0px 8px;
-  line-height: 2.25vw;
 }
 
 .toolbar-btn-group {

@@ -57,6 +57,18 @@ library.add(
 
 const moment = require("moment");
 
+const defaultTheme = {
+  "--background": "#f5f5f5",
+  "--borders": "#cec0b7",
+  "--accent": "#cf9893",
+  "--accent-text": "#ffffff",
+  "--headers": "#8a2020",
+  "--body": "#6e6e6e",
+  "--hover": "#f7ebeb",
+  "--active": "gold",
+  "--active-text": "#ffffff",
+};
+
 const ivyTheme = {
   "--background": "#DEEDE9",
   "--borders": "#B6D8CE",
@@ -67,6 +79,11 @@ const ivyTheme = {
   "--hover": "#ADEACC",
   "--active": "#88EFD7",
   "--active-text": "#ffffff",
+};
+
+const themeMap = {
+  default: defaultTheme,
+  ivy: ivyTheme,
 };
 
 /**
@@ -109,7 +126,8 @@ class App extends Component {
       });
   }
 
-  setTheme = (theme) => {
+  setTheme = (themeName) => {
+    const theme = themeMap[themeName];
     Object.keys(theme).map((color) => {
       const value = theme[color];
       document.documentElement.style.setProperty(color, value);
@@ -137,7 +155,7 @@ class App extends Component {
       currentView: window.location.pathname.slice(1),
     });
 
-    this.setTheme(ivyTheme);
+    this.setTheme("ivy");
     console.log("IVY THEME SET");
   };
 
@@ -147,6 +165,7 @@ class App extends Component {
     });
     post("/api/logout").then(() => {
       navigate("/");
+      this.setTheme("default");
     });
   };
 
