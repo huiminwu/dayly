@@ -55,6 +55,18 @@ library.add(
 
 const moment = require("moment");
 
+const ivyTheme = {
+  "--background": "#DEEDE9",
+  "--borders": "#B6D8CE",
+  "--accent": "#3AB795",
+  "--accent-text": "#ffffff",
+  "--headers": "#3E8E66",
+  "--body": "#251605",
+  "--hover": "#ADEACC",
+  "--active": "#88EFD7",
+  "--active-text": "#ffffff",
+};
+
 /**
  * Define the "App" component as a class.
  */
@@ -95,6 +107,13 @@ class App extends Component {
       });
   }
 
+  setTheme = (theme) => {
+    Object.keys(theme).map((color) => {
+      const value = theme[color];
+      document.documentElement.style.setProperty(color, value);
+    });
+  };
+
   handleLogin = (res) => {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken })
@@ -115,6 +134,9 @@ class App extends Component {
     this.setState({
       currentView: window.location.pathname.slice(1),
     });
+
+    this.setTheme(ivyTheme);
+    console.log("IVY THEME SET");
   };
 
   handleLogout = () => {

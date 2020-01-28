@@ -63,8 +63,8 @@ a {
 }
 
 .calendar-day:active {
-  color: white;
-  background-color: gold;
+  color: var(--active-text);
+  background-color: var(--active);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -150,66 +150,61 @@ FOR COLORING WIDGET DATA
 */
 
 .BinaryWidget-false {
-  background-color: red;
+  background-color: var(--binary-false);
 }
 .BinaryWidget-true {
-  background-color: green;
+  background-color: var(--binary-true);
 }
 
 .ColorWidget-1 {
-  background-color: #1c6ff8;
+  background-color: var(--color-1);
 }
-
 .ColorWidget-2 {
-  background-color: #27bbe0;
+  background-color: var(--color-2);
 }
-
 .ColorWidget-3 {
-  background-color: #9bfa24;
+  background-color: var(--color-3);
 }
-
 .ColorWidget-4 {
-  background-color: #9bfa24;
+  background-color: var(--color-4);
 }
 .ColorWidget-5 {
-  background-color: #fef720;
+  background-color: var(--color-5);
 }
 
 .SliderWidget-1 {
-  background-color: rgba(225, 0, 225, 0.08);
+  background-color: var(--slider-1);
 }
-
 .SliderWidget-2 {
-  background-color: rgba(225, 0, 225, 0.17);
+  background-color: var(--slider-2);
 }
-
 .SliderWidget-3 {
-  background-color: rgba(225, 0, 225, 0.25);
+  background-color: var(--slider-3);
 }
 .SliderWidget-4 {
-  background-color: rgba(225, 0, 225, 0.34);
+  background-color: var(--slider-4);
 }
 .SliderWidget-5 {
-  background-color: rgba(225, 0, 225, 0.42);
+  background-color: var(--slider-5);
 }
 .SliderWidget-6 {
-  background-color: rgba(225, 0, 225, 0.5);
+  background-color: var(--slider-6);
 }
 .SliderWidget-7 {
-  background-color: rgba(225, 0, 225, 0.58);
+  background-color: var(--slider-7);
 }
 .SliderWidget-8 {
-  background-color: rgba(225, 0, 225, 0.67);
+  background-color: var(--slider-8);
 }
 .SliderWidget-9 {
-  background-color: rgba(225, 0, 225, 0.75);
+  background-color: var(--slider-9);
 }
 .SliderWidget-10 {
-  background-color: rgba(225, 0, 225, 0.83);
+  background-color: var(--slider-10);
 }
 .SliderWidget-11 {
-  background-color: rgba(225, 0, 225, 0.92);
+  background-color: var(--slider-11);
 }
 .SliderWidget-12 {
-  background-color: rgba(225, 0, 225, 1);
+  background-color: var(--slider-12);
 }
