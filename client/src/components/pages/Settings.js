@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Settings.css";
+import "../../utilities.css"
 
 import Widget from "../modules/Widget.js";
 import minus from "../../public/round-delete-button.png";
@@ -18,8 +19,11 @@ class Settings extends Component {
     this.state = {
       newWidgetName: "",
       newWidgetType: "ColorWidget",
+      errorMsgs: [],
     };
   }
+
+  MAX_LENGTH = 32;
 
   widgetTypes = ["ColorWidget", "SliderWidget", "BinaryWidget"];
 
@@ -29,17 +33,19 @@ class Settings extends Component {
 
   displayWidgets = () => {
     let widgets = [];
+    let isBinary = false;
     if (this.props.widgetlist) {
       this.props.widgetlist.forEach((widget) => {
+        isBinary = widget["widgetType"] === "BinaryWidget"
         widgets.push(
-          <div>
-            <div> {this.getWidgetStyle(widget["name"], widget["widgetType"])} </div>
+          <div className="widContainer" >
+            <> {this.getWidgetStyle(widget["name"], widget["widgetType"])} </>
             <img
-              className="minus-sign"
+              className={`${isBinary ? "minus-sign-Binary" : "minus-sign"}`}
               onClick={() => this.handleWidDelete(widget["_id"], widget["name"])}
               src={minus}
             ></img>
-          </div>
+          </div >
         );
       });
     }
@@ -47,13 +53,20 @@ class Settings extends Component {
   };
 
   getWidgetStyle(widgetName, widgetType) {
-    return <Widget name={widgetName} type={widgetType} work="no" />;
+    return <Widget isSettings="true" name={widgetName} type={widgetType} work="no" />;
   }
 
   handleNameChange = (event) => {
     this.setState({
       newWidgetName: event.target.value,
     });
+    if (event.target.value.length === this.MAX_LENGTH) {
+      this.setState({ errorMsgs: `Names of widgets must be less than ${this.MAX_LENGTH} characters` })
+    } else {
+      this.setState({
+        errorMsgs: [],
+      })
+    }
   };
 
   handleTypeChange = (event) => {
@@ -66,38 +79,72 @@ class Settings extends Component {
     this.props.handleWidgetDelete(id, name);
   };
 
-  handleWidSubmit = () => {
-    this.props.handleWidgetSubmit(this.state.newWidgetName, this.state.newWidgetType);
-    this.setState({ newWidgetName: "" });
-    this.setState({ newWidgetType: "ColorWidget" });
+
+  handleWidSubmit = (e) => {
+    // e.preventDefault();
+    // this.validate(this.state.newWidgetName).then((msg) => {
+    //   if (msg.length > 0) {
+    //     alert(msg);
+    //   } else {
+    let a = this.validate();
+    if (a.length === 0) {
+      this.props.handleWidgetSubmit(this.state.newWidgetName, this.state.newWidgetType);
+      this.setState({ errorMsgs: [] })
+    } else {
+      this.setState({ errorMsgs: a })
+    };
+    if (this.state.newWidgetName !== "") {
+      this.setState({ newWidgetName: "" });
+      this.setState({ newWidgetType: "ColorWidget" });
+    };
+
+  };
+
+  validate = () => {
+    let alert = "";
+    const badChars = "~`!#$%^&*+=-[]\\\';,/{}|\":<>?"
+    for (var i = 0; i < this.state.newWidgetName.length; i++) {
+      if (badChars.indexOf(this.state.newWidgetName.charAt(i)) != -1) {
+        alert = "File name has special characters ~`!#$%^&*+=-[]\\\';,/{}|\":<>? \nThese are not allowed\n";
+      }
+    };
+
+    if (this.state.newWidgetName.length === 0) {
+      alert = "Please have a name a length > 0";
+    };
+
+    return alert;
   };
 
   render() {
     return (
-      <>
-        <div className="settingsTitle">Settings</div>
-        <div className="settingsContainer">
-          <div className="widgetsTitle"> Widgets </div>
-          {this.displayWidgets()}
+      <div className="settingsContainer">
+        <h2>Settings</h2>
+        <h3> Widgets </h3>
+        {this.displayWidgets()}
+        <div className="form">
           <input
             type="text"
-            placeholder="Name of Widget"
             value={this.state.newWidgetName}
             onChange={this.handleNameChange}
             className="NewWidget-input"
+            maxLength={this.MAX_LENGTH}
           />
           <label>
-            <select value={this.state.newWidgetType} onChange={this.handleTypeChange}>
-              <option value="ColorWidget">Color</option>
-              <option value="SliderWidget">Slider</option>
-              <option value="BinaryWidget">Binary</option>
+            <select className="dropDownSettings" value={this.state.newWidgetType} onChange={this.handleTypeChange}>
+              <option className="dropDown-option" value="ColorWidget">Color</option>
+              <option className="dropDown-option" value="SliderWidget">Slider</option>
+              <option className="dropDown-option" value="BinaryWidget">Binary</option>
             </select>
           </label>
-          <button type="submit" onClick={this.handleWidSubmit}>
-            Submit
+          <button type="submit" className="widgetButton" onClick={this.handleWidSubmit}>
+            Add Widget
           </button>
         </div>
-      </>
+        <div className="errorContainer">
+          {this.state.errorMsgs}
+        </div>
+      </div>
     );
   }
 }

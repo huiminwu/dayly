@@ -42,7 +42,7 @@ class BinaryWidget extends Component {
         <div className="widget-name">{this.props.name}</div>
         {this.props.work === "no" ?
           (
-            <div>
+            <>
               <button
                 className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
               >
@@ -53,9 +53,9 @@ class BinaryWidget extends Component {
               >
                 <FontAwesomeIcon icon="times" />
               </button>
-            </div>
+            </>
           ) : (
-            <div>
+            <>
               <button
                 className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
                 onClick={() => this.handleOnClick("true")}
@@ -68,7 +68,7 @@ class BinaryWidget extends Component {
               >
                 <FontAwesomeIcon icon="times" />
               </button>
-            </div>
+            </>
           )
         }
 
@@ -133,7 +133,7 @@ class ColorWidget extends Component {
     return (
       <>
         <div className="widget-name">{this.props.name}</div>
-        <div className="color-btn-container">{colorButtons}</div>
+        <div className={`${this.props.isSettings ? "color-btn-container-Setting" : "color-btn-container"}`}>{colorButtons}</div>
       </>
     );
   }
@@ -226,33 +226,40 @@ class Widget extends Component {
 
   render() {
     return (
-      <div className="widget">
-        {this.props.type === "BinaryWidget" && (
-          <BinaryWidget
-            name={this.props.name}
-            submitValue={this.submitValue}
-            value={this.props.value}
-            work={this.props.work}
-          />
-        )}
-        {this.props.type === "ColorWidget" && (
-          <ColorWidget
-            name={this.props.name}
-            submitValue={this.submitValue}
-            value={this.props.value}
-            work={this.props.work}
-          />
-        )}
-        {this.props.type === "SliderWidget" && (
-          <SliderWidget
-            name={this.props.name}
-            className="slider-widget"
-            submitValue={this.submitValue}
-            value={this.props.value}
-            work={this.props.work}
-          />
-        )}
-      </div>
+      <div className={`${this.props.isSettings ? "widget-Setting" : "widget-Daily"}`} >
+        {
+          this.props.type === "BinaryWidget" && (
+            <BinaryWidget
+              name={this.props.name}
+              submitValue={this.submitValue}
+              value={this.props.value}
+              work={this.props.work}
+            />
+          )
+        }
+        {
+          this.props.type === "ColorWidget" && (
+            <ColorWidget
+              isSettings={this.props.isSettings}
+              name={this.props.name}
+              submitValue={this.submitValue}
+              value={this.props.value}
+              work={this.props.work}
+            />
+          )
+        }
+        {
+          this.props.type === "SliderWidget" && (
+            <SliderWidget
+              name={this.props.name}
+              className="slider-widget"
+              submitValue={this.submitValue}
+              value={this.props.value}
+              work={this.props.work}
+            />
+          )
+        }
+      </div >
     );
   }
 }

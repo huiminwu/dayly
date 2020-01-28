@@ -1,9 +1,112 @@
-.minus-sign {
-  height: 50px;
-  width: 50px;
-  display: inline-block;
+.settingsContainer {
+  width: 90vw;
+  padding-top: 5vh;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
 }
 
-.settings-widget  {
-  display: inline-block;
+.dropDownSettings {
+  font-family: "Poppins", sans-serif;
+  padding: 10px;
+  background-color: var(--accent);
+  color: white;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+option{
+  padding: 3px;
+}
+
+.select-items{
+  background-color: gray;
+}
+
+.dropDownSettings:focus{
+  outline: none;
+}
+
+.form {
+  padding-top: 10px;
+}
+
+.widgetButton {
+  font-family: "Poppins", sans-serif;
+  color: white;
+  width: 15%;
+  background: var(--accent);
+  padding: 10px 10px 10px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.widgetButton:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.NewWidget-input {
+  width: 35vmin;
+  padding: 5px;
+  padding-top: 15px;
+  border: 0;
+  border-bottom: 2px solid gray;
+  outline: 0;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  background: transparent;
+  transition: border-color 0.2s;
+  font-weight: 200;
+}
+
+/* .NewWidget-input::placeholder {
+  color: transparent;
+} */
+
+.NewWidget-input:focus {
+  padding-bottom: 6px;
+  border-width: 3px;
+  border-image: linear-gradient(to right, grey, var(--accent));
+  border-image-slice: 1;
+}
+
+/* reset input */
+.NewWidget-input:required, .NewWidget-input:invalid {
+  box-shadow: none;
+}
+
+.minus-sign {
+  height: 25px;
+  width: 25px;
+  display: inline;
+  float: right;
+}
+
+.minus-sign-Binary {
+  height: 25px;
+  width: 25px;
+  display: inline;
+  float: right;
+}
+
+.widContainer {
+  border: 1px solid var(--borders);
+  border-radius: 7px;
+  padding: 5px;
+  width: 35vmin;
+  align-items: center;
+  justify-content: center;
+}
+
+.widContainer + .widContainer {
+  margin-top: 16px;
+}
+
+.errorContainer {
+  color: #CD0C00;
+
+}
+.dropDown-option {
+  padding: 10px;
 }
