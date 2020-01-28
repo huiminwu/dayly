@@ -110,7 +110,7 @@
 }
 
 .dropdown-btn:hover {
-  background: var(--background);
+  background-color: var(--hover);
   transition-duration: 0.2s;
 }
 

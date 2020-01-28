@@ -27,7 +27,7 @@ for widget buttons that alter calendar
 }
 
 .calendar-widget-btn.active {
-  color: white;
+  color: var(--accent-text);
   background-color: var(--accent);
 }
 /* 
@@ -44,7 +44,7 @@ a {
 
 .week-day {
   background-color: var(--accent);
-  color: white;
+  color: var(--accent-color);
 }
 .calendar {
   border-spacing: 0;
@@ -58,7 +58,7 @@ a {
 }
 
 .calendar-day:hover {
-  background-color: #f0f0f0;
+  background-color: var(--hover);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 

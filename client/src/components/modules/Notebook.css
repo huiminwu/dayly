@@ -43,7 +43,7 @@
 
 .editor-saveButton {
   background: var(--accent);
-  color: white;
+  color: var(--accent-text);
 }
 
 .editor-saveButton-saved {

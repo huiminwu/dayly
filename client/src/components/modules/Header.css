@@ -16,7 +16,7 @@
 
 .Header-nav-btn {
   background-color: var(--accent) !important;
-  color: white;
+  color: var(--accent-text);
   border: 1px solid var(--borders);
   height: 32px;
   width: 32px;
@@ -28,6 +28,6 @@
   cursor: pointer;
 }
 
-.Header-nav-btn + .Header-nav-btn{
+.Header-nav-btn + .Header-nav-btn {
   margin-left: 5px;
 }

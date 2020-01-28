@@ -22,8 +22,10 @@
   --accent: #cf9893;
   --headers: #6e6e6e;
   --body: #6e6e6e;
+  --hover: #f7ebeb;
   --borders: #cec0b7;
   --background: #fcf8f7;
+  --accent-text: #ffffff;
 
   --xs: 4px;
   --s: 8px;
