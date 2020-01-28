@@ -7,6 +7,7 @@ import Yearly from "./pages/Yearly.js";
 import Collections from "./pages/Collections.js";
 import Landing from "./pages/Landing.js";
 import Loading from "./pages/Loading.js";
+import Settings from "./pages/Settings.js";
 import Navbar from "./modules/Navbar.js";
 import Tab from "./modules/Tab.js";
 
@@ -95,6 +96,7 @@ class App extends Component {
     super(props);
     this.state = {
       creator: undefined,
+      creatorName: undefined,
       dateObject: moment().local(),
       data: null,
       widgetlist: null,
@@ -108,7 +110,12 @@ class App extends Component {
     if (user._id) {
       this.setState({
         creator: user._id,
-        widgetlist: user.widgetList,
+        creatorName: user.name,
+      });
+
+      const userWidgets = await get("/api/user/widgets");
+      this.setState({
+        widgetlist: userWidgets,
       });
 
       this.getDateData(this.state.dateObject);
@@ -141,6 +148,7 @@ class App extends Component {
         this.setState({
           creator: user._id,
           widgetlist: user.widgetList,
+          creatorName: user.name,
         });
         // return post("/api/initsocket", { socketid: socket.id });
       })
@@ -205,6 +213,20 @@ class App extends Component {
     }
   };
 
+  handleWidgetSubmit = (name, type) => {
+    const params = { name: name, widgetType: type };
+    post("/api/user/widgets", params).then((newWidgets) => {
+      this.setState({
+        widgetlist: newWidgets,
+      });
+    });
+  };
+
+  handleWidgetDelete = (id, name) => {
+    post("/api/user/widgets/delete", { widget: id, name: name }).then((userNew) => {
+      this.setState({ widgetlist: userNew.widgetList });
+    });
+  };
   /**
    *  Methods for overriding current day
    *  */
@@ -238,17 +260,26 @@ class App extends Component {
         currentView: window.location.pathname.slice(1),
       });
   }
+  //   <Settings
+  //   path="/settings"
+  //   creator={this.state.creator}
+  //   widgetlist={this.state.widgetlist}
+  //   handleWidgetSubmit={this.handleWidgetSubmit}
+  //   handleWidgetDelete={this.handleWidgetDelete}
+  // />
   render() {
     if (this.state.creator) {
       return (
         <>
           <Navbar
             creator={this.state.creator}
+            creatorName={this.state.creatorName}
             currentView={this.state.currentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
             handleViewChange={this.viewToday}
           />
+
           <div className="bullet-journal">
             <div className="bullet-journal_body">
               <Router>
@@ -262,8 +293,8 @@ class App extends Component {
                     handleNextClick={() => this.handleNextClick("day")}
                   />
                 ) : (
-                  <Loading path="/day" />
-                )}
+                    <Loading path="/day" />
+                  )}
                 {/* View for when you look back on Monthly view */}
                 <Daily
                   path="/day/:oldYear/:oldMonth/:oldDay"
@@ -288,6 +319,13 @@ class App extends Component {
                   handleNextClick={() => this.handleNextClick("year")}
                 />
                 <Collections path="/collections" />
+                <Settings
+                  path="/settings"
+                  creator={this.state.creator}
+                  widgetlist={this.state.widgetlist}
+                  handleWidgetSubmit={this.handleWidgetSubmit}
+                  handleWidgetDelete={this.handleWidgetDelete}
+                />
                 <Loading default />
               </Router>
             </div>

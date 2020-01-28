@@ -22,8 +22,8 @@ class Loading extends Component {
     return this.state.redirect ? (
       <NotFound />
     ) : (
-      <h1 className="notFound-Container error"> Loading... </h1>
-    );
+        <h1 className="notFound-Container error"> Loading... </h1>
+      );
   }
 }
 
