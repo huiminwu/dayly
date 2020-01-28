@@ -1,7 +1,7 @@
 .submitted-val.yes-btn,
 .submitted-val.no-btn {
   background: var(--accent);
-  color: white;
+  color: var(--accent-text);
   border: white;
 }
 

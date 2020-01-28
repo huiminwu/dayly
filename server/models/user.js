@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
   name: String,
   googleid: String,
+  theme: { type: String, default: "default" },
   widgetList: {
     type: [{ name: String, widgetType: String }],
     default: () => [

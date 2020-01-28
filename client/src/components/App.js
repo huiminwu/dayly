@@ -58,6 +58,43 @@ library.add(
 
 const moment = require("moment");
 
+const defaultTheme = {
+  "--background": "#f5f5f5",
+  "--borders": "#cec0b7",
+  "--accent": "#cf9893",
+  "--accent-text": "#ffffff",
+  "--headers": "#8a2020",
+  "--body": "#6e6e6e",
+  "--hover": "#f7ebeb",
+  "--active": "gold",
+  "--active-text": "#ffffff",
+};
+
+const ivyTheme = {
+  "--background": "#DEEDE9",
+  "--borders": "#B6D8CE",
+  "--accent": "#3AB795",
+  "--accent-text": "#ffffff",
+  "--headers": "#3E8E66",
+  "--body": "#251605",
+  "--hover": "#ADEACC",
+  "--active": "#88EFD7",
+  "--active-text": "#ffffff",
+};
+
+const themeMap = {
+  default: {
+    name: "default",
+    theme: defaultTheme,
+    displayColors: ["#ff6c6c", "#6cb9ff", "#ffbc6c"],
+  },
+  ivy: {
+    name: "ivy",
+    theme: ivyTheme,
+    displayColors: ["#3AB795", "#ADEACC", "#3E8E66"],
+  },
+};
+
 /**
  * Define the "App" component as a class.
  */
@@ -72,6 +109,7 @@ class App extends Component {
       data: null,
       widgetlist: null,
       currentView: "",
+      activeTheme: null,
     };
   }
 
@@ -79,9 +117,12 @@ class App extends Component {
     const user = await get("/api/whoami");
     // they are registered in the database, and currently logged in.
     if (user._id) {
+      console.log("user theme is " + user.theme);
+      console.log(user);
       this.setState({
         creator: user._id,
         creatorName: user.name,
+        activeTheme: user.theme,
       });
 
       const userWidgets = user.widgetList;
@@ -112,6 +153,7 @@ class App extends Component {
           creator: user._id,
           widgetlist: user.widgetList,
           creatorName: user.name,
+          activeTheme: user.theme,
         });
         // return post("/api/initsocket", { socketid: socket.id });
       })
@@ -133,6 +175,7 @@ class App extends Component {
     });
     post("/api/logout").then(() => {
       navigate("/");
+      this.setTheme("default");
     });
   };
 
@@ -186,6 +229,23 @@ class App extends Component {
       this.setState({ widgetlist: userNew.widgetList });
     });
   };
+
+  setTheme = (themeName) => {
+    const themeObj = themeMap[themeName];
+    Object.keys(themeObj.theme).map((color) => {
+      const value = themeObj.theme[color];
+      document.documentElement.style.setProperty(color, value);
+    });
+  };
+
+  handleThemeChange = (themeName) => {
+    post("/api/user/theme", { theme: themeName }).then((updatedUser) => {
+      console.log("theme set");
+      this.setState({ activeTheme: updatedUser.theme });
+      // this.setTheme(updatedUser.theme);
+    });
+  };
+
   /**
    *  Methods for overriding current day
    *  */
@@ -222,6 +282,10 @@ class App extends Component {
 
   render() {
     if (this.state.creator) {
+      if (this.state.activeTheme) {
+        console.log(this.state.activeTheme);
+        this.setTheme(this.state.activeTheme);
+      }
       return (
         <>
           <Navbar
@@ -246,8 +310,8 @@ class App extends Component {
                     handleNextClick={() => this.handleNextClick("day")}
                   />
                 ) : (
-                    <Loading path="/day" />
-                  )}
+                  <Loading path="/day" />
+                )}
                 {/* View for when you look back on Monthly view */}
                 <Daily
                   path="/day/:oldYear/:oldMonth/:oldDay"
@@ -278,6 +342,9 @@ class App extends Component {
                   widgetlist={this.state.widgetlist}
                   handleWidgetSubmit={this.handleWidgetSubmit}
                   handleWidgetDelete={this.handleWidgetDelete}
+                  themeMap={themeMap}
+                  activeTheme={this.state.activeTheme}
+                  handleThemeChange={this.handleThemeChange}
                 />
                 <Loading default />
               </Router>

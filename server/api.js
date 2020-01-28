@@ -151,6 +151,22 @@ router.post("/user/widgets/delete", auth.ensureLoggedIn, (req, res) => {
       }).then((s) => console.log("deleted many"));
     });
 });
+
+// router.get("/user/theme", (req, res) => {
+//   User.findOne({
+//     _id: req.user._id,
+//   }).then((user) => res.send(user));
+// });
+
+router.post("/user/theme", auth.ensureLoggedIn, (req, res) => {
+  User.findOne({
+    _id: req.user._id,
+  }).then((user) => {
+    user.theme = req.body.theme;
+    user.save().then((updatedUser) => res.send(updatedUser));
+  });
+});
+
 /**
  * Updates the value of the widget instance for specified day
  */
