@@ -38,21 +38,41 @@ class BinaryWidget extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <div className="widget-name">{this.props.name}</div>
-        <button
-          className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
-          onClick={() => this.handleOnClick("true")}
-        >
-          <FontAwesomeIcon icon="check" />
-        </button>
-        <button
-          className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
-          onClick={() => this.handleOnClick("false")}
-        >
-          <FontAwesomeIcon icon="times" />
-        </button>
-      </div>
+        {this.props.work === "no" ?
+          (
+            <div>
+              <button
+                className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
+              >
+                <FontAwesomeIcon icon="check" />
+              </button>
+              <button
+                className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
+              >
+                <FontAwesomeIcon icon="times" />
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button
+                className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
+                onClick={() => this.handleOnClick("true")}
+              >
+                <FontAwesomeIcon icon="check" />
+              </button>
+              <button
+                className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
+                onClick={() => this.handleOnClick("false")}
+              >
+                <FontAwesomeIcon icon="times" />
+              </button>
+            </div>
+          )
+        }
+
+      </>
     );
   }
 }
@@ -91,20 +111,30 @@ class ColorWidget extends Component {
     // dynamically produce buttons
     const colorValues = [1, 2, 3, 4, 5];
     const colorButtons = colorValues.map((val, k) => (
-      <button
-        key={k}
-        className={`cool-btn ColorWidget-${val} ${
-          val === parseInt(this.state.value) ? "submitted-val" : ""
-        }`}
-        onClick={() => this.handleOnClick(val)}
-      />
+      this.props.work === "no" ? (
+        <button
+          key={k}
+          className={`cool-btn ColorWidget-${val} ${
+            val === parseInt(this.state.value) ? "submitted-val" : ""
+            }`}
+        />
+      ) : (
+          <button
+            key={k}
+            className={`cool-btn ColorWidget-${val} ${
+              val === parseInt(this.state.value) ? "submitted-val" : ""
+              }`}
+
+            onClick={() => this.handleOnClick(val)}
+          />
+        )
     ));
 
     return (
-      <div>
+      <>
         <div className="widget-name">{this.props.name}</div>
         <div className="color-btn-container">{colorButtons}</div>
-      </div>
+      </>
     );
   }
 }
@@ -136,21 +166,34 @@ class SliderWidget extends Component {
   }
 
   render() {
+
     return (
-      <div>
+      <>
         <div className="widget-name">{this.props.name}</div>
-        <input
-          type="range"
-          min="0"
-          max="12"
-          step="1"
-          value={this.state.slider_value}
-          onChange={this.handleSliderChange}
-          onMouseUp={() => this.props.submitValue(this.state.slider_value)}
-          className="slider-input"
-        />
+        {this.props.work === "no" ? (
+          <input
+            type="range"
+            min="0"
+            max="12"
+            step="1"
+            value={this.state.slider_value}
+            className="slider-input"
+          />
+        ) : (
+            <input
+              type="range"
+              min="0"
+              max="12"
+              step="1"
+              value={this.state.slider_value}
+              onChange={this.handleSliderChange}
+              onMouseUp={() => this.props.submitValue(this.state.slider_value)}
+              className="slider-input"
+            />
+          )}
+
         <span className="slider-display">{this.state.slider_value}</span>
-      </div>
+      </>
     );
   }
 }
@@ -170,7 +213,7 @@ class Widget extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   submitValue = (val) => {
     const params = {
@@ -189,6 +232,7 @@ class Widget extends Component {
             name={this.props.name}
             submitValue={this.submitValue}
             value={this.props.value}
+            work={this.props.work}
           />
         )}
         {this.props.type === "ColorWidget" && (
@@ -196,6 +240,7 @@ class Widget extends Component {
             name={this.props.name}
             submitValue={this.submitValue}
             value={this.props.value}
+            work={this.props.work}
           />
         )}
         {this.props.type === "SliderWidget" && (
@@ -204,6 +249,7 @@ class Widget extends Component {
             className="slider-widget"
             submitValue={this.submitValue}
             value={this.props.value}
+            work={this.props.work}
           />
         )}
       </div>

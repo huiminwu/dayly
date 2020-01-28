@@ -117,6 +117,42 @@ router.post("/day", (req, res) => {
   });
 });
 
+router.post("/user/widgets", auth.ensureLoggedIn, (req, res) => {
+  User.findOne({
+    _id: req.user._id,
+  }).then((user) => {
+    user.widgetList.push({ name: req.body.name, widgetType: req.body.widgetType });
+    user.save().then((updated) => {
+      res.send(updated);
+    })
+    // .then(() => {
+    //   newWidget = new Widget({
+    //     creator: req.user._id,
+    //     name: widget.name,
+    //     type: widget.widgetType,
+    //     timestamp: startOfDay.add(1, "minute"),
+    //   })
+    //   newWidget.save().then(console.log("saved"));
+    // })
+  });
+});
+
+router.post("/user/widgets/delete", auth.ensureLoggedIn, (req, res) => {
+  User.findOne({
+    _id: req.user._id,
+  }).then((user) => {
+    user.widgetList.pull({ _id: req.body.widget });
+    user.save().then((updated) => {
+      res.send(updated)
+    })
+  })
+    .then(() => {
+      Widget.deleteMany({
+        _id: req.user._id,
+        name: req.body.name,
+      }).then((s) => console.log("deleted many"))
+    });
+});
 /**
  * Updates the value of the widget instance for specified day
  */

@@ -59,6 +59,7 @@ class Daily extends Component {
             type={widget.type}
             value={widget.value}
             dateObject={this.props.dateObject}
+            work="yes"
           />
         );
       });

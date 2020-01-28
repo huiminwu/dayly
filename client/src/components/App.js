@@ -48,6 +48,8 @@ class App extends Component {
 
   async componentDidMount() {
     const user = await get("/api/whoami");
+    console.log("Component did mount")
+    console.log(user.widgetList)
     // they are registered in the database, and currently logged in.
     if (user._id) {
       this.setState({

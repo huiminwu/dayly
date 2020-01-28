@@ -1,0 +1,9 @@
+.minus-sign {
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+}
+
+.settings-widget  {
+  display: inline-block;
+}
