@@ -49,11 +49,10 @@ class Header extends Component {
 
     return (
       <>
-        {console.log(this.onCurrentDay())}
         <div className="Header-container">
           <h1 className="Header-dates">{date}</h1>
           <div className="Header-nav">
-            {this.onCurrentDay() ? (
+            {(this.onCurrentDay() && this.props.view === "day") ? (
               <button className="Header-nav-btn" type="button" onClick={this.props.handleBackClick}>
                 <FontAwesomeIcon icon="angle-left" />
               </button>

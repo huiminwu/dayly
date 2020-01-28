@@ -200,14 +200,10 @@ class App extends Component {
   handleNextClick = async (varToChange) => {
     // if changing daily view update date state
     if (varToChange === "day") {
-      if (parseInt(moment().local().format("D")) <= parseInt(this.state.dateObject.format("D"))) {
-        alert("You can't access future pages")
-      } else {
-        this.setState({
-          dateObject: this.state.dateObject.add(1, "day"),
-        });
-        this.getDateData(this.state.dateObject);
-      }
+      this.setState({
+        dateObject: this.state.dateObject.add(1, "day"),
+      });
+      this.getDateData(this.state.dateObject);
     } else if (varToChange === "month") {
       this.setState({
         dateObject: this.state.dateObject.add(1, "month"),
