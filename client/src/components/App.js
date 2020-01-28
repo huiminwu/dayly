@@ -63,8 +63,9 @@ class App extends Component {
     this.state = {
       creator: undefined,
       dateObject: moment().local(),
-      widgetlist: null,
       data: null,
+      widgetlist: null,
+      currentView: null,
     };
   }
 
@@ -97,6 +98,10 @@ class App extends Component {
       .then(() => {
         this.getDateData(this.state.dateObject);
       });
+
+    this.setState({
+      currentView: window.location.pathname.slice(1),
+    });
   };
 
   handleLogout = () => {
@@ -171,12 +176,19 @@ class App extends Component {
     });
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentView !== window.location.pathname.slice(1))
+      this.setState({
+        currentView: window.location.pathname.slice(1),
+      });
+  }
   render() {
     if (this.state.creator) {
       return (
         <>
           <Navbar
             creator={this.state.creator}
+            currentView={this.state.currentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
             handleViewChange={this.viewToday}

@@ -29,11 +29,14 @@
   width: 50%;
   margin-right: 20px;
   padding: 10px 10px 0 10px;
-  border-bottom: 1px solid transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
   text-decoration: none;
+  transition: transform 0.5s;
 }
 .Navbar-opts_link:hover {
-  /* background-color: white; */
-  /* color: #000; */
-  border-bottom: 1px solid white;
+  transform: translateY(-5px);
+}
+.Navbar-opts_link.active {
+  border: 1px solid white;
 }

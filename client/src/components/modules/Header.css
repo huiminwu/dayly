@@ -28,6 +28,6 @@
   cursor: pointer;
 }
 
-.Header-nav button + button {
+.Header-nav-btn + .Header-nav-btn{
   margin-left: 5px;
 }
