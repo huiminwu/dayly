@@ -117,8 +117,7 @@ class App extends Component {
     const user = await get("/api/whoami");
     // they are registered in the database, and currently logged in.
     if (user._id) {
-      console.log("user theme is " + user.theme);
-      console.log(user);
+
       this.setState({
         creator: user._id,
         creatorName: user.name,
@@ -139,10 +138,11 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentView !== window.location.pathname.slice(1))
+    if (prevState.currentView !== window.location.pathname.slice(1)) {
       this.setState({
         currentView: window.location.pathname.slice(1),
       });
+    }
   }
 
   handleLogin = (res) => {
@@ -240,7 +240,6 @@ class App extends Component {
 
   handleThemeChange = (themeName) => {
     post("/api/user/theme", { theme: themeName }).then((updatedUser) => {
-      console.log("theme set");
       this.setState({ activeTheme: updatedUser.theme });
       // this.setTheme(updatedUser.theme);
     });
@@ -273,109 +272,119 @@ class App extends Component {
     });
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentView !== window.location.pathname.slice(1))
+  resetCurrentView = () => {
+    if (this.state.currentView.length != "") {
       this.setState({
-        currentView: window.location.pathname.slice(1),
-      });
+        currentView: "",
+      })
+    }
   }
 
-  render() {
-    if (this.state.creator) {
-      if (this.state.activeTheme) {
-        console.log(this.state.activeTheme);
-        this.setTheme(this.state.activeTheme);
-      }
-      return (
-        <>
-          <Navbar
-            creator={this.state.creator}
-            creatorName={this.state.creatorName}
-            currentView={this.state.currentView}
-            handleLogin={this.handleLogin}
-            handleLogout={this.handleLogout}
-            handleViewChange={this.viewToday}
-          />
+  componentDidUpdate(prevProps, prevState) { }
+  if(prevState.currentView !== window.location.pathname.slice(1)) {
+  this.setState({
+    currentView: window.location.pathname.slice(1),
+  });
+}
+  }
 
-          <div className="bullet-journal">
-            <div className="bullet-journal_body">
-              <Router>
-                <Landing path="/" creator={this.state.creator} />
-                {this.state.data ? (
-                  <Daily
-                    path="/day"
-                    dateObject={this.state.dateObject}
-                    data={this.state.data}
-                    handleBackClick={() => this.handleBackClick("day")}
-                    handleNextClick={() => this.handleNextClick("day")}
-                  />
-                ) : (
-                    <Loading path="/day" />
-                  )}
-                {/* View for when you look back on Monthly view */}
+
+render() {
+  if (this.state.creator) {
+    if (this.state.activeTheme) {
+      this.setTheme(this.state.activeTheme);
+    }
+    return (
+      <>
+        <Navbar
+          creator={this.state.creator}
+          creatorName={this.state.creatorName}
+          currentView={this.state.currentView}
+          handleViewChange={this.resetCurrentView}
+          handleLogin={this.handleLogin}
+          handleLogout={this.handleLogout}
+        // handleViewChange={this.viewToday}
+        />
+
+        <div className="bullet-journal">
+          <div className="bullet-journal_body">
+            <Router>
+              <Landing path="/" creator={this.state.creator} />
+              {this.state.data ? (
                 <Daily
-                  path="/day/:oldYear/:oldMonth/:oldDay"
+                  path="/day"
                   dateObject={this.state.dateObject}
                   data={this.state.data}
-                  setToOldDate={this.setToOldDate}
                   handleBackClick={() => this.handleBackClick("day")}
                   handleNextClick={() => this.handleNextClick("day")}
                 />
-                <Monthly
-                  path="/month"
-                  dateObject={this.state.dateObject}
-                  widgetlist={this.state.widgetlist}
-                  handleBackClick={() => this.handleBackClick("month")}
-                  handleNextClick={() => this.handleNextClick("month")}
-                />
-                <Yearly
-                  path="/year"
-                  dateObject={this.state.dateObject}
-                  widgetlist={this.state.widgetlist}
-                  handleBackClick={() => this.handleBackClick("year")}
-                  handleNextClick={() => this.handleNextClick("year")}
-                />
-                <Collections path="/collections" />
-                <Settings
-                  path="/settings"
-                  creator={this.state.creator}
-                  widgetlist={this.state.widgetlist}
-                  handleWidgetSubmit={this.handleWidgetSubmit}
-                  handleWidgetDelete={this.handleWidgetDelete}
-                  themeMap={themeMap}
-                  activeTheme={this.state.activeTheme}
-                  handleThemeChange={this.handleThemeChange}
-                />
-                <Loading default />
-              </Router>
-            </div>
-            <Tab
-              creator={this.state.creator}
-              currentView={this.state.currentView}
-              handleViewChange={this.viewToday}
-            />
+              ) : (
+                  <Loading path="/day" />
+                )}
+              {/* View for when you look back on Monthly view */}
+              <Daily
+                path="/day/:oldYear/:oldMonth/:oldDay"
+                dateObject={this.state.dateObject}
+                data={this.state.data}
+                setToOldDate={this.setToOldDate}
+                handleBackClick={() => this.handleBackClick("day")}
+                handleNextClick={() => this.handleNextClick("day")}
+              />
+              <Monthly
+                path="/month"
+                dateObject={this.state.dateObject}
+                widgetlist={this.state.widgetlist}
+                handleBackClick={() => this.handleBackClick("month")}
+                handleNextClick={() => this.handleNextClick("month")}
+              />
+              <Yearly
+                path="/year"
+                dateObject={this.state.dateObject}
+                widgetlist={this.state.widgetlist}
+                handleBackClick={() => this.handleBackClick("year")}
+                handleNextClick={() => this.handleNextClick("year")}
+              />
+              <Collections path="/collections" />
+              <Settings
+                path="/settings"
+                creator={this.state.creator}
+                widgetlist={this.state.widgetlist}
+                handleWidgetSubmit={this.handleWidgetSubmit}
+                handleWidgetDelete={this.handleWidgetDelete}
+                themeMap={themeMap}
+                activeTheme={this.state.activeTheme}
+                handleThemeChange={this.handleThemeChange}
+              />
+              <Loading default />
+            </Router>
           </div>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <Navbar
-            //creator={this.state.creator}
+          <Tab
+            creator={this.state.creator}
             currentView={this.state.currentView}
-            handleLogin={this.handleLogin}
-            handleLogout={this.handleLogout}
             handleViewChange={this.viewToday}
           />
-          <Router>
-            <Landing path="/" />
-            <Loading default />
-            <NotFound path="/404" />
-          </Router>
-        </>
-      );
-    }
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Navbar
+          //creator={this.state.creator}
+          currentView={this.state.currentView}
+          handleLogin={this.handleLogin}
+          handleLogout={this.handleLogout}
+          handleViewChange={this.viewToday}
+        />
+        <Router>
+          <Landing path="/" />
+          <Loading default />
+          <NotFound path="/404" />
+        </Router>
+      </>
+    );
   }
+}
 }
 
 export default App;
