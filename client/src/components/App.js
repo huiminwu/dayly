@@ -11,7 +11,7 @@ import Navbar from "./modules/Navbar.js";
 
 import "../utilities.css";
 
-import { socket } from "../client-socket.js";
+// import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
 
@@ -89,7 +89,7 @@ class App extends Component {
           creator: user._id,
           widgetlist: user.widgetList,
         });
-        return post("/api/initsocket", { socketid: socket.id });
+        // return post("/api/initsocket", { socketid: socket.id });
       })
       .then(() => {
         navigate("/day");
