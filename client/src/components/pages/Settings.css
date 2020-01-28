@@ -1,0 +1,164 @@
+.settings-container {
+  width: 90vw;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* THEMES */
+.theme-list-container {
+  display: flex;
+}
+
+.theme-container + .theme-container {
+  margin-left: 16px;
+}
+
+.theme-container {
+  width: 8vw;
+  padding: 16px;
+  border: 1px solid red;
+}
+
+.theme-container:hover {
+  cursor: pointer;
+}
+
+.theme-active {
+  border: 1px solid orange;
+}
+
+.theme-name {
+  text-align: center;
+}
+
+.theme-color-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.theme-color {
+  height: 2vw;
+  width: 2vw;
+  border-radius: 3px;
+}
+
+.theme-color + .theme-color {
+  margin-left: 4px;
+}
+
+/* WIDGETS */
+
+h2 {
+  color: var(--headers);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h3 {
+  color: var(--body);
+}
+.dropdown-settings {
+  font-family: "Poppins", sans-serif;
+  padding: 10px;
+  background-color: var(--accent);
+  color: white;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+option {
+  padding: 3px;
+}
+
+.select-items {
+  background-color: gray;
+}
+
+.dropdown-settings:focus {
+  outline: none;
+}
+
+.form {
+  padding-top: 10px;
+}
+
+.widget-button {
+  font-family: "Poppins", sans-serif;
+  color: white;
+  width: 15%;
+  background: var(--accent);
+  padding: 10px 10px 10px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.widget-button:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.new-widget-input {
+  width: 35vmin;
+  padding: 5px;
+  padding-top: 15px;
+  border: 0;
+  border-bottom: 2px solid gray;
+  outline: 0;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  background: transparent;
+  transition: border-color 0.2s;
+  font-weight: 200;
+}
+
+/* .new-widget-input::placeholder {
+  color: transparent;
+} */
+
+.new-widget-input:focus {
+  padding-bottom: 6px;
+  border-width: 3px;
+  border-image: linear-gradient(to right, grey, var(--accent));
+  border-image-slice: 1;
+}
+
+/* reset input */
+.new-widget-input:required,
+.new-widget-input:invalid {
+  box-shadow: none;
+}
+
+.minus-sign {
+  height: 25px;
+  width: 25px;
+  display: inline;
+  float: right;
+}
+
+.minus-sign-Binary {
+  height: 25px;
+  width: 25px;
+  display: inline;
+  float: right;
+}
+
+.wid-container {
+  border: 1px solid var(--borders);
+  border-radius: 7px;
+  padding: 5px;
+  width: 35vmin;
+  align-items: center;
+  justify-content: center;
+}
+
+.wid-container + .wid-container {
+  margin-top: 16px;
+}
+
+.error-container {
+  color: #cd0c00;
+}
+.dropdown-option {
+  padding: 10px;
+}

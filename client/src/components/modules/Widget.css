@@ -1,7 +1,7 @@
 .submitted-val.yes-btn,
 .submitted-val.no-btn {
   background: var(--accent);
-  color: white;
+  color: var(--accent-text);
   border: white;
 }
 
@@ -9,15 +9,22 @@
   border: 1.5px solid black;
 }
 
-.widget {
+.widget-Daily {
   /* border: 1px solid var(--borders); */
   /* border-radius: 7px; */
   padding: 16px;
 }
 
-.widget + .widget {
+.widget-Setting {
+  /* border: 1px solid var(--borders); */
+  /* border-radius: 7px; */
+  display: inline;
+}
+
+.widget-Daily + .widget-Daily {
   margin-top: 16px;
 }
+
 
 .widget-name {
   margin-bottom: 8px;
@@ -30,6 +37,10 @@
   border: 1px solid var(--borders);
   border-radius: 100%;
   font-family: "Poppins", sans-serif;
+}
+
+.color-btn-container-Setting {
+  display: inline;
 }
 
 .color-btn {

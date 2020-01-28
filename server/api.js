@@ -34,9 +34,13 @@ router.get("/whoami", (req, res) => {
   if (!req.user) {
     // not logged in
     return res.send({});
+  } else {
+    User.findOne({
+      _id: req.user._id,
+    }).then((user) => {
+      res.send(user);
+    })
   }
-
-  res.send(req.user);
 });
 
 router.post("/initsocket", (req, res) => {
@@ -98,22 +102,68 @@ router.post("/day", (req, res) => {
       .sort({ type: -1, timestamp: 1 })
       .then((w) => {
         if (w.length === 0) {
-          req.user.widgetList.forEach((widget) => {
-            newWidget = new Widget({
-              creator: req.user._id,
-              name: widget.name,
-              type: widget.widgetType,
-              timestamp: startOfDay.add(1, "minute"),
+          User.findById(req.user._id).then((user) => {
+            user.widgetList.forEach((widget) => {
+              newWidget = new Widget({
+                creator: req.user._id,
+                name: widget.name,
+                type: widget.widgetType,
+                timestamp: startOfDay.add(1, "minute"),
+              });
+              newWidget.save();
+              response["widgets"].push(newWidget);
             });
-            newWidget.save();
-            response["widgets"].push(newWidget);
+            res.send(response);
           });
-          res.send(response);
         } else {
           response.widgets = w;
           res.send(response);
         }
       });
+  });
+});
+
+router.post("/user/widgets", auth.ensureLoggedIn, (req, res) => {
+  User.findOne({
+    _id: req.user._id,
+  }).then((user) => {
+    user.widgetList.push({ name: req.body.name, widgetType: req.body.widgetType });
+    user.save().then((updated) => {
+      res.send(updated.widgetList);
+    });
+  });
+});
+
+router.post("/user/widgets/delete", auth.ensureLoggedIn, (req, res) => {
+  User.findOne({
+    _id: req.user._id,
+  })
+    .then((user) => {
+      user.widgetList.pull({ _id: req.body.widget });
+      user.save().then((updated) => {
+        res.send(updated);
+      });
+    })
+    .then(() => {
+      Widget.deleteMany({
+        _id: req.body.widget,
+        name: req.body.name,
+      }).then((s) => console.log("deleted many"));
+    });
+});
+
+// router.get("/user/theme", (req, res) => {
+//   User.findOne({
+//     _id: req.user._id,
+//   }).then((user) => res.send(user));
+// });
+
+router.post("/user/theme", auth.ensureLoggedIn, (req, res) => {
+  User.findOne({
+    _id: req.user._id,
+  }).then((user) => {
+    user.theme = req.body.theme;
+    user.save().then((updatedUser) => res.send(updatedUser));
   });
 });
 
