@@ -73,14 +73,16 @@ class App extends Component {
 
   async componentDidMount() {
     const user = await get("/api/whoami");
-    console.log("Component did mount");
-    console.log(user.widgetList);
     // they are registered in the database, and currently logged in.
     if (user._id) {
       this.setState({
         creator: user._id,
-        widgetlist: user.widgetList,
         creatorName: user.name,
+      });
+
+      const userWidgets = await get("/api/user/widgets");
+      this.setState({
+        widgetlist: userWidgets,
       });
 
       this.getDateData(this.state.dateObject);
@@ -167,12 +169,10 @@ class App extends Component {
   };
 
   handleWidgetSubmit = (name, type) => {
-    console.log(`i exist in app and i was called`);
     const params = { name: name, widgetType: type };
-    post("/api/user/widgets", params).then((userNew) => {
-      console.log("done");
+    post("/api/user/widgets", params).then((newWidgets) => {
       this.setState({
-        widgetlist: userNew.widgetList,
+        widgetlist: newWidgets,
       });
     });
   };

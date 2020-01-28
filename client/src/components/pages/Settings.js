@@ -63,17 +63,13 @@ class Settings extends Component {
   };
 
   handleWidDelete = (id, name) => {
-    // ev.preventDefault();
-    console.log("DELETE 68");
     this.props.handleWidgetDelete(id, name);
   };
 
   handleWidSubmit = () => {
-    console.log(`i exist in settigns and i was submitted `);
-    this.props.handleWidgetSubmit(this.state.newWidgetName, this.state.newWidgetType).then(() => {
-      this.setState({ newWidgetName: "" });
-      this.setState({ newWidgetType: "ColorWidget" });
-    });
+    this.props.handleWidgetSubmit(this.state.newWidgetName, this.state.newWidgetType);
+    this.setState({ newWidgetName: "" });
+    this.setState({ newWidgetType: "ColorWidget" });
   };
 
   render() {
