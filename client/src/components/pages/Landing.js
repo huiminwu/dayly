@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Router } from "@reach/router";
 import book from "../../public/book.svg";
+import journal from "../../public/journal.svg";
 
 import "./Landing.css";
 import "../../utilities.css";
@@ -20,12 +21,10 @@ class Landing extends Component {
     const Icon = () => <SVG src="./../../public/book.svg" />;
     return (
       <>
-        <div className="landing-Page">
-          <div className="landing-Container">
-            <div className="title">Day.ly</div>
-            <div className="tagline">A silver bullet for all your daily bullet journal needs.</div>
-            <img className="pic" src={book}></img>
-          </div>
+        <div className="landing-Container">
+          <h1 className="title">day.ly</h1>
+          <p className="tagline">A silver bullet for all your daily bullet journal needs.</p>
+          <img className="pic" src={journal}></img>
         </div>
       </>
     );

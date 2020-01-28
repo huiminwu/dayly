@@ -1,7 +1,5 @@
 .editor-container {
   width: 60vw;
-  border: 1px solid var(--borders);
-  border-radius: 10px;
   padding: 24px;
   color: var(--body);
   overflow: scroll;
@@ -27,7 +25,6 @@
   padding: 16px 10px 16px 0px;
   margin-top: -26px;
   margin-left: -6px;
-  background-color: var(--background);
   z-index: 1;
 }
 
@@ -82,7 +79,10 @@
 
 .bullet-circle {
   font-size: 8px;
-  color: var(--accent);
+}
+
+.bullet-dash {
+  font-size: 9px;
 }
 
 .bullet-label {
@@ -102,6 +102,18 @@
 
 .label-3 {
   background-color: #d9b3ff;
+}
+
+.bullet-1 {
+  color: var(--accent);
+}
+
+.bullet-2 {
+  color: #b3d9ff;
+}
+
+.bullet-3 {
+  color: #d9b3ff;
 }
 
 .bullet-content {

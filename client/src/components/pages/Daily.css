@@ -14,10 +14,10 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  border: 1px solid var(--borders);
-  border-radius: 10px;
+  align-items: flex-start;
+  border-right: 1px solid var(--borders);
   height: 50vh;
-  width: 20vw;
-  padding: 24px;
+  width: 20%;
+  padding: 24px 0;
   overflow: scroll;
 }

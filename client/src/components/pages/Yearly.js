@@ -99,18 +99,18 @@ class Yearly extends Component {
     }
 
     return (
-      <div className="page-container">
+      <>
         <Header
           view="year"
           dateObject={this.props.dateObject}
           handleBackClick={this.handleBackYear}
           handleNextClick={this.handleNextYear}
         />
-        <div className="year-container">
-          <div className="calendar-widgets">{widgetButtons}</div>
+        <div className="journal-container">
+          <div className="widget-container">{widgetButtons}</div>
           <div className="calendars">{calendar}</div>
         </div>
-      </div>
+      </>
     );
   }
 }

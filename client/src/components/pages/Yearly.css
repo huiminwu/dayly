@@ -3,7 +3,7 @@
   justify-content: space-evenly;
 }
 .calendars {
-  width: 60vw;
+  width: 77%;
   display: flex;
   flex-wrap: wrap;
 }

@@ -8,16 +8,16 @@
 
 
 .Navbar-container {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  padding: 10px;
-  background-color: var(--accent);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+  padding: 15px 20px 10px 20px;
+  height: 10vh;
 }
 
 .Navbar-company {
   font-family: "Sacramento", cursive;
-  color: white;
+  color: var(--headers);
   font-size: 36px;
   font-weight: 500;
   margin-left: 15px;
@@ -32,7 +32,7 @@
 
 .Navbar-opts_link {
   font-family: "Poppins", sans-serif;
-  color: white;
+  color: var(--headers);
   width: 50%;
   margin-right: 20px;
   padding: 10px 10px 0 10px;
@@ -63,7 +63,7 @@
   /* padding: 12px 16px; */
   /* width: 300px;  */
   z-index: 2; 
-  background: var(--accent);
+  background: white;
   border: 1px solid rgba(0, 0, 0, 0.04); 
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14); 
 } 
@@ -82,6 +82,7 @@ ul {
 
 li { 
   padding: 8px 12px; 
+  color: var(--headers);
 } 
 
 li:hover {
@@ -99,9 +100,9 @@ li:hover {
   text-align: center;
   font-family: "Poppins", sans-serif;
   font-size: 24px;
-  color: white;
+  color: var(--headers);
 }
 
 .name-Container:hover {
-  background-color: var(--accent);
+  background-color: rgba(0, 0, 0, 0.14);
 }

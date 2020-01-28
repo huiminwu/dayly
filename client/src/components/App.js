@@ -9,7 +9,9 @@ import Landing from "./pages/Landing.js";
 import Loading from "./pages/Loading.js";
 import Settings from "./pages/Settings.js";
 import Navbar from "./modules/Navbar.js";
+import Tab from "./modules/Tab.js";
 
+import "./App.css";
 import "../utilities.css";
 
 // import { socket } from "../client-socket.js";
@@ -29,6 +31,7 @@ import {
   faTimes,
   faCaretDown,
   faCircle as fasFaCircle,
+  faMinus,
   faStrikethrough,
   faHighlighter,
   faFont,
@@ -47,6 +50,7 @@ library.add(
   faCaretDown,
   fasFaCircle,
   farFaCircle,
+  faMinus,
   faStrikethrough,
   faHighlighter,
   faFont
@@ -215,6 +219,13 @@ class App extends Component {
         currentView: window.location.pathname.slice(1),
       });
   }
+  //   <Settings
+  //   path="/settings"
+  //   creator={this.state.creator}
+  //   widgetlist={this.state.widgetlist}
+  //   handleWidgetSubmit={this.handleWidgetSubmit}
+  //   handleWidgetDelete={this.handleWidgetDelete}
+  // />
   render() {
     if (this.state.creator) {
       return (
@@ -227,52 +238,62 @@ class App extends Component {
             handleLogout={this.handleLogout}
             handleViewChange={this.viewToday}
           />
-          <Router>
-            <Landing path="/" creator={this.state.creator} />
-            {this.state.data ? (
-              <Daily
-                path="/day"
-                dateObject={this.state.dateObject}
-                data={this.state.data}
-                handleBackClick={() => this.handleBackClick("day")}
-                handleNextClick={() => this.handleNextClick("day")}
-              />
-            ) : (
-              <Loading path="/day" />
-            )}
-            {/* View for when you look back on Monthly view */}
-            <Daily
-              path="/day/:oldYear/:oldMonth/:oldDay"
-              dateObject={this.state.dateObject}
-              data={this.state.data}
-              setToOldDate={this.setToOldDate}
-              handleBackClick={() => this.handleBackClick("day")}
-              handleNextClick={() => this.handleNextClick("day")}
-            />
-            <Monthly
-              path="/month"
-              dateObject={this.state.dateObject}
-              widgetlist={this.state.widgetlist}
-              handleBackClick={() => this.handleBackClick("month")}
-              handleNextClick={() => this.handleNextClick("month")}
-            />
-            <Yearly
-              path="/year"
-              dateObject={this.state.dateObject}
-              widgetlist={this.state.widgetlist}
-              handleBackClick={() => this.handleBackClick("year")}
-              handleNextClick={() => this.handleNextClick("year")}
-            />
-            <Collections path="/collections" />
-            <Settings
-              path="/settings"
+
+          <div className="bullet-journal">
+            <div className="bullet-journal_body">
+              <Router>
+                <Landing path="/" creator={this.state.creator} />
+                {this.state.data ? (
+                  <Daily
+                    path="/day"
+                    dateObject={this.state.dateObject}
+                    data={this.state.data}
+                    handleBackClick={() => this.handleBackClick("day")}
+                    handleNextClick={() => this.handleNextClick("day")}
+                  />
+                ) : (
+                    <Loading path="/day" />
+                  )}
+                {/* View for when you look back on Monthly view */}
+                <Daily
+                  path="/day/:oldYear/:oldMonth/:oldDay"
+                  dateObject={this.state.dateObject}
+                  data={this.state.data}
+                  setToOldDate={this.setToOldDate}
+                  handleBackClick={() => this.handleBackClick("day")}
+                  handleNextClick={() => this.handleNextClick("day")}
+                />
+                <Monthly
+                  path="/month"
+                  dateObject={this.state.dateObject}
+                  widgetlist={this.state.widgetlist}
+                  handleBackClick={() => this.handleBackClick("month")}
+                  handleNextClick={() => this.handleNextClick("month")}
+                />
+                <Yearly
+                  path="/year"
+                  dateObject={this.state.dateObject}
+                  widgetlist={this.state.widgetlist}
+                  handleBackClick={() => this.handleBackClick("year")}
+                  handleNextClick={() => this.handleNextClick("year")}
+                />
+                <Collections path="/collections" />
+                <Settings
+                  path="/settings"
+                  creator={this.state.creator}
+                  widgetlist={this.state.widgetlist}
+                  handleWidgetSubmit={this.handleWidgetSubmit}
+                  handleWidgetDelete={this.handleWidgetDelete}
+                />
+                <Loading default />
+              </Router>
+            </div>
+            <Tab
               creator={this.state.creator}
-              widgetlist={this.state.widgetlist}
-              handleWidgetSubmit={this.handleWidgetSubmit}
-              handleWidgetDelete={this.handleWidgetDelete}
+              currentView={this.state.currentView}
+              handleViewChange={this.viewToday}
             />
-            <Loading default />
-          </Router>
+          </div>
         </>
       );
     } else {
