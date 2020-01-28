@@ -256,11 +256,9 @@ class Collections extends Component {
     }
 
     return (
-      <div className="collections-page-container">
-        <div className="collections-header">
-          <h1>Collections</h1>
-        </div>
-        <div className="collections-container">
+      <>
+        <h1 className="collections-header">Collections</h1>
+        <div className="journal-container">
           {this.state.allCollections ? (
             <CollectionList
               allCollections={this.state.allCollections}
@@ -284,7 +282,7 @@ class Collections extends Component {
           )}
           {popup}
         </div>
-      </div>
+      </>
     );
   }
 }

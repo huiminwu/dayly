@@ -1,7 +1,5 @@
 .editor-container {
   width: 60vw;
-  border: 1px solid var(--borders);
-  border-radius: 10px;
   padding: 24px;
   color: var(--body);
   overflow: scroll;
@@ -27,7 +25,6 @@
   padding: 16px 10px 16px 0px;
   margin-top: -26px;
   margin-left: -6px;
-  background-color: var(--background);
   z-index: 1;
 }
 

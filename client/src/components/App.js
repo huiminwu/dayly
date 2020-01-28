@@ -8,7 +8,9 @@ import Collections from "./pages/Collections.js";
 import Landing from "./pages/Landing.js";
 import Loading from "./pages/Loading.js";
 import Navbar from "./modules/Navbar.js";
+import Tab from "./modules/Tab.js";
 
+import "./App.css";
 import "../utilities.css";
 
 // import { socket } from "../client-socket.js";
@@ -206,45 +208,54 @@ class App extends Component {
             handleLogout={this.handleLogout}
             handleViewChange={this.viewToday}
           />
-          <Router>
-            <Landing path="/" creator={this.state.creator} />
-            {this.state.data ? (
-              <Daily
-                path="/day"
-                dateObject={this.state.dateObject}
-                data={this.state.data}
-                handleBackClick={() => this.handleBackClick("day")}
-                handleNextClick={() => this.handleNextClick("day")}
-              />
-            ) : (
-              <Loading path="/day" />
-            )}
-            {/* View for when you look back on Monthly view */}
-            <Daily
-              path="/day/:oldYear/:oldMonth/:oldDay"
-              dateObject={this.state.dateObject}
-              data={this.state.data}
-              setToOldDate={this.setToOldDate}
-              handleBackClick={() => this.handleBackClick("day")}
-              handleNextClick={() => this.handleNextClick("day")}
+          <div className="bullet-journal">
+            <div className="bullet-journal_body">
+              <Router>
+                <Landing path="/" creator={this.state.creator} />
+                {this.state.data ? (
+                  <Daily
+                    path="/day"
+                    dateObject={this.state.dateObject}
+                    data={this.state.data}
+                    handleBackClick={() => this.handleBackClick("day")}
+                    handleNextClick={() => this.handleNextClick("day")}
+                  />
+                ) : (
+                  <Loading path="/day" />
+                )}
+                {/* View for when you look back on Monthly view */}
+                <Daily
+                  path="/day/:oldYear/:oldMonth/:oldDay"
+                  dateObject={this.state.dateObject}
+                  data={this.state.data}
+                  setToOldDate={this.setToOldDate}
+                  handleBackClick={() => this.handleBackClick("day")}
+                  handleNextClick={() => this.handleNextClick("day")}
+                />
+                <Monthly
+                  path="/month"
+                  dateObject={this.state.dateObject}
+                  widgetlist={this.state.widgetlist}
+                  handleBackClick={() => this.handleBackClick("month")}
+                  handleNextClick={() => this.handleNextClick("month")}
+                />
+                <Yearly
+                  path="/year"
+                  dateObject={this.state.dateObject}
+                  widgetlist={this.state.widgetlist}
+                  handleBackClick={() => this.handleBackClick("year")}
+                  handleNextClick={() => this.handleNextClick("year")}
+                />
+                <Collections path="/collections" />
+                <Loading default />
+              </Router>
+            </div>
+            <Tab
+              creator={this.state.creator}
+              currentView={this.state.currentView}
+              handleViewChange={this.viewToday}
             />
-            <Monthly
-              path="/month"
-              dateObject={this.state.dateObject}
-              widgetlist={this.state.widgetlist}
-              handleBackClick={() => this.handleBackClick("month")}
-              handleNextClick={() => this.handleNextClick("month")}
-            />
-            <Yearly
-              path="/year"
-              dateObject={this.state.dateObject}
-              widgetlist={this.state.widgetlist}
-              handleBackClick={() => this.handleBackClick("year")}
-              handleNextClick={() => this.handleNextClick("year")}
-            />
-            <Collections path="/collections" />
-            <Loading default />
-          </Router>
+          </div>
         </>
       );
     } else {

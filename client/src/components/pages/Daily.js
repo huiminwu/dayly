@@ -70,7 +70,7 @@ class Daily extends Component {
     }
 
     return (
-      <div className="page-container">
+      <>
         <Header
           dateObject={this.props.dateObject}
           view={"day"}
@@ -81,7 +81,7 @@ class Daily extends Component {
           <div className="widget-container">{widgets}</div>
           {notebook}
         </div>
-      </div>
+      </>
     );
   }
 }
