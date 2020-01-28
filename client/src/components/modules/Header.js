@@ -41,11 +41,12 @@ class Header extends Component {
       this.props.view === "day"
         ? this.props.dateObject.format("MMMM D, YYYY")
         : this.props.view === "month"
-        ? this.props.dateObject.format("MMMM YYYY")
-        : this.props.dateObject.format("YYYY");
+          ? this.props.dateObject.format("MMMM YYYY")
+          : this.props.dateObject.format("YYYY");
 
     return (
       <>
+        {console.log(this.props.dateObject.format("DDD"))}
         <div className="Header-container">
           <h1 className="Header-dates">{date}</h1>
           <div className="Header-nav">

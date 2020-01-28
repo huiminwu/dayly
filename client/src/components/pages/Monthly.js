@@ -90,6 +90,7 @@ class Monthly extends Component {
             view={"month"}
             month={this.props.dateObject.month()}
             year={this.props.dateObject.year()}
+            day={this.props.dateObject.day()}
             displayWidget={this.state.displayWidget}
             dateObject={this.props.dateObject}
             widgetData={this.state.widgetData}

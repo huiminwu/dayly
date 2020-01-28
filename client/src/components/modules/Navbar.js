@@ -126,7 +126,9 @@ class Navbar extends Component {
           </>
         ) : (
             <>
-              <span className="Navbar-company"> Day.ly </span>
+              <Link to="/">
+                <span className="Navbar-company"> Day.ly </span>
+              </Link>
             </>
           )}
         <div className="Navbar-opts">
