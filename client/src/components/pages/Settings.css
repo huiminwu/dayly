@@ -1,8 +1,10 @@
 .settings-container {
-  width: 90vw;
+  /* width: 90vw; */
+  height: 75vh;
   padding-top: 20px;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 }
 
 /* THEMES */
