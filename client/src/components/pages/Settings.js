@@ -73,7 +73,7 @@ class Settings extends Component {
       this.props.widgetlist.forEach((widget) => {
         isBinary = widget["widgetType"] === "BinaryWidget";
         widgets.push(
-          <div className="widContainer">
+          <div className="wid-container">
             <> {this.getWidgetStyle(widget["name"], widget["widgetType"])} </>
             <img
               className={`${isBinary ? "minus-sign-Binary" : "minus-sign"}`}
@@ -146,13 +146,13 @@ class Settings extends Component {
     }
 
     this.props.widgetlist.forEach((w) => {
-      console.log(w["name"])
+      console.log(w["name"]);
       let prevWidget = w["name"].toLowerCase();
       let newWidget = this.state.newWidgetName.toLowerCase();
       if (newWidget === prevWidget) {
-        alert = "Please name your widgets uniquely"
+        alert = "Please name your widgets uniquely";
       }
-    })
+    });
 
     if (this.state.newWidgetName.length === 0) {
       alert = "Please have a name a length > 0";
