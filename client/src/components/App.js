@@ -239,6 +239,7 @@ class App extends Component {
         <>
           <Navbar
             //creator={this.state.creator}
+            currentView={this.state.currentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
             handleViewChange={this.viewToday}
