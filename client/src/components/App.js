@@ -65,7 +65,7 @@ class App extends Component {
       dateObject: moment().local(),
       data: null,
       widgetlist: null,
-      currentView: null,
+      currentView: "",
     };
   }
 
