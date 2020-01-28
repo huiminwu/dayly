@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Router } from "@reach/router";
-import book from "../../public/book.svg";
 import journal from "../../public/journal.svg";
 
 import "./Landing.css";
@@ -18,7 +17,7 @@ class Landing extends Component {
   }
 
   render() {
-    const Icon = () => <SVG src="./../../public/book.svg" />;
+    // const Icon = () => <SVG src="./../../public/book.svg" />;
     return (
       <>
         <div className="landing-Container">
