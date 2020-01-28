@@ -118,7 +118,17 @@ class Navbar extends Component {
     return (
       <div className="Navbar-container">
         {/* hardcoded logo for now */}
-        <span className="Navbar-company"> Day.ly </span>
+        {this.props.creator ? (
+          <>
+            <Link to="/day/:oldYear/:oldMonth/:oldDay">
+              <span className="Navbar-company"> Day.ly </span>
+            </Link>
+          </>
+        ) : (
+            <>
+              <span className="Navbar-company"> Day.ly </span>
+            </>
+          )}
         <div className="Navbar-opts">
           {this.props.creator ? (
             <>
@@ -127,18 +137,18 @@ class Navbar extends Component {
                 {this.state.open && (
                   <div className="dropDown" onClick={this.handleButtonClick}>
                     <ul>
-                      <li className="name-Container">
+                      <li>
                         {/* <img className="li-pfp" src={this.getFirstLetter()} onClick={this.handleButtonClick} /> */}
                         <h3 className="name"> {this.props.creatorName} </h3>
                       </li>
-                      <li>
-                        <Link className="settings Navbar-opts_link" to="/settings">
+                      <Link className="settings" to="/settings">
+                        <li className="settings-Container">
                           Settings
-                        </Link>
-                      </li>
+                        </li>
+                      </Link>
                       <li>
                         <GoogleLogout
-                          className="Navbar-opts_login"
+                          className="logout-btn Navbar-opts_login"
                           clientId={GOOGLE_CLIENT_ID}
                           buttonText="Logout"
                           onLogoutSuccess={this.props.handleLogout}

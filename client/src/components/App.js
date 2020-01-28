@@ -125,7 +125,7 @@ class App extends Component {
         activeTheme: user.theme,
       });
 
-      const userWidgets = await get("/api/user/widgets");
+      const userWidgets = user.widgetList;
       this.setState({
         widgetlist: userWidgets,
       });
@@ -279,13 +279,7 @@ class App extends Component {
         currentView: window.location.pathname.slice(1),
       });
   }
-  //   <Settings
-  //   path="/settings"
-  //   creator={this.state.creator}
-  //   widgetlist={this.state.widgetlist}
-  //   handleWidgetSubmit={this.handleWidgetSubmit}
-  //   handleWidgetDelete={this.handleWidgetDelete}
-  // />
+
   render() {
     if (this.state.creator) {
       if (this.state.activeTheme) {

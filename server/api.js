@@ -34,8 +34,13 @@ router.get("/whoami", (req, res) => {
   if (!req.user) {
     // not logged in
     return res.send({});
+  } else {
+    User.findOne({
+      _id: req.user._id,
+    }).then((user) => {
+      res.send(user);
+    })
   }
-  res.send(req.user);
 });
 
 router.post("/initsocket", (req, res) => {
@@ -115,14 +120,6 @@ router.post("/day", (req, res) => {
           res.send(response);
         }
       });
-  });
-});
-
-router.get("/user/widgets", auth.ensureLoggedIn, (req, res) => {
-  User.findOne({
-    _id: req.user._id,
-  }).then((user) => {
-    res.send(user.widgetList);
   });
 });
 

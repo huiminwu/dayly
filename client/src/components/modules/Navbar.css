@@ -4,8 +4,23 @@
   height: 40px;
   width: 40px;
 }
+.settings {
+  font-family: "Poppins", sans-serif;
+  color: var(--headers);
+  width: 50%;
+  line-height: 3rem;
+  text-align: center;
+  margin: auto;
+}
 
+/* .settings-Container {
+  padding: 0;
+} */
 
+.settings-Container:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.14);
+}
 
 .Navbar-container {
   box-sizing: border-box;
@@ -30,7 +45,7 @@
   right: 0;
 }
 
-.Navbar-opts_link {
+/* .Navbar-opts_link {
   font-family: "Poppins", sans-serif;
   color: var(--headers);
   width: 50%;
@@ -42,21 +57,20 @@
   transition: transform 0.5s;
 }
 
-
-
 .Navbar-opts_link:hover {
   transform: translateY(-5px);
 }
 .Navbar-opts_link.active {
   border: 1px solid white;
-}
+} */
 
 .dropDown-container {
   position: relative;
   /* display: inline-block; */
 }
 .dropDown { 
-  /* display: none; */
+  display: flex;
+  justify-content: center;
   position: absolute;
   margin-top: 12px;
   right:0;
@@ -73,6 +87,10 @@
   height: 40px;
   width: 40px;
 }
+/* 
+.logout-btn{
+  align-self: center;
+} */
 
 ul { 
   list-style: none; 
@@ -81,28 +99,7 @@ ul {
 } 
 
 li { 
+  text-align: center;
   padding: 8px 12px; 
   color: var(--headers);
 } 
-
-li:hover {
-  background-color: rgba(0, 0, 0, 0.14);
-  cursor: pointer;
-}
-
-.settings {
-  text-align: center;
-  margin: auto;
-}
-
-.name {
-  display: block;
-  text-align: center;
-  font-family: "Poppins", sans-serif;
-  font-size: 24px;
-  color: var(--headers);
-}
-
-.name-Container:hover {
-  background-color: rgba(0, 0, 0, 0.14);
-}
