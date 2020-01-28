@@ -31,9 +31,9 @@ class CustomBullet1 extends React.Component {
         {this.props.children.map((child, k) => {
           return (
             <div className="custom-bullet">
-              <FontAwesomeIcon icon={["fas", "circle"]} className="bullet-point bullet-circle" />
+              <FontAwesomeIcon icon={["fas", "circle"]} className="bullet-circle bullet-1" />
               <div contentEditable={false} readOnly key={k} className="bullet-label label-1">
-                EVENT
+                TASK
               </div>
               <div className="bullet-content">{child}</div>
             </div>
@@ -54,7 +54,7 @@ class CustomBullet2 extends React.Component {
         {this.props.children.map((child, k) => {
           return (
             <div className="custom-bullet">
-              <FontAwesomeIcon icon="angle-right" className="bullet-point" />
+              <FontAwesomeIcon icon="minus" className="bullet-dash bullet-2" />
               <div contentEditable={false} readOnly key={k} className="bullet-label label-2">
                 NOTE
               </div>
@@ -77,9 +77,9 @@ class CustomBullet3 extends React.Component {
         {this.props.children.map((child, k) => {
           return (
             <div className="custom-bullet">
-              <FontAwesomeIcon icon={["far", "circle"]} className="bullet-point bullet-circle" />
+              <FontAwesomeIcon icon={["far", "circle"]} className="bullet-circle bullet-3" />
               <div contentEditable={false} readOnly key={k} className="bullet-label label-3">
-                TASK
+                EVENT
               </div>
               <div className="bullet-content">{child}</div>
             </div>

@@ -82,7 +82,10 @@
 
 .bullet-circle {
   font-size: 8px;
-  color: var(--accent);
+}
+
+.bullet-dash {
+  font-size: 9px;
 }
 
 .bullet-label {
@@ -102,6 +105,18 @@
 
 .label-3 {
   background-color: #d9b3ff;
+}
+
+.bullet-1 {
+  color: var(--accent);
+}
+
+.bullet-2 {
+  color: #b3d9ff;
+}
+
+.bullet-3 {
+  color: #d9b3ff;
 }
 
 .bullet-content {

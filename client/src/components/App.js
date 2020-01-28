@@ -28,6 +28,7 @@ import {
   faTimes,
   faCaretDown,
   faCircle as fasFaCircle,
+  faMinus,
   faStrikethrough,
   faHighlighter,
   faFont,
@@ -46,6 +47,7 @@ library.add(
   faCaretDown,
   fasFaCircle,
   farFaCircle,
+  faMinus,
   faStrikethrough,
   faHighlighter,
   faFont

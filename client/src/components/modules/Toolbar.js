@@ -250,9 +250,9 @@ class Toolbar extends Component {
         label: <FontAwesomeIcon icon="list-ol" />,
         style: "ordered-list-item",
       },
-      { label: "Event", style: "CustomBullet1" },
+      { label: "Task", style: "CustomBullet1" },
       { label: "Note", style: "CustomBullet2" },
-      { label: "Task", style: "CustomBullet3" },
+      { label: "Event", style: "CustomBullet3" },
     ];
 
     const FONT_FAMILIES = [
