@@ -130,18 +130,20 @@ class CollectionEditor extends Component {
 
     return (
       <div className="collections-editor">
-        <div className="collection-name">{this.props.name}</div>
-        <button className="editor-btn" onClick={() => this.props.openPopup("rename")}>
-          Rename
-        </button>
-        <button className="editor-btn" onClick={() => this.props.openPopup("delete")}>
-          Delete
-        </button>
-        <BlockStyleControls
-          BLOCK_TYPES={BLOCK_TYPES}
-          editorState={this.state.editorState}
-          onToggle={this._toggleBlockType}
-        />
+        <div className="collections-editor-header">
+          <div className="collection-name">{this.props.name}</div>
+          <button className="editor-btn" onClick={() => this.props.openPopup("rename")}>
+            Rename
+          </button>
+          <button className="editor-btn" onClick={() => this.props.openPopup("delete")}>
+            Delete
+          </button>
+          <BlockStyleControls
+            BLOCK_TYPES={BLOCK_TYPES}
+            editorState={this.state.editorState}
+            onToggle={this._toggleBlockType}
+          />
+        </div>
         <div className={editorClassName}>
           <Editor
             editorState={this.state.editorState}

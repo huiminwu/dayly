@@ -4,6 +4,7 @@
   color: var(--body);
   overflow: scroll;
   word-wrap: break-word;
+  border: 1px solid red;
 }
 
 .editor-body {
@@ -12,6 +13,7 @@
   margin-top: 16px;
   padding-top: 16px;
 }
+
 .editor-hidePlaceholder .public-DraftEditorPlaceholder-root {
   display: none;
 }
@@ -21,6 +23,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: baseline;
+  background-color: white;
   width: 60vw;
   padding: 16px 10px 16px 0px;
   margin-top: -26px;
