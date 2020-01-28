@@ -163,10 +163,12 @@ class Collections extends Component {
         this.setState({ nameError: newCollection.error });
       } else {
         this.closePopup();
-        this.setState((prevState) => ({
+        const collections = this.state.allCollections;
+        collections.splice(0, 0, newCollection);
+        this.setState({
           currentCollection: newCollection,
-          allCollections: prevState.allCollections.concat(newCollection),
-        }));
+          allCollections: collections,
+        });
       }
     });
   };
