@@ -24,6 +24,7 @@ class Daily extends Component {
     super(props);
     this.state = {
       widgetValues: null,
+      // canForward: false,
     };
   }
 
@@ -75,6 +76,7 @@ class Daily extends Component {
         <Header
           dateObject={this.props.dateObject}
           view={"day"}
+          // forward={this.state.canForward}
           handleBackClick={this.props.handleBackClick}
           handleNextClick={this.props.handleNextClick}
         />

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./Header.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+const moment = require("moment");
 // hardcoded list to convert numerical month to english
 const MONTHS = [
   "January",
@@ -34,6 +34,9 @@ class Header extends Component {
     super(props);
   }
 
+  onCurrentDay = () => {
+    return (moment().local().format("D") === this.props.dateObject.format("D"))
+  }
   render() {
     // display full date if in daily view
     // else display just month and year
@@ -46,16 +49,24 @@ class Header extends Component {
 
     return (
       <>
-        {console.log(this.props.dateObject.format("DDD"))}
+        {console.log(this.onCurrentDay())}
         <div className="Header-container">
           <h1 className="Header-dates">{date}</h1>
           <div className="Header-nav">
-            <button className="Header-nav-btn" type="button" onClick={this.props.handleBackClick}>
-              <FontAwesomeIcon icon="angle-left" />
-            </button>
-            <button className="Header-nav-btn" type="button" onClick={this.props.handleNextClick}>
-              <FontAwesomeIcon icon="angle-right" />
-            </button>
+            {this.onCurrentDay() ? (
+              <button className="Header-nav-btn" type="button" onClick={this.props.handleBackClick}>
+                <FontAwesomeIcon icon="angle-left" />
+              </button>
+            ) : (
+                <>
+                  <button className="Header-nav-btn" type="button" onClick={this.props.handleBackClick}>
+                    <FontAwesomeIcon icon="angle-left" />
+                  </button>
+                  <button className="Header-nav-btn" type="button" onClick={this.props.handleNextClick}>
+                    <FontAwesomeIcon icon="angle-right" />
+                  </button>
+                </>
+              )}
           </div>
         </div>
       </>
