@@ -42,11 +42,6 @@ const GOOGLE_CLIENT_ID = "209641585704-as3jqe7b1ensmoc8anroucgruqqq8a72.apps.goo
  * Proptypes
  * @param {func} handleLogin
  * @param {func} handleLogout
-<<<<<<< HEAD
- * @param {string} creator id
- * @param {string} creatorName
-=======
->>>>>>> 7dc90715bffd2a184c72ed80e7f70a8474356f48
  **/
 class Navbar extends Component {
   constructor(props) {

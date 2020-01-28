@@ -126,6 +126,23 @@ class App extends Component {
     }
   };
 
+  handleWidgetSubmit = (name, type) => {
+    const params = { name: name, widgetType: type, };
+    post("/api/user/widgets", params).then((userNew) => {
+      console.log("done")
+      this.setState({
+        widgetlist: userNew.widgetList
+      });
+    });
+  }
+
+  handleWidgetDelete = (id, name) => {
+    post("/api/user/widgets/delete", { widget: id, name: name })
+      .then((userNew) => {
+        this.setState({ widgetlist: userNew.widgetList }
+        );
+      });
+  }
   /**
    *  Methods for overriding current day
    *  */
@@ -204,6 +221,9 @@ class App extends Component {
             <Settings
               path="/settings"
               creator={this.state.creator}
+              widgetlist={this.state.widgetlist}
+              handleWidgetSubmit={this.handleWidgetSubmit}
+              handleWidgetDelete={this.handleWidgetDelete}
             />
             <Loading default />
           </Router>
