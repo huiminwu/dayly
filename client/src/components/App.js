@@ -219,13 +219,7 @@ class App extends Component {
         currentView: window.location.pathname.slice(1),
       });
   }
-  //   <Settings
-  //   path="/settings"
-  //   creator={this.state.creator}
-  //   widgetlist={this.state.widgetlist}
-  //   handleWidgetSubmit={this.handleWidgetSubmit}
-  //   handleWidgetDelete={this.handleWidgetDelete}
-  // />
+
   render() {
     if (this.state.creator) {
       return (
