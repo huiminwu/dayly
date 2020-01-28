@@ -22,8 +22,8 @@ class Landing extends Component {
     return (
       <>
         <div className="landing-Container">
-          <div className="title">day.ly</div>
-          <div className="tagline">A silver bullet for all your daily bullet journal needs.</div>
+          <h1 className="title">day.ly</h1>
+          <p className="tagline">A silver bullet for all your daily bullet journal needs.</p>
           <img className="pic" src={journal}></img>
         </div>
       </>

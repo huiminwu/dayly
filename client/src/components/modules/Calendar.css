@@ -44,6 +44,12 @@ a {
 .calendar {
   border-spacing: 0;
 }
+.calendar-number {
+  text-align: center;
+  font-size: 50px;
+  font-weight: 300;
+  color: #c0c0c0;
+}
 .calendar-day {
   position: relative;
   padding: 0 !important;
@@ -53,14 +59,12 @@ a {
 }
 
 .calendar-day:hover {
-  background-color: #f0f0f0;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  color: var(--accent);
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .calendar-day:active {
-  color: white;
-  background-color: gold;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .calendar-day.empty,
@@ -88,11 +92,6 @@ tr > td:not(:first-child) {
   top: 0;
   height: 10px;
   width: 100%;
-}
-.calendar-number {
-  text-align: center;
-  font-size: 50px;
-  color: #c0c0c0;
 }
 
 /* 

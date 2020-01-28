@@ -1,9 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins|Sacramento&display=swap");
 
 .Navbar-container {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   padding: 15px 20px 10px 20px;
+  height: 10vh;
 }
 
 .Navbar-company {

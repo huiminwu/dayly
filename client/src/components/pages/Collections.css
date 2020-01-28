@@ -4,6 +4,7 @@
 }
 
 .collections-header {
+  color: var(--headers);
   height: 10vh;
   margin: 0 0px 10px 0px;
 }
