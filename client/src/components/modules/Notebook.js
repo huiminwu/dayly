@@ -30,9 +30,11 @@ class CustomBullet1 extends React.Component {
       <div className="custom-bullet-container">
         {this.props.children.map((child, k) => {
           return (
-            <div key={k} className="custom-bullet">
+            <div className="custom-bullet">
               <FontAwesomeIcon icon={["fas", "circle"]} className="bullet-point bullet-circle" />
-              <div className="bullet-label label-1">EVENT</div>
+              <div contentEditable={false} readOnly key={k} className="bullet-label label-1">
+                EVENT
+              </div>
               <div className="bullet-content">{child}</div>
             </div>
           );
@@ -51,9 +53,11 @@ class CustomBullet2 extends React.Component {
       <div className="custom-bullet-container">
         {this.props.children.map((child, k) => {
           return (
-            <div key={k} className="custom-bullet">
+            <div className="custom-bullet">
               <FontAwesomeIcon icon="angle-right" className="bullet-point" />
-              <div className="bullet-label label-2">NOTE</div>
+              <div contentEditable={false} readOnly key={k} className="bullet-label label-2">
+                NOTE
+              </div>
               <div className="bullet-content">{child}</div>
             </div>
           );
@@ -72,9 +76,11 @@ class CustomBullet3 extends React.Component {
       <div className="custom-bullet-container">
         {this.props.children.map((child, k) => {
           return (
-            <div key={k} className="custom-bullet">
+            <div className="custom-bullet">
               <FontAwesomeIcon icon={["far", "circle"]} className="bullet-point bullet-circle" />
-              <div className="bullet-label label-3">TASK</div>
+              <div contentEditable={false} readOnly key={k} className="bullet-label label-3">
+                TASK
+              </div>
               <div className="bullet-content">{child}</div>
             </div>
           );
@@ -358,7 +364,7 @@ class Notebook extends Component {
 
     const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
-    let editorClassName = "RichEditor-editor";
+    let editorClassName = "editor-body";
     var contentState = this.state.editorState.getCurrentContent();
     if (!contentState.hasText()) {
       if (
@@ -367,18 +373,13 @@ class Notebook extends Component {
           .first()
           .getType() !== "unstyled"
       ) {
-        editorClassName += " RichEditor-hidePlaceholder";
+        editorClassName += " editor-hidePlaceholder";
       }
-    }
-
-    let saveClassName = "editor-saveButton";
-    if (this.state.isSaved) {
-      saveClassName = "editor-saveButton-saved";
     }
 
     return (
       <div className="notes-section">
-        <div className="RichEditor-root">
+        <div className="editor-container">
           <Toolbar
             editorState={this.state.editorState}
             setInlineStyle={this.setInlineStyle}
@@ -401,12 +402,11 @@ class Notebook extends Component {
               placeholder="How was your day?"
             />
           </div>
-        </div>
-        <div className="RichEditor-footer">
-          {this.state.isSaved ? <span>All changes saved</span> : <span>Unsaved</span>}
-          <button className={saveClassName} onClick={() => this.handleSave(this.state.editorState)}>
-            Save
-          </button>
+          <div className="editor-footer">
+            <span className="editor-saveStatus">
+              {this.state.isSaved ? "All changes saved" : "Unsaved"}
+            </span>
+          </div>
         </div>
       </div>
     );

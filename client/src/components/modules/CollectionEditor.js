@@ -150,8 +150,11 @@ class CollectionEditor extends Component {
             keyBindingFn={this.mapKeyBindings}
             placeholder="Start making a list!"
           />
-          {this.state.isSaved ? <span>All changes saved</span> : <span>Unsaved</span>}
-          <button onClick={() => this.handleSave(this.state.editorState)}>Save</button>
+          <div className="collections-footer editor-footer">
+            <span className="editor-saveStatus">
+              {this.state.isSaved ? "All changes saved" : "Unsaved"}
+            </span>
+          </div>
         </div>
       </div>
     );

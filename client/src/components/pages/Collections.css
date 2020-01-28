@@ -49,17 +49,25 @@
   width: 60vw;
   border: 1px solid red;
   padding: 16px;
+  word-wrap: break-word;
+  overflow: scroll;
+}
+
+.collections-footer {
+  padding: 16px 10px 16px 0px;
+  margin-top: -25px !important;
+  margin-left: -6px;
 }
 
 .popup {
   position: fixed;
   width: 20vw;
-  height: 20vw;
   margin: auto;
+  margin-top: 10vh;
   background-color: white;
   border: 1px solid var(--borders);
   border-radius: 10px;
-  padding: 16px;
+  padding: 0px 16px 16px 16px;
   z-index: 1;
 }
 
@@ -70,6 +78,31 @@
   top: 25%;
   bottom: 25%;
   margin: auto;
-  border-radius: 20px;
+  border-radius: 15px;
   background: white;
+}
+
+.popup-text {
+  height: 3vh;
+  width: 19.5vw;
+  border: 1px solid var(--borders);
+}
+
+.popup-btn-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2vh;
+}
+
+.popup-btn {
+  height: 4vh;
+  width: 9vw;
+  background: none;
+  border: 1px solid var(--borders);
+  border-radius: 3px;
+}
+
+.popup-submit-btn {
+  color: white;
+  background: var(--accent);
 }
