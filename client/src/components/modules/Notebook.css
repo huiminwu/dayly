@@ -2,7 +2,6 @@
   width: 60vw;
   padding: 24px 16px 24px 24px;
   color: var(--body);
-  overflow: scroll;
   word-wrap: break-word;
 }
 
@@ -11,13 +10,14 @@
   border-top: 1px solid var(--borders);
   margin-top: 48px;
   padding-top: 16px;
+  overflow: scroll;
 }
 
-.editor-container::-webkit-scrollbar {
+.editor-body::-webkit-scrollbar {
   background-color: var(--bujo-body);
 }
 
-.editor-container::-webkit-scrollbar-thumb {
+.editor-body::-webkit-scrollbar-thumb {
   width: 6px;
   background: var(--accent);
   border-radius: 6px;
