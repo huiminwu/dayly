@@ -282,14 +282,6 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentView !== window.location.pathname.slice(1)) {
-      this.setState({
-        currentView: window.location.pathname.slice(1),
-      });
-    }
-  }
-
   handleLogin = (res) => {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken })
@@ -429,6 +421,12 @@ class App extends Component {
       this.setState({
         currentView: window.location.pathname.slice(1),
       });
+    }
+    if (
+      window.location.pathname.slice(1) === "day" &&
+      prevState.dateObject !== this.state.dateObject
+    ) {
+      this.getDateData(this.state.dateObject);
     }
   }
 
