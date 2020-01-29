@@ -145,7 +145,6 @@ const naturalTheme = {
   "--background": "#f4eee1",
   "--borders": "#e4d1c2",
   "--accent": "#efba89",
-  "--accent-text": "#ffffff",
   "--headers": "#999999",
   "--hover": "#f1e3d6",
   "--tab1": "#d3c4be",
@@ -425,7 +424,6 @@ class App extends Component {
           <div className="bullet-journal">
             <div className="bullet-journal_body">
               <Router>
-                <Landing path="/" creator={this.state.creator} />
                 {this.state.data ? (
                   <Daily
                     path="/day"
@@ -470,6 +468,14 @@ class App extends Component {
                   themeMap={themeMap}
                   activeTheme={this.state.activeTheme}
                   handleThemeChange={this.handleThemeChange}
+                />
+                <Daily
+                  path="/"
+                  dateObject={this.state.dateObject}
+                  data={this.state.data}
+                  setToOldDate={this.setToOldDate}
+                  handleBackClick={() => this.handleBackClick("day")}
+                  handleNextClick={() => this.handleNextClick("day")}
                 />
                 <Loading default />
               </Router>

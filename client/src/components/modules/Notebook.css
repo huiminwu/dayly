@@ -13,6 +13,17 @@
   padding-top: 16px;
 }
 
+.editor-container::-webkit-scrollbar {
+  background-color: var(--bujo-body);
+}
+
+.editor-container::-webkit-scrollbar-thumb {
+  width: 6px;
+  background: var(--accent);
+  border-radius: 6px;
+  border: 3px solid var(--bujo-body);
+}
+
 .editor-hidePlaceholder .public-DraftEditorPlaceholder-root {
   display: none;
 }
@@ -24,7 +35,7 @@
   align-items: baseline;
   width: 60vw;
   background-color: var(--bujo-body);
-  padding: 16px 10px 16px 0px;
+  padding: 16px 8px 16px 0px;
   margin-top: -26px;
   margin-left: -6px;
   z-index: 1;
