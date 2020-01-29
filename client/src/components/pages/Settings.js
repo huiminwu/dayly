@@ -188,10 +188,10 @@ class Settings extends Component {
                 const theme = this.props.themeMap[themeName];
                 const hexCodes = [
                   theme["--accent"],
-                  theme["--tab0"],
-                  theme["--tab1"],
-                  theme["--tab2"],
                   theme["--tab3"],
+                  theme["--tab2"],
+                  theme["--tab1"],
+                  theme["--tab0"],
                 ];
                 return (
                   <Theme

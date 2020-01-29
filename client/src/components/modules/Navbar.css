@@ -106,13 +106,13 @@
   align-self: center;
 } */
 
-ul {
+.dropDown ul {
   list-style: none;
   padding: 0;
   margin: auto;
 }
 
-li {
+.dropDown li {
   text-align: center;
   padding: 8px 12px;
   color: var(--headers);
