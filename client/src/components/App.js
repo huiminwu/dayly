@@ -63,11 +63,9 @@ const defaultTheme = {
   "--borders": "#cec0b7",
   "--accent": "#cf9893",
   "--accent-text": "#ffffff",
-  "--headers": "#8a2020",
+  "--headers": "#3d3d3d",
   "--body": "#6e6e6e",
   "--hover": "#f7ebeb",
-  "--active": "gold",
-  "--active-text": "#ffffff",
 };
 
 const ivyTheme = {
@@ -78,20 +76,18 @@ const ivyTheme = {
   "--headers": "#3E8E66",
   "--body": "#251605",
   "--hover": "#ADEACC",
-  "--active": "#88EFD7",
-  "--active-text": "#ffffff",
 };
 
 const themeMap = {
   default: {
     name: "default",
     theme: defaultTheme,
-    displayColors: ["#ff6c6c", "#6cb9ff", "#ffbc6c"],
+    displayColors: ["#ff6c6c", "#6cb9ff", "#ffbc6c", "#ff6c6c", "#6cb9ff"],
   },
   ivy: {
     name: "ivy",
     theme: ivyTheme,
-    displayColors: ["#3AB795", "#ADEACC", "#3E8E66"],
+    displayColors: ["#3AB795", "#ADEACC", "#3E8E66", "#3AB795", "#ADEACC"],
   },
 };
 
@@ -310,8 +306,8 @@ class App extends Component {
                     handleNextClick={() => this.handleNextClick("day")}
                   />
                 ) : (
-                    <Loading path="/day" />
-                  )}
+                  <Loading path="/day" />
+                )}
                 {/* View for when you look back on Monthly view */}
                 <Daily
                   path="/day/:oldYear/:oldMonth/:oldDay"

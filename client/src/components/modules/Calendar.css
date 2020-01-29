@@ -2,11 +2,14 @@
 for widget buttons that alter calendar
 */
 
+.no-link {
+  cursor: default !important;
+}
 
 .no-link:hover {
-  box-shadow: none;
-  cursor: default; 
-  background-color: transparent;
+  box-shadow: none !important;
+  cursor: default;
+  background-color: transparent !important;
 }
 
 .calendar-widget-btn {
@@ -55,16 +58,15 @@ a {
   text-align: center;
   font-size: 50px;
   font-weight: 300;
-  color: #c0c0c0;
+  color: var(--calendar-text-month);
 }
 .calendar-day {
   position: relative;
   padding: 0 !important;
   margin: 0;
-  border: 1px solid #c0c0c0;
+  border: 1px solid var(--calendar-text-month);
   cursor: pointer;
 }
-
 
 .calendar-day:hover {
   background-color: var(--hover);
@@ -90,7 +92,7 @@ tr:not(:first-child) > td {
 }
 
 tr:nth-child(2) > td {
-  border: 1px solid #c0c0c0;
+  border: 1px solid var(--calendar-text-month);
 }
 
 tr > td:not(:first-child) {
@@ -139,7 +141,7 @@ For yearly
 
 .calendar-number.year {
   font-size: 10px;
-  color: #696969;
+  color: var(--calendar-text-year);
   z-index: 100;
 }
 
