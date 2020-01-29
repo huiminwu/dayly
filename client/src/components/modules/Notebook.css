@@ -12,6 +12,7 @@
   margin-top: 16px;
   padding-top: 16px;
 }
+
 .editor-hidePlaceholder .public-DraftEditorPlaceholder-root {
   display: none;
 }
@@ -22,6 +23,7 @@
   justify-content: flex-end;
   align-items: baseline;
   width: 60vw;
+  background-color: var(--bujo-body);
   padding: 16px 10px 16px 0px;
   margin-top: -26px;
   margin-left: -6px;
@@ -117,5 +119,7 @@
 }
 
 .bullet-content {
-  margin-left: 8px;
+  margin-left: 10px;
+  word-wrap: break-word;
+  overflow-x: hidden;
 }
