@@ -77,7 +77,7 @@ class Settings extends Component {
               className="widget-delete-btn"
               onClick={() => this.props.handleWidgetDelete(widget["_id"], widget["name"])}
             >
-              <FontAwesomeIcon icon="times" />
+              <FontAwesomeIcon icon="trash-alt" />
             </div>
           </div>
         );

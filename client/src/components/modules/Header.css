@@ -16,25 +16,39 @@
 .Header-nav-btn {
   background-color: var(--accent) !important;
   color: var(--accent-text);
-  border: 1px solid var(--borders);
+  cursor: pointer;
+}
+
+.Header-nav-btn,
+.Header-nav-btn-inactive {
   height: 32px;
   width: 32px;
+  padding: 0px;
   line-height: 32px;
   font-size: 20px;
   font-weight: 300;
   border-radius: 100%;
-  cursor: pointer;
+  border: 1px solid var(--borders);
 }
 
 .Header-nav-btn:hover {
-  box-shadow: 0 0 6px rgba(207, 152, 147, 1);
+  background-color: var(--hover) !important;
+  transition: all 0.4s;
 }
+
 .Header-nav-btn:active {
   background-color: var(--accent);
   color: white;
   box-shadow: 0 0 6px rgba(207, 152, 147, 1);
 }
 
-.Header-nav-btn + .Header-nav-btn {
+.Header-nav-btn + .Header-nav-btn,
+.Header-nav-btn + .Header-nav-btn-inactive {
   margin-left: 5px;
+}
+
+.Header-nav-btn-inactive {
+  background-color: white !important;
+  color: var(--borders);
+  cursor: default;
 }
