@@ -41,7 +41,7 @@
 
 .createNew-btn,
 .collectionList-btn {
-  font-family: "Pippins", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 14px;
   text-align: center;
   padding: 20px 16px;
@@ -68,27 +68,30 @@
   border-radius: 7px;
   transition: all 0.5s;
 }
+
 .editor-btn:hover,
 .createNew-btn:hover {
   box-shadow: 0 0 5px var(--accent);
 }
+
 .editor-btn:active,
 .createNew-btn:active {
   color: white;
   background-color: var(--accent);
   box-shadow: 0 0 5px var(--accent);
 }
+
 .collection-name {
   font-size: 1.75rem;
   color: var(--headers);
   width: 100%;
   overflow-wrap: break-word;
   border-bottom: 1px solid var(--borders);
-  margin-bottom: 5px;
+  padding-bottom: 5px;
 }
 
 .collections-editor {
-  width: 70%;
+  width: 75%;
   padding: 16px;
   word-wrap: break-word;
   overflow: scroll;
@@ -97,8 +100,8 @@
 .collections-footer {
   padding: 16px 10px 16px 0px;
   right: 15%;
-  margin-top: -25px !important;
-  margin-left: -6px;
+  margin-top: 4px !important;
+  margin-right: -40px !important;
 }
 
 .editor-btn {
@@ -109,6 +112,7 @@
   border: 1px solid var(--accent);
   color: var(--accent);
   transition: all 0.25s;
+  font-family: "Poppins", sans-serif;
 }
 
 .editor-btn + .editor-btn {
@@ -119,13 +123,17 @@
   display: inline;
   margin: 10px 0 10px 10px;
 }
+
 .editor-tools > .toolbar-btn-group {
   display: inline-flex;
+  align-items: center;
 }
+
 .collection-tools {
   border-bottom: 1px solid var(--borders);
-  padding-bottom: 5px;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .collections-editor-body {

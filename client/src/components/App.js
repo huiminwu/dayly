@@ -38,7 +38,7 @@ import {
   faSadCry,
   faLaughBeam,
   faGrinHearts,
-  faTired,
+  faFrown,
   faMeh,
   faCog,
   faTrashAlt,
@@ -65,7 +65,7 @@ library.add(
   faSadCry,
   faLaughBeam,
   faGrinHearts,
-  faTired,
+  faFrown,
   faMeh,
   faCog,
   faTrashAlt,
@@ -91,18 +91,18 @@ const defaultTheme = {
   "--label1": "#cf9893",
   "--label2": "#b3d9ff",
   "--label3": "#d9b3ff",
-  "--slider-1": "rgba(44, 190, 255, 0.08)",
-  "--slider-2": "rgba(44, 190, 255, 0.17)",
-  "--slider-3": "rgba(44, 190, 255, 0.25)",
-  "--slider-4": "rgba(44, 190, 255, 0.34)",
-  "--slider-5": "rgba(44, 190, 255, 0.42)",
-  "--slider-6": "rgba(44, 190, 255, 0.5)",
-  "--slider-7": "rgba(44, 190, 255, 0.58)",
-  "--slider-8": "rgba(44, 190, 255, 0.67)",
-  "--slider-9": "rgba(44, 190, 255, 0.75)",
-  "--slider-10": "rgba(44, 190, 255, 0.83)",
-  "--slider-11": "rgba(44, 190, 255, 0.92)",
-  "--slider-12": "rgba(44, 190, 255, 1)",
+  "--slider-1": "rgba(152, 180, 241, 0.08)",
+  "--slider-2": "rgba(152, 180, 241, 0.17)",
+  "--slider-3": "rgba(152, 180, 241, 0.25)",
+  "--slider-4": "rgba(152, 180, 241, 0.34)",
+  "--slider-5": "rgba(152, 180, 241, 0.42)",
+  "--slider-6": "rgba(152, 180, 241, 0.5)",
+  "--slider-7": "rgba(152, 180, 241, 0.58)",
+  "--slider-8": "rgba(152, 180, 241, 0.67)",
+  "--slider-9": "rgba(152, 180, 241, 0.75)",
+  "--slider-10": "rgba(152, 180, 241, 0.83)",
+  "--slider-11": "rgba(152, 180, 241, 0.92)",
+  "--slider-12": "rgba(152, 180, 241, 1)",
 };
 
 const lilacTheme = {
@@ -135,7 +135,7 @@ const lilacTheme = {
   "--slider-10": "rgba(188, 158, 251, 0.83)",
   "--slider-11": "rgba(188, 158, 251, 0.92)",
   "--slider-12": "rgba(188, 158, 251, 1)",
-}
+};
 
 const naturalTheme = {
   "--body": "#6e6e6e",
