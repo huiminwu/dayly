@@ -16,10 +16,17 @@ class BinaryWidget extends Component {
 
   // submits and updates value
   handleOnClick = (val) => {
+    let v = (val === "true");
+    if (v === true) {
+      v = "false"
+    } else {
+      v = "true"
+    }
     this.setState({
-      value: val,
+      value: v,
     });
-    this.props.submitValue(val);
+    this.props.submitValue(v);
+    console.log(v)
   };
 
   componentDidMount() {
@@ -36,35 +43,47 @@ class BinaryWidget extends Component {
     }
   }
 
+
   render() {
     return (
       <>
         <div className="widget-name">{this.props.name}</div>
         {this.props.work === "no" ? (
           <>
-            <button className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}>
-              <FontAwesomeIcon icon="check" />
-            </button>
-            <button className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}>
-              <FontAwesomeIcon icon="times" />
-            </button>
+            <input type="checkbox" id="toggle"
+              className="checkbox"
+            />
+            <label for="toggle" class="switch"></label>
           </>
         ) : (
-          <>
-            <button
-              className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
-              onClick={() => this.handleOnClick("true")}
-            >
-              <FontAwesomeIcon icon="check" />
-            </button>
-            <button
-              className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
-              onClick={() => this.handleOnClick("false")}
-            >
-              <FontAwesomeIcon icon="times" />
-            </button>
-          </>
-        )}
+            <>
+              {this.state.value === "true" ? (
+                <>
+                  <input type="checkbox" id="toggle"
+                    className={`checkbox`}
+                    onClick={() => this.handleOnClick(this.state.value)}
+                    checked
+                  />
+                  <label for="toggle" class="switch"></label>
+                </>
+              ) : (
+                  <>
+                    <input type="checkbox" id="toggle"
+                      className={`checkbox`}
+                      onClick={() => this.handleOnClick(this.state.value)}
+                    />
+                    <label for="toggle" class="switch"></label>
+                  </>
+                )}
+
+              {/* <button
+                className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
+                onClick={() => this.handleOnClick("false")}
+              >
+                <FontAwesomeIcon icon="times" />
+              </button> */}
+            </>
+          )}
       </>
     );
   }
@@ -104,17 +123,25 @@ class ColorWidget extends Component {
   render() {
     // dynamically produce buttons
     const colorValues = [1, 2, 3, 4, 5];
-    const colorButtons = colorValues.map((val, k) => {
-      return (
+    const colorButtons = colorValues.map((val, k) => (
+      this.props.work === "no" ? (
         <button
           key={k}
           className={`cool-btn ColorWidget-${val} ${
             val === parseInt(this.state.value) ? "submitted-val" : ""
-          }`}
-          onClick={() => this.handleOnClick(val)}
+            }`}
         />
-      );
-    });
+      ) : (
+          <button
+            key={k}
+            className={`cool-btn ColorWidget-${val} ${
+              val === parseInt(this.state.value) ? "submitted-val" : ""
+              }`}
+
+            onClick={() => this.handleOnClick(val)}
+          />
+        )
+    ));
 
     return (
       <>
@@ -122,9 +149,19 @@ class ColorWidget extends Component {
         <div
           className={`${
             this.props.isSettings ? "color-btn-container-Setting" : "color-btn-container"
-          }`}
+            }`}
         >
           {colorButtons}
+          {(this.props.work === "yes" && this.props.name.toLowerCase() === "mood") &&
+            <>
+              <br />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="laugh-beam" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="grin-hearts" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="sad-cry" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="meh" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="tired" />
+            </>
+          }
         </div>
       </>
     );
@@ -170,17 +207,17 @@ class SliderWidget extends Component {
             className="slider-input"
           />
         ) : (
-          <input
-            type="range"
-            min="0"
-            max="12"
-            step="1"
-            value={this.state.slider_value}
-            onChange={this.handleSliderChange}
-            onMouseUp={() => this.props.submitValue(this.state.slider_value)}
-            className="slider-input"
-          />
-        )}
+            <input
+              type="range"
+              min="0"
+              max="12"
+              step="1"
+              value={this.state.slider_value}
+              onChange={this.handleSliderChange}
+              onMouseUp={() => this.props.submitValue(this.state.slider_value)}
+              className="slider-input"
+            />
+          )}
 
         <span className="slider-display">{this.state.slider_value}</span>
       </>
@@ -192,18 +229,18 @@ class SliderWidget extends Component {
  * Widget is a component for displaying widgets
  *
  * Proptypes
- * @param {moment} dateObject
- * @param {string} name of widget
- * @param {string} type of widget
- * @param {string} placeholder of widget
- **/
+* @param {moment} dateObject
+* @param {string} name of widget
+* @param {string} type of widget
+* @param {string} placeholder of widget
+    **/
 class Widget extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   submitValue = (val) => {
     const params = {
