@@ -15,6 +15,9 @@
   animation: enter 0.25s ease-in;
 }
 
+.popup-settings {
+  /* margin-top: -500px !important; */
+}
 
 .popup_inner {
   height: 100%;
