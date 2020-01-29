@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
         widgetType: "ColorWidget",
       },
       {
-        name: "Pset",
+        name: "Finish Pset",
         widgetType: "BinaryWidget",
       },
     ],
