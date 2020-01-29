@@ -194,6 +194,7 @@ class Settings extends Component {
         <div className="settings-container">
           <div className="themes">
             <h2 className="settings-category">Themes</h2>
+            <p className="popup-error">Modified widget list will be shown starting tomorrow.</p>
             <div className="theme-container">
               {themeList.map((themeName) => {
                 const theme = this.props.themeMap[themeName];
@@ -219,6 +220,7 @@ class Settings extends Component {
 
           <div className="widgets">
             <h2 className="settings-category">Widgets</h2>
+            <p className="popup-error">Modified widget list will be shown starting tomorrow.</p>
             <div className="settingsWidget-container">{this.displayWidgets()}</div>
             <div className="widget-createNew-container">
               {this.state.showCreateNew && (
