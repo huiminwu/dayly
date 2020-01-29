@@ -1,8 +1,11 @@
 .popup {
   position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -150px;
+  margin-top: -75px;
   width: 300px;
-  margin: auto;
-  margin-top: 10vh;
+  height: 150px;
   background-color: white;
   border: 1px solid var(--borders);
   border-radius: 7px;
@@ -12,19 +15,23 @@
   animation: enter 0.25s ease-in;
 }
 
-.popup\_inner {
-  position: absolute;
-  left: 25%;
-  right: 25%;
-  top: 25%;
-  bottom: 25%;
+.popup_inner {
+  height: 100%;
   background: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .popup-text {
   height: 3vh;
-  width: 19.5vw;
+  width: 100%;
   border: 1px solid var(--borders);
+}
+.popup-text:focus {
+  box-shadow: 0 0 5px var(--accent);
+  outline: 0;
 }
 
 .popup-btn-container {
@@ -39,11 +46,17 @@
   background: none;
   border: 1px solid var(--borders);
   border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.25s;
 }
 
 .popup-submit-btn {
   color: var(--accent-text);
   background: var(--accent);
+}
+
+.popup-btn:hover {
+  box-shadow: 0 0 5px var(--accent);
 }
 
 .overlay {

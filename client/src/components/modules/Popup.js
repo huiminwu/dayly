@@ -24,7 +24,7 @@ class Popup extends Component {
     return (
       <>
         <div className="popup">
-          <div className="popup\_inner">
+          <div className="popup_inner">
             <p>{this.props.text}</p>
             {this.props.submitType === "input" && (
               <>
@@ -55,11 +55,14 @@ class Popup extends Component {
             )}
             {this.props.submitType === "binary" && (
               <div className="popup-btn-container">
+                <button
+                  className="popup-btn popup-submit-btn"
+                  onClick={() => this.props.editFunction()}
+                >
+                  Yes, delete
+                </button>
                 <button className="popup-btn popup-delete-btn" onClick={this.props.closePopup}>
                   No
-                </button>
-                <button className="popup-btn" onClick={() => this.props.editFunction()}>
-                  Yes, delete
                 </button>
               </div>
             )}
