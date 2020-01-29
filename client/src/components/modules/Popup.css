@@ -15,15 +15,15 @@
   animation: enter 0.25s ease-in;
 }
 
-.popup-settings {
-  /* margin-top: -500px !important; */
-}
-
 .popup_inner {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+
+.popup-settings {
+  margin-top: -500px !important;
 }
 
 .popup-text {
@@ -59,6 +59,11 @@
 
 .popup-btn:hover {
   box-shadow: 0 0 5px var(--accent);
+}
+
+.popup-error {
+  font-size: 0.7rem;
+  font-style: italic;
 }
 
 .overlay {
