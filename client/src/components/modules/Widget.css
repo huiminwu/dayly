@@ -88,12 +88,12 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .cool-btn + .cool-btn {
-  margin-left: 0.3vw;
+  margin-left: 0.2vw;
   /* border-radius: 10px; */
 }
 
 .mood-icon + .mood-icon {
-  margin-left: 0.4vw;
+  margin-left: 0.3vw;
 }
 
 .switch {
