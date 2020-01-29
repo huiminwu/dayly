@@ -20,6 +20,8 @@
 :root {
   /* CHANGES WITH THEME */
   --background: #f5f5f5;
+  --bujo-body: #ffffff;
+  --body-darker: #f5f5f5;
   --borders: #cec0b7;
   --border-darker: #9b9089;
   --accent: #ff9696;
@@ -49,21 +51,21 @@
   --color-4: #9bfa24;
   --color-5: #fef720;
 
-  --binary-true: green;
-  --binary-false: red;
+  --binary-true: #a0e5a1;
+  --binary-false: #ffabab;
 
-  --slider-1: rgba(225, 0, 225, 0.08);
-  --slider-2: rgba(225, 0, 225, 0.17);
-  --slider-3: rgba(225, 0, 225, 0.25);
-  --slider-4: rgba(225, 0, 225, 0.34);
-  --slider-5: rgba(225, 0, 225, 0.42);
-  --slider-6: rgba(225, 0, 225, 0.5);
-  --slider-7: rgba(225, 0, 225, 0.58);
-  --slider-8: rgba(225, 0, 225, 0.67);
-  --slider-9: rgba(225, 0, 225, 0.75);
-  --slider-10: rgba(225, 0, 225, 0.83);
-  --slider-11: rgba(225, 0, 225, 0.92);
-  --slider-12: rgba(225, 0, 225, 1);
+  --slider-1: rgba(44, 190, 255, 0.08);
+  --slider-2: rgba(44, 190, 255, 0.17);
+  --slider-3: rgba(44, 190, 255, 0.25);
+  --slider-4: rgba(44, 190, 255, 0.34);
+  --slider-5: rgba(44, 190, 255, 0.42);
+  --slider-6: rgba(44, 190, 255, 0.5);
+  --slider-7: rgba(44, 190, 255, 0.58);
+  --slider-8: rgba(44, 190, 255, 0.67);
+  --slider-9: rgba(44, 190, 255, 0.75);
+  --slider-10: rgba(44, 190, 255, 0.83);
+  --slider-11: rgba(44, 190, 255, 0.92);
+  --slider-12: rgba(44, 190, 255, 1);
 
   --xs: 4px;
   --s: 8px;
