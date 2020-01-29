@@ -130,36 +130,38 @@ class CollectionEditor extends Component {
     }
 
     return (
-      <div className="collections-editor">
-        <div className="collection-name">{this.props.name}</div>
-        <div className="collection-tools">
-          <button className="editor-btn" onClick={() => this.props.openPopup("rename")}>
-            Rename
+      <div className="editor-section">
+        <div className="collections-editor">
+          <div className="collection-name">{this.props.name}</div>
+          <div className="collection-tools">
+            <button className="editor-btn" onClick={() => this.props.openPopup("rename")}>
+              Rename
           </button>
-          <button className="editor-btn" onClick={() => this.props.openPopup("delete")}>
-            Delete
+            <button className="editor-btn" onClick={() => this.props.openPopup("delete")}>
+              Delete
           </button>
-          <div className="editor-tools">
-            <BlockStyleControls
-              BLOCK_TYPES={BLOCK_TYPES}
+            <div className="editor-tools">
+              <BlockStyleControls
+                BLOCK_TYPES={BLOCK_TYPES}
+                editorState={this.state.editorState}
+                onToggle={this._toggleBlockType}
+              />
+            </div>
+          </div>
+          <div className={editorClassName}>
+            <Editor
               editorState={this.state.editorState}
-              onToggle={this._toggleBlockType}
+              onChange={this.onChange}
+              handleKeyCommand={this.handleKeyCommand}
+              keyBindingFn={this.mapKeyBindings}
+              placeholder="Start making your list!"
             />
           </div>
         </div>
-        <div className={editorClassName}>
-          <Editor
-            editorState={this.state.editorState}
-            onChange={this.onChange}
-            handleKeyCommand={this.handleKeyCommand}
-            keyBindingFn={this.mapKeyBindings}
-            placeholder="Start making your list!"
-          />
-          <div className="collections-footer editor-footer">
-            <span className="editor-saveStatus">
-              {this.state.isSaved ? "All changes saved" : "Unsaved"}
-            </span>
-          </div>
+        <div className="collections-footer editor-footer">
+          <span className="editor-saveStatus">
+            {this.state.isSaved ? "All changes saved" : "Unsaved"}
+          </span>
         </div>
       </div>
     );

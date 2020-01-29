@@ -7,7 +7,6 @@
 
 .journal-container {
   display: flex;
-  justify-content: space-between;
 }
 
 .widget-container {
