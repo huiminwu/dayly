@@ -56,8 +56,8 @@ class Navbar extends Component {
   }
 
   handleButtonClick = () => {
-    this.setState({ open: !this.state.open })
-  }
+    this.setState({ open: !this.state.open });
+  };
 
   handleClickOutside = (event) => {
     if (this.container.current && !this.container.current.contains(event.target)) {
@@ -122,12 +122,12 @@ class Navbar extends Component {
             </Link>
           </>
         ) : (
-            <>
-              <Link to="/">
-                <span className="Navbar-company"> Day.ly </span>
-              </Link>
-            </>
-          )}
+          <>
+            <Link to="/">
+              <span className="Navbar-company"> Day.ly </span>
+            </Link>
+          </>
+        )}
         <div className="Navbar-opts">
           {this.props.creator ? (
             <>
@@ -159,16 +159,16 @@ class Navbar extends Component {
               </div>
             </>
           ) : (
-              <GoogleLogin
-                className="Navbar-opts_login"
-                clientId={GOOGLE_CLIENT_ID}
-                buttonText="Login"
-                onSuccess={this.props.handleLogin}
-                onFailure={(err) => console.log(err)}
-              />
-            )}
+            <GoogleLogin
+              className="Navbar-opts_login"
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Login"
+              onSuccess={this.props.handleLogin}
+              onFailure={(err) => console.log(err)}
+            />
+          )}
         </div>
-      </div >
+      </div>
     );
   }
 }

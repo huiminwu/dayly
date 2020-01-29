@@ -3,7 +3,7 @@ import "./Settings.css";
 import "../../utilities.css";
 
 import Widget from "../modules/Widget.js";
-import minus from "../../public/round-delete-button.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { get, post } from "../../utilities";
 
@@ -68,18 +68,17 @@ class Settings extends Component {
 
   displayWidgets = () => {
     let widgets = [];
-    let isBinary = false;
     if (this.props.widgetlist) {
       this.props.widgetlist.forEach((widget) => {
-        isBinary = widget["widgetType"] === "BinaryWidget";
         widgets.push(
           <div className="wid-container">
-            <> {this.getWidgetStyle(widget["name"], widget["widgetType"])} </>
-            <img
-              className={`${isBinary ? "minus-sign-Binary" : "minus-sign"}`}
-              onClick={() => this.handleWidDelete(widget["_id"], widget["name"])}
-              src={minus}
-            ></img>
+            {this.getWidgetStyle(widget["name"], widget["widgetType"])}
+            <div
+              className="widget-delete-btn"
+              onClick={() => this.props.handleWidgetDelete(widget["_id"], widget["name"])}
+            >
+              <FontAwesomeIcon icon="trash-alt" />
+            </div>
           </div>
         );
       });
@@ -110,10 +109,6 @@ class Settings extends Component {
     this.setState({
       newWidgetType: event.target.value,
     });
-  };
-
-  handleWidDelete = (id, name) => {
-    this.props.handleWidgetDelete(id, name);
   };
 
   handleWidSubmit = (e) => {
@@ -150,12 +145,12 @@ class Settings extends Component {
       let prevWidget = w["name"].toLowerCase();
       let newWidget = this.state.newWidgetName.toLowerCase();
       if (newWidget === prevWidget) {
-        alert = "Please name your widgets uniquely";
+        alert = "You already have a widget with this name!";
       }
     });
 
     if (this.state.newWidgetName.length === 0) {
-      alert = "Please have a name a length > 0";
+      alert = "Widget name cannot be blank.";
     }
 
     return alert;
@@ -165,10 +160,10 @@ class Settings extends Component {
     const themeList = Object.keys(this.props.themeMap);
     return (
       <>
-        <h2>Settings</h2>
+        <h1 className="settings-header">Settings</h1>
         <div className="settings-container">
           <div className="themes">
-            <h3 className="settings-category">Theme</h3>
+            <h2 className="settings-category">Theme</h2>
             <div className="theme-container">
               {themeList.map((themeName) => {
                 const currentTheme = this.props.themeMap[themeName];
@@ -185,7 +180,7 @@ class Settings extends Component {
           </div>
 
           <div className="widgets">
-            <h3 className="settings-category">Widgets</h3>
+            <h2 className="settings-category">Widgets</h2>
             <div className="settingsWidget-container">{this.displayWidgets()}</div>
             <div className="form">
               New widget name:
