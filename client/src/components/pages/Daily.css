@@ -16,8 +16,8 @@
   justify-content: flex-start;
   align-items: flex-start;
   border-right: 1px solid var(--borders);
-  /* height: 50vh; */
+  height: 59vh;
   width: 20%;
   padding: 24px 0;
-  overflow: scroll;
+  overflow-y: scroll;
 }
