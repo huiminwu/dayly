@@ -41,6 +41,7 @@ class Daily extends Component {
       // if accessed from landing page
       this.setState({ widgetValues: this.props.data.widgets });
     }
+
   }
 
   componentDidUpdate(prevProps) {
@@ -56,6 +57,7 @@ class Daily extends Component {
   };
 
   render() {
+    // { console.log(this.state.widgetValues) }
     let widgets = "Loading...";
     if (this.state.widgetValues) {
       widgets = this.state.widgetValues.map((widget, k) => {

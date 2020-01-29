@@ -42,6 +42,10 @@
   font-family: "Poppins", sans-serif;
 }
 
+.yes-btn{
+  margin-right: 5px;
+}
+
 .color-btn-container-Setting {
   display: inline;
 }
@@ -70,7 +74,6 @@
 
 .slider-container {
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -121,7 +124,7 @@ input[type="range"]::-webkit-slider-thumb {
   margin-left: 0.3vw;
 }
 
-.switch {
+/* .switch {
   position: relative;
   display: inline-block;
   width: 48px;
@@ -157,7 +160,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .checkbox {
   display: none;
-}
+} */
 
 .yes-btn,
 .no-btn {
