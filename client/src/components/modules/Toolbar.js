@@ -47,6 +47,8 @@ export class StyleButton extends Component {
  * @param {func} toggleDropdown sets which dropdown, if any, is shown
  * @param {bool} wideMenu for the font-family menu, which needs to be wider
  * @param {bool} colorMenu for the font color and highlight menus, which have special icons and widths
+ *
+ * The dropdown code is based off of a tutorial posted by gitconnected (see README for link)
  **/
 class Dropdown extends Component {
   constructor(props) {

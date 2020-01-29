@@ -158,6 +158,7 @@ class Notebook extends Component {
     return false;
   };
 
+  // mapKeyBindings is borrowed from the official example on the DraftJS website (see README for link)
   mapKeyBindings = (e) => {
     if (e.keyCode === 9) {
       // on tab, indent the list to a maximum of 3 layers
@@ -170,36 +171,7 @@ class Notebook extends Component {
     return getDefaultKeyBinding(e);
   };
 
-  getBlockStyle = (block, customStyleMap) => {
-    const blockStyles = [];
-    const styleMap = Object.keys(customStyleMap);
-
-    switch (block.getType()) {
-      case "ordered-list-item":
-      case "unordered-list-item":
-        // With draft JS we cannot output different styles for the same block type.
-        // We can however customise the css classes:
-        block.findStyleRanges(
-          (item) => {
-            const itemStyles = item.getStyle();
-            return _.some(styleMap, (styleKey) => itemStyles.includes(styleKey));
-          },
-          (startCharacter) => {
-            if (startCharacter === 0) {
-              // Apply the same styling to the block as the first character
-              _.each(block.getInlineStyleAt(startCharacter).toArray(), (styleKey) => {
-                blockStyles.push(`block-style-${styleKey}`);
-              });
-            }
-          }
-        );
-
-        return blockStyles.join(" ");
-      default:
-        return null;
-    }
-  };
-
+  // setInlineStyle code is derived from the function of the same name used in the official DraftJS example (see README for link)
   setInlineStyle = (inlineStyle, customStyleMap) => {
     const editorState = this.state.editorState;
     const selection = editorState.getSelection();
@@ -262,27 +234,6 @@ class Notebook extends Component {
       // The change was triggered by a change in focus/selection
     } // const currentSelection = this.state.editorState.getSelection();
   }, 1000);
-  // handleSave = (editorState) => {
-  //   // const currentSelection = this.state.editorState.getSelection();
-  //   const rawContentState = convertToRaw(editorState.getCurrentContent());
-  //   let contentStateString = JSON.stringify(rawContentState);
-  //   if (!editorState.getCurrentContent().hasText()) {
-  //     const rawEmptyContentState = convertToRaw(EditorState.createEmpty().getCurrentContent());
-  //     contentStateString = JSON.stringify(rawEmptyContentState);
-  //   }
-  //   const params = {
-  //     day: this.props.dateObject.format(),
-  //     value: contentStateString,
-  //   };
-  //   post("/api/notes", params).then((notes) => {
-  //     // const convertedContentState = convertFromRaw(notes);
-  //     // const editorStateWithContent = EditorState.createWithContent(convertedContentState);
-  //     this.setState({
-  //       // editorState: EditorState.forceSelection(editorStateWithContent, currentSelection),
-  //       isSaved: true,
-  //     });
-  //   });
-  // };
 
   render() {
     const fontFamilyStyleMap = {
@@ -409,6 +360,7 @@ class Notebook extends Component {
       }
     }
 
+    // Notebook code is derived from editor code in the official DraftJS example (see README for link)
     return (
       <div className="notes-section">
         <div className="editor-container">

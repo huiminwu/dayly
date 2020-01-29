@@ -19,11 +19,11 @@
 - Update this README file ;)
 
 ## Socket stuff
+
 Note: we'll be getting to this in lecture in week 2, so don't worry if you don't know it yet
 
 - If you're not using realtime updating or don't need server->client communication, you can remove socket entirely! (server-socket.js, client-socket.js, and anything that imports them)
 - If you are using socket, consider what you want to do with the FIXME in server-socket.js
-
 
 ## How to integrate into your own project
 
@@ -48,3 +48,9 @@ webpack.config.js
 ```
 
 ## Good luck on your project :)
+
+## Borrowed code:
+
+The code for the Notebook and Collections editors are based off the official DraftJS examples of rich text and color text editors (https://github.com/facebook/draft-js/tree/master/examples/draft-0-10-0/rich and https://github.com/facebook/draft-js/tree/master/examples/draft-0-10-0/color, respectively). The Notebook editor also borrows a key binding map function from https://draftjs.org/docs/advanced-topics-key-bindings/#defaults.
+
+The code for the dropdown menu in the editor toolbar is based off of this tutorial: https://levelup.gitconnected.com/do-you-even-draft-pumping-up-font-sizes-in-draft-js-9582c421bc55.
