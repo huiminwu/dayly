@@ -10,16 +10,23 @@ class BinaryWidget extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "",
+      value: "false",
     };
   }
 
   // submits and updates value
   handleOnClick = (val) => {
+    let v = (val === "true");
+    if (v === true) {
+      v = "false"
+    } else {
+      v = "true"
+    }
     this.setState({
-      value: val,
+      value: v,
     });
-    this.props.submitValue(val);
+    this.props.submitValue(v);
+    console.log(v)
   };
 
   componentDidMount() {
@@ -36,26 +43,39 @@ class BinaryWidget extends Component {
     }
   }
 
+
   render() {
     return (
       <>
         <div className="widget-name">{this.props.name}</div>
         {this.props.work === "no" ? (
           <>
-            <button className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}>
-              <FontAwesomeIcon icon="check" />
-            </button>
-            <button className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}>
-              <FontAwesomeIcon icon="times" />
-            </button>
+            <input type="checkbox" id="toggle"
+              className="checkbox"
+            />
+            <label for="toggle" class="switch"></label>
           </>
         ) : (
             <>
-              <input type="checkbox" id="toggle"
-                className="checkbox"
-                onClick={this.handleOnClick}
-              />
-              <label for="toggle" class="switch"></label>
+              {this.state.value === "true" ? (
+                <>
+                  <input type="checkbox" id="toggle"
+                    className={`checkbox`}
+                    onClick={() => this.handleOnClick(this.state.value)}
+                    checked
+                  />
+                  <label for="toggle" class="switch"></label>
+                </>
+              ) : (
+                  <>
+                    <input type="checkbox" id="toggle"
+                      className={`checkbox`}
+                      onClick={() => this.handleOnClick(this.state.value)}
+                    />
+                    <label for="toggle" class="switch"></label>
+                  </>
+                )}
+
               {/* <button
                 className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
                 onClick={() => this.handleOnClick("false")}
