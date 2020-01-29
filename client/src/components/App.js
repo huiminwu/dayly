@@ -470,6 +470,14 @@ class App extends Component {
                   activeTheme={this.state.activeTheme}
                   handleThemeChange={this.handleThemeChange}
                 />
+                <Daily
+                  path="/"
+                  dateObject={this.state.dateObject}
+                  data={this.state.data}
+                  setToOldDate={this.setToOldDate}
+                  handleBackClick={() => this.handleBackClick("day")}
+                  handleNextClick={() => this.handleNextClick("day")}
+                />
                 <Loading default />
               </Router>
             </div>

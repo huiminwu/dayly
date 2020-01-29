@@ -402,11 +402,11 @@ class Notebook extends Component {
               placeholder="How was your day?"
             />
           </div>
-          <div className="editor-footer">
-            <span className="editor-saveStatus">
-              {this.state.isSaved ? "All changes saved" : "Unsaved"}
-            </span>
-          </div>
+        </div>
+        <div className="editor-footer">
+          <span className="editor-saveStatus">
+            {this.state.isSaved ? "All changes saved" : "Unsaved"}
+          </span>
         </div>
       </div>
     );
