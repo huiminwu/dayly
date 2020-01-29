@@ -1,5 +1,5 @@
 .settings-container {
-  height: 75% !important;
+  /* height: 60% !important; */
   display: flex;
   flex-direction: row;
   flex-basis: 0;
@@ -9,6 +9,7 @@
 .settings-container > .themes,
 .settings-container > .widgets {
   width: 40%;
+  height: ;
 }
 
 .theme-container,
@@ -73,7 +74,7 @@
 .settingsWidget-container {
   flex-direction: column;
   overflow-y: scroll;
-  max-height: 60vh;
+  max-height: 60%;
 }
 
 .settingsWidget-container::-webkit-scrollbar {
@@ -134,10 +135,11 @@
 
 .settings-category {
   color: var(--body);
+  margin: 10px 0;
 }
 
 .widget-createNew-container {
-  margin-top: 32px;
+  margin-top: 20px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
