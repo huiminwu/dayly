@@ -6,7 +6,7 @@
   justify-content: center;
 }
 .bullet-journal_body {
-  background-color: white;
+  background-color: var(--bujo-body);
   border-radius: 25px 25px 0 0;
   padding: 30px;
   margin-top: 7vh;

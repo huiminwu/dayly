@@ -49,7 +49,7 @@ a {
 
 .week-day {
   background-color: var(--accent);
-  color: var(--accent-color);
+  color: var(--accent-text);
 }
 .calendar {
   border-spacing: 0;

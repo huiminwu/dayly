@@ -190,7 +190,6 @@ router.post("/widget", auth.ensureLoggedIn, (req, res) => {
   }).then((widget) => {
     widget.value = req.body.value;
     widget.save().then((updated) => {
-      console.log(updated.value);
       res.send(updated.value);
     });
   });
