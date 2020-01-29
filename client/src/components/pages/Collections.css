@@ -60,6 +60,7 @@
 .collectionList-btn {
   font-family: "Poppins", sans-serif;
   font-size: 14px;
+  color: var(--body);
   text-align: center;
   padding: 20px 16px;
   background: none;
@@ -138,7 +139,7 @@
 
 .editor-btn {
   padding: 5px 10px;
-  background-color: white;
+  background-color: var(--bujo-body);
   outline: none;
   border-radius: 7px;
   border: 1px solid var(--accent);

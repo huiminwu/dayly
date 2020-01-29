@@ -39,7 +39,7 @@
 
 .Header-nav-btn:active {
   background-color: var(--accent);
-  color: white;
+  color: var(--accent-text);
   box-shadow: 0 0 6px rgba(207, 152, 147, 1);
 }
 

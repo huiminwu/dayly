@@ -287,6 +287,7 @@ class Toolbar extends Component {
       { label: "#174B8A", style: "blueText" },
       { label: "#4D1586", style: "purpleText" },
       { label: "#A6178E", style: "pinkText" },
+      { label: "#F5F2F4", style: "whiteText" },
     ];
 
     return (
