@@ -17,6 +17,7 @@
 
 .widget-container::-webkit-scrollbar {
   background-color: var(--bujo-body);
+  display: none;
 }
 
 .widget-container::-webkit-scrollbar-thumb {

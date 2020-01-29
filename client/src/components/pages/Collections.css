@@ -106,6 +106,7 @@
 
 .collections-editor::-webkit-scrollbar {
   background-color: var(--bujo-body);
+  display: none;
 }
 
 .collections-editor::-webkit-scrollbar-thumb {
