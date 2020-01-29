@@ -19,6 +19,7 @@
   border: 1px solid var(--borders);
   height: 32px;
   width: 32px;
+  line-height: 32px;
   font-size: 20px;
   font-weight: 300;
   border-radius: 100%;

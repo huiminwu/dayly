@@ -102,7 +102,7 @@ class Popup extends Component {
                 <div className="popup-error">You already have a collection with this name!</div>
               )}
               {this.props.nameError === "No name entered" && (
-                <div className="popup-error">Collection name cannot be blank</div>
+                <div className="popup-error">Collection name cannot be blank.</div>
               )}
             </>
           )}
