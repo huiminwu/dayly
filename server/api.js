@@ -39,7 +39,7 @@ router.get("/whoami", (req, res) => {
       _id: req.user._id,
     }).then((user) => {
       res.send(user);
-    })
+    });
   }
 });
 
@@ -190,6 +190,7 @@ router.post("/widget", auth.ensureLoggedIn, (req, res) => {
   }).then((widget) => {
     widget.value = req.body.value;
     widget.save().then((updated) => {
+      console.log(updated.value);
       res.send(updated.value);
     });
   });

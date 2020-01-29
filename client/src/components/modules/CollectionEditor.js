@@ -101,7 +101,7 @@ class CollectionEditor extends Component {
     };
 
     post("/api/collections", params).then((updatedCollection) => this.setState({ isSaved: true }));
-  }, 2000);
+  }, 1000);
 
   render() {
     const BLOCK_TYPES = [

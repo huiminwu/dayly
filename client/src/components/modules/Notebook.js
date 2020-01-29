@@ -253,7 +253,7 @@ class Notebook extends Component {
         isSaved: true,
       });
     });
-  }, 2000);
+  }, 1000);
 
   render() {
     const fontFamilyStyleMap = {

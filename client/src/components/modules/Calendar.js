@@ -20,7 +20,7 @@ class Calendar extends Component {
       oldMonth: parseInt(this.props.dateObject.format("M")),
       oldYear: parseInt(this.props.dateObject.format("Y")),
       oldDay: parseInt(this.props.dateObject.format("D")),
-    }
+    };
   }
 
   // for finding the first day of the month
@@ -91,22 +91,22 @@ class Calendar extends Component {
               <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
               <div className={`calendar-color-data ${widgetClass} ${this.props.view}`}> </div>
             </td>
-          )
+          );
         } else if (year === this.state.oldYear) {
-          if ((month + 1) > this.state.oldMonth) {
+          if (month + 1 > this.state.oldMonth) {
             daysInMonth.push(
               <td key={d} className={`no-link calendar-day ${this.props.view}`}>
                 <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
                 <div className={`calendar-color-data ${widgetClass} ${this.props.view}`}> </div>
               </td>
-            )
-          } else if ((month + 1) === this.state.oldMonth && d > this.state.oldDay) {
+            );
+          } else if (month + 1 === this.state.oldMonth && d > this.state.oldDay) {
             daysInMonth.push(
               <td key={d} className={`no-link calendar-day ${this.props.view}`}>
                 <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
                 <div className={`calendar-color-data ${widgetClass} ${this.props.view}`}> </div>
               </td>
-            )
+            );
           } else {
             daysInMonth.push(
               <td key={d} className={`calendar-day ${this.props.view}`}>
@@ -135,20 +135,20 @@ class Calendar extends Component {
             <td key={d} className={`no-link calendar-day ${this.props.view} ${widgetClass}`}>
               <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
             </td>
-          )
+          );
         } else if (year === this.state.oldYear) {
-          if ((month + 1) > this.state.oldMonth) {
+          if (month + 1 > this.state.oldMonth) {
             daysInMonth.push(
               <td key={d} className={`no-link calendar-day ${this.props.view} ${widgetClass}`}>
                 <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
               </td>
-            )
-          } else if ((month + 1) === this.state.oldMonth && d > this.state.oldDay) {
+            );
+          } else if (month + 1 === this.state.oldMonth && d > this.state.oldDay) {
             daysInMonth.push(
               <td key={d} className={`no-link calendar-day ${this.props.view} ${widgetClass}`}>
                 <h1 className={`calendar-number ${this.props.view}`}>{d}</h1>
               </td>
-            )
+            );
           } else {
             daysInMonth.push(
               <td key={d} className={`calendar-day ${this.props.view} ${widgetClass}`}>
