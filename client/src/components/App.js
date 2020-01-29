@@ -104,6 +104,7 @@ const defaultTheme = {
   "--slider-11": "rgba(44, 190, 255, 0.92)",
   "--slider-12": "rgba(44, 190, 255, 1)",
 };
+
 const lilacTheme = {
   "--body": "#6e6e6e",
   "--accent-text": "#ffffff",
@@ -136,6 +137,38 @@ const lilacTheme = {
   "--slider-12": "rgba(188, 158, 251, 1)",
 }
 
+const naturalTheme = {
+  "--body": "#6e6e6e",
+  "--accent-text": "#ffffff",
+  "--calendar-text-month": "#c0c0c0",
+  "--calendar-text-year": "#696969",
+  "--background": "#f4eee1",
+  "--borders": "#e4d1c2",
+  "--accent": "#efba89",
+  "--accent-text": "#ffffff",
+  "--headers": "#999999",
+  "--hover": "#f1e3d6",
+  "--tab1": "#d3c4be",
+  "--tab2": "#d39b84",
+  "--tab3": "#8090a8",
+  "--tab0": "#695b5c",
+  "--label1": "#A37974",
+  "--label2": "#D1AFAB",
+  "--label3": "#91A2AC",
+  "--slider-1": "rgba(39, 95, 151, 0.08)",
+  "--slider-2": "rgba(39, 95, 151, 0.17)",
+  "--slider-3": "rgba(39, 95, 151, 0.25)",
+  "--slider-4": "rgba(39, 95, 151, 0.34)",
+  "--slider-5": "rgba(39, 95, 151, 0.42)",
+  "--slider-6": "rgba(39, 95, 151, 0.5)",
+  "--slider-7": "rgba(39, 95, 151, 0.58)",
+  "--slider-8": "rgba(39, 95, 151, 0.67)",
+  "--slider-9": "rgba(39, 95, 151, 0.75)",
+  "--slider-10": "rgba(39, 95, 151, 0.83)",
+  "--slider-11": "rgba(39, 95, 151,, 0.92)",
+  "--slider-12": "rgba(39, 95, 151, 1)",
+}
+
 const ivyTheme = {
   "--body": "#6e6e6e",
   "--accent-text": "#ffffff",
@@ -165,6 +198,7 @@ const themeMap = {
   default: defaultTheme,
   ivy: ivyTheme,
   lilac: lilacTheme,
+  natural: naturalTheme,
 };
 
 // const themeMap = {
@@ -385,7 +419,7 @@ class App extends Component {
             handleViewChange={this.resetCurrentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
-            // handleViewChange={this.viewToday}
+          // handleViewChange={this.viewToday}
           />
 
           <div className="bullet-journal">
@@ -401,8 +435,8 @@ class App extends Component {
                     handleNextClick={() => this.handleNextClick("day")}
                   />
                 ) : (
-                  <Loading path="/day" />
-                )}
+                    <Loading path="/day" />
+                  )}
                 {/* View for when you look back on Monthly view */}
                 <Daily
                   path="/day/:oldYear/:oldMonth/:oldDay"
