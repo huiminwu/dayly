@@ -188,7 +188,9 @@ class Settings extends Component {
     }
     return (
       <>
-        <h1 className="settings-header">Settings</h1>
+        <div className="Header-container">
+          <h1 className="settings-header Header-dates">Settings</h1>
+        </div>
         <div className="settings-container">
           <div className="themes">
             <h2 className="settings-category">Themes</h2>

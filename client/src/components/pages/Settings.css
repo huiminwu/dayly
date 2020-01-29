@@ -1,5 +1,5 @@
 .settings-container {
-  height: 75% !important;
+  /* height: 60% !important; */
   display: flex;
   flex-direction: row;
   flex-basis: 0;
@@ -9,6 +9,7 @@
 .settings-container > .themes,
 .settings-container > .widgets {
   width: 40%;
+  height: ;
 }
 
 .theme-container,
@@ -73,7 +74,19 @@
 .settingsWidget-container {
   flex-direction: column;
   overflow-y: scroll;
-  max-height: 60vh;
+  max-height: 60%;
+}
+
+.settingsWidget-container::-webkit-scrollbar {
+  width: 15px;
+  background-color: var(--bujo-body);
+}
+
+.settingsWidget-container::-webkit-scrollbar-thumb {
+  width: 6px;
+  background: var(--accent);
+  border-radius: 6px;
+  border: 3px solid var(--bujo-body);
 }
 
 .wid-container {
@@ -122,10 +135,11 @@
 
 .settings-category {
   color: var(--body);
+  margin: 10px 0;
 }
 
 .widget-createNew-container {
-  margin-top: 32px;
+  margin-top: 20px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -159,9 +173,6 @@
 }
 
 .widget-showNew-btn-hide {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
   transition: all 0.5s;
   background-color: var(--accent);
   color: var(--accent-text);

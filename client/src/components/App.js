@@ -390,14 +390,6 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentView !== window.location.pathname.slice(1)) {
-      this.setState({
-        currentView: window.location.pathname.slice(1),
-      });
-    }
-  }
-
   handleLogin = (res) => {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken })
@@ -538,6 +530,12 @@ class App extends Component {
         currentView: window.location.pathname.slice(1),
       });
     }
+    if (
+      window.location.pathname.slice(1) === "day" &&
+      prevState.dateObject !== this.state.dateObject
+    ) {
+      this.getDateData(this.state.dateObject);
+    }
   }
 
   render() {
@@ -560,7 +558,6 @@ class App extends Component {
           <div className="bullet-journal">
             <div className="bullet-journal_body">
               <Router>
-                <Landing path="/" creator={this.state.creator} />
                 {this.state.data ? (
                   <Daily
                     path="/day"
@@ -605,6 +602,14 @@ class App extends Component {
                   themeMap={themeMap}
                   activeTheme={this.state.activeTheme}
                   handleThemeChange={this.handleThemeChange}
+                />
+                <Daily
+                  path="/"
+                  dateObject={this.state.dateObject}
+                  data={this.state.data}
+                  setToOldDate={this.setToOldDate}
+                  handleBackClick={() => this.handleBackClick("day")}
+                  handleNextClick={() => this.handleNextClick("day")}
                 />
                 <Loading default />
               </Router>
