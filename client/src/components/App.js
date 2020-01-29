@@ -430,6 +430,9 @@ class App extends Component {
         currentView: window.location.pathname.slice(1),
       });
     }
+    if (prevState.dateObject !== this.state.dateObject) {
+      this.getDateData(this.state.dateObject);
+    }
   }
 
   render() {
