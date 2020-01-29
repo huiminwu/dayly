@@ -184,7 +184,7 @@ const ivyTheme = {
   "--headers": "#52853b",
   "--hover": "#b2d3ae",
   "--tab0": "#397923",
-  "--tab1": "#9de079",
+  "--tab1": "#b0e096",
   "--tab2": "#9cd566",
   "--tab3": "#72aa3d",
   "--label1": "#89bd83",
