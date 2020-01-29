@@ -167,6 +167,7 @@ option {
 } */
 
 .new-widget-input:focus {
+  padding-left: 3px;
   height: 1.75rem;
   border-image: linear-gradient(to right, grey, var(--accent));
   box-shadow: 0 0 5px var(--accent);
