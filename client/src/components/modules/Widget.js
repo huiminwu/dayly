@@ -204,17 +204,17 @@ class SliderWidget extends Component {
               className="slider-input"
             />
           ) : (
-            <input
-              type="range"
-              min="0"
-              max="12"
-              step="1"
-              value={this.state.slider_value}
-              onChange={this.handleSliderChange}
-              onMouseUp={() => this.props.submitValue(this.state.slider_value)}
-              className="slider-input"
-            />
-          )}
+              <input
+                type="range"
+                min="0"
+                max="12"
+                step="1"
+                value={this.state.slider_value}
+                onChange={this.handleSliderChange}
+                onMouseUp={() => this.props.submitValue(this.state.slider_value)}
+                className="slider-input"
+              />
+            )}
           <span className="slider-display">{this.state.slider_value}</span>
         </div>
       </>

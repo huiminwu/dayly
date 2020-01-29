@@ -110,8 +110,8 @@ const defaultTheme = {
 
 const lilacTheme = {
   "--background": "#e7ddf8",
-  "--bujo-body": "#cec3e4",
-  "--borders": "#f6f2ff",
+  "--bujo-body": "#f5f5f5",
+  "--borders": "#c2a4db",
   "--accent": "#393952",
   "--headers": "#655296",
   "--hover": "#e9e1f8",
@@ -128,18 +128,18 @@ const lilacTheme = {
   "--calendar-text-year": "#5c5c5c",
   "--box-shadow": "rgba(51, 50, 47, 0.377)",
 
-  "--slider-1": "rgba(188, 158, 251, 0.08)",
-  "--slider-2": "rgba(188, 158, 251, 0.17)",
-  "--slider-3": "rgba(188, 158, 251, 0.25)",
-  "--slider-4": "rgba(188, 158, 251, 0.34)",
-  "--slider-5": "rgba(188, 158, 251, 0.42)",
-  "--slider-6": "rgba(188, 158, 251, 0.5)",
-  "--slider-7": "rgba(188, 158, 251, 0.58)",
-  "--slider-8": "rgba(188, 158, 251, 0.67)",
-  "--slider-9": "rgba(188, 158, 251, 0.75)",
-  "--slider-10": "rgba(188, 158, 251, 0.83)",
-  "--slider-11": "rgba(188, 158, 251, 0.92)",
-  "--slider-12": "rgba(188, 158, 251, 1)",
+  "--slider-1": "rgba(178, 104, 202, 0.08)",
+  "--slider-2": "rgba(188, 104, 202, 0.17)",
+  "--slider-3": "rgba(188, 104, 202, 0.25)",
+  "--slider-4": "rgba(188, 104, 202, 0.34)",
+  "--slider-5": "rgba(188, 104, 202, 0.42)",
+  "--slider-6": "rgba(188, 104, 202, 0.5)",
+  "--slider-7": "rgba(188, 104, 202, 0.58)",
+  "--slider-8": "rgba(188, 104, 202, 0.67)",
+  "--slider-9": "rgba(188, 104, 202, 0.75)",
+  "--slider-10": "rgba(188, 104, 202, 0.83)",
+  "--slider-11": "rgba(188, 104, 202, 0.92)",
+  "--slider-12": "rgba(188, 104, 202, 1)",
 };
 
 const naturalTheme = {
@@ -264,18 +264,18 @@ const redVelvetTheme = {
   "--calendar-text-year": "#565656",
   "--box-shadow": "rgba(51, 50, 47, 0.377)",
 
-  "--slider-1": "rgba(159, 173, 241, 0.08)",
-  "--slider-2": "rgba(159, 173, 241, 0.17)",
-  "--slider-3": "rgba(159, 173, 241, 0.25)",
-  "--slider-4": "rgba(159, 173, 241, 0.34)",
-  "--slider-5": "rgba(159, 173, 241, 0.42)",
-  "--slider-6": "rgba(159, 173, 241, 0.5)",
-  "--slider-7": "rgba(159, 173, 241, 0.58)",
-  "--slider-8": "rgba(159, 173, 241, 0.67)",
-  "--slider-9": "rgba(159, 173, 241, 0.75)",
-  "--slider-10": "rgba(159, 173, 241, 0.83)",
-  "--slider-11": "rgba(159, 173, 241, 0.92)",
-  "--slider-12": "rgba(159, 173, 241, 1)",
+  "--slider-1": "rgba(192, 51, 54, 0.08)",
+  "--slider-2": "rgba(192, 51, 54, 0.17)",
+  "--slider-3": "rgba(192, 51, 54, 0.25)",
+  "--slider-4": "rgba(192, 51, 54, 0.34)",
+  "--slider-5": "rgba(192, 51, 54, 0.42)",
+  "--slider-6": "rgba(192, 51, 54, 0.5)",
+  "--slider-7": "rgba(192, 51, 54, 0.58)",
+  "--slider-8": "rgba(192, 51, 54, 0.67)",
+  "--slider-9": "rgba(192, 51, 54, 0.75)",
+  "--slider-10": "rgba(192, 51, 54, 0.83)",
+  "--slider-11": "rgba(192, 51, 54, 0.92)",
+  "--slider-12": "rgba(192, 51, 54, 1)",
 };
 
 const joyTheme = {
@@ -312,7 +312,7 @@ const joyTheme = {
   "--slider-12": "rgba(152, 180, 241, 1)",
 };
 
-const cherryBlossomTheme = {
+const sakuraTheme = {
   "--background": "#f8dfe6",
   "--bujo-body": "#faeef2",
   "--borders": "#cec0b7",
@@ -332,18 +332,18 @@ const cherryBlossomTheme = {
   "--calendar-text-year": "#696969",
   "--box-shadow": "rgba(51, 50, 47, 0.377)",
 
-  "--slider-1": "rgba(152, 180, 241, 0.08)",
-  "--slider-2": "rgba(152, 180, 241, 0.17)",
-  "--slider-3": "rgba(152, 180, 241, 0.25)",
-  "--slider-4": "rgba(152, 180, 241, 0.34)",
-  "--slider-5": "rgba(152, 180, 241, 0.42)",
-  "--slider-6": "rgba(152, 180, 241, 0.5)",
-  "--slider-7": "rgba(152, 180, 241, 0.58)",
-  "--slider-8": "rgba(152, 180, 241, 0.67)",
-  "--slider-9": "rgba(152, 180, 241, 0.75)",
-  "--slider-10": "rgba(152, 180, 241, 0.83)",
-  "--slider-11": "rgba(152, 180, 241, 0.92)",
-  "--slider-12": "rgba(152, 180, 241, 1)",
+  "--slider-1": "rgba(255, 153, 212, 0.08)",
+  "--slider-2": "rgba(255, 153, 212, 0.17)",
+  "--slider-3": "rgba(255, 153, 212, 0.25)",
+  "--slider-4": "rgba(255, 153, 212, 0.34)",
+  "--slider-5": "rgba(255, 153, 212, 0.42)",
+  "--slider-6": "rgba(255, 153, 212, 0.5)",
+  "--slider-7": "rgba(255, 153, 212, 0.58)",
+  "--slider-8": "rgba(255, 153, 212, 0.67)",
+  "--slider-9": "rgba(255, 153, 212, 0.75)",
+  "--slider-10": "rgba(255, 153, 212, 0.83)",
+  "--slider-11": "rgba(255, 153, 212, 0.92)",
+  "--slider-12": "rgba(255, 153, 212, 1)",
 };
 
 const themeMap = {
@@ -354,7 +354,7 @@ const themeMap = {
   galaxy: galaxyTheme,
   redVelvet: redVelvetTheme,
   joy: joyTheme,
-  cherryBlossom: cherryBlossomTheme,
+  sakura: sakuraTheme,
 };
 
 /**
@@ -560,7 +560,7 @@ class App extends Component {
             handleViewChange={this.resetCurrentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
-            // handleViewChange={this.viewToday}
+          // handleViewChange={this.viewToday}
           />
 
           <div className="bullet-journal">
@@ -575,8 +575,8 @@ class App extends Component {
                     handleNextClick={() => this.handleNextClick("day")}
                   />
                 ) : (
-                  <Loading path="/day" />
-                )}
+                    <Loading path="/day" />
+                  )}
                 {/* View for when you look back on Monthly view */}
                 <Daily
                   path="/day/:oldYear/:oldMonth/:oldDay"

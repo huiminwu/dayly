@@ -1,6 +1,6 @@
 .editor-container {
   width: 60vw;
-  padding: 24px 16px 24px 24px;
+  padding: 24px 16px 0px 24px;
   color: var(--body);
   word-wrap: break-word;
 }
@@ -33,12 +33,12 @@
   position: fixed;
   display: flex;
   justify-content: flex-end;
-  align-items: baseline;
   width: 60vw;
   background-color: var(--bujo-body);
-  padding: 16px 8px 16px 0px;
-  margin-top: -26px;
-  margin-left: -6px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  margin-left: 0px;
+  margin-top: 0px;
   z-index: 1;
 }
 

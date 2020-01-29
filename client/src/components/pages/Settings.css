@@ -9,13 +9,13 @@
 .settings-container > .themes,
 .settings-container > .widgets {
   width: 40%;
-  height: ;
 }
 
 .theme-container,
 .settingsWidget-container {
   display: flex;
   flex-basis: 0;
+  max-height: 52vh;
 }
 
 /* THEMES */
