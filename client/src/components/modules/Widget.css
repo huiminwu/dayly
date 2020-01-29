@@ -46,6 +46,28 @@
   display: inline;
 }
 
+.color-btn-container {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.iconWrapper,
+.moodWrapper {
+  flex-wrap: none;
+  flex-basis: 0;
+  width:100% ;
+}
+
+.iconWrapper {
+  margin-top: -10px;
+}
+.cool-btn,
+.mood-icon {
+  width: 20%;
+}
+
+
 .slider-container {
   display: flex;
   justify-content: center;

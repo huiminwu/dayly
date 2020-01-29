@@ -48,38 +48,38 @@ class BinaryWidget extends Component {
             <label htmlFor="toggle" className="switch"></label>
           </>
         ) : (
-          <>
-            {this.state.value === "true" ? (
-              <>
-                <input
-                  type="checkbox"
-                  id="toggle"
-                  className={`checkbox`}
-                  onClick={() => this.handleOnClick()}
-                  checked
-                />
-                <label htmlFor="toggle" className="switch"></label>
-              </>
-            ) : (
-              <>
-                <input
-                  type="checkbox"
-                  id="toggle"
-                  className={`checkbox`}
-                  onClick={() => this.handleOnClick(this.state.value)}
-                />
-                <label htmlFor="toggle" className="switch"></label>
-              </>
-            )}
+            <>
+              {this.state.value === "true" ? (
+                <>
+                  <input
+                    type="checkbox"
+                    id="toggle"
+                    className={`checkbox`}
+                    onClick={() => this.handleOnClick()}
+                    checked
+                  />
+                  <label htmlFor="toggle" className="switch"></label>
+                </>
+              ) : (
+                  <>
+                    <input
+                      type="checkbox"
+                      id="toggle"
+                      className={`checkbox`}
+                      onClick={() => this.handleOnClick(this.state.value)}
+                    />
+                    <label htmlFor="toggle" className="switch"></label>
+                  </>
+                )}
 
-            {/* <button
+              {/* <button
                 className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
                 onClick={() => this.handleOnClick("false")}
               >
                 <FontAwesomeIcon icon="times" />
               </button> */}
-          </>
-        )}
+            </>
+          )}
       </>
     );
   }
@@ -125,17 +125,17 @@ class ColorWidget extends Component {
           key={k}
           className={`cool-btn ColorWidget-${val} ${
             val === parseInt(this.state.value) ? "submitted-val" : ""
-          }`}
+            }`}
         />
       ) : (
-        <button
-          key={k}
-          className={`cool-btn ColorWidget-${val} ${
-            val === parseInt(this.state.value) ? "submitted-val" : ""
-          }`}
-          onClick={() => this.handleOnClick(val)}
-        />
-      )
+          <button
+            key={k}
+            className={`cool-btn ColorWidget-${val} ${
+              val === parseInt(this.state.value) ? "submitted-val" : ""
+              }`}
+            onClick={() => this.handleOnClick(val)}
+          />
+        )
     );
 
     return (
@@ -144,20 +144,24 @@ class ColorWidget extends Component {
         <div
           className={`${
             this.props.isSettings ? "color-btn-container-Setting" : "color-btn-container"
-          }`}
+            }`}
         >
-          {colorButtons}
-          {this.props.work === "yes" && this.props.name.toLowerCase() === "mood" && (
-            <>
-              <br />
+          <div className="moodWrapper">
+            {colorButtons}
+          </div>
+          <div className="iconWrapper">
+            {this.props.work === "yes" && this.props.name.toLowerCase() === "mood" && (
+              <>
+                <br />
 
-              <FontAwesomeIcon size="2x" className="mood-icon" icon="frown" />
-              <FontAwesomeIcon size="2x" className="mood-icon" icon="sad-cry" />
-              <FontAwesomeIcon size="2x" className="mood-icon" icon="meh" />
-              <FontAwesomeIcon size="2x" className="mood-icon" icon="laugh-beam" />
-              <FontAwesomeIcon size="2x" className="mood-icon" icon="grin-hearts" />
-            </>
-          )}
+                <FontAwesomeIcon size="2x" className="mood-icon" icon="sad-cry" />
+                <FontAwesomeIcon size="2x" className="mood-icon" icon="frown" />
+                <FontAwesomeIcon size="2x" className="mood-icon" icon="meh" />
+                <FontAwesomeIcon size="2x" className="mood-icon" icon="laugh-beam" />
+                <FontAwesomeIcon size="2x" className="mood-icon" icon="grin-hearts" />
+              </>
+            )}
+          </div>
         </div>
       </>
     );
@@ -237,7 +241,7 @@ class Widget extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   submitValue = (val) => {
     const params = {
