@@ -119,6 +119,7 @@ class Settings extends Component {
     if (!validationError) {
       this.props.handleWidgetSubmit(name, type);
       this.closePopup();
+      this.setState({ showCreateNew: false });
     } else {
       this.setState({ nameError: validationError });
     }
@@ -182,7 +183,7 @@ class Settings extends Component {
         <h1 className="settings-header">Settings</h1>
         <div className="settings-container">
           <div className="themes">
-            <h2 className="settings-category">Theme</h2>
+            <h2 className="settings-category">Themes</h2>
             <div className="theme-container">
               {themeList.map((themeName) => {
                 const theme = this.props.themeMap[themeName];

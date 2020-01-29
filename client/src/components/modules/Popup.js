@@ -48,7 +48,7 @@ class Popup extends Component {
               this.props.targetObjectProperties.id,
               this.props.targetObjectProperties.name
             );
-            this.closePopup();
+            this.props.closePopup();
           }}
         >
           Yes, delete
