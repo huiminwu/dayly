@@ -6,7 +6,10 @@ import "./Popup.css";
  * Proptypes
  * @param {string} text to display instructions
  * @param {func} editFunction what exactly the particular Popup does
+ * @param {string} submitType input or binary
  * @param {func} closePopup
+ * @param {string} page where the popup shows
+ * @param {Object} targetObject of the edit function
  **/
 class Popup extends Component {
   constructor(props) {
@@ -21,7 +24,27 @@ class Popup extends Component {
   };
 
   render() {
+    let popupClassName = "popup";
+    let deleteButton = (
+      <button className="popup-btn" onClick={this.props.editFunction}>
+        Yes, delete
+      </button>
+    );
+    if (this.props.page === "settings") {
+      popupClassName += " popup-settings";
+      deleteButton = (
+        <button
+          className="popup-btn"
+          onClick={() =>
+            this.props.editFunction(this.props.targetObject.id, this.props.targetObject.name)
+          }
+        >
+          Yes, delete
+        </button>
+      );
+    }
     return (
+
       <>
         <div className="popup">
           <div className="popup_inner">
@@ -67,6 +90,7 @@ class Popup extends Component {
               </div>
             )}
           </div>
+
         </div>
         <div className="overlay" onClick={this.props.closePopup}></div>
       </>

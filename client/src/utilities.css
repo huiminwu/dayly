@@ -21,6 +21,7 @@
   /* CHANGES WITH THEME */
   --background: #f5f5f5;
   --borders: #cec0b7;
+  --border-darker: #9b9089;
   --accent: #ff9696;
   --headers: #3d3d3d;
   --hover: #f7ebeb;
@@ -30,11 +31,12 @@
   --tab2: #ffbc6c;
   --tab3: #ad6cff;
 
-  --label-1: #cf9893;
-  --label-2: #b3d9ff;
-  --label-3: #d9b3ff;
+  --label1: #cf9893;
+  --label2: #b3d9ff;
+  --label3: #d9b3ff;
 
   /* DEFAULT UNLESS EXPLICITLY RENAMED */
+  /* they do still have to be included in the theme object though, in case they get overridden */
   --body: #6e6e6e;
   --accent-text: #ffffff;
   --calendar-text-month: #c0c0c0;
@@ -76,7 +78,8 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 200;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  color: var(--body);
 }
 
 form {
