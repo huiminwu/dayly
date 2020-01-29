@@ -6,7 +6,10 @@ import "./Popup.css";
  * Proptypes
  * @param {string} text to display instructions
  * @param {func} editFunction what exactly the particular Popup does
+ * @param {string} submitType input or binary
  * @param {func} closePopup
+ * @param {string} page where the popup shows
+ * @param {Object} targetObject of the edit function
  **/
 class Popup extends Component {
   constructor(props) {
@@ -21,8 +24,27 @@ class Popup extends Component {
   };
 
   render() {
+    let popupClassName = "popup";
+    let deleteButton = (
+      <button className="popup-btn" onClick={this.props.editFunction}>
+        Yes, delete
+      </button>
+    );
+    if (this.props.page === "settings") {
+      popupClassName += " popup-settings";
+      deleteButton = (
+        <button
+          className="popup-btn"
+          onClick={() =>
+            this.props.editFunction(this.props.targetObject.id, this.props.targetObject.name)
+          }
+        >
+          Yes, delete
+        </button>
+      );
+    }
     return (
-      <div className="popup">
+      <div className={popupClassName}>
         <div className="popup\_inner">
           <p>{this.props.text}</p>
           {this.props.submitType === "input" && (
@@ -44,12 +66,7 @@ class Popup extends Component {
                   Cancel
                 </button>
               </div>
-              {this.props.nameError === "Duplicate name" && (
-                <div className="popup-error">You already have a collection with this name!</div>
-              )}
-              {this.props.nameError === "No name entered" && (
-                <div className="popup-error">Collection name cannot be blank.</div>
-              )}
+              {this.props.nameError && <div className="popup-error">{this.props.nameError}</div>}
             </>
           )}
           {this.props.submitType === "binary" && (
@@ -57,9 +74,7 @@ class Popup extends Component {
               <button className="popup-btn popup-delete-btn" onClick={this.props.closePopup}>
                 No
               </button>
-              <button className="popup-btn" onClick={() => this.props.editFunction()}>
-                Yes, delete
-              </button>
+              {deleteButton}
             </div>
           )}
         </div>
