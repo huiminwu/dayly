@@ -113,8 +113,6 @@ class App extends Component {
     const user = await get("/api/whoami");
     // they are registered in the database, and currently logged in.
     if (user._id) {
-      console.log("user theme is " + user.theme);
-      console.log(user);
       this.setState({
         creator: user._id,
         creatorName: user.name,
@@ -135,10 +133,11 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentView !== window.location.pathname.slice(1))
+    if (prevState.currentView !== window.location.pathname.slice(1)) {
       this.setState({
         currentView: window.location.pathname.slice(1),
       });
+    }
   }
 
   handleLogin = (res) => {
@@ -236,7 +235,6 @@ class App extends Component {
 
   handleThemeChange = (themeName) => {
     post("/api/user/theme", { theme: themeName }).then((updatedUser) => {
-      console.log("theme set");
       this.setState({ activeTheme: updatedUser.theme });
       // this.setTheme(updatedUser.theme);
     });
@@ -269,17 +267,23 @@ class App extends Component {
     });
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentView !== window.location.pathname.slice(1))
+  resetCurrentView = () => {
+    if (this.state.currentView.length != "") {
       this.setState({
-        currentView: window.location.pathname.slice(1),
+        currentView: "",
       });
+    }
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentView !== window.location.pathname.slice(1)) {
+      this.setState({ currentView: window.location.pathname.slice(1) });
+    }
   }
 
   render() {
     if (this.state.creator) {
       if (this.state.activeTheme) {
-        console.log(this.state.activeTheme);
         this.setTheme(this.state.activeTheme);
       }
       return (
@@ -288,9 +292,10 @@ class App extends Component {
             creator={this.state.creator}
             creatorName={this.state.creatorName}
             currentView={this.state.currentView}
+            handleViewChange={this.resetCurrentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
-            handleViewChange={this.viewToday}
+            // handleViewChange={this.viewToday}
           />
 
           <div className="bullet-journal">
