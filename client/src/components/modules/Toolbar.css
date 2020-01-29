@@ -33,8 +33,11 @@
   cursor: default;
 }
 
-.toolbar-btn:hover {
+.toolbar-btn:hover,
+.toolbar-icon-btn:hover {
   cursor: pointer;
+  background-color: var(--hover);
+  transition: all 0.4s;
 }
 
 .toolbar-btn,
