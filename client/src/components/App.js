@@ -424,7 +424,6 @@ class App extends Component {
           <div className="bullet-journal">
             <div className="bullet-journal_body">
               <Router>
-                <Landing path="/" creator={this.state.creator} />
                 {this.state.data ? (
                   <Daily
                     path="/day"
