@@ -233,8 +233,9 @@ class Settings extends Component {
                 </div>
               )}
               <button
-                className={`widget-showNew-btn ${this.state.showCreateNew &&
-                  "widget-showNew-btn-active"}`}
+                className={`widget-showNew-btn ${
+                  this.state.showCreateNew ? "widget-showNew-btn-active" : "widget-showNew-btn-hide"
+                }`}
                 onClick={() =>
                   this.setState((prevState) => ({
                     showCreateNew: !prevState.showCreateNew,

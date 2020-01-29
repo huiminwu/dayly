@@ -43,19 +43,30 @@
 }
 
 .theme-color-container {
+  padding-top: 1vh;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .theme-color {
   height: 2vw;
   width: 2vw;
-  border-radius: 3px;
+  /* border-radius: 3px; */
 }
 
+.theme-color:first-child {
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+
+.theme-color:last-child {
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+/* 
 .theme-color + .theme-color {
   margin-left: 4px;
-}
+} */
 
 /* WIDGETS */
 
@@ -145,6 +156,15 @@
   transition: all 0.5s;
   background-color: var(--bujo-body);
   color: var(--borders);
+}
+
+.widget-showNew-btn-hide {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transition: all 0.5s;
+  background-color: var(--accent);
+  color: var(--accent-text);
 }
 
 .widget-createNew-btn {
