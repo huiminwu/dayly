@@ -53,8 +53,8 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newWidgetName: "",
-      newWidgetType: "ColorWidget",
+      newWidget: null,
+      showCreateNew: false,
       widgetToBeDeleted: null,
       nameError: "",
       showPopup: null,
@@ -62,8 +62,6 @@ class Settings extends Component {
   }
 
   MAX_LENGTH = 32;
-
-  widgetTypes = ["ColorWidget", "SliderWidget", "BinaryWidget"];
 
   componentDidMount() {
     this.displayWidgets();
@@ -107,54 +105,43 @@ class Settings extends Component {
     this.openPopup("delete");
   };
 
+  handleCreateRequest = (type) => {
+    this.setState({ newWidget: { type: type } });
+    this.openPopup("createNew");
+  };
+
   getWidgetStyle(widgetName, widgetType) {
     return <Widget isSettings="true" name={widgetName} type={widgetType} work="no" />;
   }
 
-  handleNameChange = (event) => {
-    this.setState({
-      newWidgetName: event.target.value,
-    });
-  };
-
-  handleTypeChange = (event) => {
-    this.setState({
-      newWidgetType: event.target.value,
-    });
-  };
-
-  handleWidSubmit = () => {
-    let validationError = this.validate();
+  handleWidSubmit = (name, type) => {
+    let validationError = this.validate(name);
     if (!validationError) {
-      this.props.handleWidgetSubmit(this.state.newWidgetName, this.state.newWidgetType);
-      this.setState({ nameError: "" });
+      this.props.handleWidgetSubmit(name, type);
+      this.closePopup();
     } else {
       this.setState({ nameError: validationError });
     }
-    if (this.state.newWidgetName !== "") {
-      this.setState({ newWidgetName: "" });
-      this.setState({ newWidgetType: "ColorWidget" });
-    }
   };
 
-  validate = () => {
+  validate = (name) => {
     let alert = "";
     const badChars = "~`!#$%^&*+=-[]\\';,/{}|\":<>?";
-    for (var i = 0; i < this.state.newWidgetName.length; i++) {
-      if (badChars.indexOf(this.state.newWidgetName.charAt(i)) != -1) {
+    for (var i = 0; i < name.length; i++) {
+      if (badChars.indexOf(name.charAt(i)) != -1) {
         alert = "Special characters ~`!#$%^&*+=-[]\\';,/{}|\":<>? \n are not allowed.\n";
       }
     }
 
     this.props.widgetlist.forEach((w) => {
       let prevWidget = w["name"].toLowerCase();
-      let newWidget = this.state.newWidgetName.toLowerCase();
+      let newWidget = name.toLowerCase();
       if (newWidget === prevWidget) {
         alert = "You already have a widget with this name!";
       }
     });
 
-    if (this.state.newWidgetName.length === 0) {
+    if (name.length === 0) {
       alert = "Widget name cannot be blank.";
     }
 
@@ -165,14 +152,17 @@ class Settings extends Component {
     const themeList = Object.keys(this.props.themeMap);
     let popup = null;
     if (this.state.showPopup === "createNew") {
+      const newWidgetType = this.state.newWidget.type;
+      const newWidgetTypeSliced = newWidgetType.slice(0, newWidgetType.length - 6).toLowerCase();
       popup = (
         <Popup
-          text="Choose a name for your new widget:"
+          text={`Choose a name for your new ${newWidgetTypeSliced} widget:`}
           page="settings"
           submitType="input"
           closePopup={this.closePopup}
           editFunction={this.handleWidSubmit}
           nameError={this.state.nameError}
+          targetObjectProperties={this.state.newWidget}
         />
       );
     } else if (this.state.showPopup === "delete") {
@@ -183,7 +173,7 @@ class Settings extends Component {
           submitType="binary"
           closePopup={this.closePopup}
           editFunction={this.props.handleWidgetDelete}
-          targetObject={this.state.widgetToBeDeleted}
+          targetObjectProperties={this.state.widgetToBeDeleted}
         />
       );
     }
@@ -218,41 +208,40 @@ class Settings extends Component {
           <div className="widgets">
             <h2 className="settings-category">Widgets</h2>
             <div className="settingsWidget-container">{this.displayWidgets()}</div>
-            <div className="form">
-              New widget name:
-              <div className="form-options">
-                <input
-                  type="text"
-                  value={this.state.newWidgetName}
-                  onChange={this.handleNameChange}
-                  className="new-widget-input"
-                  maxLength={this.MAX_LENGTH}
-                />
-                <label>
-                  <select
-                    className="dropdown-settings"
-                    value={this.state.newWidgetType}
-                    onChange={this.handleTypeChange}
+            <div className="widget-createNew-container">
+              {this.state.showCreateNew && (
+                <div>
+                  <button
+                    className="widget-createNew-btn"
+                    onClick={() => this.handleCreateRequest("ColorWidget")}
                   >
-                    <option className="dropdown-option" value="ColorWidget">
-                      Color
-                    </option>
-                    <option className="dropdown-option" value="SliderWidget">
-                      Slider
-                    </option>
-                    <option className="dropdown-option" value="BinaryWidget">
-                      Binary
-                    </option>
-                  </select>
-                </label>
-                <button
-                  type="submit"
-                  className="widget-button"
-                  onClick={() => this.openPopup("createNew")}
-                >
-                  Add Widget
-                </button>
-              </div>
+                    Color
+                  </button>
+                  <button
+                    className="widget-createNew-btn"
+                    onClick={() => this.handleCreateRequest("SliderWidget")}
+                  >
+                    Slider
+                  </button>
+                  <button
+                    className="widget-createNew-btn"
+                    onClick={() => this.handleCreateRequest("BinaryWidget")}
+                  >
+                    Binary
+                  </button>
+                </div>
+              )}
+              <button
+                className={`widget-showNew-btn ${this.state.showCreateNew &&
+                  "widget-showNew-btn-active"}`}
+                onClick={() =>
+                  this.setState((prevState) => ({
+                    showCreateNew: !prevState.showCreateNew,
+                  }))
+                }
+              >
+                <FontAwesomeIcon icon="plus" />
+              </button>
             </div>
           </div>
         </div>

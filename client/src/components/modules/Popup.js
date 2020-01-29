@@ -9,7 +9,7 @@ import "./Popup.css";
  * @param {string} submitType input or binary
  * @param {func} closePopup
  * @param {string} page where the popup shows
- * @param {Object} targetObject of the edit function
+ * @param {Object} targetObjectProperties of the edit function
  **/
 class Popup extends Component {
   constructor(props) {
@@ -30,16 +30,38 @@ class Popup extends Component {
         Yes, delete
       </button>
     );
+    let submitButton = (
+      <button
+        className="popup-btn popup-submit-btn"
+        onClick={() => this.props.editFunction(this.state.value)}
+      >
+        Submit
+      </button>
+    );
     if (this.props.page === "settings") {
       popupClassName += " popup-settings";
       deleteButton = (
         <button
           className="popup-btn"
-          onClick={() =>
-            this.props.editFunction(this.props.targetObject.id, this.props.targetObject.name)
-          }
+          onClick={() => {
+            this.props.editFunction(
+              this.props.targetObjectProperties.id,
+              this.props.targetObjectProperties.name
+            );
+            this.closePopup();
+          }}
         >
           Yes, delete
+        </button>
+      );
+      submitButton = (
+        <button
+          className="popup-btn popup-submit-btn"
+          onClick={() =>
+            this.props.editFunction(this.state.value, this.props.targetObjectProperties.type)
+          }
+        >
+          Submit
         </button>
       );
     }
@@ -56,12 +78,7 @@ class Popup extends Component {
                 onChange={this.handleChange}
               />
               <div className="popup-btn-container">
-                <button
-                  className="popup-btn popup-submit-btn"
-                  onClick={() => this.props.editFunction(this.state.value)}
-                >
-                  Submit
-                </button>
+                {submitButton}
                 <button className="popup-btn" onClick={this.props.closePopup}>
                   Cancel
                 </button>
