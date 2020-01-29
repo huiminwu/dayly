@@ -50,21 +50,21 @@ class BinaryWidget extends Component {
             </button>
           </>
         ) : (
-          <>
-            <button
-              className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
-              onClick={() => this.handleOnClick("true")}
-            >
-              <FontAwesomeIcon icon="check" />
-            </button>
-            <button
-              className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
-              onClick={() => this.handleOnClick("false")}
-            >
-              <FontAwesomeIcon icon="times" />
-            </button>
-          </>
-        )}
+            <>
+              <button
+                className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
+                onClick={() => this.handleOnClick("true")}
+              >
+                <FontAwesomeIcon icon="check" />
+              </button>
+              <button
+                className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
+                onClick={() => this.handleOnClick("false")}
+              >
+                <FontAwesomeIcon icon="times" />
+              </button>
+            </>
+          )}
       </>
     );
   }
@@ -104,17 +104,25 @@ class ColorWidget extends Component {
   render() {
     // dynamically produce buttons
     const colorValues = [1, 2, 3, 4, 5];
-    const colorButtons = colorValues.map((val, k) => {
-      return (
+    const colorButtons = colorValues.map((val, k) => (
+      this.props.work === "no" ? (
         <button
           key={k}
           className={`cool-btn ColorWidget-${val} ${
             val === parseInt(this.state.value) ? "submitted-val" : ""
-          }`}
-          onClick={() => this.handleOnClick(val)}
+            }`}
         />
-      );
-    });
+      ) : (
+          <button
+            key={k}
+            className={`cool-btn ColorWidget-${val} ${
+              val === parseInt(this.state.value) ? "submitted-val" : ""
+              }`}
+
+            onClick={() => this.handleOnClick(val)}
+          />
+        )
+    ));
 
     return (
       <>
@@ -122,9 +130,15 @@ class ColorWidget extends Component {
         <div
           className={`${
             this.props.isSettings ? "color-btn-container-Setting" : "color-btn-container"
-          }`}
+            }`}
         >
           {colorButtons}
+          <br />
+          <FontAwesomeIcon size="2x" className="mood-icon" icon="laugh-beam" />
+          <FontAwesomeIcon size="2x" className="mood-icon" icon="grin-hearts" />
+          <FontAwesomeIcon size="2x" className="mood-icon" icon="sad-cry" />
+          <FontAwesomeIcon size="2x" className="mood-icon" icon="meh" />
+          <FontAwesomeIcon size="2x" className="mood-icon" icon="tired" />
         </div>
       </>
     );
@@ -170,17 +184,17 @@ class SliderWidget extends Component {
             className="slider-input"
           />
         ) : (
-          <input
-            type="range"
-            min="0"
-            max="12"
-            step="1"
-            value={this.state.slider_value}
-            onChange={this.handleSliderChange}
-            onMouseUp={() => this.props.submitValue(this.state.slider_value)}
-            className="slider-input"
-          />
-        )}
+            <input
+              type="range"
+              min="0"
+              max="12"
+              step="1"
+              value={this.state.slider_value}
+              onChange={this.handleSliderChange}
+              onMouseUp={() => this.props.submitValue(this.state.slider_value)}
+              className="slider-input"
+            />
+          )}
 
         <span className="slider-display">{this.state.slider_value}</span>
       </>
@@ -203,7 +217,7 @@ class Widget extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   submitValue = (val) => {
     const params = {
