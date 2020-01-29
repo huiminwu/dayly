@@ -3,9 +3,9 @@
   top: 50%;
   left: 50%;
   margin-left: -150px;
-  margin-top: -75px;
+  margin-top: -100px;
   width: 300px;
-  height: 150px;
+  height: 175px;
   background-color: white;
   border: 1px solid var(--borders);
   border-radius: 7px;
@@ -31,7 +31,13 @@
   height: 3vh;
   width: 100%;
   border: 1px solid var(--borders);
+  font-family: "Poppins", sans-serif;
 }
+
+.popup input {
+  padding: 4px 0px 4px 4px;
+}
+
 .popup-text:focus {
   box-shadow: 0 0 5px var(--accent);
   outline: 0;
@@ -51,9 +57,12 @@
   border-radius: 3px;
   cursor: pointer;
   transition: all 0.25s;
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
 }
 
-.popup-submit-btn {
+.popup-submit-btn,
+.popup-delete-btn {
   color: var(--accent-text);
   background: var(--accent);
 }
@@ -65,6 +74,7 @@
 .popup-error {
   font-size: 0.7rem;
   font-style: italic;
+  margin-top: 8px;
 }
 
 .overlay {
