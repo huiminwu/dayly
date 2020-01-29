@@ -42,6 +42,10 @@
   font-family: "Poppins", sans-serif;
 }
 
+.yes-btn{
+  margin-right: 5px;
+}
+
 .color-btn-container-Setting {
   display: inline;
 }
