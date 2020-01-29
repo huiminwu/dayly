@@ -3,6 +3,7 @@ import "./Settings.css";
 import "../../utilities.css";
 
 import Widget from "../modules/Widget.js";
+import Popup from "../modules/Popup.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { get, post } from "../../utilities";
@@ -54,7 +55,9 @@ class Settings extends Component {
     this.state = {
       newWidgetName: "",
       newWidgetType: "ColorWidget",
-      errorMsgs: [],
+      widgetToBeDeleted: null,
+      nameError: "",
+      showPopup: null,
     };
   }
 
@@ -66,6 +69,19 @@ class Settings extends Component {
     this.displayWidgets();
   }
 
+  openPopup = (popup) => {
+    this.setState({
+      showPopup: popup,
+    });
+  };
+
+  closePopup = () => {
+    this.setState({
+      showPopup: null,
+      nameError: "",
+    });
+  };
+
   displayWidgets = () => {
     let widgets = [];
     if (this.props.widgetlist) {
@@ -75,7 +91,7 @@ class Settings extends Component {
             {this.getWidgetStyle(widget["name"], widget["widgetType"])}
             <div
               className="widget-delete-btn"
-              onClick={() => this.props.handleWidgetDelete(widget["_id"], widget["name"])}
+              onClick={() => this.handleDeleteRequest(widget["_id"], widget["name"])}
             >
               <FontAwesomeIcon icon="trash-alt" />
             </div>
@@ -86,6 +102,11 @@ class Settings extends Component {
     return widgets;
   };
 
+  handleDeleteRequest = (id, name) => {
+    this.setState({ widgetToBeDeleted: { id: id, name: name } });
+    this.openPopup("delete");
+  };
+
   getWidgetStyle(widgetName, widgetType) {
     return <Widget isSettings="true" name={widgetName} type={widgetType} work="no" />;
   }
@@ -94,15 +115,6 @@ class Settings extends Component {
     this.setState({
       newWidgetName: event.target.value,
     });
-    if (event.target.value.length === this.MAX_LENGTH) {
-      this.setState({
-        errorMsgs: `Names of widgets must be less than ${this.MAX_LENGTH} characters`,
-      });
-    } else {
-      this.setState({
-        errorMsgs: [],
-      });
-    }
   };
 
   handleTypeChange = (event) => {
@@ -111,18 +123,13 @@ class Settings extends Component {
     });
   };
 
-  handleWidSubmit = (e) => {
-    // e.preventDefault();
-    // this.validate(this.state.newWidgetName).then((msg) => {
-    //   if (msg.length > 0) {
-    //     alert(msg);
-    //   } else {
-    let a = this.validate();
-    if (a.length === 0) {
+  handleWidSubmit = () => {
+    let validationError = this.validate();
+    if (!validationError) {
       this.props.handleWidgetSubmit(this.state.newWidgetName, this.state.newWidgetType);
-      this.setState({ errorMsgs: [] });
+      this.setState({ nameError: "" });
     } else {
-      this.setState({ errorMsgs: a });
+      this.setState({ nameError: validationError });
     }
     if (this.state.newWidgetName !== "") {
       this.setState({ newWidgetName: "" });
@@ -135,13 +142,11 @@ class Settings extends Component {
     const badChars = "~`!#$%^&*+=-[]\\';,/{}|\":<>?";
     for (var i = 0; i < this.state.newWidgetName.length; i++) {
       if (badChars.indexOf(this.state.newWidgetName.charAt(i)) != -1) {
-        alert =
-          "File name has special characters ~`!#$%^&*+=-[]\\';,/{}|\":<>? \nThese are not allowed\n";
+        alert = "Special characters ~`!#$%^&*+=-[]\\';,/{}|\":<>? \n are not allowed.\n";
       }
     }
 
     this.props.widgetlist.forEach((w) => {
-      console.log(w["name"]);
       let prevWidget = w["name"].toLowerCase();
       let newWidget = this.state.newWidgetName.toLowerCase();
       if (newWidget === prevWidget) {
@@ -158,62 +163,101 @@ class Settings extends Component {
 
   render() {
     const themeList = Object.keys(this.props.themeMap);
+    let popup = null;
+    if (this.state.showPopup === "createNew") {
+      popup = (
+        <Popup
+          text="Choose a name for your new widget:"
+          page="settings"
+          submitType="input"
+          closePopup={this.closePopup}
+          editFunction={this.handleWidSubmit}
+          nameError={this.state.nameError}
+        />
+      );
+    } else if (this.state.showPopup === "delete") {
+      popup = (
+        <Popup
+          text="Are you sure you want to delete this widget?"
+          page="settings"
+          submitType="binary"
+          closePopup={this.closePopup}
+          editFunction={this.props.handleWidgetDelete}
+          targetObject={this.state.widgetToBeDeleted}
+        />
+      );
+    }
     return (
-      <div className="settings-container">
-        <h2>Settings</h2>
-        <h3>Theme</h3>
-        <div className="theme-list-container">
-          {themeList.map((themeName) => {
-            const theme = this.props.themeMap[themeName];
-            const hexCodes = [
-              theme["--accent"],
-              theme["--tab0"],
-              theme["--tab1"],
-              theme["--tab2"],
-              theme["--tab3"],
-            ];
-            return (
-              <Theme
-                name={themeName}
-                hexCodes={hexCodes}
-                activeTheme={this.props.activeTheme}
-                handleThemeChange={this.props.handleThemeChange}
-              />
-            );
-          })}
+      <>
+        <h1 className="settings-header">Settings</h1>
+        <div className="settings-container">
+          <div className="themes">
+            <h2 className="settings-category">Theme</h2>
+            <div className="theme-container">
+              {themeList.map((themeName) => {
+                const theme = this.props.themeMap[themeName];
+                const hexCodes = [
+                  theme["--accent"],
+                  theme["--tab0"],
+                  theme["--tab1"],
+                  theme["--tab2"],
+                  theme["--tab3"],
+                ];
+                return (
+                  <Theme
+                    name={themeName}
+                    hexCodes={hexCodes}
+                    activeTheme={this.props.activeTheme}
+                    handleThemeChange={this.props.handleThemeChange}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="widgets">
+            <h2 className="settings-category">Widgets</h2>
+            <div className="settingsWidget-container">{this.displayWidgets()}</div>
+            <div className="form">
+              New widget name:
+              <div className="form-options">
+                <input
+                  type="text"
+                  value={this.state.newWidgetName}
+                  onChange={this.handleNameChange}
+                  className="new-widget-input"
+                  maxLength={this.MAX_LENGTH}
+                />
+                <label>
+                  <select
+                    className="dropdown-settings"
+                    value={this.state.newWidgetType}
+                    onChange={this.handleTypeChange}
+                  >
+                    <option className="dropdown-option" value="ColorWidget">
+                      Color
+                    </option>
+                    <option className="dropdown-option" value="SliderWidget">
+                      Slider
+                    </option>
+                    <option className="dropdown-option" value="BinaryWidget">
+                      Binary
+                    </option>
+                  </select>
+                </label>
+                <button
+                  type="submit"
+                  className="widget-button"
+                  onClick={() => this.openPopup("createNew")}
+                >
+                  Add Widget
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <h3>Widgets</h3>
-        {this.displayWidgets()}
-        <div className="form">
-          <input
-            type="text"
-            value={this.state.newWidgetName}
-            onChange={this.handleNameChange}
-            className="new-widget-input"
-            maxLength={this.MAX_LENGTH}
-          />
-          <label>
-            <select
-              className="dropdown-settings"
-              value={this.state.newWidgetType}
-              onChange={this.handleTypeChange}
-            >
-              <option className="dropdown-option" value="ColorWidget">
-                Color
-              </option>
-              <option className="dropdown-option" value="SliderWidget">
-                Slider
-              </option>
-              <option className="dropdown-option" value="BinaryWidget">
-                Binary
-              </option>
-            </select>
-          </label>
-          <button type="submit" className="widget-button" onClick={this.handleWidSubmit}>
-            Add Widget
-          </button>
-        </div>
-      </div>
+        {popup}
+      </>
     );
   }
 }

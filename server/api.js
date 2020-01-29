@@ -148,7 +148,7 @@ router.post("/user/widgets/delete", auth.ensureLoggedIn, (req, res) => {
       Widget.deleteMany({
         _id: req.body.widget,
         name: req.body.name,
-      }).then((s) => console.log("deleted many"));
+      });
     });
 });
 
@@ -282,7 +282,7 @@ router.get("/collections/all", (req, res) => {
 
 router.post("/collections/new", auth.ensureLoggedIn, (req, res) => {
   if (!req.body.name) {
-    res.send({ error: "No name entered" });
+    res.send({ error: "Collection name cannot be blank." });
   } else {
     const collectionQuery = {
       creator: req.user._id,
@@ -291,7 +291,7 @@ router.post("/collections/new", auth.ensureLoggedIn, (req, res) => {
 
     Collection.findOne(collectionQuery).then((collection) => {
       if (collection) {
-        res.send({ error: "Duplicate name" });
+        res.send({ error: "You already have a collection with this name!" });
       } else {
         const newCollection = new Collection({
           creator: req.user._id,
