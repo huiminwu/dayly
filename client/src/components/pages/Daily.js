@@ -24,6 +24,7 @@ class Daily extends Component {
     super(props);
     this.state = {
       widgetValues: null,
+      iteration: 0,
       // canForward: false,
     };
   }
@@ -48,6 +49,12 @@ class Daily extends Component {
     }
   }
 
+  increment = () => {
+    this.setState({
+      iteration: this.state.iteration + 1,
+    });
+  };
+
   render() {
     let widgets = "Loading...";
     if (this.state.widgetValues) {
@@ -60,6 +67,7 @@ class Daily extends Component {
             type={widget.type}
             value={widget.value}
             dateObject={this.props.dateObject}
+            iteration={this.state.iteration}
             work="yes"
           />
         );
@@ -76,8 +84,14 @@ class Daily extends Component {
         <Header
           dateObject={this.props.dateObject}
           view={"day"}
-          handleBackClick={this.props.handleBackClick}
-          handleNextClick={this.props.handleNextClick}
+          handleBackClick={() => {
+            this.props.handleBackClick("month");
+            this.increment();
+          }}
+          handleNextClick={() => {
+            this.props.handleNextClick("month");
+            this.increment();
+          }}
         />
         <div className="journal-container">
           <div className="widget-container">{widgets}</div>
