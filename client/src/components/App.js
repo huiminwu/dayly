@@ -73,37 +73,54 @@ library.add(
 const moment = require("moment");
 
 const defaultTheme = {
+  "--body": "#6e6e6e",
+  "--accent-text": "#ffffff",
+  "--calendar-text-month": "#c0c0c0",
+  "--calendar-text-year": "#696969",
   "--background": "#f5f5f5",
   "--borders": "#cec0b7",
   "--accent": "#cf9893",
-  "--accent-text": "#ffffff",
   "--headers": "#3d3d3d",
-  "--body": "#6e6e6e",
   "--hover": "#f7ebeb",
+  "--tab0": "#ff6c6c",
+  "--tab1": "#6cb9ff",
+  "--tab2": "#ffbc6c",
+  "--tab3": "#ad6cff",
+  "--label1": "#cf9893",
+  "--label2": "#b3d9ff",
+  "--label3": "#d9b3ff",
 };
 
 const ivyTheme = {
+  "--body": "#6e6e6e",
+  "--accent-text": "#ffffff",
+  "--calendar-text-month": "#c0c0c0",
+  "--calendar-text-year": "#696969",
   "--background": "#DEEDE9",
   "--borders": "#B6D8CE",
   "--accent": "#3AB795",
   "--accent-text": "#ffffff",
   "--headers": "#3E8E66",
-  "--body": "#251605",
   "--hover": "#ADEACC",
 };
 
 const themeMap = {
-  default: {
-    name: "default",
-    theme: defaultTheme,
-    displayColors: ["#ff6c6c", "#6cb9ff", "#ffbc6c", "#ff6c6c", "#6cb9ff"],
-  },
-  ivy: {
-    name: "ivy",
-    theme: ivyTheme,
-    displayColors: ["#3AB795", "#ADEACC", "#3E8E66", "#3AB795", "#ADEACC"],
-  },
+  default: defaultTheme,
+  ivy: ivyTheme,
 };
+
+// const themeMap = {
+//   default: {
+//     name: "default",
+//     theme: defaultTheme,
+//     displayColors: ["#ff6c6c", "#6cb9ff", "#ffbc6c", "#ff6c6c", "#6cb9ff"],
+//   },
+//   ivy: {
+//     name: "ivy",
+//     theme: ivyTheme,
+//     displayColors: ["#3AB795", "#ADEACC", "#3E8E66", "#3AB795", "#ADEACC"],
+//   },
+// };
 
 /**
  * Define the "App" component as a class.
@@ -240,9 +257,9 @@ class App extends Component {
   };
 
   setTheme = (themeName) => {
-    const themeObj = themeMap[themeName];
-    Object.keys(themeObj.theme).map((color) => {
-      const value = themeObj.theme[color];
+    const theme = themeMap[themeName];
+    Object.keys(theme).map((color) => {
+      const value = theme[color];
       document.documentElement.style.setProperty(color, value);
     });
   };
@@ -250,7 +267,6 @@ class App extends Component {
   handleThemeChange = (themeName) => {
     post("/api/user/theme", { theme: themeName }).then((updatedUser) => {
       this.setState({ activeTheme: updatedUser.theme });
-      // this.setTheme(updatedUser.theme);
     });
   };
 
