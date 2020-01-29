@@ -24,7 +24,14 @@ class Popup extends Component {
   };
 
   render() {
-    let popupClassName = "popup";
+    let input = (
+      <input
+        type="text"
+        className="popup-text"
+        value={this.state.value}
+        onChange={this.handleChange}
+      />
+    );
     let deleteButton = (
       <button className="popup-btn popup-delete-btn" onClick={this.props.editFunction}>
         Yes, delete
@@ -39,7 +46,6 @@ class Popup extends Component {
       </button>
     );
     if (this.props.page === "settings") {
-      popupClassName += " popup-settings";
       deleteButton = (
         <button
           className="popup-btn popup-delete-btn"
@@ -64,6 +70,15 @@ class Popup extends Component {
           Submit
         </button>
       );
+      input = (
+        <input
+          type="text"
+          className="popup-text"
+          value={this.state.value}
+          onChange={this.handleChange}
+          maxLength={50}
+        />
+      );
     }
     return (
       <>
@@ -72,12 +87,7 @@ class Popup extends Component {
             <p>{this.props.text}</p>
             {this.props.submitType === "input" && (
               <>
-                <input
-                  type="text"
-                  className="popup-text"
-                  value={this.state.value}
-                  onChange={this.handleChange}
-                />
+                {input}
                 <div className="popup-btn-container">
                   {submitButton}
                   <button className="popup-btn" onClick={this.props.closePopup}>
