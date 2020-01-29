@@ -15,6 +15,8 @@ import { get, post } from "../../utilities";
  * @param {string} name of theme
  * @param {array} hexCodes of the colors in the theme
  * @param {string} activeTheme currently
+ * @param {func} handleThemeChange
+ * @param {func} unCamelCase for themes with names >=2 words
  **/
 class Theme extends Component {
   constructor(props) {
@@ -28,7 +30,7 @@ class Theme extends Component {
         className={`theme-option ${active && "theme-active"}`}
         onClick={() => this.props.handleThemeChange(this.props.name)}
       >
-        <div className="theme-name">{this.props.name}</div>
+        <div className="theme-name">{this.props.unCamelCase(this.props.name)}</div>
         <div className="theme-color-container">
           {this.props.hexCodes.map((color) => (
             <div className="theme-color" style={{ backgroundColor: color }}></div>
@@ -149,6 +151,12 @@ class Settings extends Component {
     return alert;
   };
 
+  unCamelCase(str) {
+    str = str.replace(/([a-z\xE0-\xFF])([A-Z\xC0\xDF])/g, "$1 $2");
+    str = str.toLowerCase(); //add space between camelCase text
+    return str;
+  }
+
   render() {
     const themeList = Object.keys(this.props.themeMap);
     let popup = null;
@@ -202,6 +210,7 @@ class Settings extends Component {
                     hexCodes={hexCodes}
                     activeTheme={this.props.activeTheme}
                     handleThemeChange={this.props.handleThemeChange}
+                    unCamelCase={this.unCamelCase}
                   />
                 );
               })}
