@@ -15,18 +15,13 @@ class BinaryWidget extends Component {
   }
 
   // submits and updates value
-  handleOnClick = (val) => {
-    let v = (val === "true");
-    if (v === true) {
-      v = "false"
-    } else {
-      v = "true"
-    }
-    this.setState({
-      value: v,
-    });
-    this.props.submitValue(v);
-    console.log(v)
+  handleOnClick = () => {
+    this.setState((prevState) => (
+      { value: JSON.stringify(!JSON.parse(prevState.value)) }
+    ), () => {
+      this.props.submitValue(this.state.value);
+      console.log(this.state.value);
+    })
   };
 
   componentDidMount() {
@@ -61,7 +56,7 @@ class BinaryWidget extends Component {
                 <>
                   <input type="checkbox" id="toggle"
                     className={`checkbox`}
-                    onClick={() => this.handleOnClick(this.state.value)}
+                    onClick={() => this.handleOnClick()}
                     checked
                   />
                   <label for="toggle" class="switch"></label>
