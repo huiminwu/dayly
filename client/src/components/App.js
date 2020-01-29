@@ -92,6 +92,7 @@ const defaultTheme = {
   "--accent-text": "#ffffff",
   "--calendar-text-month": "#c0c0c0",
   "--calendar-text-year": "#696969",
+  "--box-shadow": "rgba(51, 50, 47, 0.377)",
 
   "--slider-1": "rgba(152, 180, 241, 0.08)",
   "--slider-2": "rgba(152, 180, 241, 0.17)",
@@ -125,6 +126,7 @@ const lilacTheme = {
   "--accent-text": "#ffffff",
   "--calendar-text-month": "#a2a2a2",
   "--calendar-text-year": "#5c5c5c",
+  "--box-shadow": "rgba(51, 50, 47, 0.377)",
 
   "--slider-1": "rgba(188, 158, 251, 0.08)",
   "--slider-2": "rgba(188, 158, 251, 0.17)",
@@ -158,6 +160,7 @@ const naturalTheme = {
   "--accent-text": "#ffffff",
   "--calendar-text-month": "#c0c0c0",
   "--calendar-text-year": "#696969",
+  "--box-shadow": "rgba(51, 50, 47, 0.377)",
 
   "--slider-1": "rgba(39, 95, 151, 0.08)",
   "--slider-2": "rgba(39, 95, 151, 0.17)",
@@ -175,7 +178,7 @@ const naturalTheme = {
 
 const ivyTheme = {
   "--background": "#DFEDDE",
-  "--bujo-body": "#d2e6d0",
+  "--bujo-body": "#f5f5f5",
   "--borders": "#a8c198",
   "--accent": "#3c8942",
   "--headers": "#52853b",
@@ -191,6 +194,7 @@ const ivyTheme = {
   "--accent-text": "#ffffff",
   "--calendar-text-month": "#929292",
   "--calendar-text-year": "#696969",
+  "--box-shadow": "rgba(51, 50, 47, 0.377)",
 
   "--slider-1": "rgba(135, 223, 111, 0.08)",
   "--slider-2": "rgba(135, 223, 111, 0.17)",
@@ -224,6 +228,7 @@ const galaxyTheme = {
   "--accent-text": "#ffffff",
   "--calendar-text-month": "#c7c7c7",
   "--calendar-text-year": "#ded8d8",
+  "--box-shadow": "rgba(255, 255, 255, 1)",
 
   "--slider-1": "rgba(247, 235, 129, 0.08)",
   "--slider-2": "rgba(247, 235, 129, 0.17)",
@@ -257,6 +262,7 @@ const redVelvetTheme = {
   "--accent-text": "#ffffff",
   "--calendar-text-month": "#a0a0a0",
   "--calendar-text-year": "#565656",
+  "--box-shadow": "rgba(51, 50, 47, 0.377)",
 
   "--slider-1": "rgba(159, 173, 241, 0.08)",
   "--slider-2": "rgba(159, 173, 241, 0.17)",
@@ -290,6 +296,7 @@ const joyTheme = {
   "--accent-text": "#ffffff",
   "--calendar-text-month": "#a0a0a0",
   "--calendar-text-year": "#565656",
+  "--box-shadow": "rgba(51, 50, 47, 0.377)",
 
   "--slider-1": "rgba(152, 180, 241, 0.08)",
   "--slider-2": "rgba(152, 180, 241, 0.17)",
@@ -323,6 +330,7 @@ const cherryBlossomTheme = {
   "--accent-text": "#ffffff",
   "--calendar-text-month": "#c0c0c0",
   "--calendar-text-year": "#696969",
+  "--box-shadow": "rgba(51, 50, 47, 0.377)",
 
   "--slider-1": "rgba(152, 180, 241, 0.08)",
   "--slider-2": "rgba(152, 180, 241, 0.17)",

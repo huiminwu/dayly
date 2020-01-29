@@ -79,6 +79,7 @@
 .editor-btn:hover,
 .createNew-btn:hover {
   box-shadow: 0 0 5px var(--accent);
+  cursor: pointer;
 }
 
 .editor-btn:active,

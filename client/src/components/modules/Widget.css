@@ -5,7 +5,7 @@
   border: white;
 }
 .cool-btn.submitted-val {
-  box-shadow: 0 0 5px rgba(51, 50, 47, 0.377);
+  box-shadow: 0 0 5px var(--box-shadow);
 }
 
 .mood-icon {

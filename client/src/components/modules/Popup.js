@@ -26,7 +26,7 @@ class Popup extends Component {
   render() {
     let popupClassName = "popup";
     let deleteButton = (
-      <button className="popup-btn" onClick={this.props.editFunction}>
+      <button className="popup-btn popup-delete-btn" onClick={this.props.editFunction}>
         Yes, delete
       </button>
     );
@@ -42,7 +42,7 @@ class Popup extends Component {
       popupClassName += " popup-settings";
       deleteButton = (
         <button
-          className="popup-btn"
+          className="popup-btn popup-delete-btn"
           onClick={() => {
             this.props.editFunction(
               this.props.targetObjectProperties.id,
@@ -89,10 +89,10 @@ class Popup extends Component {
             )}
             {this.props.submitType === "binary" && (
               <div className="popup-btn-container">
-                <button className="popup-btn popup-delete-btn" onClick={this.props.closePopup}>
+                {deleteButton}
+                <button className="popup-btn" onClick={this.props.closePopup}>
                   No
                 </button>
-                {deleteButton}
               </div>
             )}
           </div>
