@@ -15,13 +15,11 @@ class BinaryWidget extends Component {
   }
 
   // submits and updates value
-  handleOnClick = () => {
-    this.setState(
-      (prevState) => ({ value: JSON.stringify(!JSON.parse(prevState.value)) }),
-      () => {
-        this.props.submitValue(this.state.value);
-      }
-    );
+  handleOnClick = (val) => {
+    this.setState({
+      value: val,
+    });
+    this.props.submitValue(val);
   };
 
   componentDidMount() {
@@ -31,7 +29,7 @@ class BinaryWidget extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.iteration !== prevProps.iteration) {
+    if (this.props !== prevProps) {
       this.setState({
         value: this.props.value,
       });
@@ -44,42 +42,30 @@ class BinaryWidget extends Component {
         <div className="widget-name">{this.props.name}</div>
         {this.props.work === "no" ? (
           <>
-            <input type="checkbox" id="toggle" className="checkbox" />
-            <label htmlFor="toggle" className="switch"></label>
+
+            <button className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}>
+              <FontAwesomeIcon icon="check" />
+            </button>
+            <button className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}>
+              <FontAwesomeIcon icon="times" />
+            </button>
           </>
         ) : (
-          <>
-            {this.state.value === "true" ? (
-              <>
-                <input
-                  type="checkbox"
-                  id="toggle"
-                  className={`checkbox`}
-                  onClick={() => this.handleOnClick()}
-                  checked
-                />
-                <label htmlFor="toggle" className="switch"></label>
-              </>
-            ) : (
-              <>
-                <input
-                  type="checkbox"
-                  id="toggle"
-                  className={`checkbox`}
-                  onClick={() => this.handleOnClick(this.state.value)}
-                />
-                <label htmlFor="toggle" className="switch"></label>
-              </>
-            )}
-
-            {/* <button
+            <>
+              <button
+                className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
+                onClick={() => this.handleOnClick("true")}
+              >
+                <FontAwesomeIcon icon="check" />
+              </button>
+              <button
                 className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
                 onClick={() => this.handleOnClick("false")}
               >
                 <FontAwesomeIcon icon="times" />
-              </button> */}
-          </>
-        )}
+              </button>
+            </>
+          )}
       </>
     );
   }
@@ -109,7 +95,7 @@ class ColorWidget extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.iteration !== prevProps.iteration) {
+    if (this.props !== prevProps) {
       this.setState({
         value: this.props.value,
       });
@@ -125,17 +111,17 @@ class ColorWidget extends Component {
           key={k}
           className={`cool-btn ColorWidget-${val} ${
             val === parseInt(this.state.value) ? "submitted-val" : ""
-          }`}
+            }`}
         />
       ) : (
-        <button
-          key={k}
-          className={`cool-btn ColorWidget-${val} ${
-            val === parseInt(this.state.value) ? "submitted-val" : ""
-          }`}
-          onClick={() => this.handleOnClick(val)}
-        />
-      )
+          <button
+            key={k}
+            className={`cool-btn ColorWidget-${val} ${
+              val === parseInt(this.state.value) ? "submitted-val" : ""
+              }`}
+            onClick={() => this.handleOnClick(val)}
+          />
+        )
     );
 
     return (
@@ -144,7 +130,7 @@ class ColorWidget extends Component {
         <div
           className={`${
             this.props.isSettings ? "color-btn-container-Setting" : "color-btn-container"
-          }`}
+            }`}
         >
           {colorButtons}
           {this.props.work === "yes" && this.props.name.toLowerCase() === "mood" && (
@@ -182,7 +168,7 @@ class SliderWidget extends Component {
     });
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.iteration !== prevProps.iteration) {
+    if (this.props !== prevProps) {
       this.setState({
         slider_value: this.props.value,
       });
@@ -237,7 +223,7 @@ class Widget extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   submitValue = (val) => {
     const params = {
@@ -245,7 +231,8 @@ class Widget extends Component {
       name: this.props.name,
       value: val,
     };
-    post("/api/widget", params);
+    // console.log(params)
+    post("/api/widget", params).then((x) => (console.log(x)));
   };
 
   render() {
