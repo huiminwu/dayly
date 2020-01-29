@@ -15,14 +15,20 @@
 .theme-container,
 .settingsWidget-container {
   display: flex;
+  flex-basis: 0;
 }
 
 /* THEMES */
+.theme-container {
+  flex-wrap: wrap;
+}
 
 .theme-option {
-  width: 8vw;
+  width: 40%;
+  margin: 5px;
   padding: 16px;
-  border: 1px solid red;
+  border-radius: 7px;
+  border: 1px solid var(--borders);
 }
 
 .theme-option:hover {
@@ -30,7 +36,7 @@
 }
 
 .theme-active {
-  border: 1px solid orange;
+  box-shadow: 0 0px 5px var(--accent);
 }
 
 .theme-name {
@@ -64,6 +70,7 @@
 .form {
   width: 90%;
 }
+
 .wid-container {
   border: 1px solid var(--borders);
   border-radius: 7px;
@@ -107,7 +114,9 @@ option {
 }
 
 .form {
-  padding-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid var(--borders);
+  margin-top: 20px;
 }
 .form-options {
   display: flex;
