@@ -306,11 +306,11 @@ router.post("/collections/new", auth.ensureLoggedIn, (req, res) => {
 
 router.post("/collections/rename", auth.ensureLoggedIn, (req, res) => {
   if (!req.body.newName) {
-    res.send({ error: "No name entered" });
+    res.send({ error: "Collection name cannot be blank." });
   } else {
     Collection.findOne({ creator: req.user._id, name: req.body.newName }).then((collection) => {
       if (collection) {
-        res.send({ error: "Duplicate name" });
+        res.send({ error: "You already have a collection with this name!" });
       } else {
         Collection.findOne({ creator: req.user._id, name: req.body.oldName }).then((collection) => {
           collection.name = req.body.newName;

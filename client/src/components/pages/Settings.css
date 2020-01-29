@@ -171,9 +171,6 @@
 }
 
 .widget-showNew-btn-hide {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
   transition: all 0.5s;
   background-color: var(--accent);
   color: var(--accent-text);
