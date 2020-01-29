@@ -20,7 +20,6 @@ class BinaryWidget extends Component {
       (prevState) => ({ value: JSON.stringify(!JSON.parse(prevState.value)) }),
       () => {
         this.props.submitValue(this.state.value);
-        console.log(this.state.value);
       }
     );
   };
@@ -46,7 +45,7 @@ class BinaryWidget extends Component {
         {this.props.work === "no" ? (
           <>
             <input type="checkbox" id="toggle" className="checkbox" />
-            <label for="toggle" class="switch"></label>
+            <label htmlFor="toggle" className="switch"></label>
           </>
         ) : (
           <>
@@ -59,7 +58,7 @@ class BinaryWidget extends Component {
                   onClick={() => this.handleOnClick()}
                   checked
                 />
-                <label for="toggle" class="switch"></label>
+                <label htmlFor="toggle" className="switch"></label>
               </>
             ) : (
               <>
@@ -69,7 +68,7 @@ class BinaryWidget extends Component {
                   className={`checkbox`}
                   onClick={() => this.handleOnClick(this.state.value)}
                 />
-                <label for="toggle" class="switch"></label>
+                <label htmlFor="toggle" className="switch"></label>
               </>
             )}
 

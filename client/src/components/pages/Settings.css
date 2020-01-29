@@ -80,6 +80,7 @@
 .settingsWidget-container::-webkit-scrollbar {
   width: 15px;
   background-color: var(--bujo-body);
+  display: none;
 }
 
 .settingsWidget-container::-webkit-scrollbar-thumb {

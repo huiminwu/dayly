@@ -8,13 +8,14 @@
 .editor-body {
   height: 50vh;
   border-top: 1px solid var(--borders);
-  margin-top: 48px;
+  margin-top: 16px;
   padding-top: 16px;
   overflow: scroll;
 }
 
 .editor-body::-webkit-scrollbar {
   background-color: var(--bujo-body);
+  display: none;
 }
 
 .editor-body::-webkit-scrollbar-thumb {

@@ -41,8 +41,6 @@
   --accent-text: #ffffff;
   --calendar-text-month: #c0c0c0;
   --calendar-text-year: #696969;
-  --body-darker: #f5f5f5;
-  --border-darker: #9b9089;
 
   /* STATIC */
   --color-1: #4472d6;
@@ -54,6 +52,7 @@
   --binary-true: #a0e5a1;
   --binary-false: #ffabab;
 
+  --body-darker: #f5f5f5;
   --slider-1: rgba(152, 180, 241, 0.08);
   --slider-2: rgba(152, 180, 241, 0.17);
   --slider-3: rgba(152, 180, 241, 0.25);
