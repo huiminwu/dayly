@@ -10,7 +10,7 @@ class BinaryWidget extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "false",
+      value: "",
     };
   }
 
@@ -152,12 +152,16 @@ class ColorWidget extends Component {
             }`}
         >
           {colorButtons}
-          <br />
-          <FontAwesomeIcon size="2x" className="mood-icon" icon="laugh-beam" />
-          <FontAwesomeIcon size="2x" className="mood-icon" icon="grin-hearts" />
-          <FontAwesomeIcon size="2x" className="mood-icon" icon="sad-cry" />
-          <FontAwesomeIcon size="2x" className="mood-icon" icon="meh" />
-          <FontAwesomeIcon size="2x" className="mood-icon" icon="tired" />
+          {(this.props.work === "yes" && this.props.name.toLowerCase() === "mood") &&
+            <>
+              <br />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="laugh-beam" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="grin-hearts" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="sad-cry" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="meh" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="tired" />
+            </>
+          }
         </div>
       </>
     );
