@@ -21,6 +21,7 @@
 /* THEMES */
 .theme-container {
   flex-wrap: wrap;
+  overflow-y: scroll;
 }
 
 .theme-option {
@@ -74,15 +75,17 @@
 .settingsWidget-container {
   flex-direction: column;
   overflow-y: scroll;
-  max-height: 60%;
+  height: 80%;
 }
 
+.theme-container::-webkit-scrollbar,
 .settingsWidget-container::-webkit-scrollbar {
   width: 15px;
   background-color: var(--bujo-body);
   display: none;
 }
 
+.theme-container::-webkit-scrollbar-thumb,
 .settingsWidget-container::-webkit-scrollbar-thumb {
   width: 6px;
   background: var(--accent);
