@@ -51,18 +51,17 @@ class BinaryWidget extends Component {
           </>
         ) : (
             <>
-              <button
-                className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
-                onClick={() => this.handleOnClick("true")}
-              >
-                <FontAwesomeIcon icon="check" />
-              </button>
-              <button
+              <input type="checkbox" id="toggle"
+                className="checkbox"
+                onClick={this.handleOnClick}
+              />
+              <label for="toggle" class="switch"></label>
+              {/* <button
                 className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
                 onClick={() => this.handleOnClick("false")}
               >
                 <FontAwesomeIcon icon="times" />
-              </button>
+              </button> */}
             </>
           )}
       </>
@@ -206,11 +205,11 @@ class SliderWidget extends Component {
  * Widget is a component for displaying widgets
  *
  * Proptypes
- * @param {moment} dateObject
- * @param {string} name of widget
- * @param {string} type of widget
- * @param {string} placeholder of widget
- **/
+* @param {moment} dateObject
+* @param {string} name of widget
+* @param {string} type of widget
+* @param {string} placeholder of widget
+    **/
 class Widget extends Component {
   constructor(props) {
     super(props);
