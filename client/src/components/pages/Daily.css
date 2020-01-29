@@ -12,6 +12,9 @@
   width: 20%;
   padding: 24px 0;
   overflow-y: scroll;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  word-break: break-word;
 }
 
 .widget-container::-webkit-scrollbar {

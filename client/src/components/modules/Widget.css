@@ -28,6 +28,9 @@
 
 .widget-name {
   margin-bottom: 8px;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  word-break: break-word;
 }
 
 .yes-btn,
