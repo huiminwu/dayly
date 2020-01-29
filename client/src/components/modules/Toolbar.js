@@ -71,23 +71,6 @@ class Dropdown extends Component {
     };
   }
 
-  componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
-  }
-
-  //   handleClickOutside = (e) => {
-  //     if (!this.node.contains(e.target)) {
-  //       console.log("I AM OUTSIDE");
-  //       this.props.toggleDropdown(null);
-  //     } else {
-  //       console.log("I AM INSIDE");
-  //     }
-  //   };
-
   render() {
     const currentStyle = this.props.editorState.getCurrentInlineStyle();
     // option refers to each individual style in the dropdown
@@ -137,7 +120,6 @@ class Dropdown extends Component {
 
     return (
       <div className="dropdown-container">
-        {/* ref={(node) => (this.node = node)} */}
         <div
           onMouseDown={(e) => this.toggleMenu(e)}
           className={`${this.props.wideMenu && "dropdown-btn-wide"} ${this.props.colorMenu &&
@@ -227,10 +209,26 @@ class Toolbar extends Component {
     this.state = {
       showDropdown: null,
     };
+
+    this.container = React.createRef();
   }
 
   toggleDropdown = (name) => {
     this.setState({ showDropdown: name });
+  };
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  }
+
+  handleClickOutside = (event) => {
+    if (this.container.current && !this.container.current.contains(event.target)) {
+      this.toggleDropdown(null);
+    }
   };
 
   render() {
@@ -263,15 +261,15 @@ class Toolbar extends Component {
       { label: "Poppins", style: "POPPINS" },
     ];
 
-    const FONT_SIZES = [
-      { label: "12", style: "12" },
-      { label: "14", style: "14" },
-      { label: "16", style: "16" },
-      { label: "18", style: "18" },
-      { label: "20", style: "20" },
-      { label: "24", style: "24" },
-      { label: "32", style: "32" },
-    ];
+    // const FONT_SIZES = [
+    //   { label: "12", style: "12" },
+    //   { label: "14", style: "14" },
+    //   { label: "16", style: "16" },
+    //   { label: "18", style: "18" },
+    //   { label: "20", style: "20" },
+    //   { label: "24", style: "24" },
+    //   { label: "32", style: "32" },
+    // ];
 
     const HIGHLIGHT_COLORS = [
       { label: "rgba(0, 0, 0, 0)", style: "none" },
@@ -293,17 +291,19 @@ class Toolbar extends Component {
 
     return (
       <div className="editor-toolbar-container">
-        <Dropdown
-          STYLE_LIST={FONT_FAMILIES}
-          defaultOption="Poppins"
-          wideMenu={true}
-          editorState={this.props.editorState}
-          customStyleMap={this.props.fontFamilyStyleMap}
-          setInlineStyle={this.props.setInlineStyle}
-          showDropdown={this.state.showDropdown}
-          toggleDropdown={this.toggleDropdown}
-        />
-        {/* <Dropdown
+        <div className="dropdown-group" ref={this.container}>
+          <Dropdown
+            STYLE_LIST={FONT_FAMILIES}
+            defaultOption="Poppins"
+            wideMenu={true}
+            colorMenu={false}
+            editorState={this.props.editorState}
+            customStyleMap={this.props.fontFamilyStyleMap}
+            setInlineStyle={this.props.setInlineStyle}
+            showDropdown={this.state.showDropdown}
+            toggleDropdown={this.toggleDropdown}
+          />
+          {/* <Dropdown
           STYLE_LIST={FONT_SIZES}
           defaultOption="16"
           editorState={this.props.editorState}
@@ -312,26 +312,29 @@ class Toolbar extends Component {
           showDropdown={this.state.showDropdown}
           toggleDropdown={this.toggleDropdown}
         /> */}
-        <Dropdown
-          STYLE_LIST={TEXT_COLORS}
-          defaultOption="#6e6e6e"
-          colorMenu={true}
-          editorState={this.props.editorState}
-          customStyleMap={this.props.textColorStyleMap}
-          setInlineStyle={this.props.setInlineStyle}
-          showDropdown={this.state.showDropdown}
-          toggleDropdown={this.toggleDropdown}
-        />
-        <Dropdown
-          STYLE_LIST={HIGHLIGHT_COLORS}
-          defaultOption="rgba(0, 0, 0, 0)"
-          colorMenu={true}
-          editorState={this.props.editorState}
-          customStyleMap={this.props.highlightStyleMap}
-          setInlineStyle={this.props.setInlineStyle}
-          showDropdown={this.state.showDropdown}
-          toggleDropdown={this.toggleDropdown}
-        />
+          <Dropdown
+            STYLE_LIST={TEXT_COLORS}
+            defaultOption="#6e6e6e"
+            wideMenu={false}
+            colorMenu={true}
+            editorState={this.props.editorState}
+            customStyleMap={this.props.textColorStyleMap}
+            setInlineStyle={this.props.setInlineStyle}
+            showDropdown={this.state.showDropdown}
+            toggleDropdown={this.toggleDropdown}
+          />
+          <Dropdown
+            STYLE_LIST={HIGHLIGHT_COLORS}
+            defaultOption="rgba(0, 0, 0, 0)"
+            wideMenu={false}
+            colorMenu={true}
+            editorState={this.props.editorState}
+            customStyleMap={this.props.highlightStyleMap}
+            setInlineStyle={this.props.setInlineStyle}
+            showDropdown={this.state.showDropdown}
+            toggleDropdown={this.toggleDropdown}
+          />
+        </div>
         <InlineStyleControls
           INLINE_STYLES={INLINE_STYLES}
           editorState={this.props.editorState}
