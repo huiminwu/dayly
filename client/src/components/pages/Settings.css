@@ -15,6 +15,7 @@
 .settingsWidget-container {
   display: flex;
   flex-basis: 0;
+  max-height: 52vh;
 }
 
 /* THEMES */
@@ -73,7 +74,6 @@
 .settingsWidget-container {
   flex-direction: column;
   overflow-y: scroll;
-  max-height: 60vh;
 }
 
 .settingsWidget-container::-webkit-scrollbar {
