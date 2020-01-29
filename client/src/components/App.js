@@ -110,16 +110,16 @@ const lilacTheme = {
   "--accent-text": "#ffffff",
   "--calendar-text-month": "#c0c0c0",
   "--calendar-text-year": "#696969",
-  "--background": "#eed3fb",
+  "--background": "#e7ddf8",
   "--borders": "#CFB4D3",
-  "--accent": "#B67BBE",
+  "--accent": "#e2375f",
   "--accent-text": "#ffffff",
-  "--headers": "#9D5BA6",
+  "--headers": "#9868b2",
   "--hover": "#E0CAE3",
-  "--tab1": "#7a4ca8",
-  "--tab2": "#796cff",
-  "--tab3": "#6c88ff",
-  "--tab0": "#6cbeff",
+  "--tab0": "#9aabf2",
+  "--tab1": "#e3b3ea",
+  "--tab2": "#c099e6",
+  "--tab3": "#9f98e4",
   "--label1": "#6cbeff",
   "--label2": "#6c88ff",
   "--label3": "#796bff",
@@ -167,31 +167,58 @@ const naturalTheme = {
   "--slider-10": "rgba(39, 95, 151, 0.83)",
   "--slider-11": "rgba(39, 95, 151,, 0.92)",
   "--slider-12": "rgba(39, 95, 151, 1)",
-}
+};
 
 const ivyTheme = {
   "--body": "#6e6e6e",
   "--accent-text": "#ffffff",
   "--calendar-text-month": "#c0c0c0",
   "--calendar-text-year": "#696969",
-  "--background": "#DEEDE9",
+  "--background": "#DFEDDE",
   "--borders": "#B6D8CE",
-  "--accent": "#3AB795",
+  "--accent": "#d34e4e",
   "--accent-text": "#ffffff",
-  "--headers": "#3E8E66",
+  "--headers": "#52853b",
   "--hover": "#ADEACC",
-  "--slider-1": "rgba(158, 251, 215, 0.08)",
-  "--slider-2": "rgba(158, 251, 215, 0.17)",
-  "--slider-3": "rgba(158, 251, 215, 0.25)",
-  "--slider-4": "rgba(158, 251, 215, 0.34)",
-  "--slider-5": "rgba(158, 251, 215, 0.42)",
-  "--slider-6": "rgba(158, 251, 215, 0.5)",
-  "--slider-7": "rgba(158, 251, 215, 0.58)",
-  "--slider-8": "rgba(158, 251, 215, 0.67)",
-  "--slider-9": "rgba(158, 251, 215, 0.75)",
-  "--slider-10": "rgba(158, 251, 215, 0.83)",
-  "--slider-11": "rgba(158, 251, 215, 0.92)",
-  "--slider-12": "rgba(158, 251, 215, 1)",
+  "--tab0": "#397923",
+  "--tab1": "#9de079",
+  "--tab2": "#9cd566",
+  "--tab3": "#72aa3d",
+  "--label1": "#89bd83",
+  "--label2": "#8dc51f",
+  "--label3": "#dea62a",
+  "--slider-1": "rgba(135, 223, 111, 0.08)",
+  "--slider-2": "rgba(135, 223, 111, 0.17)",
+  "--slider-3": "rgba(135, 223, 111, 0.25)",
+  "--slider-4": "rgba(135, 223, 111, 0.34)",
+  "--slider-5": "rgba(135, 223, 111, 0.42)",
+  "--slider-6": "rgba(135, 223, 111, 0.5)",
+  "--slider-7": "rgba(135, 223, 111, 0.58)",
+  "--slider-8": "rgba(135, 223, 111, 0.67)",
+  "--slider-9": "rgba(135, 223, 111, 0.75)",
+  "--slider-10": "rgba(135, 223, 111, 0.83)",
+  "--slider-11": "rgba(135, 223, 111, 0.92)",
+  "--slider-12": "rgba(135, 223, 111, 1)",
+};
+
+const galaxyTheme = {
+  "--body": "#ffffff",
+  "--bujo-body": "#454358",
+  "--accent-text": "#ffffff",
+  "--calendar-text-month": "#c0c0c0",
+  "--calendar-text-year": "#696969",
+  "--background": "#292933",
+  "--borders": "#fce2d2",
+  "--accent": "#88e3ff",
+  "--headers": "#7c8fe0",
+  "--hover": "#f7ebeb",
+  "--tab2": "#5992b9",
+  "--tab1": "#8cb1d3",
+  "--tab0": "#593c7d",
+  "--tab3": "#2b506f",
+  "--label1": "#9493cf",
+  "--label2": "#5e8ebd",
+  "--label3": "#deca6a",
 };
 
 const themeMap = {
@@ -199,6 +226,7 @@ const themeMap = {
   ivy: ivyTheme,
   lilac: lilacTheme,
   natural: naturalTheme,
+  galaxy: galaxyTheme,
 };
 
 // const themeMap = {
@@ -419,7 +447,7 @@ class App extends Component {
             handleViewChange={this.resetCurrentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
-          // handleViewChange={this.viewToday}
+            // handleViewChange={this.viewToday}
           />
 
           <div className="bullet-journal">
@@ -435,8 +463,8 @@ class App extends Component {
                     handleNextClick={() => this.handleNextClick("day")}
                   />
                 ) : (
-                    <Loading path="/day" />
-                  )}
+                  <Loading path="/day" />
+                )}
                 {/* View for when you look back on Monthly view */}
                 <Daily
                   path="/day/:oldYear/:oldMonth/:oldDay"

@@ -13,6 +13,7 @@
   z-index: 2;
   transform-origin: top left;
   animation: enter 0.25s ease-in;
+  color: #6e6e6e;
 }
 
 .popup-settings {
