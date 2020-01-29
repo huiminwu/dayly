@@ -30,11 +30,12 @@
   --tab2: #ffbc6c;
   --tab3: #ad6cff;
 
-  --label-1: #cf9893;
-  --label-2: #b3d9ff;
-  --label-3: #d9b3ff;
+  --label1: #cf9893;
+  --label2: #b3d9ff;
+  --label3: #d9b3ff;
 
   /* DEFAULT UNLESS EXPLICITLY RENAMED */
+  /* they do still have to be included in the theme object though, in case they get overridden */
   --body: #6e6e6e;
   --accent-text: #ffffff;
   --calendar-text-month: #c0c0c0;
@@ -77,6 +78,7 @@ body {
   font-weight: 200;
   height: 100vh;
   overflow-x: hidden;
+  color: var(--body);
 }
 
 form {

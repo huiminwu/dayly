@@ -93,27 +93,27 @@
 }
 
 .label-1 {
-  background-color: var(--label-1);
+  background-color: var(--label1);
 }
 
 .label-2 {
-  background-color: var(--label-2);
+  background-color: var(--label2);
 }
 
 .label-3 {
-  background-color: var(--label-3);
+  background-color: var(--label3);
 }
 
 .bullet-1 {
-  color: var(--label-1);
+  color: var(--label1);
 }
 
 .bullet-2 {
-  color: var(--label-2);
+  color: var(--label2);
 }
 
 .bullet-3 {
-  color: var(--label-3);
+  color: var(--label3);
 }
 
 .bullet-content {
