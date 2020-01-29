@@ -367,6 +367,9 @@ class Notebook extends Component {
       pinkText: {
         color: "#A6178E",
       },
+      whiteText: {
+        color: "#F5F2F4",
+      },
     };
 
     const customStyleMap = {
