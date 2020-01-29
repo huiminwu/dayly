@@ -17,33 +17,74 @@
 .collectionList-container {
   display: flex;
   flex-direction: column;
-  width: 20%;
-  height: 50vh;
-  overflow: scroll;
-  padding: 24px;
+  justify-content: flex-start;
+  align-items: flex-start;
   border-right: 1px solid var(--borders);
+  height: 59vh;
+  width: 20%;
+  padding: 24px 0;
 }
 
+.collectionList-opts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 90%;
+  overflow-y: scroll;
+  border: 1px solid var(--borders);
+  border-radius: 7px;
+  margin-top: 10px;
+  height: 80%;
+  padding: 10px 0;
+}
+
+.createNew-btn,
 .collectionList-btn {
   font-family: "Pippins", sans-serif;
   font-size: 14px;
-  text-align: left;
-  padding: 16px;
+  text-align: center;
+  padding: 20px 16px;
   background: none;
   border: none;
   overflow-wrap: break-word;
-}
-
-.collectionList-btn + .collectionList-btn {
-  margin-top: 16px;
+  width: 90%;
+  transition: all 0.5s;
+  cursor: pointer;
 }
 
 .collectionList-btn-active {
-  background: var(--accent);
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+.collectionList-btn:hover {
+  color: var(--accent);
+}
+
+.createNew-btn {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 7px;
+  transition: all 0.5s;
+}
+.editor-btn:hover,
+.createNew-btn:hover {
+  box-shadow: 0 0 5px var(--accent);
+}
+.editor-btn:active,
+.createNew-btn:active {
+  color: white;
+  background-color: var(--accent);
+  box-shadow: 0 0 5px var(--accent);
+}
 .collection-name {
+  font-size: 1.75rem;
+  color: var(--headers);
+  width: 100%;
   overflow-wrap: break-word;
+  border-bottom: 1px solid var(--borders);
+  margin-bottom: 5px;
 }
 
 .collections-editor {
@@ -55,6 +96,38 @@
 
 .collections-footer {
   padding: 16px 10px 16px 0px;
+  right: 15%;
   margin-top: -25px !important;
   margin-left: -6px;
+}
+
+.editor-btn {
+  padding: 5px 10px;
+  background-color: white;
+  outline: none;
+  border-radius: 7px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  transition: all 0.25s;
+}
+
+.editor-btn + .editor-btn {
+  margin-left: 5px;
+}
+
+.editor-tools {
+  display: inline;
+  margin: 10px 0 10px 10px;
+}
+.editor-tools > .toolbar-btn-group {
+  display: inline-flex;
+}
+.collection-tools {
+  border-bottom: 1px solid var(--borders);
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+.RichEditor-editor {
+  position: relative;
 }

@@ -44,13 +44,10 @@ class CollectionList extends Component {
 
     return (
       <div className="collectionList-container">
-        <button
-          className="createNew-btn collectionList-btn"
-          onClick={() => this.props.openPopup("createNew")}
-        >
-          Create a new collection...
+        <button className="createNew-btn" onClick={() => this.props.openPopup("createNew")}>
+          Create a new collection
         </button>
-        {collectionList}
+        <div className="collectionList-opts">{collectionList}</div>
       </div>
     );
   }
@@ -191,7 +188,9 @@ class Collections extends Component {
 
     return (
       <>
-        <h1 className="collections-header">Collections</h1>
+        <div className="Header-container">
+          <h1 className="Header-dates">Collections</h1>
+        </div>
         <div className="journal-container">
           {this.state.allCollections ? (
             <CollectionList

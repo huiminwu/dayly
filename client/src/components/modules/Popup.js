@@ -66,36 +66,39 @@ class Popup extends Component {
       );
     }
     return (
-      <div className={popupClassName}>
-        <div className="popup\_inner">
-          <p>{this.props.text}</p>
-          {this.props.submitType === "input" && (
-            <>
-              <input
-                type="text"
-                className="popup-text"
-                value={this.state.value}
-                onChange={this.handleChange}
-              />
+      <>
+        <div className="popup">
+          <div className="popup_inner">
+            <p>{this.props.text}</p>
+            {this.props.submitType === "input" && (
+              <>
+                <input
+                  type="text"
+                  className="popup-text"
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                />
+                <div className="popup-btn-container">
+                  {submitButton}
+                  <button className="popup-btn" onClick={this.props.closePopup}>
+                    Cancel
+                  </button>
+                </div>
+                {this.props.nameError && <div className="popup-error">{this.props.nameError}</div>}
+              </>
+            )}
+            {this.props.submitType === "binary" && (
               <div className="popup-btn-container">
-                {submitButton}
-                <button className="popup-btn" onClick={this.props.closePopup}>
-                  Cancel
+                <button className="popup-btn popup-delete-btn" onClick={this.props.closePopup}>
+                  No
                 </button>
+                {deleteButton}
               </div>
-              {this.props.nameError && <div className="popup-error">{this.props.nameError}</div>}
-            </>
-          )}
-          {this.props.submitType === "binary" && (
-            <div className="popup-btn-container">
-              <button className="popup-btn popup-delete-btn" onClick={this.props.closePopup}>
-                No
-              </button>
-              {deleteButton}
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+        <div className="overlay" onClick={this.props.closePopup}></div>
+      </>
     );
   }
 }
