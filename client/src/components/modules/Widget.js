@@ -235,8 +235,7 @@ class Widget extends Component {
       name: this.props.name,
       value: val,
     };
-    // console.log(params)
-    post("/api/widget", params).then((x) => (console.log(x)));
+    post("/api/widget", params);
   };
 
   render() {
