@@ -128,6 +128,10 @@
   margin-bottom: 20px;
 }
 
-.RichEditor-editor {
+.collections-editor-body {
   position: relative;
+}
+
+.collections-editor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+  display: none;
 }

@@ -17,6 +17,9 @@
 
 .toolbar-icon-btn {
   width: 2vw;
+  padding: 0px;
+  line-height: 2vw;
+  font-size: 14px;
 }
 
 .toolbar-btn {

@@ -365,7 +365,7 @@ class Notebook extends Component {
     const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
     let editorClassName = "editor-body";
-    var contentState = this.state.editorState.getCurrentContent();
+    let contentState = this.state.editorState.getCurrentContent();
     if (!contentState.hasText()) {
       if (
         contentState

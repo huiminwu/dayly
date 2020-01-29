@@ -116,7 +116,7 @@ class CollectionEditor extends Component {
       },
     ];
 
-    let editorClassName = "RichEditor-editor";
+    let editorClassName = "collections-editor-body";
     let contentState = this.state.editorState.getCurrentContent();
     if (!contentState.hasText()) {
       if (
@@ -125,7 +125,7 @@ class CollectionEditor extends Component {
           .first()
           .getType() !== "unstyled"
       ) {
-        editorClassName += " RichEditor-hidePlaceholder";
+        editorClassName += " editor-hidePlaceholder";
       }
     }
 
