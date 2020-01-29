@@ -49,7 +49,7 @@
 }
 
 .Header-nav-btn-inactive {
-  background-color: white !important;
+  background-color: var(--bujo-body) !important;
   color: var(--borders);
   cursor: default;
 }
