@@ -63,11 +63,9 @@ const defaultTheme = {
   "--borders": "#cec0b7",
   "--accent": "#cf9893",
   "--accent-text": "#ffffff",
-  "--headers": "#8a2020",
+  "--headers": "#3d3d3d",
   "--body": "#6e6e6e",
   "--hover": "#f7ebeb",
-  "--active": "gold",
-  "--active-text": "#ffffff",
 };
 
 const ivyTheme = {
@@ -78,20 +76,18 @@ const ivyTheme = {
   "--headers": "#3E8E66",
   "--body": "#251605",
   "--hover": "#ADEACC",
-  "--active": "#88EFD7",
-  "--active-text": "#ffffff",
 };
 
 const themeMap = {
   default: {
     name: "default",
     theme: defaultTheme,
-    displayColors: ["#ff6c6c", "#6cb9ff", "#ffbc6c"],
+    displayColors: ["#ff6c6c", "#6cb9ff", "#ffbc6c", "#ff6c6c", "#6cb9ff"],
   },
   ivy: {
     name: "ivy",
     theme: ivyTheme,
-    displayColors: ["#3AB795", "#ADEACC", "#3E8E66"],
+    displayColors: ["#3AB795", "#ADEACC", "#3E8E66", "#3AB795", "#ADEACC"],
   },
 };
 
@@ -117,8 +113,6 @@ class App extends Component {
     const user = await get("/api/whoami");
     // they are registered in the database, and currently logged in.
     if (user._id) {
-      console.log("user theme is " + user.theme);
-      console.log(user);
       this.setState({
         creator: user._id,
         creatorName: user.name,
@@ -139,10 +133,11 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentView !== window.location.pathname.slice(1))
+    if (prevState.currentView !== window.location.pathname.slice(1)) {
       this.setState({
         currentView: window.location.pathname.slice(1),
       });
+    }
   }
 
   handleLogin = (res) => {
@@ -240,7 +235,6 @@ class App extends Component {
 
   handleThemeChange = (themeName) => {
     post("/api/user/theme", { theme: themeName }).then((updatedUser) => {
-      console.log("theme set");
       this.setState({ activeTheme: updatedUser.theme });
       // this.setTheme(updatedUser.theme);
     });
@@ -273,17 +267,23 @@ class App extends Component {
     });
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentView !== window.location.pathname.slice(1))
+  resetCurrentView = () => {
+    if (this.state.currentView.length != "") {
       this.setState({
-        currentView: window.location.pathname.slice(1),
+        currentView: "",
       });
+    }
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentView !== window.location.pathname.slice(1)) {
+      this.setState({ currentView: window.location.pathname.slice(1) });
+    }
   }
 
   render() {
     if (this.state.creator) {
       if (this.state.activeTheme) {
-        console.log(this.state.activeTheme);
         this.setTheme(this.state.activeTheme);
       }
       return (
@@ -292,9 +292,10 @@ class App extends Component {
             creator={this.state.creator}
             creatorName={this.state.creatorName}
             currentView={this.state.currentView}
+            handleViewChange={this.resetCurrentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
-            handleViewChange={this.viewToday}
+            // handleViewChange={this.viewToday}
           />
 
           <div className="bullet-journal">
@@ -310,8 +311,8 @@ class App extends Component {
                     handleNextClick={() => this.handleNextClick("day")}
                   />
                 ) : (
-                    <Loading path="/day" />
-                  )}
+                  <Loading path="/day" />
+                )}
                 {/* View for when you look back on Monthly view */}
                 <Daily
                   path="/day/:oldYear/:oldMonth/:oldDay"

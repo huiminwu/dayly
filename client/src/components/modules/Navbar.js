@@ -42,6 +42,8 @@ const GOOGLE_CLIENT_ID = "209641585704-as3jqe7b1ensmoc8anroucgruqqq8a72.apps.goo
  * Proptypes
  * @param {func} handleLogin
  * @param {func} handleLogout
+ * @param currentView
+ * @param {func} handleViewChange
  **/
 class Navbar extends Component {
   constructor(props) {
@@ -138,7 +140,7 @@ class Navbar extends Component {
                         <h3 className="name"> {this.props.creatorName} </h3>
                       </li>
                       <Link className="settings" to="/settings">
-                        <li className="settings-Container">
+                        <li className="settings-Container" onClick={this.props.handleViewChange}>
                           Settings
                         </li>
                       </Link>
@@ -166,7 +168,7 @@ class Navbar extends Component {
               />
             )}
         </div>
-      </div>
+      </div >
     );
   }
 }
