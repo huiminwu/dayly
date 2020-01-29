@@ -7,7 +7,7 @@
 }
 
 .editor-body {
-  height: 50vh;
+  height: 48vh;
   border-top: 1px solid var(--borders);
   margin-top: 16px;
   padding-top: 16px;
@@ -32,12 +32,12 @@
   position: fixed;
   display: flex;
   justify-content: flex-end;
-  align-items: baseline;
   width: 60vw;
   background-color: var(--bujo-body);
-  padding: 16px 8px 16px 0px;
-  margin-top: -26px;
-  margin-left: -6px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  margin-left: 0px;
+  margin-top: 0px;
   z-index: 1;
 }
 

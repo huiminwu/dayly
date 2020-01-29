@@ -8,7 +8,7 @@
 .bullet-journal_body {
   background-color: var(--bujo-body);
   border-radius: 25px 25px 0 0;
-  padding: 30px;
+  padding: 30px !important;
   margin-top: 7vh;
   width: 80vw;
   height: 75vh;
