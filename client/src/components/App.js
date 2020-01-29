@@ -42,6 +42,7 @@ import {
   faMeh,
   faCog,
   faTrashAlt,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircle as farFaCircle } from "@fortawesome/free-regular-svg-icons";
 library.add(
@@ -68,6 +69,7 @@ library.add(
   faMeh,
   faCog,
   faTrashAlt,
+  faPlus
 );
 
 const moment = require("moment");
@@ -327,7 +329,7 @@ class App extends Component {
             handleViewChange={this.resetCurrentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
-          // handleViewChange={this.viewToday}
+            // handleViewChange={this.viewToday}
           />
 
           <div className="bullet-journal">
@@ -343,8 +345,8 @@ class App extends Component {
                     handleNextClick={() => this.handleNextClick("day")}
                   />
                 ) : (
-                    <Loading path="/day" />
-                  )}
+                  <Loading path="/day" />
+                )}
                 {/* View for when you look back on Monthly view */}
                 <Daily
                   path="/day/:oldYear/:oldMonth/:oldDay"
