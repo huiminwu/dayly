@@ -125,7 +125,7 @@ class Notebook extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.data !== prevProps.data) {
       if (this.props.data.notes.value) {
         const contentStateParsed = JSON.parse(this.props.data.notes.value);
@@ -170,35 +170,35 @@ class Notebook extends Component {
     return getDefaultKeyBinding(e);
   };
 
-  // getBlockStyle = (block, customStyleMap) => {
-  //   const blockStyles = [];
-  //   const styleMap = Object.keys(customStyleMap);
+  getBlockStyle = (block, customStyleMap) => {
+    const blockStyles = [];
+    const styleMap = Object.keys(customStyleMap);
 
-  //   switch (block.getType()) {
-  //     case "ordered-list-item":
-  //     case "unordered-list-item":
-  //       // With draft JS we cannot output different styles for the same block type.
-  //       // We can however customise the css classes:
-  //       block.findStyleRanges(
-  //         (item) => {
-  //           const itemStyles = item.getStyle();
-  //           return _.some(styleMap, (styleKey) => itemStyles.includes(styleKey));
-  //         },
-  //         (startCharacter) => {
-  //           if (startCharacter === 0) {
-  //             // Apply the same styling to the block as the first character
-  //             _.each(block.getInlineStyleAt(startCharacter).toArray(), (styleKey) => {
-  //               blockStyles.push(`block-style-${styleKey}`);
-  //             });
-  //           }
-  //         }
-  //       );
+    switch (block.getType()) {
+      case "ordered-list-item":
+      case "unordered-list-item":
+        // With draft JS we cannot output different styles for the same block type.
+        // We can however customise the css classes:
+        block.findStyleRanges(
+          (item) => {
+            const itemStyles = item.getStyle();
+            return _.some(styleMap, (styleKey) => itemStyles.includes(styleKey));
+          },
+          (startCharacter) => {
+            if (startCharacter === 0) {
+              // Apply the same styling to the block as the first character
+              _.each(block.getInlineStyleAt(startCharacter).toArray(), (styleKey) => {
+                blockStyles.push(`block-style-${styleKey}`);
+              });
+            }
+          }
+        );
 
-  //       return blockStyles.join(" ");
-  //     default:
-  //       return null;
-  //   }
-  // };
+        return blockStyles.join(" ");
+      default:
+        return null;
+    }
+  };
 
   setInlineStyle = (inlineStyle, customStyleMap) => {
     const editorState = this.state.editorState;
@@ -234,26 +234,55 @@ class Notebook extends Component {
 
   // commented code is probably unnecessary, but leaving it there just in case there's a bug
   handleSave = debounce((editorState) => {
-    // const currentSelection = this.state.editorState.getSelection();
-    const rawContentState = convertToRaw(editorState.getCurrentContent());
-    let contentStateString = JSON.stringify(rawContentState);
-    if (!editorState.getCurrentContent().hasText()) {
-      const rawEmptyContentState = convertToRaw(EditorState.createEmpty().getCurrentContent());
-      contentStateString = JSON.stringify(rawEmptyContentState);
-    }
-    const params = {
-      day: this.props.dateObject.format(),
-      value: contentStateString,
-    };
-    post("/api/notes", params).then((notes) => {
-      // const convertedContentState = convertFromRaw(notes);
-      // const editorStateWithContent = EditorState.createWithContent(convertedContentState);
-      this.setState({
-        // editorState: EditorState.forceSelection(editorStateWithContent, currentSelection),
-        isSaved: true,
+    const currentContentState = this.state.editorState.getCurrentContent();
+    const newContentState = editorState.getCurrentContent();
+
+    if (currentContentState == newContentState) {
+      // There was a change in the content
+      const rawContentState = convertToRaw(editorState.getCurrentContent());
+      let contentStateString = JSON.stringify(rawContentState);
+      if (!editorState.getCurrentContent().hasText()) {
+        const rawEmptyContentState = convertToRaw(EditorState.createEmpty().getCurrentContent());
+        contentStateString = JSON.stringify(rawEmptyContentState);
+      }
+      const params = {
+        day: this.props.dateObject.format(),
+        value: contentStateString,
+      };
+      post("/api/notes", params).then((notes) => {
+        // const convertedContentState = convertFromRaw(notes);
+        // const editorStateWithContent = EditorState.createWithContent(convertedContentState);
+        this.setState({
+          // editorState: EditorState.forceSelection(editorStateWithContent, currentSelection),
+          isSaved: true,
+        });
       });
-    });
+    } else {
+      console.log("false alarm!");
+      // The change was triggered by a change in focus/selection
+    } // const currentSelection = this.state.editorState.getSelection();
   }, 1000);
+  // handleSave = (editorState) => {
+  //   // const currentSelection = this.state.editorState.getSelection();
+  //   const rawContentState = convertToRaw(editorState.getCurrentContent());
+  //   let contentStateString = JSON.stringify(rawContentState);
+  //   if (!editorState.getCurrentContent().hasText()) {
+  //     const rawEmptyContentState = convertToRaw(EditorState.createEmpty().getCurrentContent());
+  //     contentStateString = JSON.stringify(rawEmptyContentState);
+  //   }
+  //   const params = {
+  //     day: this.props.dateObject.format(),
+  //     value: contentStateString,
+  //   };
+  //   post("/api/notes", params).then((notes) => {
+  //     // const convertedContentState = convertFromRaw(notes);
+  //     // const editorStateWithContent = EditorState.createWithContent(convertedContentState);
+  //     this.setState({
+  //       // editorState: EditorState.forceSelection(editorStateWithContent, currentSelection),
+  //       isSaved: true,
+  //     });
+  //   });
+  // };
 
   render() {
     const fontFamilyStyleMap = {
