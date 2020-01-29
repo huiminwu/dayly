@@ -16,10 +16,17 @@ class BinaryWidget extends Component {
 
   // submits and updates value
   handleOnClick = (val) => {
+    let v = (val === "true");
+    if (v === true) {
+      v = "false"
+    } else {
+      v = "true"
+    }
     this.setState({
-      value: val,
+      value: v,
     });
-    this.props.submitValue(val);
+    this.props.submitValue(v);
+    console.log(v)
   };
 
   componentDidMount() {
@@ -29,49 +36,54 @@ class BinaryWidget extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.value !== this.props.value) {
+    if (this.props.iteration !== prevProps.iteration) {
       this.setState({
         value: this.props.value,
       });
     }
   }
 
+
   render() {
     return (
       <>
         <div className="widget-name">{this.props.name}</div>
-        {this.props.work === "no" ?
-          (
+        {this.props.work === "no" ? (
+          <>
+            <input type="checkbox" id="toggle"
+              className="checkbox"
+            />
+            <label for="toggle" class="switch"></label>
+          </>
+        ) : (
             <>
-              <button
-                className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
-              >
-                <FontAwesomeIcon icon="check" />
-              </button>
-              <button
-                className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
-              >
-                <FontAwesomeIcon icon="times" />
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                className={`yes-btn ${this.state.value === "true" ? "submitted-val" : ""}`}
-                onClick={() => this.handleOnClick("true")}
-              >
-                <FontAwesomeIcon icon="check" />
-              </button>
-              <button
+              {this.state.value === "true" ? (
+                <>
+                  <input type="checkbox" id="toggle"
+                    className={`checkbox`}
+                    onClick={() => this.handleOnClick(this.state.value)}
+                    checked
+                  />
+                  <label for="toggle" class="switch"></label>
+                </>
+              ) : (
+                  <>
+                    <input type="checkbox" id="toggle"
+                      className={`checkbox`}
+                      onClick={() => this.handleOnClick(this.state.value)}
+                    />
+                    <label for="toggle" class="switch"></label>
+                  </>
+                )}
+
+              {/* <button
                 className={`no-btn ${this.state.value === "false" ? "submitted-val" : ""}`}
                 onClick={() => this.handleOnClick("false")}
               >
                 <FontAwesomeIcon icon="times" />
-              </button>
+              </button> */}
             </>
-          )
-        }
-
+          )}
       </>
     );
   }
@@ -82,6 +94,7 @@ class ColorWidget extends Component {
     super(props);
     this.state = {
       value: "",
+      loadedValue: props.value,
     };
   }
 
@@ -95,12 +108,12 @@ class ColorWidget extends Component {
 
   componentDidMount() {
     this.setState({
-      value: this.props.value,
+      value: this.state.loadedValue,
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.value !== this.props.value) {
+    if (this.props.iteration !== prevProps.iteration) {
       this.setState({
         value: this.props.value,
       });
@@ -133,7 +146,23 @@ class ColorWidget extends Component {
     return (
       <>
         <div className="widget-name">{this.props.name}</div>
-        <div className={`${this.props.isSettings ? "color-btn-container-Setting" : "color-btn-container"}`}>{colorButtons}</div>
+        <div
+          className={`${
+            this.props.isSettings ? "color-btn-container-Setting" : "color-btn-container"
+            }`}
+        >
+          {colorButtons}
+          {(this.props.work === "yes" && this.props.name.toLowerCase() === "mood") &&
+            <>
+              <br />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="laugh-beam" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="grin-hearts" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="sad-cry" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="meh" />
+              <FontAwesomeIcon size="2x" className="mood-icon" icon="tired" />
+            </>
+          }
+        </div>
       </>
     );
   }
@@ -156,9 +185,8 @@ class SliderWidget extends Component {
       slider_value: this.props.value,
     });
   }
-
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.slider_value !== this.props.value) {
+    if (this.props.iteration !== prevProps.iteration) {
       this.setState({
         slider_value: this.props.value,
       });
@@ -166,7 +194,6 @@ class SliderWidget extends Component {
   }
 
   render() {
-
     return (
       <>
         <div className="widget-name">{this.props.name}</div>
@@ -202,11 +229,11 @@ class SliderWidget extends Component {
  * Widget is a component for displaying widgets
  *
  * Proptypes
- * @param {moment} dateObject
- * @param {string} name of widget
- * @param {string} type of widget
- * @param {string} placeholder of widget
- **/
+* @param {moment} dateObject
+* @param {string} name of widget
+* @param {string} type of widget
+* @param {string} placeholder of widget
+    **/
 class Widget extends Component {
   constructor(props) {
     super(props);
@@ -226,40 +253,40 @@ class Widget extends Component {
 
   render() {
     return (
-      <div className={`${this.props.isSettings ? "widget-Setting" : "widget-Daily"}`} >
-        {
-          this.props.type === "BinaryWidget" && (
-            <BinaryWidget
-              name={this.props.name}
-              submitValue={this.submitValue}
-              value={this.props.value}
-              work={this.props.work}
-            />
-          )
-        }
-        {
-          this.props.type === "ColorWidget" && (
-            <ColorWidget
-              isSettings={this.props.isSettings}
-              name={this.props.name}
-              submitValue={this.submitValue}
-              value={this.props.value}
-              work={this.props.work}
-            />
-          )
-        }
-        {
-          this.props.type === "SliderWidget" && (
-            <SliderWidget
-              name={this.props.name}
-              className="slider-widget"
-              submitValue={this.submitValue}
-              value={this.props.value}
-              work={this.props.work}
-            />
-          )
-        }
-      </div >
+      <div className={`${this.props.isSettings ? "widget-Setting" : "widget-Daily"}`}>
+        {this.props.type === "BinaryWidget" && (
+          <BinaryWidget
+            iteration={this.props.iteration}
+            name={this.props.name}
+            dateObject={this.props.dateObject}
+            submitValue={this.submitValue}
+            value={this.props.value}
+            work={this.props.work}
+          />
+        )}
+        {this.props.type === "ColorWidget" && (
+          <ColorWidget
+            iteration={this.props.iteration}
+            isSettings={this.props.isSettings}
+            dateObject={this.props.dateObject}
+            name={this.props.name}
+            submitValue={this.submitValue}
+            value={this.props.value}
+            work={this.props.work}
+          />
+        )}
+        {this.props.type === "SliderWidget" && (
+          <SliderWidget
+            iteration={this.props.iteration}
+            name={this.props.name}
+            dateObject={this.props.dateObject}
+            className="slider-widget"
+            submitValue={this.submitValue}
+            value={this.props.value}
+            work={this.props.work}
+          />
+        )}
+      </div>
     );
   }
 }

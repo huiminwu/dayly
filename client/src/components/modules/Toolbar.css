@@ -33,8 +33,11 @@
   cursor: default;
 }
 
-.toolbar-btn:hover {
+.toolbar-btn:hover,
+.toolbar-icon-btn:hover {
   cursor: pointer;
+  background-color: var(--hover);
+  transition: all 0.4s;
 }
 
 .toolbar-btn,
@@ -49,6 +52,11 @@
 }
 
 /* DROPDOWN MENU */
+.dropdown-group {
+  display: flex;
+  justify-content: center;
+}
+
 .dropdown-container {
   display: inline-block;
   position: relative; /* idk if this might break it lol */

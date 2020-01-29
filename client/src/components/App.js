@@ -35,6 +35,13 @@ import {
   faStrikethrough,
   faHighlighter,
   faFont,
+  faSadCry,
+  faLaughBeam,
+  faGrinHearts,
+  faTired,
+  faMeh,
+  faCog,
+  faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircle as farFaCircle } from "@fortawesome/free-regular-svg-icons";
 library.add(
@@ -53,7 +60,14 @@ library.add(
   faMinus,
   faStrikethrough,
   faHighlighter,
-  faFont
+  faFont,
+  faSadCry,
+  faLaughBeam,
+  faGrinHearts,
+  faTired,
+  faMeh,
+  faCog,
+  faTrashAlt,
 );
 
 const moment = require("moment");
@@ -293,7 +307,9 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.currentView !== window.location.pathname.slice(1)) {
-      this.setState({ currentView: window.location.pathname.slice(1) });
+      this.setState({
+        currentView: window.location.pathname.slice(1),
+      });
     }
   }
 
@@ -311,7 +327,7 @@ class App extends Component {
             handleViewChange={this.resetCurrentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
-            // handleViewChange={this.viewToday}
+          // handleViewChange={this.viewToday}
           />
 
           <div className="bullet-journal">
@@ -327,8 +343,8 @@ class App extends Component {
                     handleNextClick={() => this.handleNextClick("day")}
                   />
                 ) : (
-                  <Loading path="/day" />
-                )}
+                    <Loading path="/day" />
+                  )}
                 {/* View for when you look back on Monthly view */}
                 <Daily
                   path="/day/:oldYear/:oldMonth/:oldDay"

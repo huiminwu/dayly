@@ -3,7 +3,7 @@ import "./Settings.css";
 import "../../utilities.css";
 
 import Widget from "../modules/Widget.js";
-import minus from "../../public/round-delete-button.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { get, post } from "../../utilities";
 
@@ -24,7 +24,7 @@ class Theme extends Component {
     const active = this.props.activeTheme === this.props.name;
     return (
       <div
-        className={`theme-container ${active && "theme-active"}`}
+        className={`theme-option ${active && "theme-active"}`}
         onClick={() => this.props.handleThemeChange(this.props.name)}
       >
         <div className="theme-name">{this.props.name}</div>
@@ -68,18 +68,17 @@ class Settings extends Component {
 
   displayWidgets = () => {
     let widgets = [];
-    let isBinary = false;
     if (this.props.widgetlist) {
       this.props.widgetlist.forEach((widget) => {
-        isBinary = widget["widgetType"] === "BinaryWidget";
         widgets.push(
           <div className="wid-container">
-            <> {this.getWidgetStyle(widget["name"], widget["widgetType"])} </>
-            <img
-              className={`${isBinary ? "minus-sign-Binary" : "minus-sign"}`}
-              onClick={() => this.handleWidDelete(widget["_id"], widget["name"])}
-              src={minus}
-            ></img>
+            {this.getWidgetStyle(widget["name"], widget["widgetType"])}
+            <div
+              className="widget-delete-btn"
+              onClick={() => this.props.handleWidgetDelete(widget["_id"], widget["name"])}
+            >
+              <FontAwesomeIcon icon="trash-alt" />
+            </div>
           </div>
         );
       });
@@ -110,10 +109,6 @@ class Settings extends Component {
     this.setState({
       newWidgetType: event.target.value,
     });
-  };
-
-  handleWidDelete = (id, name) => {
-    this.props.handleWidgetDelete(id, name);
   };
 
   handleWidSubmit = (e) => {
@@ -150,12 +145,12 @@ class Settings extends Component {
       let prevWidget = w["name"].toLowerCase();
       let newWidget = this.state.newWidgetName.toLowerCase();
       if (newWidget === prevWidget) {
-        alert = "Please name your widgets uniquely";
+        alert = "You already have a widget with this name!";
       }
     });
 
     if (this.state.newWidgetName.length === 0) {
-      alert = "Please have a name a length > 0";
+      alert = "Widget name cannot be blank.";
     }
 
     return alert;
@@ -218,7 +213,6 @@ class Settings extends Component {
             Add Widget
           </button>
         </div>
-        <div className="error-container">{this.state.errorMsgs}</div>
       </div>
     );
   }
