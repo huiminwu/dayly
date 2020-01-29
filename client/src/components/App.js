@@ -560,7 +560,6 @@ class App extends Component {
             handleViewChange={this.resetCurrentView}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
-          // handleViewChange={this.viewToday}
           />
 
           <div className="bullet-journal">
