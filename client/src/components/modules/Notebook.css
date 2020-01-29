@@ -1,12 +1,12 @@
 .editor-container {
   width: 60vw;
-  padding: 24px 16px 24px 24px;
+  padding: 24px 16px 0px 24px;
   color: var(--body);
   word-wrap: break-word;
 }
 
 .editor-body {
-  height: 48vh;
+  height: 50vh;
   border-top: 1px solid var(--borders);
   margin-top: 48px;
   padding-top: 16px;
