@@ -15,7 +15,7 @@
 
 .editor-body::-webkit-scrollbar {
   background-color: var(--bujo-body);
-  display: none;
+  /* display: none; */
 }
 
 .editor-body::-webkit-scrollbar-thumb {

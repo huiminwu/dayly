@@ -48,9 +48,9 @@
   scrollbar-width: none; /* Firefox */
 }
 
-.collectionList-opts::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
-}
+/* .collectionList-opts::-webkit-scrollbar {
+  display: none; Safari and Chrome
+} */
 
 .createNew-btn,
 .collectionList-btn {
