@@ -39,6 +39,15 @@
   padding: 10px 0;
 }
 
+.collectionList-opts::-webkit-scrollbar {
+  background-color: var(--bujo-body);
+}
+
+.ccollectionList-opts::-webkit-scrollbar-thumb {
+  background: var(--accent);
+
+  border-radius: 6px;
+}
 .createNew-btn,
 .collectionList-btn {
   font-family: "Poppins", sans-serif;
@@ -95,6 +104,15 @@
   padding: 16px;
   word-wrap: break-word;
   overflow: scroll;
+}
+
+.collections-editor::-webkit-scrollbar {
+  background-color: var(--bujo-body);
+}
+
+.collections-editor::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 6px;
 }
 
 .collections-footer {

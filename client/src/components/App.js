@@ -145,7 +145,6 @@ const naturalTheme = {
   "--background": "#f4eee1",
   "--borders": "#e4d1c2",
   "--accent": "#efba89",
-  "--accent-text": "#ffffff",
   "--headers": "#999999",
   "--hover": "#f1e3d6",
   "--tab1": "#d3c4be",

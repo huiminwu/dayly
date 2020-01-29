@@ -76,6 +76,17 @@
   max-height: 60vh;
 }
 
+.settingsWidget-container::-webkit-scrollbar {
+  width: 15px;
+  background-color: var(--bujo-body);
+}
+
+.settingsWidget-container::-webkit-scrollbar-thumb {
+  width: 6px;
+  background: var(--accent);
+  border-radius: 6px;
+}
+
 .wid-container {
   width: 100%;
 }
