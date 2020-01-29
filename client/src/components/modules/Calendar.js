@@ -13,6 +13,9 @@ dateObject={this.props.dateObject}
 widgetData={this.state.widgetData}
 */
 
+// Guide on creating calendar from scratch was found here:
+// https://programmingwithmosh.com/react/build-a-react-calendar-component-from-scratch/
+
 class Calendar extends Component {
   constructor(props) {
     super(props);
