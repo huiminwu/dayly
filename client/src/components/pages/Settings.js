@@ -195,11 +195,18 @@ class Settings extends Component {
             <h2 className="settings-category">Theme</h2>
             <div className="theme-container">
               {themeList.map((themeName) => {
-                const currentTheme = this.props.themeMap[themeName];
+                const theme = this.props.themeMap[themeName];
+                const hexCodes = [
+                  theme["--accent"],
+                  theme["--tab0"],
+                  theme["--tab1"],
+                  theme["--tab2"],
+                  theme["--tab3"],
+                ];
                 return (
                   <Theme
-                    name={currentTheme.name}
-                    hexCodes={currentTheme.displayColors}
+                    name={themeName}
+                    hexCodes={hexCodes}
                     activeTheme={this.props.activeTheme}
                     handleThemeChange={this.props.handleThemeChange}
                   />

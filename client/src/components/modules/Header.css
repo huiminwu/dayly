@@ -33,6 +33,7 @@
 
 .Header-nav-btn:hover {
   background-color: var(--hover) !important;
+  color: var(--accent) !important;
   transition: all 0.4s;
 }
 
