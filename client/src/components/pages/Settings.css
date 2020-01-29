@@ -1,28 +1,31 @@
 .settings-container {
-  /* width: 90vw; */
   height: 75vh;
   padding-top: 20px;
   display: flex;
-  flex-direction: column;
-  overflow: scroll;
+  flex-direction: row;
+  flex-basis: 0;
+  justify-content: space-evenly;
 }
 
-/* THEMES */
-.theme-list-container {
+.settings-container > .themes,
+.settings-container > .widgets {
+  width: 40%;
+}
+
+.theme-container,
+.settingsWidget-container {
   display: flex;
 }
 
-.theme-container + .theme-container {
-  margin-left: 16px;
-}
+/* THEMES */
 
-.theme-container {
+.theme-option {
   width: 8vw;
   padding: 16px;
   border: 1px solid red;
 }
 
-.theme-container:hover {
+.theme-option:hover {
   cursor: pointer;
 }
 
@@ -51,21 +54,43 @@
 
 /* WIDGETS */
 
+.settingsWidget-container {
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 60%;
+}
+
+.wid-container,
+.form {
+  width: 90%;
+}
+.wid-container {
+  border: 1px solid var(--borders);
+  border-radius: 7px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
 h2 {
   color: var(--headers);
   margin-top: 0;
   margin-bottom: 0;
 }
 
-h3 {
+.settings-category {
   color: var(--body);
 }
 .dropdown-settings {
   font-family: "Poppins", sans-serif;
-  padding: 10px;
-  background-color: var(--accent);
-  color: white;
-  margin: 5px;
+  background-color: none;
+  font-size: 0.75rem;
+  padding: 10px 5px;
+  color: var(--headers);
+  border-color: var(--borders);
+  margin: 0 5px;
+  height: 2rem;
   border-radius: 10px;
 }
 
@@ -82,32 +107,43 @@ option {
 }
 
 .form {
-  padding-top: 10px;
+  padding-top: 20px;
+}
+.form-options {
+  display: flex;
+  flex-direction: row;
 }
 
 .widget-button {
   font-family: "Poppins", sans-serif;
   color: white;
-  width: 15%;
+  font-size: 0.75rem;
   background: var(--accent);
-  padding: 10px 10px 10px 10px;
+  padding: 7px 10px;
   border: 1px solid transparent;
   border-radius: 10px;
   text-decoration: none;
+  width: 25%;
+  transition: all 0.5s;
 }
 
 .widget-button:hover {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--accent);
+  background: none;
+  color: var(--accent);
+}
+
+.widget-button:active {
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .new-widget-input {
-  width: 35vmin;
-  padding: 5px;
-  padding-top: 15px;
-  border: 0;
-  border-bottom: 2px solid gray;
+  display: block;
+  width: 55%;
+  height: 1.75rem;
+  border: 1px solid var(--borders);
   outline: 0;
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-family: "Poppins", sans-serif;
   background: transparent;
   transition: border-color 0.2s;
@@ -119,9 +155,9 @@ option {
 } */
 
 .new-widget-input:focus {
-  padding-bottom: 6px;
-  border-width: 3px;
+  height: 1.75rem;
   border-image: linear-gradient(to right, grey, var(--accent));
+  box-shadow: 0 0 5px var(--accent);
   border-image-slice: 1;
 }
 
@@ -130,28 +166,13 @@ option {
 .new-widget-input:invalid {
   box-shadow: none;
 }
-
+.minus-sign-Binary,
 .minus-sign {
   height: 25px;
   width: 25px;
   display: inline;
   float: right;
-}
-
-.minus-sign-Binary {
-  height: 25px;
-  width: 25px;
-  display: inline;
-  float: right;
-}
-
-.wid-container {
-  border: 1px solid var(--borders);
-  border-radius: 7px;
-  padding: 5px;
-  width: 35vmin;
-  align-items: center;
-  justify-content: center;
+  opacity: 50%;
 }
 
 .wid-container + .wid-container {
@@ -163,4 +184,5 @@ option {
 }
 .dropdown-option {
   padding: 10px;
+  width: 25%;
 }
