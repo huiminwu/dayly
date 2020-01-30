@@ -22,7 +22,9 @@ class Landing extends Component {
       <>
         <div className="landing-Container">
           <h1 className="title">day.ly</h1>
-          <p className="tagline">the silver bullet of bullet journals</p>
+          <p className="tagline">
+            the <span className="tagline-highlight">silver bullet</span> of bullet journals
+          </p>
           <img className="pic" src={journal}></img>
         </div>
       </>

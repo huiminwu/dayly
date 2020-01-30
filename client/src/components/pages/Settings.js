@@ -129,10 +129,10 @@ class Settings extends Component {
 
   validate = (name) => {
     let alert = "";
-    const badChars = "~`!#$%^&*+=-[]\\';,/{}|\":<>?";
+    const badChars = '~`!#^&*+=-[];/{}|":<>?';
     for (var i = 0; i < name.length; i++) {
       if (badChars.indexOf(name.charAt(i)) != -1) {
-        alert = "Special characters ~`!#$%^&*+=-[]\\';,/{}|\":<>? \n are not allowed.\n";
+        alert = 'Special characters ~`!#^&*+=-[];/{}|":<>? \n are not allowed.\n';
       }
     }
 
@@ -194,7 +194,6 @@ class Settings extends Component {
         <div className="settings-container">
           <div className="themes">
             <h2 className="settings-category">Themes</h2>
-            <p className="popup-error">Modified widget list will be shown starting tomorrow.</p>
             <div className="theme-container">
               {themeList.map((themeName) => {
                 const theme = this.props.themeMap[themeName];
@@ -220,7 +219,6 @@ class Settings extends Component {
 
           <div className="widgets">
             <h2 className="settings-category">Widgets</h2>
-            <p className="popup-error">Modified widget list will be shown starting tomorrow.</p>
             <div className="settingsWidget-container">{this.displayWidgets()}</div>
             <div className="widget-createNew-container">
               {this.state.showCreateNew && (
