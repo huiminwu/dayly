@@ -35,11 +35,8 @@ class Header extends Component {
   }
 
   onCurrentDay = () => {
-    return (
-      moment()
-        .local()
-        .format("D") === this.props.dateObject.format("D")
-    );
+    let date = moment().local().format("MMMM D, YYYY");
+    return (date === this.props.dateObject.format("MMMM D, YYYY"));
   };
   render() {
     // display full date if in daily view
@@ -48,8 +45,8 @@ class Header extends Component {
       this.props.view === "day"
         ? this.props.dateObject.format("MMMM D, YYYY")
         : this.props.view === "month"
-        ? this.props.dateObject.format("MMMM YYYY")
-        : this.props.dateObject.format("YYYY");
+          ? this.props.dateObject.format("MMMM YYYY")
+          : this.props.dateObject.format("YYYY");
 
     let rightBtn = (
       <button className="Header-nav-btn" type="button" onClick={this.props.handleNextClick}>
