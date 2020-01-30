@@ -82,15 +82,15 @@
   border-radius: 3px;
   max-height: 25vh;
   overflow-y: scroll;
-  width: calc(2vw + 24px);
+  min-width: 120px;
 }
 
 .dropdown-menu-wide {
-  width: calc(8vw + 24px) !important;
+  min-width: 120px !important;
 }
 
 .dropdown-btn-wide {
-  min-width: 30px !important;
+  min-width: 120px !important;
 }
 
 .dropdown-menu-color {
@@ -98,7 +98,7 @@
 }
 
 .dropdown-btn-color {
-  padding: 4px 8px !important;
+  padding: 4px 12px !important;
 }
 
 .dropdown-menu::-webkit-scrollbar {
@@ -135,12 +135,13 @@
 
 .dropdown-color {
   height: 14px;
-  width: 1vw;
+  width: 14px;
   background-color: black;
+  border: 1px solid var(--borders);
 }
 
 .dropdown-color-first {
-  width: 1.5em;
+  width: 16px;
   text-align: center;
   font-size: 12px;
   border-bottom: 3px solid none;
