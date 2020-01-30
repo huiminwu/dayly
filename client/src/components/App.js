@@ -78,7 +78,7 @@ const defaultTheme = {
   "--background": "#f5f5f5",
   "--bujo-body": "#ffffff",
   "--borders": "#cec0b7",
-  "--accent": "#cf9893",
+  "--accent": "#e78d8d",
   "--headers": "#3d3d3d",
   "--hover": "#f7ebeb",
   "--tab0": "#ff6c6c",
@@ -574,8 +574,8 @@ class App extends Component {
                     handleNextClick={() => this.handleNextClick("day")}
                   />
                 ) : (
-                    <Loading path="/day" />
-                  )}
+                  <Loading path="/day" />
+                )}
                 {/* View for when you look back on Monthly view */}
                 <Daily
                   path="/day/:oldYear/:oldMonth/:oldDay"

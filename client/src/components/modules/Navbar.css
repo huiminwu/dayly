@@ -94,7 +94,7 @@
   z-index: 2;
   background: var(--bujo-body);
   border-radius: 16px;
-  box-shadow: 0 6px 16px 1px rgba(0, 0, 0, 0.14); 
+  box-shadow: 0 6px 16px 1px rgba(0, 0, 0, 0.14);
 }
 
 .li-pfp {
@@ -117,5 +117,4 @@
 .dropDown li {
   text-align: center;
   padding: 8px 12px;
-  color: var(--headers);
 }
