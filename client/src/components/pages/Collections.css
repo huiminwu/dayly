@@ -162,7 +162,7 @@
 
 .collection-tools {
   border-bottom: 1px solid var(--borders);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
 }

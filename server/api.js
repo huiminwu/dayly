@@ -91,17 +91,22 @@ router.post("/day", (req, res) => {
       newNote.save();
       response["notes"] = newNote;
     }
-    // and do the same for widgets
-    Widget.find({
-      creator: req.user._id,
-      timestamp: {
-        $gte: startOfDay.format(),
-        $lte: endOfDay.format(),
-      },
-    })
-      .sort({ type: -1, timestamp: 1 })
-      .then((w) => {
-        if (w.length === 0) {
+
+    // get widgetlist for user
+    User.findOne({ _id: req.user._id }).then((u) => {
+      const userWidgetList = u.widgetList.map((widget) => ({
+        name: widget.name,
+        widgetType: widget.widgetType,
+      }));
+      Widget.find({
+        creator: req.user._id,
+        timestamp: {
+          $gte: startOfDay.format(),
+          $lte: endOfDay.format(),
+        },
+        //allWidgetObjs are the current widget objs associated w the issue in the widget collection
+      }).then((allWidgetObjs) => {
+        if (allWidgetObjs.length === 0) {
           User.findById(req.user._id).then((user) => {
             user.widgetList.forEach((widget) => {
               newWidget = new Widget({
@@ -116,10 +121,39 @@ router.post("/day", (req, res) => {
             res.send(response);
           });
         } else {
-          response.widgets = w;
+          const widgetWidgetList = allWidgetObjs.map((widgetObj) => ({
+            name: widgetObj.name,
+            widgetType: widgetObj.type,
+          }));
+          const updatedWidgetObjs = userWidgetList.map((userWidget) => {
+            const matchingWidgets = widgetWidgetList.filter(
+              (widget) =>
+                widget.name === userWidget.name && widget.widgetType === userWidget.widgetType
+            );
+            if (matchingWidgets.length !== 0) {
+              // preservedWidgets were not added or deleted recently. should be array of one Widget object
+              let preservedWidgets = allWidgetObjs.filter(
+                (widgetObj) =>
+                  widgetObj.name === userWidget.name && widgetObj.type === userWidget.widgetType
+              );
+              return preservedWidgets[0];
+            } else {
+              newWidget = new Widget({
+                creator: req.user._id,
+                name: userWidget.name,
+                type: userWidget.widgetType,
+                timestamp: startOfDay.add(1, "minute"),
+              });
+              newWidget.save();
+              return newWidget;
+            }
+          });
+
+          response["widgets"] = updatedWidgetObjs;
           res.send(response);
         }
       });
+    });
   });
 });
 
