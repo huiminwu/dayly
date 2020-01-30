@@ -37,7 +37,7 @@ require("dotenv").config();
 // TODO change connection URL after setting up your team database
 const mongoConnectionURL = process.env.ATLAS_SRV;
 // TODO change database name to the name you chose
-const databaseName = "dayly";
+const databaseName = "new-dayly";
 
 // connect to mongodb
 mongoose
