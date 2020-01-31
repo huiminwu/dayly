@@ -94,15 +94,24 @@ class CollectionEditor extends Component {
   }
 
   handleSave = debounce((editorState) => {
-    const rawContentState = convertToRaw(editorState.getCurrentContent());
-    const contentStateString = JSON.stringify(rawContentState);
-    const params = {
-      name: this.props.name,
-      content: contentStateString,
-    };
+    const currentContentState = this.state.editorState.getCurrentContent();
+    const newContentState = editorState.getCurrentContent();
 
-    post("/api/collections", params).then((updatedCollection) => this.setState({ isSaved: true }));
-  }, 1000);
+    if (currentContentState == newContentState) {
+      const rawContentState = convertToRaw(editorState.getCurrentContent());
+      const contentStateString = JSON.stringify(rawContentState);
+      const params = {
+        name: this.props.name,
+        content: contentStateString,
+      };
+
+      post("/api/collections", params).then((updatedCollection) =>
+        this.setState({ isSaved: true })
+      );
+    } else {
+      console.log("false alarm!");
+    }
+  }, 500);
 
   render() {
     const BLOCK_TYPES = [
