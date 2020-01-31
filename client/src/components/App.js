@@ -247,7 +247,7 @@ const galaxyTheme = {
 const redVelvetTheme = {
   "--background": "#e4dbce",
   "--bujo-body": "#faf6ef",
-  "--borders": "#fce2d2",
+  "--borders": "#e6c9b7",
   "--accent": "#a63433",
   "--headers": "#9c1b11",
   "--hover": "#dfd5c6",
