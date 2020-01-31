@@ -111,7 +111,7 @@ class CollectionEditor extends Component {
     } else {
       console.log("false alarm!");
     }
-  }, 1000);
+  }, 500);
 
   render() {
     const BLOCK_TYPES = [

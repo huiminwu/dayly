@@ -233,7 +233,7 @@ class Notebook extends Component {
       console.log("false alarm!");
       // The change was triggered by a change in focus/selection
     } // const currentSelection = this.state.editorState.getSelection();
-  }, 1000);
+  }, 500);
 
   render() {
     const fontFamilyStyleMap = {
